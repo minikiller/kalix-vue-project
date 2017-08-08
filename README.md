@@ -7,6 +7,7 @@
 ``` bash
 # install yarn
 npm i -g yarn
+yarn config set registry https://registry.npm.taobao.org
 
 # install dependencies
 yarn
