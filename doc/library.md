@@ -36,7 +36,23 @@ yarn add vuex
 ```
 ## add pug
 ```xml
-yarn add pug -D
+yarn add pug pug-loader -D
+```
+
+modify build/webpack.base.conf.js file
+```xml
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader'
+      }
 ```
 
 ## add toml

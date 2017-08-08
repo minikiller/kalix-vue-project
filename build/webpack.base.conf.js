@@ -73,6 +73,10 @@ module.exports = {
       {
         test: /\.toml$/,
         loader: 'toml-loader'
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader'
       }
     ]
   }

@@ -9,6 +9,11 @@
       return {
         msg: msg
       }
+    },
+    methods: {
+      changeMsg() {
+        this.msg = 'hello'
+      }
     }
   }
 </script>
