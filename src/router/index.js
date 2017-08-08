@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'views/demo/Hello'
 import Login from '@/components/login/login'
+import Cache from 'common/cache'
 Vue.use(Router)
 
 const router = new Router({
@@ -20,7 +21,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (sessionStorage.getItem('id') === null && to.name !== 'login') {
+  if (Cache.get('id') === null && to.name !== 'login') {
     next({path: '/login'})
   }
   next()

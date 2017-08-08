@@ -20,6 +20,7 @@
   import Router from 'router'
   import Store from 'store'
   import Message from 'common/message'
+  import Cache from 'common/cache'
   import Login from 'api/login'
 
   var validatePass = (rule, value, callback) => {
@@ -58,10 +59,10 @@
               'password': that.loginForm.pass
             }).then(data => {
               if (data.success) {
-                sessionStorage.setItem('id', data.user.id)
-                sessionStorage.setItem('access_token', data.access_token)
-                sessionStorage.setItem('user_token', data.user.token)
-                console.log(data.access_token)
+                Cache.save('id', data.user.id)
+                Cache.save('access_token', data.access_token)
+                Cache.save('user_token', data.user.token)
+                console.log('access token is: ', data.access_token)
                 Store.commit({
                   type: 'saveLogin',
                   access_token: data.access_token,
