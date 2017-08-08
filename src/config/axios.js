@@ -6,6 +6,7 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import Message from 'common/message'
 import {baseURL} from 'config/global.toml'
+import {LoadingTimeOut, LoadingFailure} from 'config/info.toml'
 
 // axios 配置
 axios.defaults.timeout = 5000
@@ -25,7 +26,7 @@ axios.interceptors.request.use(config => {
 }, error => {
   loadinginstace.close()
   Message.error({
-    message: '加载超时'
+    message: LoadingTimeOut
   })
   return Promise.reject(error)
 })
@@ -37,7 +38,7 @@ axios.interceptors.response.use(data => {
 }, error => {
   loadinginstace.close()
   Message.error({
-    message: '加载失败'
+    message: LoadingFailure
   })
   return Promise.reject(error)
 })
