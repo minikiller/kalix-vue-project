@@ -3,9 +3,11 @@
 
 ## ajax call
 ```xml
-  this.$http.get(api).then((response) => {
-    console.log(response.data)
-  })
+  this.$http.get(api).then((resp) => {
+    console.log(resp.data)
+  }).catch((err) => {
+              console.log(err.message)
+            })
 ```
 
 ## vue template

@@ -81,4 +81,32 @@ yarn add stylus-loader -D
 yarn add stylus
 ```
 
-modify build/utils.js file
+## add element-ui
+```xml
+yarn add element-ui
+```
+
+add entry file
+```xml
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+Vue.use(ElementUI)
+```
+
+## add mockjs
+```xml
+yarn add mockjs
+```
+
+> mockjs 的使用
+
+```javascript
+import '../mock'
+getData() {
+        this.$http.get('http://test.cn/list').then((resp) => {
+          console.log(resp.data.data)
+        }).catch((err) => {
+          console.log(err.message)
+        })
+      }
+```

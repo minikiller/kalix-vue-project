@@ -3,6 +3,7 @@
 
 <script type="text/ecmascript-6">
   import {msg} from './Hello.toml'
+  import '../mock'
   export default {
     name: 'hello',
     data() {
@@ -10,9 +11,19 @@
         msg: msg
       }
     },
+    mounted() {
+      this.getData()
+    },
     methods: {
       changeMsg() {
         this.msg = 'hello'
+      },
+      getData() {
+        this.$http.get('http://test.cn/list').then((resp) => {
+          console.log(resp.data.data)
+        }).catch((err) => {
+          console.log(err.message)
+        })
       }
     }
   }
