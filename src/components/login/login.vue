@@ -20,7 +20,7 @@
   import Router from 'router'
   import Store from 'store'
   import Message from 'common/message'
-  import {baseUrl, loginUrl} from 'config/global.toml'
+  import Login from 'api/login'
 
   var validatePass = (rule, value, callback) => {
     if (value === '') {
@@ -51,30 +51,12 @@
     methods: {
       onSubmit(formName) {
         let that = this
-        console.log(baseUrl + loginUrl)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$http.request({
-              method: 'POST',
-              url: baseUrl + loginUrl,
-              transformRequest: [(data) => {
-                // Do whatever you want to transform the data
-                let ret = ''
-                for (let it in data) {
-                  ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-                }
-                return ret
-              }],
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              data: {
-                'username': that.loginForm.name,
-                'password': that.loginForm.pass
-              }
-            }).then(response => {
-              console.log(response.data)
-              let data = response.data
+            Login.remoteLogin({
+              'username': that.loginForm.name,
+              'password': that.loginForm.pass
+            }).then(data => {
               if (data.success) {
                 sessionStorage.setItem('id', data.user.id)
                 sessionStorage.setItem('access_token', data.access_token)
@@ -87,7 +69,6 @@
                   user_token: data.user.token,
                   user_id: data.user.id
                 })
-
                 Router.push({path: '/'})
               } else {
                 Message.error(data.message)
