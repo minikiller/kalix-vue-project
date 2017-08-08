@@ -2,8 +2,8 @@
  * Created by sunlf on 2017/7/21.
  * 封装消息显示
  */
-
 import ElementUI from 'element-ui'
+
 export default {
   message(_type, _msg, _showClose = true) {
     ElementUI.Message({
