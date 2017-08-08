@@ -4,7 +4,7 @@
 开发日期：2017年7月14日
 -->
 <template lang="pug">
-  div.sign-in
+  div.login
     div.form
       div.logo
       el-form.demo-ruleForm(:model="loginForm" :rules="rules" ref="loginForm" label-width="100px")
