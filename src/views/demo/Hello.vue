@@ -3,7 +3,8 @@
 
 <script type="text/ecmascript-6">
   import {msg} from './Hello.toml'
-//  import '../../mock/index'
+  import {PageConfig} from 'config/global.toml'
+  //  import '../../mock/index'
   export default {
     name: 'hello',
     data() {
@@ -19,11 +20,14 @@
         this.msg = 'hello'
       },
       getData() {
-        this.$http.get('http://test.cn/list').then((resp) => {
-          console.log(resp.data.data)
-        }).catch((err) => {
-          console.log(err.message)
-        })
+        console.log(PageConfig)
+        setTimeout(() => {
+          this.$http.get('/camel/rest/roles').then((resp) => {
+            console.log(resp.data.data)
+          }).catch((err) => {
+            console.log(err.message)
+          })
+        }, 5000)
       }
     }
   }

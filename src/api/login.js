@@ -3,7 +3,7 @@
  * 登录api
  */
 import Vue from 'vue'
-import {baseUrl, loginUrl} from 'config/global.toml'
+import {loginUrl} from 'config/global.toml'
 
 export default {
   /**
@@ -12,10 +12,10 @@ export default {
    * @returns {Promise.<TResult>|*}
    */
   remoteLogin(_data) {
-    console.log(`remote address is ${baseUrl + loginUrl}`)
+    console.log(`remote address is ${loginUrl}`)
     return Vue.axios.request({
       method: 'POST',
-      url: baseUrl + loginUrl,
+      url: loginUrl,
       transformRequest: [(data) => {
         // Do whatever you want to transform the data
         let ret = ''

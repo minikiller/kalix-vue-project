@@ -1,6 +1,5 @@
-baseUrl = 'http://localhost:8181'
+baseURL = 'http://localhost:8181'
 loginUrl = '/login.jsp'
-# adminUrl = #baseUrl# + '/admin'
 [PageConfig]
   sizes = [20, 30, 40]
   limit = 0
