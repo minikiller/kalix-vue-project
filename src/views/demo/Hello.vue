@@ -3,7 +3,7 @@
 
 <script type="text/ecmascript-6">
   import {msg} from './Hello.toml'
-  import '../mock'
+//  import '../../mock/index'
   export default {
     name: 'hello',
     data() {
@@ -31,5 +31,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
-  @import './Hello.styl'
+  @import 'Hello.styl'
 </style>

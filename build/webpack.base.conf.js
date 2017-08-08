@@ -26,7 +26,11 @@ module.exports = {
       'api': resolve('src/api'),
       'components': resolve('src/components'),
       'common': resolve('src/common'),
-      'mock': resolve('src/mock')
+      'mock': resolve('src/mock'),
+      'config': resolve('src/config'),
+      'store': resolve('src/store'),
+      'router': resolve('src/router'),
+      'views': resolve('src/views')
     }
   },
   module: {

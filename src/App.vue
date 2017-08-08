@@ -1,6 +1,6 @@
 <template lang="pug">
   div#app
-    img(src="./assets/logo.png")
+    <!--img(src="./assets/logo.png")-->
     router-view
 </template>
 
