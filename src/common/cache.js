@@ -8,5 +8,8 @@ export default {
   },
   get(key) {
     return sessionStorage.getItem(key)
+  },
+  clear() {
+    sessionStorage.clear()
   }
 }

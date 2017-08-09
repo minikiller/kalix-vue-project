@@ -1,5 +1,9 @@
-baseURL = 'http://localhost:8181'
-loginUrl = '/login.jsp'
+cacheTime = 7200000 #缓存校验时间
+baseURL = "http://localhost:8181"
+loginUrl = "/login.jsp"
+logoutUrl = "/logout"
+applicationURL = "/camel/rest/system/applications"
+
 [PageConfig]
   sizes = [20, 30, 40]
   limit = 0

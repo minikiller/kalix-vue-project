@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Hello from 'views/demo/Hello'
 import Login from '@/components/login/login'
 import Cache from 'common/cache'
+import Home from '@/components/home/home'
 
 Vue.use(Router)
 
@@ -10,7 +11,12 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/hello',
+      name: 'hello',
       component: Hello
     },
     {

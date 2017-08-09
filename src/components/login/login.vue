@@ -7,13 +7,13 @@
   div.login
     div.form
       div.logo
-      el-form.demo-ruleForm(:model="loginForm" :rules="rules" ref="loginForm" label-width="100px")
+      el-form.loginForm(:model="loginForm" :rules="rules" ref="loginForm" label-width="100px")
         el-form-item(label="账号" prop="name")
           el-input(v-model="loginForm.name")
         el-form-item(label="密码" prop="pass")
           el-input(type="password" v-model="loginForm.pass" auto-complete="off")
         el-form-item(label=" ")
-          el-button(type="primary" @click="onSubmit('loginForm')" size="large" class="btn-submit") 立即登录
+          el-button.btn-submit(type="primary" @click="onSubmit('loginForm')" size="large") 立即登录
 </template>
 
 <script type="text/ecmascript-6">
@@ -23,13 +23,6 @@
   import Cache from 'common/cache'
   import Login from 'api/login'
 
-  var validatePass = (rule, value, callback) => {
-    if (value === '') {
-      callback(new Error('请输入密码'))
-    } else {
-      callback()
-    }
-  }
   export default {
     data() {
       return {
@@ -44,7 +37,7 @@
             {min: 3, max: 8, message: '用户名长度在 3 到 8 个字符', trigger: 'blur'}
           ],
           pass: [
-            {required: true, validator: validatePass, trigger: 'blur'}
+            {required: true, message: '请输入密码', trigger: 'blur'}
           ]
         }
       }
