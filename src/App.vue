@@ -1,7 +1,8 @@
 <template lang="pug">
   div#app
     <!--img(src="./assets/logo.png")-->
-    router-view
+    keep-alive
+      router-view
 </template>
 
 <script>

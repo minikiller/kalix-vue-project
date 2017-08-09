@@ -4,7 +4,7 @@
 开发日期：2017年7月14日
 -->
 <template lang="pug">
-  div.treeList(:class="{'smail':menuChk}")
+  div.treeList(:class="{'small':menuChk}")
     ul.bd
       li(v-for="item in treeData")
         div.s-flex.tit(@click="showTree(item,$event)")
@@ -17,7 +17,7 @@
           div.mn(v-show="setShow(item)")
             ul
               li(v-for="item in item.children")
-                router-link.tit( tag="div" :to="{path:'/'+item.routeId}")
+                router-link.tit(tag="div" :to="{path:'/'+item.routeId}")
                   i.tit_icon(:class="bindClass(item.iconCls)") {{item.text}}
 </template>
 

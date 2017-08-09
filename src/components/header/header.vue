@@ -6,7 +6,7 @@
 <template lang="pug">
   div#ToolBar
     div.s-flex.bd
-      div.logo(:class="{'smail':menuChk}")
+      div.logo(:class="{'small':menuChk}")
         img(src="./logo_oa_horizontal.png")
       div.s-flex_item.s-flex.mn
         ul.s-flex_item.menu
@@ -112,7 +112,7 @@
         return e
       },
       menuChkChange() {
-        this.$emit('setSmail', this.menuChk)
+        this.$emit('onSmall', this.menuChk)
       }
     },
     components: {},

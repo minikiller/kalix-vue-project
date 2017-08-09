@@ -5,9 +5,9 @@
 -->
 <template lang="pug">
   div.home
-    kalix-header(:menuChk="isSmail" @setSmail="setSmail")
+    kalix-header(:menuChk="isSmall" @onSmall="setSmall")
     div.s-flex.container
-      kalix-nav(:menuChk="isSmail")
+      kalix-nav(:menuChk="isSmall")
     div.s-flex_item.article
     <!--component(:is="which_to_show")-->
 </template>
@@ -20,7 +20,7 @@
     data() {
       return {
         name: 'kalixHome',
-        isSmail: false,
+        isSmall: false,
         which_to_show: 'Welcome'
       }
     },
@@ -28,8 +28,8 @@
       this.fetchdata()
     },
     methods: {
-      setSmail(e) {
-        this.isSmail = e
+      setSmall(e) {
+        this.isSmall = e
       },
       fetchdata() {
         let app = this.$route.params.app
