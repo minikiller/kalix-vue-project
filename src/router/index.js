@@ -8,11 +8,16 @@ import Home from '@/components/home/home'
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      children: [
+        {path: '/:name', name: 'Welcome', component: Home},
+        {path: '/:name/:app', name: 'Welcome', component: Home}
+      ]
     },
     {
       path: '/hello',

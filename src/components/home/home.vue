@@ -9,12 +9,17 @@
     div.s-flex.container
       kalix-nav(:menuChk="isSmall")
     div.s-flex_item.article
-    <!--component(:is="which_to_show")-->
+      kalix-content(:is="which_to_show")
 </template>
 
 <script type="text/ecmascript-6">
   import Header from '@/components/header/header'
   import Nav from '@/components/nav/nav'
+  import Welcome from '@/views/admin/welcome'
+
+  let content = {
+    Welcome
+  }
 
   export default {
     data() {
@@ -27,6 +32,7 @@
     mounted() {
       this.fetchdata()
     },
+    watch: {'$route': 'fetchdata'},
     methods: {
       setSmall(e) {
         this.isSmall = e
@@ -34,12 +40,14 @@
       fetchdata() {
         let app = this.$route.params.app
         console.log(app)
-//        this.which_to_show = (_components[app]) ? app : 'Welcome'
+        this.which_to_show = (content[app]) ? app : 'Welcome'
       }
     },
     components: {
       KalixHeader: Header,
-      KalixNav: Nav
+      KalixNav: Nav,
+//      Welcome: Welcome,
+      KalixContent: content // 动态显示组件
     }
   }
 
