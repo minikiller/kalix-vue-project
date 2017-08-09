@@ -6,9 +6,9 @@
 <template lang="pug">
   div.home
     kalix-header(:menuChk="isSmail" @setSmail="setSmail")
-     div.s-flex.container
-       kalix-nav(:menuChk="isSmail")
-     div.s-flex_item.article
+    div.s-flex.container
+      kalix-nav(:menuChk="isSmail")
+    div.s-flex_item.article
     <!--component(:is="which_to_show")-->
 </template>
 
@@ -32,7 +32,8 @@
         this.isSmail = e
       },
       fetchdata() {
-//        let app = this.$route.params.app
+        let app = this.$route.params.app
+        console.log(app)
 //        this.which_to_show = (_components[app]) ? app : 'Welcome'
       }
     },

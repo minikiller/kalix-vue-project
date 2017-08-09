@@ -18,14 +18,14 @@
             ul
               li(v-for="item in item.children")
                 router-link.tit( tag="div" :to="{path:'/'+item.routeId}")
-                  i.tit_icon(:class="bindClass(item2.iconCls)") {{item.text}}
-
+                  i.tit_icon(:class="bindClass(item.iconCls)") {{item.text}}
 </template>
 
 <script type="text/ecmascript-6">
   import Vue from 'vue'
-  //  import axios from 'axios'
+  import Cache from 'common/cache'
   import {cacheTime, systemApplications} from 'config/global.toml'
+
   export default {
     props: {
       menuChk: {
@@ -53,8 +53,8 @@
         let treeListData = {}
         this.currName = this.$route.params.name || 'admin'
         this.currApp = this.$route.params.app
-        if (localStorage.getItem('treeListData')) {
-          treeListData = JSON.parse(localStorage.getItem('treeListData'))
+        if (Cache.get('treeListData')) {
+          treeListData = JSON.parse(Cache.get('treeListData'))
         }
         if (treeListData.createDate && (treeListData.createDate - cd) < cacheTime && treeListData[this.currName]) {
           this.treeData = treeListData[this.currName]
@@ -73,7 +73,7 @@
             })
             treeListData[this.currName] = this.treeData
             treeListData.createDate = nowDate.getTime()
-            localStorage.setItem('treeListData', JSON.stringify(treeListData))
+            Cache.save('treeListData', JSON.stringify(treeListData))
           })
         }
       },
