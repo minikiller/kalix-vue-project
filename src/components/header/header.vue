@@ -16,7 +16,8 @@
             i.el-icon-d-arrow-left
           li(v-for="item in menuList")
             router-link.link-btn(tag="div" :to="{path:'/'+item.id}")
-              i(:class="bindClass(item.iconCls)") {{item.text}}
+              i(:class="bindClass(item.iconCls)")
+              |{{item.text}}
         ul.aside
           li
             el-button(type="text" icon="message") 0
