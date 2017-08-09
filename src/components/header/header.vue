@@ -13,7 +13,7 @@
           li
             label.s-check__label.link-btn(for="menuChk")
               input.s-check(type="checkbox" id="menuChk" v-on:change="menuChkChange" v-model="menuChk")
-            i.el-icon-d-arrow-left
+              i.el-icon-d-arrow-left
           li(v-for="item in menuList")
             router-link.link-btn(tag="div" :to="{path:'/'+item.id}")
               i(:class="bindClass(item.iconCls)")
