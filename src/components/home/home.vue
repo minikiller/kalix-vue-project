@@ -8,15 +8,16 @@
     kalix-header(:menuChk="isSmall" @onSmall="setSmall")
     div.s-flex.container
       kalix-nav(:menuChk="isSmall")
-    div.s-flex_item.article
-      component(:is="which_to_show")
+      div.s-flex_item.article
+        component(:is="which_to_show")
 </template>
 
 <script type="text/ecmascript-6">
   import Header from '@/components/header/header'
   import Nav from '@/components/nav/nav'
   import Welcome from '@/views/admin/welcome'
-
+  //  import user from '@/views/admin/user'
+  //  var mmc = user
   let content = {
     Welcome
   }
@@ -38,9 +39,13 @@
         this.isSmall = e
       },
       fetchdata() {
+        let name = this.$route.params.name
         let app = this.$route.params.app
-        console.log(app)
-        this.which_to_show = (content[app]) ? app : 'Welcome'
+        if (app !== undefined) {
+          this.which_to_show = require(`@/views/${name}/${app}`)
+        } else {
+          this.which_to_show = (content[app]) ? app : 'Welcome'
+        }
       }
     },
     components: {
