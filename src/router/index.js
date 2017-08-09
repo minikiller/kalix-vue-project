@@ -11,15 +11,6 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: Home,
-      children: [
-        {path: '/:name', name: 'Welcome', component: Home},
-        {path: '/:name/:app', name: 'Welcome', component: Home}
-      ]
-    },
-    {
       path: '/hello',
       name: 'hello',
       component: Hello
@@ -28,6 +19,15 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: Home,
+      children: [
+        {path: '/:name', name: 'Welcome', component: Home},
+        {path: '/:name/:app', name: 'Welcome', component: Home}
+      ]
     }
   ]
 })
