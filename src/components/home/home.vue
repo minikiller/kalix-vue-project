@@ -9,7 +9,7 @@
     div.s-flex.container
       kalix-nav(:menuChk="isSmall")
     div.s-flex_item.article
-      kalix-content(:is="which_to_show")
+      component(:is="which_to_show")
 </template>
 
 <script type="text/ecmascript-6">
@@ -46,7 +46,7 @@
     components: {
       KalixHeader: Header,
       KalixNav: Nav,
-//      Welcome: Welcome,
+      Welcome: Welcome,
       KalixContent: content // 动态显示组件
     }
   }
