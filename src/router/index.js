@@ -25,8 +25,8 @@ const router = new Router({
       name: 'home',
       component: Home,
       children: [
-        {path: '/:name', name: 'Welcome', component: Home},
-        {path: '/:name/:app', name: 'Welcome', component: Home}
+        {path: '/:app', name: 'header', component: Home},
+        {path: '/:app/:fun', name: 'nav', component: Home}
       ]
     }
   ]

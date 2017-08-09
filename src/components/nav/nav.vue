@@ -36,8 +36,8 @@
     data() {
       return {
         name: 'kalixNav',
-        currName: '',
         currApp: '',
+        currFun: '',
         activeName: '1',
         obj: {'name': 'aa'},
         treeData: []
@@ -52,17 +52,17 @@
         let d = new Date()
         let cd = d.getTime()
         let treeListData = {}
-        this.currName = this.$route.params.name || 'admin'
-        this.currApp = this.$route.params.app
+        this.currApp = this.$route.params.app || 'admin'
+        this.currFun = this.$route.params.fun
         if (Cache.get('treeListData')) {
           treeListData = JSON.parse(Cache.get('treeListData'))
         }
-        if (treeListData.createDate && (treeListData.createDate - cd) < cacheTime && treeListData[this.currName]) {
-          this.treeData = treeListData[this.currName]
+        if (treeListData.createDate && (treeListData.createDate - cd) < cacheTime && treeListData[this.currApp]) {
+          this.treeData = treeListData[this.currApp]
         } else {
           const data = {_dc: cd, node: 'root'}
           Vue.axios({
-            url: systemApplications[this.currName],
+            url: systemApplications[this.currApp],
             method: 'get',
 //            headers: {'AccessToken': accessToken, JSESSIONID: userToken},
             params: data
@@ -72,14 +72,14 @@
             this.treeData.forEach(function (e, i) {
               Vue.set(e, 'isShow', false)
             })
-            treeListData[this.currName] = this.treeData
+            treeListData[this.currApp] = this.treeData
             treeListData.createDate = nowDate.getTime()
             Cache.save('treeListData', JSON.stringify(treeListData))
           })
         }
       },
       setShow(item) {
-        let routeName = this.currName + '/' + this.currApp
+        let routeName = this.currApp + '/' + this.currFun
         if (item.children) {
           let temp = item.children.find(function (e) {
             return e.routeId === routeName

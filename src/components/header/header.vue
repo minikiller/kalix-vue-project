@@ -17,13 +17,13 @@
           li(v-for="item in menuList")
             router-link.link-btn(tag="div" :to="{path:'/'+item.id}")
               i(:class="bindClass(item.iconCls)")
-              |{{item.text}}
+              | {{item.text}}
         ul.aside
           li
             el-button(type="text" icon="message") 0
           li
             el-dropdown(@command="handleCommand")
-              span.el-dropdown-link 管理员
+              span.el-dropdown-link {{userName}}
                 i.el-icon-caret-bottom.el-icon--right
               el-dropdown-menu(slot="dropdown")
                 el-dropdown-item(command="changeInfo") 个人信息修改
@@ -51,6 +51,7 @@
     data() {
       return {
         name: 'kalixHeader',
+        userName: Cache.get('user_name'),
         menuList: [],
         themeOptions: [
           {value: '选项1', label: '浅蓝'},
@@ -101,8 +102,7 @@
             this.$message('click on item ' + 'bbb')
             break
           case 'logout' :
-            Vue.axios.get(logoutURL, {
-            }).then(response => {
+            Vue.axios.get(logoutURL, {}).then(response => {
               Cache.clear()
               router.push({path: '/login'})
             })

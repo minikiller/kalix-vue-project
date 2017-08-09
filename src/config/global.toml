@@ -4,6 +4,9 @@ loginUrl = "/login.jsp"
 logoutUrl = "/logout"
 applicationURL = "/camel/rest/system/applications"
 
+ScheduleDictsURL = "/camel/rest/schedule/dicts"
+ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
+
 [systemApplications]
 admin = "/camel/rest/system/applications/admin"
 common = "/camel/rest/system/applications/common"

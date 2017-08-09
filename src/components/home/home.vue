@@ -39,12 +39,12 @@
         this.isSmall = e
       },
       fetchdata() {
-        let name = this.$route.params.name
-        let app = this.$route.params.app
-        if (app !== undefined) {
-          this.which_to_show = require(`@/views/${name}/${app}`)
+        let app = this.$route.params.app // 应用名称
+        let fun = this.$route.params.fun // 功能名称
+        if (fun !== undefined) {
+          this.which_to_show = require(`@/views/${app}/${fun.toLowerCase()}/${fun.toLowerCase()}`)
         } else {
-          this.which_to_show = (content[app]) ? app : 'Welcome'
+          this.which_to_show = (content[fun]) ? fun : 'Welcome'
         }
       }
     },

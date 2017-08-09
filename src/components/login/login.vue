@@ -55,6 +55,7 @@
                 Cache.save('id', data.user.id)
                 Cache.save('access_token', data.access_token)
                 Cache.save('user_token', data.user.token)
+                Cache.save('user_name', data.user.name)
                 console.log('access token is: ', data.access_token)
                 Store.commit({
                   type: 'saveLogin',
