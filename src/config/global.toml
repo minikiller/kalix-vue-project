@@ -4,6 +4,12 @@ loginUrl = "/login.jsp"
 logoutUrl = "/logout"
 applicationURL = "/camel/rest/system/applications"
 
+[systemApplications]
+admin = "/camel/rest/system/applications/admin"
+common = "/camel/rest/system/applications/common"
+oa = "/camel/rest/system/applications/oa"
+schedule = "/camel/rest/system/applications/schedule"
+
 [PageConfig]
   sizes = [20, 30, 40]
   limit = 0

@@ -6,14 +6,15 @@
 <template lang="pug">
   div.home
     kalix-header(:menuChk="isSmail" @setSmail="setSmail")
-    <!--div.s-flex.container-->
-    <!--nav(:menuChk="isSmail")-->
-    <!--div.s-flex_item article-->
+     div.s-flex.container
+       kalix-nav(:menuChk="isSmail")
+     div.s-flex_item.article
     <!--component(:is="which_to_show")-->
 </template>
 
 <script type="text/ecmascript-6">
   import Header from '@/components/header/header'
+  import Nav from '@/components/nav/nav'
 
   export default {
     data() {
@@ -23,18 +24,26 @@
         which_to_show: 'Welcome'
       }
     },
+    mounted() {
+      this.fetchdata()
+    },
     methods: {
       setSmail(e) {
         this.isSmail = e
+      },
+      fetchdata() {
+//        let app = this.$route.params.app
+//        this.which_to_show = (_components[app]) ? app : 'Welcome'
       }
     },
     components: {
-      KalixHeader: Header
+      KalixHeader: Header,
+      KalixNav: Nav
     }
   }
 
 </script>
 
 <style scoped lang="stylus">
-  @import "home.styl"
+  @import "./home.styl"
 </style>

@@ -8,7 +8,7 @@
     div.s-flex.bd
       div.logo(:class="{'smail':menuChk}")
         img(src="./logo_oa_horizontal.png")
-      div.s-flex_item.menu
+      div.s-flex_item.s-flex.mn
         ul.s-flex_item.menu
           li
             label.s-check__label.link-btn(for="menuChk")
@@ -80,7 +80,6 @@
           limit: 25
         }
         Vue.axios.get(applicationURL, {
-
           params: data
         }).then(response => {
           this.menuList = response.data

@@ -82,5 +82,5 @@
 </script>
 
 <style scoped lang="stylus">
-  @import "login.styl"
+  @import "./login.styl"
 </style>

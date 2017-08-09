@@ -1,0 +1,67 @@
+.treeList
+  width 250px
+  height 100%
+  background-color #32404e
+  color #ffffff
+  text-align left
+  overflow hidden
+  transition width .2s
+  z-index 9999
+  li
+    width 250px
+
+  .tit
+    height 64px
+    line-height 64px
+    padding-left 22px
+    padding-right 12px
+    color #adb3b8
+    position relative
+    transition color 0.5s
+    cursor pointer
+    .tit_icon
+      margin-right 12px
+      font-size 24px
+
+    .txt,.arrow
+      transition opacity .2s
+
+    .txt
+      display inline-block
+
+    .arrow
+      width 12px
+
+    &hover
+      background-color #3c4a57
+      color #d6d9dc
+
+
+
+  &.smail
+    width 65px
+    .tit
+      .txt,
+      .arrow
+        opacity 0
+  .mn
+    .tit
+      padding-left 44px
+      &before
+        top 0
+        left 0
+        bottom 0
+        width 5px
+        background-color #42b983
+        content ''
+        position absolute
+        display block
+        visibility hidden
+
+      &.router-link-exact-active
+        &before
+          visibility visible
+
+
+
+
