@@ -17,8 +17,9 @@
           div.mn(v-show="setShow(item)")
             ul
               li(v-for="item in item.children")
-                router-link.tit(tag="div" :to="{path:'/'+item.routeId}")
-                  i.tit_icon(:class="bindClass(item.iconCls)") {{item.text}}
+                router-link.tit( tag="div" :to="{path:'/'+item.routeId}")
+                  i.tit_icon(:class="bindClass(item.iconCls)")
+                  |{{item.text}}
 </template>
 
 <script type="text/ecmascript-6">
