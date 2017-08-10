@@ -123,8 +123,7 @@
   }
 </script>
 
-<style scoped lang='scss' type='text/scss'>
-  .dialog-form {
-    text-align: left;
-  }
+<style scoped lang='stylus' type='text/stylus'>
+  .dialog-form
+    text-align left
 </style>

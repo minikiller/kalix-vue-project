@@ -30,8 +30,17 @@
           i.iconfont.icon-refresh
           | 刷新
       kalix-table-columns(slot="container")
-    kalix-dialog(ref="kalixDialog" v-bind:form-name="'kalixScheduleDitDialogForm'" v-bind:formModel="formModel" v-bind:rules="rules" v-bind:data-url="dataUrl" v-on:refreshData="()=>{$refs.myWrapper.refresh()}")
-      kalix-dialog-form(slot="dialog-container" ref="kalixScheduleDitDialogForm" v-bind:parent-ref-name="kalixDialog" v-bind:parent-refs="$refs" v-bind:formModel="formModel")
+    kalix-dialog(ref="kalixDialog"
+                  form-name="kalixScheduleDitDialogForm"
+                  v-bind:formModel="formModel"
+                  v-bind:rules="rules"
+                  v-bind:data-url="dataUrl"
+                  v-on: ="()=>{$refs.myWrapper.refresh()}")
+      kalix-dialog-form(slot="dialog-container"
+                          ref="kalixScheduleDitDialogForm"
+                          parent-ref-name="kalixDialog"
+                          v-bind:parent-refs="$refs"
+                          v-bind:formModel="formModel")
 </template>
 
 <script type="text/ecmascript-6">
@@ -136,13 +145,10 @@
   }
 </script>
 
-<style scoped lang='scss' type='text/scss'>
-  @import "../../../assets/scss/Color";
-
-  .schedule-dict {
-    .dialog-form {
-      text-align: left;
-    }
-  }
+<style scoped lang='stylus' type='text/stylus'>
+  @import "../../../assets/stylus/color"
+  .schedule-dict
+    .dialog-form
+      text-align left
 </style>
 

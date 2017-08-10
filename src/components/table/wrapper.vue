@@ -8,25 +8,25 @@
         slot(name="toolbar")
       div.container(ref="wrapperContainer")
         kalix-table(ref="kalixTable"
-        v-bind:target-url="dataUrl"
-        v-bind:btn-option="btnOption"
-        v-bind:is-scroll="tableIsScroll"
-        v-bind:request-data="requestData"
-        v-bind:current-page="pager.currentPage"
-        v-bind:limit="pager.limit"
-        v-bind:height="tableHeight"
-        v-on:getTotalCount="setTotalCount"
-        v-on:tableView="tableView"
-        v-on:tableEdit="tableEdit")
+                      v-bind:target-url="dataUrl"
+                      v-bind:btn-option="btnOption"
+                      v-bind:is-scroll="tableIsScroll"
+                      v-bind:request-data="requestData"
+                      v-bind:current-page="pager.currentPage"
+                      v-bind:limit="pager.limit"
+                      v-bind:height="tableHeight"
+                      v-on:getTotalCount="setTotalCount"
+                      v-on:tableView="tableView"
+                      v-on:tableEdit="tableEdit")
           template(slot="tableColumn")
             slot(name="container")
       div.pagination
         kalix-pager(slot="pagination"
-        v-bind:currentPage="pager.currentPage"
-        v-bind:totalCount="pager.totalCount"
-        v-bind:limit="pager.limit"
-        v-on:pagerCurrentChange="pagerCurrentChange"
-        v-on:pagerSizeChange="pagerSizeChange")
+                      v-bind:currentPage="pager.currentPage"
+                      v-bind:totalCount="pager.totalCount"
+                      v-bind:limit="pager.limit"
+                      v-on:pagerCurrentChange="pagerCurrentChange"
+                      v-on:pagerSizeChange="pagerSizeChange")
 </template>
 
 <script>
@@ -122,54 +122,44 @@
   }
 </script>
 
-<style lang="scss" type="text/scss">
-  @import "../../assets/Scss/Color";
-
-  .wrapper {
-    margin: 5px;
-    border: 1px solid $border-color_1;
-    position: absolute;
-    bottom: 0;
-    top: 96px;
-    left: 0;
-    box-sizing: border-box;
-    right: 0;
-    .hd {
-      background-color: $bg-color_1;
-      color: $txt-color_1;
-      line-height: 44px;
-      padding: 0 15px;
-      text-align: left;
-    }
-    .bd {
-      .toolbar {
-        padding: 12px;
-        text-align: left;
-        .el-button {
-          .iconfont {
-            font-size: 14px;
-          }
-        }
-      }
-      .container {
-        position: absolute;
-        padding: 0 12px;
-        overflow: hidden;
-        bottom: 48px;
-        right: 0;
-        left: 0;
-        top: 104px;
-        text-align: left;
-        .el-table .info-row {
-          background-color: $bc-att;
-        }
-      }
-      .pagination {
-        text-align: left;
-        padding: 8px 0;
-        position: absolute;
-        bottom: 0;
-      }
-    }
-  }
+<style scoped lang='stylus' type='text/stylus'>
+  @import "../../assets/stylus/color.styl"
+  .wrapper
+    margin 5px
+    border 1px solid border-color_1
+    position absolute
+    bottom 0
+    top 96px
+    left 0
+    box-sizing border-box
+    right 0
+    .hd
+      background-color bg-color_1
+      color txt-color_1
+      line-height 44px
+      padding 0 15px
+      text-align left
+    .bd
+      .toolbar
+        padding 12px
+        text-align left
+        .el-button
+          .iconfont
+            font-size 14px
+      .container
+        position absolute
+        padding 0 12px
+        overflow hidden
+        bottom 48px
+        right 0
+        left 0
+        top 104px
+        text-align left
+        .el-table .info-row
+          background-color $bc-att
+      .pagination
+        text-align left
+        padding 8px 0
+        position absolute
+        bottom 0
 </style>
