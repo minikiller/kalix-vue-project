@@ -1,8 +1,8 @@
 <template lang="pug">
   el-table.kalix-table(slot="container"
-  v-bind:data="dataList" border style="width: 100%"
-  v-bind:row-class-name="tableRowClassName"
-  v-bind:height="height" ref="kalixTable")
+                        v-bind:data="dataList" border style="width: 100%"
+                        v-bind:row-class-name="tableRowClassName"
+                        v-bind:height="height" ref="kalixTable")
     slot(v-if="dataList && dataList.length" name="tableColumn")
     el-table-column(v-show="dataList && dataList.length" label="操作" width="150")
       template(scope="scope")
