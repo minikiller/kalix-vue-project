@@ -1,17 +1,14 @@
-<template>
-  <el-table class="kalix-table" slot="container"
-            :data="dataList" border style="width: 100%"
-            :row-class-name="tableRowClassName"
-            :height="height" ref="kalixTable">
-    <slot v-if="dataList && dataList.length" name="tableColumn"></slot>
-    <el-table-column v-if="dataList && dataList.length" label="操作" width="150">
-      <template scope="scope">
-        <el-button v-if="btnView" @click="tableView(scope.row)" type="text" size="small">查看</el-button>
-        <el-button v-if="btnEdit" @click="tableEdit(scope.row)" type="text" size="small">编辑</el-button>
-        <el-button v-if="btnDelete" @click="tableDelete(scope.row)" type="text" size="small">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+<template lang="pug">
+  el-table.kalix-table(slot="container"
+  v-bind:data="dataList" border style="width: 100%"
+  v-bind:row-class-name="tableRowClassName"
+  v-bind:height="height" ref="kalixTable")
+    slot(v-if="dataList && dataList.length" name="tableColumn")
+    el-table-column(v-if="dataList" label="操作" width="150")
+      template(scope="scope")
+        el-button(v-if="btnView" v-on:click="tableView(scope.row)" type="text" size="small") 查看
+        el-button(v-if="btnEdit" v-on:click="tableEdit(scope.row)" type="text" size="small") 编辑
+        el-button(v-if="btnDelete" v-on:click="tableDelete(scope.row)" type="text" size="small") 删除
 </template>
 
 <script type="text/ecmascript-6">

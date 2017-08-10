@@ -1,7 +1,6 @@
-<template>
-  <div class="kalix-table-buttons">
-    <slot></slot>
-  </div>
+<template lang="pug">
+  div.kalix-table-buttons
+    slot
 </template>
 
 <script type="text/ecmascript-6">
