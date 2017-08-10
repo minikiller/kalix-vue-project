@@ -168,7 +168,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            Vue.axios.request({
+            return Vue.axios.request({
               method: 'DELETE',
               url: this.getDataDeleteUrl + '/' + row.id,
               params: {},
@@ -180,7 +180,6 @@
               Message.success(response.data.msg)
             }).catch(() => {
             })
-          }).catch(() => {
           })
         }
       }

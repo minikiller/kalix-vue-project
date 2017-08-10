@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    el-form(ref="kalixForm" :model="formModel" :rules="formRules")
+    el-form(ref="kalixForm" v-bind:model="formModel" v-bind:rules="formRules")
       slot(name="kalixColumnSlot")
     el-button(v-on:click="submit") submit
     el-button(v-on:click="reset") cancel
@@ -9,8 +9,8 @@
 <script type="text/ecmascript-6">
   export default {
     props: {
-      formModel: {},
-      formRules: {}
+      formModel: {}, // 父组件属性，用于提供模型
+      formRules: {}  // 模型验证
     },
     data() {
       return {}
