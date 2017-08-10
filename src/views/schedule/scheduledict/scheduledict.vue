@@ -15,7 +15,7 @@
             | 查询
           el-button(type="success" v-on:click="resetSearchForm")
             i.iconfont.icon-reset
-              | 重置
+            | 重置
     kalix-wrapper(ref='myWrapper' title="字典列表" icon="iconfont icon-dict-management"
     v-bind:data-url="dataUrl"
     v-bind:request-data="requestData"
@@ -111,10 +111,11 @@
         this.formModel = JSON.parse(this.tempFormModel)
       },
       tableView(row) {
-        this.formModel.id = row.id
-        this.formModel.type = row.type
-        this.formModel.label = row.label
-        this.formModel.description = row.description
+//        this.formModel.id = row.id
+//        this.formModel.type = row.type
+//        this.formModel.label = row.label
+//        this.formModel.description = row.description
+        Object.assign(this.formModel, row)
         // 打开对话框
         this.$refs.kalixDialog.open('查看', true)
       },
