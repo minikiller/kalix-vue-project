@@ -16,5 +16,5 @@
     br
     li
       a(href="https://vuejs-templates.github.io/webpack/" target="_blank") Docs for This Template
-  kalix-demo-form(:formModel="row" :formRules="formRules")
-    kalix-editor(slot="kalixColumnSlot")
+  kalix-demo-form(v-bind:formModel="formModel" v-bind:formRules="formRules")
+    kalix-demo-column(slot="kalixColumnSlot")

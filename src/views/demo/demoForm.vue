@@ -22,6 +22,10 @@
         console.log('after :', this.$refs.kalixForm.model)
       },
       submit() {
+        if (this._events['onSubmit']) {
+          this.$emit('onSubmit', this.$refs.kalixForm.model)
+          return
+        }
         this.$refs.kalixForm.validate((valid) => {
           if (valid) {
             console.log('OK')

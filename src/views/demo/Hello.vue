@@ -4,7 +4,7 @@
 <script type="text/ecmascript-6">
   import {msg} from './Hello.toml'
   import {PageConfig} from 'config/global.toml'
-  import Editor from './editor.vue'
+  import DemoColumn from './demoColumn.vue'
   import DemoForm from './demoForm.vue'
   //  import '../../mock/index'
   let mockData = {
@@ -16,7 +16,7 @@
     data() {
       return {
         msg: msg,
-        row: {},
+        formModel: {},
         formRules: {
           name: [
             {required: true, message: '请输入 name', trigger: 'blur'}
@@ -29,15 +29,18 @@
     },
     mounted() {
       this.getData()
-      this.row = mockData
+      this.formModel = mockData
     },
     components: {
-      KalixEditor: Editor,
+      KalixDemoColumn: DemoColumn,
       KalixDemoForm: DemoForm
     },
     methods: {
       changeMsg() {
         this.msg = 'hello'
+      },
+      onSubmit(data) {
+        alert(data)
       },
       getData() {
         console.log(PageConfig)
