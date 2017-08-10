@@ -92,7 +92,7 @@
       }
     },
     created() {
-//      this.getDataList()
+      this.getDataList()
     },
     mounted() {
       this.setTableHeight()
