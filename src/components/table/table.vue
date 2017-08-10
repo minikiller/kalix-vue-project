@@ -4,7 +4,7 @@
             :row-class-name="tableRowClassName"
             :height="height" ref="kalixTable">
     <slot v-if="dataList && dataList.length" name="tableColumn"></slot>
-    <el-table-column v-if="dataList && dataList.length" label="操作" width="150">
+    <el-table-column v-show="dataList && dataList.length" label="操作" width="150">
       <template scope="scope">
         <el-button v-if="btnView" @click="tableView(scope.row)" type="text" size="small">查看</el-button>
         <el-button v-if="btnEdit" @click="tableEdit(scope.row)" type="text" size="small">编辑</el-button>

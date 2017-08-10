@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="el-form">
     <el-form-item v-if="isView" label="类型" prop="type">
       <el-input v-model="formModel.type" :readonly="isView" auto-complete="off"></el-input>
     </el-form-item>
@@ -29,9 +29,17 @@
   const DIALOG_FORM_TYPES_KEY = 'ScheduleDictDialogFormTypes'
 
   export default {
+    name: 'scheculedict-form',
     props: {
       formModel: {
         type: Object
+      },
+      parentRefs: {
+        type: Object
+      },
+      parentRefName: {
+        type: String,
+        default: 'kalixDialog'
       }
     },
     data() {
@@ -47,11 +55,8 @@
     updated() {
     },
     methods: {
-      init(isView) {
-//        console.log('init')
-        if (isView) {
-          this.isView = isView
-        }
+      init(isView = false) {
+        this.isView = isView
       },
       visibleChange() {
         this._getTypes()
@@ -80,8 +85,7 @@
         console.log('formCancel')
       },
       dialogFormCancel() {
-        console.log('dialogFormCancel')
-        this.$emit('dialogFormCancel')
+        this.parentRefs[this.parentRefName].close()
       }
     }
   }

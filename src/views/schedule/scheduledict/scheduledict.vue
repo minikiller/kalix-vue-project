@@ -32,10 +32,16 @@
     </kalix-wrapper>
     <!-- 对话框 -->
     <kalix-dialog ref="kalixDialog"
-                  :form-name="'kalixScheduleDitDialogForm'" :formModel="formModel" :rules="rules" :data-url="dataUrl"
+                  :form-name="'kalixScheduleDitDialogForm'"
+                  :formModel="formModel"
+                  :rules="rules"
+                  :data-url="dataUrl"
                   @refreshData="()=>{$refs.myWrapper.refresh()}">
       <kalix-dialog-form slot="dialog-container"
-                         ref="kalixScheduleDitDialogForm" :formModel="formModel"></kalix-dialog-form>
+                         ref="kalixScheduleDitDialogForm"
+                         :parent-ref-name="kalixDialog"
+                         :parent-refs="$refs"
+                         :formModel="formModel"></kalix-dialog-form>
     </kalix-dialog>
   </div>
 </template>
@@ -48,6 +54,7 @@
   import KalixScheduleDitDialogForm from './scheduledictForm'
 
   export default {
+    name: 'scheculedict',
     data() {
       let validateType = (rule, value, callback) => {
         callback()
@@ -80,7 +87,8 @@
             {required: true, message: '请选择类型', trigger: 'blur'}
           ],
           label: [
-            {required: true, message: '请输入标签名', trigger: 'blur'}]
+            {required: true, message: '请输入标签名', trigger: 'blur'}
+          ]
         }
       }
     },
@@ -108,7 +116,7 @@
         // 打开对话框
         this.$refs.kalixDialog.open('添加')
       },
-      refresh () {
+      refresh() {
         this.$refs.myWrapper.refresh()
       },
       resetDialogForm() {

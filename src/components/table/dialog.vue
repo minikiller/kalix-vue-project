@@ -1,6 +1,6 @@
 <template lang="pug">
   el-dialog.dialog-form(:title="title" :visible="visible" :before-close="close")
-    el-form(ref="dialogForm")
+    el-form(ref="dialogForm" :model="formModel" :rules="rules" label-width="80px")
       slot(name="dialog-container")
     div.dialog-footer(slot="footer")
       template(v-if="isView")
@@ -15,6 +15,7 @@
   import Vue from 'vue'
 
   export default {
+    name: 'dialog',
     props: {
       dataUrl: {
         type: String,
@@ -61,19 +62,19 @@
     activated() {
     },
     methods: {
-      open(title, isView) {
+      open(title, isView = false) {
         this.title = title
         this.visible = true
-        if (isView) {
-          this.isView = isView
-        }
+        this.isView = isView
         setTimeout(() => {
           let targetForm = this.$parent.$refs[this.formName]
           targetForm.init(isView)
         }, 20)
       },
       close() {
+        console.log('dialog close')
         this.visible = false
+        this.$refs.dialogForm.resetFields()
       },
       clickCancel() {
         let targetForm = this.$parent.$refs[this.formName]
@@ -90,7 +91,9 @@
           return
         }
         let that = this
+        console.log(this.formModel)
         that.$refs.dialogForm.validate((valid) => {
+          console.log('asdfasdf')
           if (valid) {
             Vue.axios.request({
               method: 'POST',
@@ -112,7 +115,6 @@
               }
             })
           } else {
-            Message.error('')
             return false
           }
         })
@@ -122,7 +124,6 @@
 </script>
 
 <style scoped lang='scss' type='text/scss'>
-
   .dialog-form {
     text-align: left;
   }
