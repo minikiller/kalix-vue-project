@@ -1,14 +1,17 @@
 <template lang="pug">
-  el-table.kalix-table(slot="container"
-                        v-bind:data="dataList" border style="width: 100%"
-                        v-bind:row-class-name="tableRowClassName"
-                        v-bind:height="height" ref="kalixTable")
-    slot(v-if="dataList && dataList.length" name="tableColumn")
-    el-table-column(v-show="dataList && dataList.length" label="操作" width="150")
-      template(scope="scope")
-        el-button(v-if="btnView" v-on:click="tableView(scope.row)" type="text" size="small") 查看
-        el-button(v-if="btnEdit" v-on:click="tableEdit(scope.row)" type="text" size="small") 编辑
-        el-button(v-if="btnDelete" v-on:click="tableDelete(scope.row)" type="text" size="small") 删除
+  div.kalix-table
+    el-table.kalix-table(slot="container"
+    v-bind:data="dataList" border style="width: 100%"
+    v-bind:row-class-name="tableRowClassName"
+    v-bind:height="height" ref="kalixTable")
+      slot(v-if="dataList && dataList.length > 0" name="tableColumn")
+      el-table-column(label="操作" width="150")
+        template(scope="scope")
+          el-button(v-if="btnView" v-on:click="tableView(scope.row)" type="text" size="small") 查看
+          el-button(v-if="btnEdit" v-on:click="tableEdit(scope.row)" type="text" size="small") 编辑
+          el-button(v-if="btnDelete" v-on:click="tableDelete(scope.row)" type="text" size="small") 删除
+    div.no-list(v-if="!dataList.length > 0" v-bind:style="{'height':height+'px'}")
+      div 暂无数据
 </template>
 
 <script type="text/ecmascript-6">
@@ -66,7 +69,8 @@
     },
     data() {
       return {
-        dataList: []
+        dataList: [],
+        isVisible: false
       }
     },
     computed: {
@@ -87,8 +91,10 @@
         return this.dataDeleteUrl || this.targetUrl
       }
     },
+    created() {
+//      this.getDataList()
+    },
     mounted() {
-      this.getDataList()
       this.setTableHeight()
     },
     watch: {
@@ -117,9 +123,11 @@
               item.rowNumber = index + that.rowNo
               return item
             })
+            that.isVisible = true
             console.log(response.data.totalCount)
             that.$emit('getTotalCount', response.data.totalCount)
           }
+        }).catch(() => {
         })
       },
       refresh() {
@@ -137,8 +145,7 @@
           return
         }
         setTimeout(() => {
-          let tbWrapper = document.getElementsByClassName('el-table__body-wrapper')
-          tbWrapper[0].style.overflowX = 'hidden'
+          this.$refs.kalixTable.$el.querySelector('.el-table__body-wrapper').style.overflowX = 'hidden'
         }, 20)
       },
       tableView(row) {
@@ -181,7 +188,29 @@
   }
 </script>
 
-<style scoped lang='scss' type='text/scss'>
-  .kalix-table {
-  }
+<style scoped lang='stylus' type='text/stylus'>
+  .kalix-table
+    position relative
+    .no-list
+      position absolute
+      left 1px
+      top 1px
+      height 744px
+      width 100%
+      color #5e7382
+      font-size 14px
+      text-align center
+      background-color #fff
+      display -webkit-box
+      display -ms-flexbox
+      display -webkit-flex
+      display flex
+      -webkit-box-pack center
+      -ms-flex-pack center
+      -webkit-justify-content center
+      justify-content center
+      -webkit-box-align center
+      -ms-flex-align center
+      -webkit-align-items center
+      align-items center
 </style>
