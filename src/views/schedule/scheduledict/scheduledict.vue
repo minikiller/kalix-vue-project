@@ -30,23 +30,8 @@
           i.iconfont.icon-refresh
           | 刷新
       kalix-table-columns(slot="container")
-    <!-- 对话框 -->
-    kalix-dialog(ref="kalixDialog" v-bind:form-name="'kalixScheduleDitDialogForm'" v-bind:formModel="formModel"
-    v-bind:rules="rules" v-bind:data-url="dataUrl" v-on:refreshData="()=>{$refs.myWrapper.refresh()}")
-      kalix-dialog-form(slot="dialog-container" ref="kalixScheduleDitDialogForm" v-bind:formModel="formModel")
-    <kalix-dialog ref="kalixDialog"
-                  :form-name="'kalixScheduleDitDialogForm'"
-                  :formModel="formModel"
-                  :rules="rules"
-                  :data-url="dataUrl"
-                  @refreshData="()=>{$refs.myWrapper.refresh()}">
-      <kalix-dialog-form slot="dialog-container"
-                         ref="kalixScheduleDitDialogForm"
-                         :parent-ref-name="kalixDialog"
-                         :parent-refs="$refs"
-                         :formModel="formModel"></kalix-dialog-form>
-    </kalix-dialog>
-  </div>
+    kalix-dialog(ref="kalixDialog" v-bind:form-name="'kalixScheduleDitDialogForm'" v-bind:formModel="formModel" v-bind:rules="rules" v-bind:data-url="dataUrl" v-on:refreshData="()=>{$refs.myWrapper.refresh()}")
+      kalix-dialog-form(slot="dialog-container" ref="kalixScheduleDitDialogForm" v-bind:parent-ref-name="kalixDialog" v-bind:parent-refs="$refs" v-bind:formModel="formModel")
 </template>
 
 <script type="text/ecmascript-6">

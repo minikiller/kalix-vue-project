@@ -1,8 +1,6 @@
 <template lang="pug">
   el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="close")
-    el-form(ref="dialogForm")
-  el-dialog.dialog-form(:title="title" :visible="visible" :before-close="close")
-    el-form(ref="dialogForm" :model="formModel" :rules="rules" label-width="80px")
+    el-form(ref="dialogForm" v-bind:model="formModel" v-bind:rules="rules" label-width="80px")
       slot(name="dialog-container")
     div.dialog-footer(slot="footer")
       template(v-if="isView")
