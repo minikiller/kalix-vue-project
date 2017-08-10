@@ -1,13 +1,15 @@
 <template lang="pug">
+  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="close")
+    el-form(ref="dialogForm")
   el-dialog.dialog-form(:title="title" :visible="visible" :before-close="close")
     el-form(ref="dialogForm" :model="formModel" :rules="rules" label-width="80px")
       slot(name="dialog-container")
     div.dialog-footer(slot="footer")
       template(v-if="isView")
-        el-button(type="primary" @click="clickCancel") 关 闭
+        el-button(type="primary" v-on:click="clickCancel") 关 闭
       template(v-else)
-        el-button(@click="clickCancel") 取 消
-        el-button(type="primary" @click="clickSubmit") 提 交
+        el-button(v-on:click="clickCancel") 取 消
+        el-button(type="primary" v-on:click="clickSubmit") 提 交
 </template>
 
 <script type="text/ecmascript-6">

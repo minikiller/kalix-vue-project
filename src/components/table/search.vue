@@ -1,12 +1,10 @@
-<template>
-  <div class="search">
-    <div class="hd">
-      <i class="iconfont icon-query"></i>{{title}}
-    </div>
-    <div class="bd">
-      <slot></slot>
-    </div>
-  </div>
+<template lang="pug">
+  div.search
+    div.hd
+      i.iconfont.icon-query
+      |{{title}}
+    div.bd
+      slot
 </template>
 
 <script>

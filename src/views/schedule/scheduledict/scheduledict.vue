@@ -3,34 +3,37 @@
 开发人：桑杨
 开发日期：2017年7月17日
 -->
-<template>
-  <div class="schedule-dict">
-    <search ref='mySearch' title="字典查询">
-      <el-form ref="searchForm" :rules="search.rules" :model="search.form" :inline="true" class="search-container">
-        <el-form-item label="类型" prop="type">
-          <el-input v-model="search.form.type"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="searchFormSubmit"><i class="iconfont icon-query"></i>查询</el-button>
-          <el-button type="success" @click="resetSearchForm"><i class="iconfont icon-reset"></i>重置</el-button>
-        </el-form-item>
-      </el-form>
-    </search>
-    <kalix-wrapper ref='myWrapper' title="字典列表" icon="iconfont icon-dict-management"
-                   :data-url="dataUrl"
-                   :request-data="requestData"
-                   @tableView="tableView"
-                   @tableEdit="tableEdit"
-    >
+<template lang="pug">
+  div.schedule-dict
+    kalix-search(ref="mySearch" title="字典查询")
+      el-form.search-container(ref="searchForm" v-bind:rules="search.rules" v-bind:model="search.form" v-bind:inline="true")
+        el-form-item(label="类型" prop="type")
+          el-input(v-model="search.form.type")
+        el-form-item
+          el-button(type="primary" v-on:click="searchFormSubmit")
+            i.iconfont.icon-query
+            | 查询
+          el-button(type="success" v-on:click="resetSearchForm")
+            i.iconfont.icon-reset
+              | 重置
+    kalix-wrapper(ref='myWrapper' title="字典列表" icon="iconfont icon-dict-management"
+    v-bind:data-url="dataUrl"
+    v-bind:request-data="requestData"
+    v-on:tableView="tableView"
+    v-on:tableEdit="tableEdit")
       <!-- 按钮 -->
-      <div slot="toolbar">
-        <el-button @click="addData" type="primary"><i class="iconfont icon-add"></i>添加</el-button>
-        <el-button @click="refresh" type="primary"><i class="iconfont icon-refresh"></i>刷新</el-button>
-      </div>
-      <!-- 列表 -->
-      <kalix-table-columns slot="container"></kalix-table-columns>
-    </kalix-wrapper>
+      div(slot="toolbar")
+        el-button(v-on:click="addData" type="primary")
+          i.iconfont.icon-add
+          | 添加
+        el-button(v-on:click="refresh" type="primary")
+          i.iconfont.icon-refresh
+          | 刷新
+      kalix-table-columns(slot="container")
     <!-- 对话框 -->
+    kalix-dialog(ref="kalixDialog" v-bind:form-name="'kalixScheduleDitDialogForm'" v-bind:formModel="formModel"
+    v-bind:rules="rules" v-bind:data-url="dataUrl" v-on:refreshData="()=>{$refs.myWrapper.refresh()}")
+      kalix-dialog-form(slot="dialog-container" ref="kalixScheduleDitDialogForm" v-bind:formModel="formModel")
     <kalix-dialog ref="kalixDialog"
                   :form-name="'kalixScheduleDitDialogForm'"
                   :formModel="formModel"
@@ -87,8 +90,7 @@
             {required: true, message: '请选择类型', trigger: 'blur'}
           ],
           label: [
-            {required: true, message: '请输入标签名', trigger: 'blur'}
-          ]
+            {required: true, message: '请输入标签名', trigger: 'blur'}]
         }
       }
     },

@@ -1,26 +1,15 @@
-<template>
-  <div class="el-form">
-    <el-form-item v-if="isView" label="类型" prop="type">
-      <el-input v-model="formModel.type" :readonly="isView" auto-complete="off"></el-input>
-    </el-form-item>
-    <el-form-item v-else label="类型" prop="type">
-      <el-select v-model="formModel.type" @visible-change="visibleChange">
-        <el-option v-for="item in formModel.types" :key="item.name" :label="item.name"
-                   :value="item.name"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="标签名" prop="label">
-      <input type="hidden" v-model="formModel.id"/>
-      <el-input v-model="formModel.label" placeholder="请输入标签名" :readonly="isView"
-                auto-complete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="备注">
-      <el-input v-model="formModel.description" :readonly="isView"
-                type="textarea"
-                :rows="3"
-                placeholder="请输入内容"></el-input>
-    </el-form-item>
-  </div>
+<template lang="pug">
+  div
+    el-form-item(v-if="isView" label="类型" prop="type")
+      el-input(v-model="formModel.type" v-bind:readonly="isView" auto-complete="off")
+    el-form-item(v-else label="类型" prop="type")
+      el-select(v-model="formModel.type" v-on:visible-change="visibleChange")
+        el-option(v-for="item in formModel.types" v-bind:key="item.name" v-bind:label="item.name" v-bind:value="item.name")
+    el-form-item(label="标签名" prop="label")
+      input(type="hidden" v-model="formModel.id")
+      el-input(v-model="formModel.label" placeholder="请输入标签名" v-bind:readonly="isView" auto-complete="off")
+    el-form-item(label="备注")
+      el-input(v-model="formModel.description" v-bind:readonly="isView" type="textarea" v-bind:rows="3" placeholder="请输入内容")
 </template>
 
 <script type="text/ecmascript-6">

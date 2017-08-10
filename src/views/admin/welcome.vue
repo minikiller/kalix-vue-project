@@ -22,7 +22,7 @@
     watch: {'$route': 'fetchdata'},
     methods: {
       fetchdata() {
-        this.name = this.$route.params.name
+        this.name = this.$route.params.app
 //        console.log(this.$route.params.name);
       }
     },

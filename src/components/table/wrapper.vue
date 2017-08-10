@@ -1,36 +1,32 @@
-<template>
-  <div class="wrapper">
-    <div class="hd"><i v-if="icon.length" :class="icon"></i>{{title}}</div>
-    <div class="bd">
-      <div class="toolbar">
-        <slot name="toolbar"></slot>
-      </div>
-      <div class="container" ref="wrapperContainer">
-        <kalix-table ref="kalixTable"
-                     :target-url="dataUrl"
-                     :btn-option="btnOption"
-                     :is-scroll="tableIsScroll"
-                     :request-data="requestData"
-                     :current-page="pager.currentPage"
-                     :limit="pager.limit"
-                     :height="tableHeight"
-                     @getTotalCount="setTotalCount"
-                     @tableView="tableView"
-                     @tableEdit="tableEdit"
-        >
-          <template slot="tableColumn">
-            <slot name="container"></slot>
-          </template>
-        </kalix-table>
-      </div>
-      <div class="pagination">
-        <kalix-pager slot="pagination" :currentPage="pager.currentPage" :totalCount="pager.totalCount"
-                     :limit="pager.limit"
-                     @pagerCurrentChange="pagerCurrentChange"
-                     @pagerSizeChange="pagerSizeChange"></kalix-pager>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  div.wrapper
+    div.hd
+      i(v-if="icon.length" v-bind:class="icon")
+      | {{title}}
+    div.bd
+      div.toolbar
+        slot(name="toolbar")
+      div.container(ref="wrapperContainer")
+        kalix-table(ref="kalixTable"
+        v-bind:target-url="dataUrl"
+        v-bind:btn-option="btnOption"
+        v-bind:is-scroll="tableIsScroll"
+        v-bind:request-data="requestData"
+        v-bind:current-page="pager.currentPage"
+        v-bind:limit="pager.limit"
+        v-bind:height="tableHeight"
+        v-on:getTotalCount="setTotalCount"
+        v-on:tableView="tableView"
+        v-on:tableEdit="tableEdit")
+          template(slot="tableColumn")
+            slot(name="container")
+      div.pagination
+        kalix-pager(slot="pagination"
+        v-bind:currentPage="pager.currentPage"
+        v-bind:totalCount="pager.totalCount"
+        v-bind:limit="pager.limit"
+        v-on:pagerCurrentChange="pagerCurrentChange"
+        v-on:pagerSizeChange="pagerSizeChange")
 </template>
 
 <script>
@@ -38,7 +34,7 @@
   import KalixTable from '@/components/table/table'
   import KalixPager from '@/components/table/pager'
 
-  export default{
+  export default {
     props: {
       title: {
         type: String,
@@ -118,7 +114,7 @@
       KalixPager
     },
     computed: {
-      rowNo () {
+      rowNo() {
         // 返回当前行号
         return (1 + ((this.pager.currentPage - 1) * this.pager.limit))
       }

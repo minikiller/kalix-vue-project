@@ -19,7 +19,7 @@ Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 
 // 注册全局组件
-Vue.component('search', Search)
+Vue.component('kalix-search', Search)
 Vue.component('kalix-wrapper', Wrapper)
 // Vue.component('input-cell', InputCell)
 Vue.component('kalix-dialog', KalixDialog)
