@@ -56,35 +56,7 @@
         // 搜索框
         search: {
           filters: [
-            {label: '类型', prop: 'type'},
-            {
-              label: '分类',
-              prop: 'value',
-              type: 'select',
-              options: [
-                {
-                  value: '选项1',
-                  label: '黄金糕'
-                },
-                {
-                  value: '选项2',
-                  label: '双皮奶'
-                },
-                {
-                  value: '选项3',
-                  label: '蚵仔煎'
-                },
-                {
-                  value: '选项4',
-                  label: '龙须面'
-                },
-                {
-                  value: '选项5',
-                  label: '北京烤鸭'
-                }
-              ]
-            },
-            {label: '数量', prop: 'num1', type: 'number'}
+            {label: '类型', prop: 'type'}
           ],
           rules: {
             type: [
@@ -115,8 +87,9 @@
     mounted() {
     },
     methods: {
-      onRefresh(e) {
-        console.log('onRefresh:', e)
+      onRefresh(_requestData) {
+        this.requestData = _requestData
+        this.refresh()
       },
       addData() {
         // 打开对话框

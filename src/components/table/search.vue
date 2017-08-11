@@ -61,7 +61,7 @@
               }
               requestDatas.push(`{"%${item}%": "` + val + `"}`)
             }
-            this.$emit('onDataRefresh', requestDatas.join(','))
+            this.$emit('onDataRefresh', {jsonStr: requestDatas.join(',')})
           } else {
             console.log('ERR')
           }
@@ -70,6 +70,7 @@
       // 重置搜索框
       onReset() {
         this.$refs.searchForm.resetFields()
+        this.$emit('onDataRefresh', {})
       }
     },
     components: {},
