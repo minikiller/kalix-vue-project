@@ -30,7 +30,7 @@
     v-bind:formModel="formModel"
     v-bind:rules="rules"
     v-bind:data-url="dataUrl"
-    v-on: ="()=>{$refs.myWrapper.refresh()}")
+    v-on:refreshData ="()=>{$refs.myWrapper.refresh()}")
       kalix-dialog-form(slot="dialog-container"
       ref="kalixScheduleDitDialogForm"
       parent-ref-name="kalixDialog"
@@ -120,6 +120,7 @@
       },
       addData() {
         // 打开对话框
+        this.resetDialogForm()
         this.$refs.kalixDialog.open('添加')
       },
       refresh() {
