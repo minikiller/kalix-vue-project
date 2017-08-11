@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   div.schedule-dict
-    kalix-search(ref="mySearch" title="字典查询" v-bind:formModel="search.form" v-bind:formRules="search.rules")
+    kalix-search(title="字典查询" v-bind:formModel="search.form" v-bind:formRules="search.rules")
       kalix-schedule-dict-search(slot="searchItem")
     kalix-wrapper(ref='myWrapper' title="字典列表" icon="iconfont icon-dict-management"
     v-bind:data-url="dataUrl"

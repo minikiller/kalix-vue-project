@@ -7,7 +7,7 @@ import ElementUI from 'element-ui'
 import Message from 'common/message'
 import {baseURL} from 'config/global.toml'
 import {LoadingTimeOut, LoadingFailure} from 'config/info.toml'
-
+import Cache from 'common/cache'
 // axios 配置
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = baseURL
@@ -16,8 +16,8 @@ var loadinginstace
 axios.interceptors.request.use(config => {
   // element ui Loading方法
   loadinginstace = ElementUI.Loading.service({fullscreen: true})
-  const accessToken = sessionStorage.getItem('access_token')
-  const userToken = sessionStorage.getItem('user_token')
+  const accessToken = Cache.get('access_token')
+  const userToken = Cache.get('user_token')
   if (accessToken && userToken) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
     config.headers.AccessToken = accessToken
     config.headers.JSESSIONID = userToken

@@ -24,12 +24,17 @@
           label: [
             {required: true, message: '请输入 label', trigger: 'blur'}
           ]
-        }
+        },
+        fields: [
+          {label: '类型', prop: 'name'},
+          {label: '标签名', prop: 'label'}
+        ]
       }
     },
     mounted() {
       this.getData()
       this.formModel = mockData
+//      this.$refs.demoForm.$props.formModel = this.formModel
     },
     components: {
       KalixDemoColumn: DemoColumn,
