@@ -4,8 +4,12 @@
       i.iconfont.icon-query
       | {{title}}
     div.bd
-      el-form.search-container(ref="searchForm" v-bind:rules="formRules" v-bind:model="formModel" v-bind:inline="true")
-        slot(name="searchItem")
+      el-form.search-container(ref="searchForm" v-bind:rules="formRules" v-bind:model="form" v-bind:inline="true")
+        el-form-item(v-for="item in filters" v-bind:label="item.label" v-bind:prop="item.prop")
+          el-select(v-if="item.type==='select'" v-model="form[item.prop]")
+            el-option(v-for="option in item.options" v-bind:key="option.value" v-bind:label="option.label" v-bind:value="option.value")
+          el-input-number(v-else-if="item.type==='number'" v-model="form[item.prop]")
+          el-input(v-else v-model="form[item.prop]")
         el-form-item
           el-button(type="primary" v-on:click="onSubmit")
             i.iconfont.icon-query
@@ -16,22 +20,27 @@
 </template>
 
 <script>
-  import EventBus from 'common/eventbus'
-//  import {strToUnicode} from 'common/unicode-convert'
+  //  import EventBus from 'common/eventbus'
+  import {strToUnicode} from 'common/unicode-convert'
 
   export default {
     data() {
-      return {}
+      return {
+        form: {}
+      }
     },
     props: {
       title: {
         type: String,
         default: ''
       },
-      formModel: {},
-      formRules: {}
+      formRules: {},
+      filters: {
+        type: Array
+      }
     },
     mounted() {
+
     },
     methods: {
       // 提交查询
@@ -39,9 +48,20 @@
         this.$refs.searchForm.validate((valid) => {
           if (valid) {
 //            todo: 增加查询组成json串
-//            that.requestData = {jsonStr: '{"%type%": "' + strToUnicode(that.search.form.type) + '"}'}
-            EventBus.$emit('onDataRefresh')
-            console.log('OK')
+            let requestDatas = []
+            for (let item in this.form) {
+              const itemVal = this.form[item]
+              const dateType = typeof itemVal
+
+              let val = null
+              if (dateType === 'string' && itemVal.length) {
+                val = strToUnicode(itemVal)
+              } else {
+                val = itemVal
+              }
+              requestDatas.push(`{"%${item}%": "` + val + `"}`)
+            }
+            this.$emit('onDataRefresh', requestDatas.join(','))
           } else {
             console.log('ERR')
           }
@@ -57,33 +77,28 @@
   }
 </script>
 
-<style lang="scss" type="text/scss">
-  @import "../../assets/Scss/Color";
 
-  .search {
-    margin: 5px;
-    .hd {
-      background-color: $bg-color_1;
-      color: $txt-color_1;
-      line-height: 44px;
-      padding: 0 15px;
-      text-align: left;
-    }
-    .bd {
-      border: 1px solid $border-color_1;
-      font-size: 0;
-      padding: 5px 15px;
-      text-align: left;
-    }
+<style scoped lang='stylus' type='text/stylus'>
+  @import "../../assets/stylus/color.styl"
 
-    .el-form-item {
-      margin-bottom: 0;
-    }
-    .el-button {
-      .iconfont {
-        font-size: 14px;
-      }
-    }
+  .search
+    margin 5px
+    .hd
+      background-color bg-color_1
+      color txt-color_1
+      line-height 44px
+      padding 0 15px
+      text-align left
 
-  }
+    .bd
+      border 1px solid border-color_1
+      font-size 0
+      padding 5px 15px
+      text-align left
+      .search-container
+        display flex
+
+    .el-button
+      .iconfont
+        font-size 14px
 </style>
