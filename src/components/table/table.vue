@@ -175,11 +175,11 @@
               data: {
                 id: row.id
               }
-            }).then(response => {
-              this.refresh()
-              Message.success(response.data.msg)
-            }).catch(() => {
             })
+          }).then(response => {
+            this.refresh()
+            Message.success(response.data.msg)
+          }).catch(() => {
           })
         }
       }
@@ -200,16 +200,10 @@
       font-size 14px
       text-align center
       background-color #fff
-      display -webkit-box
-      display -ms-flexbox
-      display -webkit-flex
       display flex
-      -webkit-box-pack center
-      -ms-flex-pack center
-      -webkit-justify-content center
+      box-pack center
       justify-content center
-      -webkit-box-align center
-      -ms-flex-align center
-      -webkit-align-items center
+      box-align center
+      flex-align center
       align-items center
 </style>

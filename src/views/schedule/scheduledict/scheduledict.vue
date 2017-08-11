@@ -5,7 +5,11 @@
 -->
 <template lang="pug">
   div.schedule-dict
-    kalix-search(title="字典查询" v-bind:formModel="search.form" v-bind:formRules="search.rules")
+    kalix-search(ref="mySearch" title="字典查询"
+    v-bind:filters="search.filters"
+    v-bind:formRules="search.rules"
+    v-on:onDataRefresh="onRefresh"
+    )
       kalix-schedule-dict-search(slot="searchItem")
     kalix-wrapper(ref='myWrapper' title="字典列表" icon="iconfont icon-dict-management"
     v-bind:data-url="dataUrl"
@@ -26,7 +30,7 @@
     v-bind:formModel="formModel"
     v-bind:rules="rules"
     v-bind:data-url="dataUrl"
-    v-on: ="()=>{$refs.myWrapper.refresh()}")
+    v-on:refreshData ="()=>{$refs.myWrapper.refresh()}")
       kalix-dialog-form(slot="dialog-container"
       ref="kalixScheduleDitDialogForm"
       parent-ref-name="kalixDialog"
@@ -51,9 +55,9 @@
         requestData: {},
         // 搜索框
         search: {
-          form: {
-            type: ''
-          },
+          filters: [
+            {label: '类型', prop: 'type'}
+          ],
           rules: {
             type: [
               {required: true, message: '请输入类型', trigger: 'blur'}
@@ -83,9 +87,13 @@
     mounted() {
     },
     methods: {
-
+      onRefresh(_requestData) {
+        this.requestData = _requestData
+        this.refresh()
+      },
       addData() {
         // 打开对话框
+        this.resetDialogForm()
         this.$refs.kalixDialog.open('添加')
       },
       refresh() {

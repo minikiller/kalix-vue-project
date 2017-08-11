@@ -8,25 +8,25 @@
         slot(name="toolbar")
       div.container(ref="wrapperContainer")
         kalix-table(ref="kalixTable"
-                      v-bind:target-url="dataUrl"
-                      v-bind:btn-option="btnOption"
-                      v-bind:is-scroll="tableIsScroll"
-                      v-bind:request-data="requestData"
-                      v-bind:current-page="pager.currentPage"
-                      v-bind:limit="pager.limit"
-                      v-bind:height="tableHeight"
-                      v-on:getTotalCount="setTotalCount"
-                      v-on:tableView="tableView"
-                      v-on:tableEdit="tableEdit")
+        v-bind:target-url="dataUrl"
+        v-bind:btn-option="btnOption"
+        v-bind:is-scroll="tableIsScroll"
+        v-bind:request-data="requestData"
+        v-bind:current-page="pager.currentPage"
+        v-bind:limit="pager.limit"
+        v-bind:height="tableHeight"
+        v-on:getTotalCount="setTotalCount"
+        v-on:tableView="tableView"
+        v-on:tableEdit="tableEdit")
           template(slot="tableColumn")
             slot(name="container")
       div.pagination
         kalix-pager(slot="pagination"
-                      v-bind:currentPage="pager.currentPage"
-                      v-bind:totalCount="pager.totalCount"
-                      v-bind:limit="pager.limit"
-                      v-on:pagerCurrentChange="pagerCurrentChange"
-                      v-on:pagerSizeChange="pagerSizeChange")
+        v-bind:currentPage="pager.currentPage"
+        v-bind:totalCount="pager.totalCount"
+        v-bind:limit="pager.limit"
+        v-on:pagerCurrentChange="pagerCurrentChange"
+        v-on:pagerSizeChange="pagerSizeChange")
 </template>
 
 <script>
@@ -129,7 +129,7 @@
     border 1px solid border-color_1
     position absolute
     bottom 0
-    top 96px
+    top 118px
     left 0
     box-sizing border-box
     right 0
