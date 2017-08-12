@@ -1,7 +1,7 @@
 <template lang="pug">
   div
-    el-table(:data="tableData" style="width: 100%")
-      el-table-column(v-for="field in fields" :prop="field.prop" :label="field.label")
+    el-table(:data="tableData" style="width: 100%" v-loading.body="loading")
+      el-table-column(v-for="field in fields" :key="field.prop" :prop="field.prop" :label="field.label")
     el-pagination(v-if="pager.totalCount"
       @size-change="pagerSizeChange"
         @current-change="pagerCurrentChange"
@@ -17,6 +17,7 @@
   export default {
     data() {
       return {
+        loading: true,
         tableData: [],
         totalCount: 0,
         pager: {
@@ -50,6 +51,7 @@
         this.getData()
       },
       getData() {
+        this.loading = true
         let _data = {
           jsonStr: '',
 //          loginName: that.search.form.loginName,
@@ -64,6 +66,7 @@
 //          if(response.data)
           this.tableData = response.data.data
           this.pager.totalCount = response.data.totalCount
+          this.loading = false
         })
       }
     }

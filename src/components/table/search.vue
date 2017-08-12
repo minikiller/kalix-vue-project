@@ -5,7 +5,7 @@
       | {{title}}
     div.bd
       el-form.search-container(ref="searchForm" v-bind:rules="formRules" v-bind:model="form" v-bind:inline="true")
-        el-form-item(v-for="item in filters" v-bind:label="item.label" v-bind:prop="item.prop")
+        el-form-item(v-for="item in filters" v-bind:label="item.label" v-bind:prop="item.prop" v-bind:key="item.prop")
           el-select(v-if="item.type==='select'" v-model="form[item.prop]")
             el-option(v-for="option in item.options" v-bind:key="option.value" v-bind:label="option.label" v-bind:value="option.value")
           el-input-number(v-else-if="item.type==='number'" v-model="form[item.prop]")
