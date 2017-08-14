@@ -1,4 +1,4 @@
-## about table tool button 
+## about table tool button
 > 1. define button array
 ```xml
 [[ToolButtonList]]
@@ -39,8 +39,17 @@ slot(name="tableToolSlot")
 
 > 5. when we need to custom button:
 ```
-kalix-table-tool(slot="tableToolSlot" :btnList="customBtnList" 
+kalix-table-tool(slot="tableToolSlot" :btnList="customBtnList"
   @onTableToolClick="customBtnClick")
+```
+
+## register global component by config file
+```
+import {GlobalComponent} from 'config/global.toml'
+GlobalComponent.forEach((item) => {
+  console.log('[kalix] registry name is: ' + item.name, '; registry path is: ' + item.path)
+  Vue.component(item.name, require('' + item.path))
+})
 ```
 
 

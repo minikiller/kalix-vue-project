@@ -37,3 +37,15 @@ schedule = "/camel/rest/system/applications/schedule"
   size = "small"
   title = "删除"
 
+[[GlobalComponent]]
+  path = "./views/demo/world"
+  name = "contact-us"
+[[GlobalComponent]]
+  path = "./components/table/search"
+  name = "kalix-search"
+[[GlobalComponent]]
+  path = "./components/table/dialog"
+  name = "kalix-dialog"
+[[GlobalComponent]]
+  path = "./components/table/wrapper"
+  name = "kalix-wrapper"

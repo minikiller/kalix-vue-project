@@ -8,7 +8,8 @@
           domProps: {
             innerHTML: 'baz'
           }
-        })
+        }),
+        createElement('contact-us')
       ])
     }
   }
