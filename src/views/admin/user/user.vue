@@ -8,7 +8,9 @@
   import BaseTable from './baseTable'
   //  import UserAdd from './userAdd.vue'
   import {usersURL} from 'config/global.toml'
+  import Vue from 'vue'
 
+  Vue.component('KalixUserAdd', require('@/views/admin/user/userAdd'))
   export default {
     data() {
       return {

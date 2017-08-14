@@ -6,28 +6,10 @@
           el-input(v-model="formModel.name")
         el-form-item(label="标签名" prop="label" v-bind:rules="formRules.label")
           el-input(v-model="formModel.label")
-        el-form-item(label="工号" prop="code")
-          el-input(v-model="formModel.code")
-        el-form-item(label="登录名" prop="loginName")
-          el-input(v-model="formModel.loginName")
-        el-form-item(label="姓名" prop="name")
-          el-input(v-model="formModel.name")
-        el-form-item(label="性别" prop="sex")
-          el-input(v-model="formModel.sex")
-        el-form-item(label="密码" prop="password")
+        el-form-item(label="密码" prop="password" v-bind:rules="rules.password")
           el-input(v-model="formModel.password")
-        el-form-item(label="确认密码" prop="confirmPassword")
+        el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
           el-input(v-model="formModel.confirmPassword")
-        el-form-item(label="邮箱" prop="email")
-          el-input(v-model="formModel.email")
-        el-form-item(label="岗位名称" prop="position")
-          el-input(v-model="formModel.position")
-        el-form-item(label="电话号码" prop="phone")
-          el-input(v-model="formModel.phone")
-        el-form-item(label="手机号" prop="mobile")
-          el-input(v-model="formModel.mobile")
-        el-form-item(label="状态" prop="available")
-          el-input(v-model="formModel.available")
 </template>
 <script type="text/ecmascript-6">
   import Dialog from './baseDialog.vue'
@@ -44,12 +26,36 @@
       }
     },
     data() {
+      var validatePassword = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'))
+        } else {
+          if (this.formModel.confirmPassword !== '') {
+//            this.$refs.kalixDialog.validateField('checkPass')
+            console.log(this.$refs.kalixDialog)
+          }
+          callback()
+        }
+      }
+      var validateConfirmPassword = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'))
+        } else if (value !== this.formModel.password) {
+          callback(new Error('两次输入密码不一致!'))
+        } else {
+          callback()
+        }
+      }
       return {
         rules: {
           name: [{required: true, message: '请输入 name', trigger: 'blur'}],
           sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          password: [{required: true, message: '请输入 password', trigger: 'blur'}],
-          confirmPassword: [{required: true, message: '请输入 confirmPassword', trigger: 'blur'}],
+          password: [
+            {validator: validatePassword, trigger: 'blur'}
+          ],
+          confirmPassword: [
+            {validator: validateConfirmPassword, trigger: 'blur'}
+          ],
           email: [{required: true, message: '请输入 email', trigger: 'blur'}],
           position: [{required: true, message: '请输入 position', trigger: 'blur'}],
           phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
