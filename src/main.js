@@ -24,7 +24,7 @@ Vue.component('kalix-search', Search)
 Vue.component('kalix-wrapper', Wrapper)
 // Vue.component('input-cell', InputCell)
 Vue.component('kalix-dialog', KalixDialog)
-Vue.component('kalixUserAdd', UserAdd)
+Vue.component('KalixUserAdd', UserAdd)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

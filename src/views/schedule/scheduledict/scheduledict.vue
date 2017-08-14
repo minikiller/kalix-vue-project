@@ -10,7 +10,6 @@
     v-bind:formRules="search.rules"
     v-on:onDataRefresh="onRefresh"
     )
-      kalix-schedule-dict-search(slot="searchItem")
     kalix-wrapper(ref='myWrapper' title="字典列表" icon="iconfont icon-dict-management"
     v-bind:data-url="dataUrl"
     v-bind:request-data="requestData"

@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible")
-      el-form(ref="dialogForm" v-bind:model="formModel" v-bind:rules="rules" label-width="80px")
+      el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
         slot(name="dialogFormSlot")
       div.dialog-footer(slot="footer")
         template(v-if="isView")
@@ -11,6 +11,8 @@
           el-button(type="primary" v-on:click="onSubmitClick") 提 交
 </template>
 <script type="text/ecmascript-6">
+  import Message from 'common/message'
+  import Vue from 'vue'
   export default {
     props: {
       formModel: {
@@ -38,6 +40,32 @@
         this.close()
       },
       onSubmitClick() {
+        this.$refs.dialogForm.validate((valid) => {
+          console.log('asdfasdf')
+          if (valid) {
+            Vue.axios.request({
+              method: 'POST',
+              url: this.dataUrl,
+              data: this.formModel,
+              params: {}
+            }).then(response => {
+              if (response.data.success) {
+                Message.success(response.data.msg)
+                // 关闭对话框
+                this.close()
+                // 刷新列表
+                this.$emit('refreshData')
+                // 清空form
+                this.$parent.resetDialogForm()
+//                this.$emit('resetDialogForm')
+              } else {
+                Message.error(response.data.msg)
+              }
+            })
+          } else {
+            return false
+          }
+        })
         console.log('dialog submit button clicked !')
         this.close()
       },

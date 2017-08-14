@@ -79,7 +79,7 @@
     },
     methods: {
       onAddClick() {
-        this.formModel = {}
+        this.$emit('resetFormModel')
         this.$refs.kalixDialog.open('添加')
       },
       onRefreshClick() {
