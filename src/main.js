@@ -12,6 +12,7 @@ import router from './router'
 import Search from '@/components/table/search'
 import Wrapper from '@/components/table/wrapper'
 import KalixDialog from '@/components/table/dialog'
+import UserAdd from '@/views/admin/user/userAdd'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
@@ -23,6 +24,7 @@ Vue.component('kalix-search', Search)
 Vue.component('kalix-wrapper', Wrapper)
 // Vue.component('input-cell', InputCell)
 Vue.component('kalix-dialog', KalixDialog)
+Vue.component('kalixUserAdd', UserAdd)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

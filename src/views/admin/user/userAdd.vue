@@ -9,11 +9,7 @@
 </template>
 <script type="text/ecmascript-6">
   import Dialog from './baseDialog.vue'
-  import Vue from 'vue'
 
-  Vue.component('KalixUserAdd', {
-    template: '#userAdd'
-  })
   export default {
     components: {
       KalixDialog: Dialog

@@ -1,11 +1,11 @@
 <template lang="pug">
   div
     base-table(v-bind:fields="fields" v-bind:targetURL="targetURL"
-    v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="KalixUserAdd" )
+    v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="'KalixUserAdd'" )
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from './baseTable'
-  import UserAdd from './userAdd.vue'
+//  import UserAdd from './userAdd.vue'
   import {usersURL} from 'config/global.toml'
 
   export default {
@@ -34,8 +34,8 @@
     },
     methods: {},
     components: {
-      BaseTable,
-      KalixUserAdd: UserAdd
+      BaseTable
+//      KalixUserAdd: UserAdd
     }
   }
 </script>
