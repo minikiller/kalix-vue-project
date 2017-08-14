@@ -17,7 +17,7 @@
     layout="total, sizes, prev, pager, next, jumper"
       :total="pager.totalCount")
     <!--el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible")-->
-      <!--slot(name="dialogFormSlot")-->
+    <!--slot(name="dialogFormSlot")-->
     <!--kalix-dialog(ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")-->
     component(:is="bizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
 
@@ -89,12 +89,13 @@
         console.log(row, btnId)
         switch (btnId) {
           case 'view':
-            this.formModel = row
+//            this.formModel = row
+            this.$emit('setFormModel', row)
             this.$refs.kalixDialog.open('查看')
             console.log('view is clicked')
             break
           case 'edit':
-            this.formModel = row
+            this.$emit('setFormModel', row)
             this.$refs.kalixDialog.open('编辑')
             console.log('edit is clicked')
             break

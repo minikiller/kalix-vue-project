@@ -2,7 +2,8 @@
   div
     base-table(v-bind:fields="fields" v-bind:targetURL="targetURL"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="'KalixUserAdd'"
-    v-on:resetFormModel="resetFormModel")
+    v-on:resetFormModel="resetFormModel"
+    v-on:setFormModel="setFormModel")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from './baseTable'
@@ -22,9 +23,7 @@
           {prop: 'sex', label: '性别'},
           {prop: 'workGroup', label: '工作组'}
         ],
-        formModel: {
-          available: true
-        },
+        formModel: {},
         formRules: {
           name: [
             {required: true, message: '请输入 name', trigger: 'blur'}
@@ -40,6 +39,10 @@
     methods: {
       resetFormModel() {
         this.formModel = {}
+      },
+      setFormModel(model) {
+        this.formModel = model
+        console.log('setFormModel', model)
       }
     },
     components: {
