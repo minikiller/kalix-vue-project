@@ -29,8 +29,7 @@
       }
     },
     data() {
-      return {
-      }
+      return {}
     },
     computed: {
       btnEdit() {

@@ -1,11 +1,15 @@
 <template lang="pug">
   div.user-add
-    kalix-dialog(ref="kalixDialog" v-bind:form-model="formModel")
-      div(slot="dialogFormSlot")
-        el-form-item(label="类型" prop="name" v-bind:rules="formRules.name")
+    kalix-dialog(ref="kalixDialog" v-bind:form-model="formModel" v-bind:dataUrl="dataUrl")
+      div.el-form(slot="dialogFormSlot")
+        el-form-item(label="工号" prop="code" v-bind:rules="rules.code")
+          el-input(v-model="formModel.code")
+        el-form-item(label="登录名" prop="loginName" v-bind:rules="rules.loginName")
+          el-input(v-model="formModel.loginName")
+        el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
           el-input(v-model="formModel.name")
-        el-form-item(label="标签名" prop="label" v-bind:rules="formRules.label")
-          el-input(v-model="formModel.label")
+        el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
+          el-input(v-model="formModel.sex")
         el-form-item(label="密码" prop="password" v-bind:rules="rules.password")
           el-input(v-model="formModel.password")
         el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
@@ -31,8 +35,7 @@
           callback(new Error('请输入密码'))
         } else {
           if (this.formModel.confirmPassword !== '') {
-//            this.$refs.kalixDialog.validateField('checkPass')
-            console.log(this.$refs.kalixDialog.$refs.form)
+            this.$refs.kalixDialog.$refs.dialogForm.validateField('confirmPassword')
           }
           callback()
         }
@@ -56,8 +59,10 @@
           confirmPassword: [
             {validator: validateConfirmPassword, trigger: 'blur'}
           ],
-          email: [{required: true, message: '请输入 email', trigger: 'blur'}],
-          position: [{required: true, message: '请输入 position', trigger: 'blur'}],
+          email: [
+            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
+            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
+          ],
           phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
           mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
           available: [{required: true, message: '请输入 available', trigger: 'blur'}]

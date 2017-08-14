@@ -17,7 +17,7 @@
     layout="total, sizes, prev, pager, next, jumper"
       :total="pager.totalCount")
     <!--el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible")-->
-    <!--slot(name="dialogFormSlot")-->
+      <!--slot(name="dialogFormSlot")-->
     <!--kalix-dialog(ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")-->
     component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
 
