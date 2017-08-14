@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     base-table(v-bind:fields="fields" v-bind:targetURL="targetURL"
-    v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="'KalixUserAdd'"
+    v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     v-on:resetFormModel="resetFormModel")
 </template>
 <script type="text/ecmascript-6">
@@ -21,6 +21,9 @@
           {prop: 'name', label: '姓名'},
           {prop: 'sex', label: '性别'},
           {prop: 'workGroup', label: '工作组'}
+        ],
+        bizDialog: [{id: 'view', dialog: 'KalixUserEdit'},
+          {id: 'add', dialog: 'KalixUserAdd'}
         ],
         formModel: {},
         formRules: {

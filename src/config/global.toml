@@ -49,3 +49,9 @@ schedule = "/camel/rest/system/applications/schedule"
 [[GlobalComponent]]
   path = "./components/table/wrapper"
   name = "kalix-wrapper"
+[[GlobalComponent]]
+  path = "./views/admin/user/userAdd"
+  name = "KalixUserAdd"
+[[GlobalComponent]]
+  path = "./views/admin/user/userEdit"
+  name = "KalixUserEdit"

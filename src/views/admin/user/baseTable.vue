@@ -17,9 +17,9 @@
     layout="total, sizes, prev, pager, next, jumper"
       :total="pager.totalCount")
     <!--el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible")-->
-      <!--slot(name="dialogFormSlot")-->
+    <!--slot(name="dialogFormSlot")-->
     <!--kalix-dialog(ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")-->
-    component(:is="bizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
+    component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
 
 </template>
 <script type="text/ecmascript-6">
@@ -33,8 +33,7 @@
   export default {
     props: {
       bizDialog: {
-        type: String,
-        default: 'UserAdd'
+        type: Array
       },
       formModel: {
         type: Object
@@ -65,6 +64,7 @@
         loading: true,
         tableData: [],
         totalCount: 0,
+        whichBizDialog: '',
         pager: {
           totalCount: 0,
           pageSizes: PageConfig.sizes,
@@ -79,8 +79,17 @@
     },
     methods: {
       onAddClick() {
-        this.$emit('resetFormModel')
-        this.$refs.kalixDialog.open('添加')
+        let that = this
+        that.$emit('resetFormModel')
+        let dig =
+          this.bizDialog.filter((item) => {
+            return item.id === 'add'
+          })
+        console.log(dig[0].dialog)
+        this.whichBizDialog = dig[0].dialog
+        setTimeout(() => {
+          that.$refs.kalixDialog.open('添加')
+        }, 20)
       },
       onRefreshClick() {
         this.getData()
@@ -89,8 +98,18 @@
         console.log(row, btnId)
         switch (btnId) {
           case 'view':
+            let that = this
             this.formModel = row
-            this.$refs.kalixDialog.open('查看')
+            let dig =
+              this.bizDialog.filter((item) => {
+                return item.id === 'view'
+              })
+            console.log(dig[0].dialog)
+            this.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.open('查看')
+            }, 20)
+//            this.$refs.kalixDialog.open('查看')
             console.log('view is clicked')
             break
           case 'edit':
