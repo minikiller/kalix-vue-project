@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     base-table(v-bind:fields="fields" v-bind:targetURL="targetURL"
-    v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="'KalixUserAdd'"
+    v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     v-on:resetFormModel="resetFormModel")
 </template>
 <script type="text/ecmascript-6">
