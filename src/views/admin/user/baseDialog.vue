@@ -1,18 +1,18 @@
 <template lang="pug">
-  div
-    el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible")
-      el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
-        slot(name="dialogFormSlot")
-      div.dialog-footer(slot="footer")
-        template(v-if="isView")
-          el-button(type="primary" v-on:click="onCancelClick") 关 闭
-        template(v-else)
-          el-button(v-on:click="onCancelClick") 取 消
-          el-button(type="primary" v-on:click="onSubmitClick") 提 交
+  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="close")
+    el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
+      slot(name="dialogFormSlot")
+    div.dialog-footer(slot="footer")
+      template(v-if="isView")
+        el-button(type="primary" v-on:click="onCancelClick") 关 闭
+      template(v-else)
+        el-button(v-on:click="onCancelClick") 取 消
+        el-button(type="primary" v-on:click="onSubmitClick") 提 交
 </template>
 <script type="text/ecmascript-6">
   import Message from 'common/message'
   import Vue from 'vue'
+
   export default {
     props: {
       formModel: {
@@ -22,6 +22,9 @@
       rules: {
         type: Object
 //        required: true
+      },
+      dataUrl: {
+        type: String
       }
     },
     render() {
@@ -41,8 +44,9 @@
       },
       onSubmitClick() {
         this.$refs.dialogForm.validate((valid) => {
-          console.log('asdfasdf')
           if (valid) {
+            console.log('onSubmitClick', this.dataUrl)
+            console.log('onSubmitClick', this.formModel)
             Vue.axios.request({
               method: 'POST',
               url: this.dataUrl,
@@ -67,7 +71,7 @@
           }
         })
         console.log('dialog submit button clicked !')
-        this.close()
+//        this.close()
       },
       close() {
         this.visible = false

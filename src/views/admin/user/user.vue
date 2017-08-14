@@ -22,7 +22,9 @@
           {prop: 'sex', label: '性别'},
           {prop: 'workGroup', label: '工作组'}
         ],
-        formModel: {},
+        formModel: {
+          available: true
+        },
         formRules: {
           name: [
             {required: true, message: '请输入 name', trigger: 'blur'}
