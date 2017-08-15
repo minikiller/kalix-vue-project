@@ -1,22 +1,25 @@
 <template lang="pug">
-  div.user-add
-    kalix-dialog(ref="kalixDialog" v-bind:form-model="formModel" v-bind:dataUrl="dataUrl")
-      div.el-form(slot="dialogFormSlot")
-        el-form-item(label="工号" prop="code" v-bind:rules="rules.code")
-          el-input(v-model="formModel.code")
-        el-form-item(label="登录名" prop="loginName" v-bind:rules="rules.loginName")
-          el-input(v-model="formModel.loginName")
-        el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
-          el-input(v-model="formModel.name")
-        el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
-          el-input(v-model="formModel.sex")
-        el-form-item(label="密码" prop="password" v-bind:rules="rules.password")
-          el-input(v-model="formModel.password")
-        el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
-          el-input(v-model="formModel.confirmPassword")
+  kalix-dialog.user-add(
+  ref="kalixDialog" v-bind:form-model="formModel" v-bind:dataUrl="dataUrl"
+  v-on:refreshData="refreshData"
+  )
+    div.el-form(slot="dialogFormSlot")
+      el-form-item(label="工号" prop="code" v-bind:rules="rules.code")
+        el-input(v-model="formModel.code")
+      el-form-item(label="登录名" prop="loginName" v-bind:rules="rules.loginName")
+        el-input(v-model="formModel.loginName")
+      el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
+        el-input(v-model="formModel.name")
+      el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
+        el-input(v-model="formModel.sex")
+      el-form-item(label="密码" prop="password" v-bind:rules="rules.password")
+        el-input(v-model="formModel.password")
+      el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
+        el-input(v-model="formModel.confirmPassword")
 </template>
 <script type="text/ecmascript-6">
   import Dialog from './baseDialog.vue'
+  import {usersURL} from 'config/global.toml'
 
   export default {
     props: {
@@ -66,7 +69,8 @@
           phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
           mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
           available: [{required: true, message: '请输入 available', trigger: 'blur'}]
-        }
+        },
+        dataUrl: usersURL
       }
     },
     created() {
@@ -81,6 +85,9 @@
       },
       open(title) {
         this.$refs.kalixDialog.open(title)
+      },
+      refreshData() {
+        this.$emit('refreshData')
       }
     }
   }

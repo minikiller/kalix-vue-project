@@ -3,23 +3,24 @@
     kalix-tool-bar(@onAddClick="onAddClick" @onRefreshClick="onRefreshClick")
     el-table( :data="tableData" style="width: 100%" v-loading.body="loading")
       //table的字段
-      div(v-if="tableData && tableData.length > 0" v-for="field in fields" :key="field.prop")
-        el-table-column( :prop="field.prop" :label="field.label")
+      div(v-if="tableData && tableData.length > 0" v-for="field in fields" v-bind:key="field.prop")
+        el-table-column( :prop="field.prop" v-bind:label="field.label")
       //  table的工具按钮
       slot(name="tableToolSlot")
-        kalix-table-tool(:btnList="btnList" @onTableToolClick="btnClick")
+        kalix-table-tool(:btnList="btnList" v-on:onTableToolClick="btnClick")
     el-pagination(v-if="pager.totalCount"
-      @size-change="pagerSizeChange"
-        @current-change="pagerCurrentChange"
-        :current-page="pager.currentPage"
-        :page-sizes="pager.pageSizes"
-        :page-size="1"
+    v-on:size-change="pagerSizeChange"
+    v-on:current-change="pagerCurrentChange"
+    v-bind:current-page="pager.currentPage"
+    v-bind:page-sizes="pager.pageSizes"
+    v-bind:page-size="1"
     layout="total, sizes, prev, pager, next, jumper"
-      :total="pager.totalCount")
+    v-bind:total="pager.totalCount")
     <!--el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible")-->
-      <!--slot(name="dialogFormSlot")-->
+    <!--slot(name="dialogFormSlot")-->
     <!--kalix-dialog(ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")-->
-    component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
+    component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules"
+    v-on:refreshData="refresh")
 
 </template>
 <script type="text/ecmascript-6">
@@ -87,11 +88,14 @@
           })
         console.log(dig[0].dialog)
         this.whichBizDialog = dig[0].dialog
-        setTimeout(() => {
+        this.$nextTick(() => {
           that.$refs.kalixDialog.open('添加')
-        }, 20)
+        })
       },
       onRefreshClick() {
+        this.getData()
+      },
+      refresh() {
         this.getData()
       },
       btnClick(row, btnId) {
@@ -152,6 +156,7 @@
         this.getData()
       },
       getData() {
+        console.log('baseTable', 'getData')
         this.loading = true
         let _data = {
           jsonStr: this.jsonStr,

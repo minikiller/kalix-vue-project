@@ -60,7 +60,7 @@
                 // 刷新列表
                 this.$emit('refreshData')
                 // 清空form
-                this.$parent.resetDialogForm()
+//                this.$parent.resetDialogForm()
 //                this.$emit('resetDialogForm')
               } else {
                 Message.error(response.data.msg)
