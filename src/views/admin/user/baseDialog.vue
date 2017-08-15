@@ -60,7 +60,7 @@
                 // 刷新列表
                 this.$emit('refreshData')
                 // 清空form
-                this.$parent.resetDialogForm()
+//                this.$parent.resetDialogForm()
 //                this.$emit('resetDialogForm')
               } else {
                 Message.error(response.data.msg)
@@ -74,8 +74,8 @@
 //        this.close()
       },
       close() {
-        this.visible = false
         this.$refs.dialogForm.resetFields()
+        this.visible = false
       },
       open(title, isView = false) {
         this.title = title

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.kalix-base-tool-bar
     el-button(v-on:click="onAddClick" type="primary")
       i.iconfont.icon-add
       | 添加
@@ -19,5 +19,7 @@
     }
   }
 </script>
-<style scoped lang="scss" type="text/scss">
+<style scoped lang="stylus" type="text/stylus">
+  .kalix-base-tool-bar
+    padding 12px
 </style>

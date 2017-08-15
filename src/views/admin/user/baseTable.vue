@@ -1,25 +1,32 @@
 <template lang="pug">
-  div
-    kalix-tool-bar(@onAddClick="onAddClick" @onRefreshClick="onRefreshClick")
-    el-table( :data="tableData" style="width: 100%" v-loading.body="loading")
-      //table的字段
-      div(v-if="tableData && tableData.length > 0" v-for="field in fields" :key="field.prop")
-        el-table-column( :prop="field.prop" :label="field.label")
-      //  table的工具按钮
-      slot(name="tableToolSlot")
-        kalix-table-tool(:btnList="btnList" @onTableToolClick="btnClick")
-    el-pagination(v-if="pager.totalCount"
-      @size-change="pagerSizeChange"
-        @current-change="pagerCurrentChange"
-        :current-page="pager.currentPage"
-        :page-sizes="pager.pageSizes"
-        :page-size="1"
-    layout="total, sizes, prev, pager, next, jumper"
-      :total="pager.totalCount")
+  div.kalix-wrapper
+    div.kalix-wrapper-hd
+      i.iconfont.icon-dict-management
+      | 字典列表
+    div.kalix-wrapper-bd
+      kalix-tool-bar(@onAddClick="onAddClick" @onRefreshClick="onRefreshClick")
+      div.kalix-table-container(ref="kalixTableContainer")
+        el-table( :data="tableData" style="width: 100%" v-loading.body="loading" v-bind:height="tableHegiht")
+          //table的字段
+          div(v-if="tableData && tableData.length > 0" v-for="field in fields" v-bind:key="field.prop")
+            el-table-column( :prop="field.prop" v-bind:label="field.label")
+          //  table的工具按钮
+          slot(name="tableToolSlot")
+            kalix-table-tool(:btnList="btnList" v-on:onTableToolClick="btnClick")
+      div.kalix-table-pagination
+        el-pagination(v-if="pager.totalCount"
+        v-on:size-change="pagerSizeChange"
+        v-on:current-change="pagerCurrentChange"
+        v-bind:current-page="pager.currentPage"
+        v-bind:page-sizes="pager.pageSizes"
+        v-bind:page-size="1"
+        layout="total, sizes, prev, pager, next, jumper"
+        v-bind:total="pager.totalCount")
     <!--el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible")-->
-      <!--slot(name="dialogFormSlot")-->
+    <!--slot(name="dialogFormSlot")-->
     <!--kalix-dialog(ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")-->
-    component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
+    component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules"
+    v-on:refreshData="refresh")
 
 </template>
 <script type="text/ecmascript-6">
@@ -71,16 +78,24 @@
           currentPage: 1,
           limit: PageConfig.limit,
           start: 0
-        }
+        },
+        tableHegiht: 0
       }
     },
     created() {
       this.getData()
     },
+    mounted() {
+      this._getTableHeight()
+      const that = this
+      window.addEventListener('resize', () => {
+        that._getTableHeight()
+      })
+    },
     methods: {
       onAddClick() {
+        this.whichBizDialog = ''
         let that = this
-        that.$emit('resetFormModel')
         let dig =
           this.bizDialog.filter((item) => {
             return item.id === 'add'
@@ -88,10 +103,14 @@
         console.log(dig[0].dialog)
         this.whichBizDialog = dig[0].dialog
         setTimeout(() => {
+          that.$emit('resetFormModel')
           that.$refs.kalixDialog.open('添加')
         }, 20)
       },
       onRefreshClick() {
+        this.getData()
+      },
+      refresh() {
         this.getData()
       },
       btnClick(row, btnId) {
@@ -99,7 +118,7 @@
         switch (btnId) {
           case 'view':
             let that = this
-            this.formModel = row
+            this.$emit('setFormModel', row)
             let dig =
               this.bizDialog.filter((item) => {
                 return item.id === 'view'
@@ -113,7 +132,7 @@
             console.log('view is clicked')
             break
           case 'edit':
-            this.formModel = row
+            this.$emit('setFormModel', row)
             this.$refs.kalixDialog.open('编辑')
             console.log('edit is clicked')
             break
@@ -152,6 +171,7 @@
         this.getData()
       },
       getData() {
+//        console.log('baseTable', 'getData')
         this.loading = true
         let _data = {
           jsonStr: this.jsonStr,
@@ -166,9 +186,13 @@
           this.tableData = response.data.data
           this.pager.totalCount = response.data.totalCount
           this.loading = false
+          document.querySelector('.el-table__body-wrapper').scrollTop = 0
         }).catch(() => {
           this.loading = false
         })
+      },
+      _getTableHeight() {
+        this.tableHegiht = this.$refs.kalixTableContainer.clientHeight
       }
     },
     components: {
@@ -177,7 +201,55 @@
       KalixDialog: Dialog,
       UserAdd
     }
+
   }
 </script>
 <style scoped lang="stylus" type="text/stylus">
+  @import "~@/assets/stylus/color"
+  .kalix-wrapper
+    margin 5px
+    border 1px solid border-color_1
+    position absolute
+    bottom 0
+    top 96px
+    left 0
+    box-sizing border-box
+    right 0
+    .kalix-wrapper-hd
+      background-color bg-color_1
+      color #FFFFFF
+      line-height 44px
+      padding 0 15px
+      text-align left
+    .kalix-wrapper-bd
+      .kalix-table-container
+        position absolute
+        padding 0 12px
+        overflow hidden
+        bottom 48px
+        right 0
+        left 0
+        top 104px
+        text-align left
+      .kalix-table-pagination
+        text-align left
+        padding 8px 0
+        position absolute
+        bottom 0
+      .no-list
+        position absolute
+        left 1px
+        top 1px
+        height 744px
+        width 100%
+        color #5e7382
+        font-size 14px
+        text-align center
+        background-color #fff
+        display flex
+        box-pack center
+        justify-content center
+        box-align center
+        flex-align center
+        align-items center
 </style>
