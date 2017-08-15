@@ -74,8 +74,8 @@
 //        this.close()
       },
       close() {
-        this.visible = false
         this.$refs.dialogForm.resetFields()
+        this.visible = false
       },
       open(title, isView = false) {
         this.title = title

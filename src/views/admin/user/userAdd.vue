@@ -11,11 +11,20 @@
       el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
         el-input(v-model="formModel.name")
       el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
-        el-input(v-model="formModel.sex")
+        el-radio-group(v-model="formModel.sex")
+          el-radio(label="男")
+          el-radio(label="女")
       el-form-item(label="密码" prop="password" v-bind:rules="rules.password")
-        el-input(v-model="formModel.password")
+        el-input(v-model="formModel.password" type="password")
       el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
-        el-input(v-model="formModel.confirmPassword")
+        el-input(v-model="formModel.confirmPassword" type="password")
+      el-form-item(label="岗位名称")
+        el-select(v-model="formModel.position" placeholder="请选择岗位名称")
+          el-option(label="岗位一" value="1")
+          el-option(label="岗位二" value="2")
+      el-form-item(label="状态")
+        el-switch(v-model="formModel.available" on-text="" off-text="" on-value="1" off-value="0")
+
 </template>
 <script type="text/ecmascript-6">
   import Dialog from './baseDialog.vue'
@@ -75,6 +84,7 @@
     },
     created() {
       console.log('this.formRules.name:', this.formRules.name)
+      console.log('[userAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
       KalixDialog: Dialog
@@ -84,6 +94,7 @@
         alert('dfdf')
       },
       open(title) {
+        console.log('[userAdd.vue methods] formModel', this.formModel)
         this.$refs.kalixDialog.open(title)
       },
       refreshData() {

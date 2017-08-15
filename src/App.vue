@@ -61,9 +61,14 @@
     border-spacing: 0;
   }
 
+  html,body{
+    height: 100%;
+  }
+
   body {
     margin: 0;
     padding: 0;
+    position: relative;
   }
 
   .s-flex {

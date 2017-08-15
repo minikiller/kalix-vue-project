@@ -2,7 +2,8 @@
   div
     base-table(v-bind:fields="fields" v-bind:targetURL="targetURL"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    v-on:resetFormModel="resetFormModel")
+    v-on:resetFormModel="resetFormModel"
+    v-on:setFormModel="setFormModel")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from './baseTable'
@@ -25,7 +26,16 @@
         bizDialog: [{id: 'view', dialog: 'KalixUserEdit'},
           {id: 'add', dialog: 'KalixUserAdd'}
         ],
-        formModel: {},
+        formModel: {
+          code: '',
+          loginName: '',
+          name: '',
+          sex: '',
+          password: '',
+          confirmPassword: '',
+          position: '',
+          available: 1
+        },
         formRules: {
           name: [
             {required: true, message: '请输入 name', trigger: 'blur'}
@@ -37,14 +47,14 @@
       }
     },
     created() {
+      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     methods: {
       resetFormModel() {
-        this.formModel = {}
+        this.formModel = JSON.parse(this.tempFormModel)
       },
       setFormModel(model) {
         this.formModel = model
-        console.log('setFormModel', model)
       }
     },
     components: {

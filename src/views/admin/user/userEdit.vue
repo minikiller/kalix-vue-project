@@ -5,9 +5,9 @@
         el-form-item(label="类型" prop="name" v-bind:rules="formRules.name")
           el-input(v-model="formModel.name")
         el-form-item(label="密码" prop="password" v-bind:rules="rules.password")
-          el-input(v-model="formModel.password")
+          el-input(v-model="formModel.password"  type="password")
         el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
-          el-input(v-model="formModel.confirmPassword")
+          el-input(v-model="formModel.confirmPassword"  type="password")
 </template>
 <script type="text/ecmascript-6">
   import Dialog from './baseDialog.vue'
