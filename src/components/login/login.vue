@@ -18,7 +18,7 @@
 
 <script type="text/ecmascript-6">
   import Router from 'router'
-  import Store from 'store'
+  import {mapMutations} from 'vuex'
   import Message from 'common/message'
   import Cache from 'common/cache'
   import Login from 'api/login'
@@ -43,6 +43,7 @@
       }
     },
     methods: {
+      ...mapMutations({setSaveLogin: 'saveLogin'}),
       onSubmit(formName) {
         let that = this
         this.$refs[formName].validate((valid) => {
@@ -57,8 +58,7 @@
                 Cache.save('user_token', data.user.token)
                 Cache.save('user_name', data.user.name)
                 console.log('access token is: ', data.access_token)
-                Store.commit({
-                  type: 'saveLogin',
+                this.setSaveLogin({
                   access_token: data.access_token,
                   user_name: data.user.name,
                   user_token: data.user.token,

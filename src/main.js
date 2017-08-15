@@ -8,7 +8,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import App from './App'
 import router from './router'
-
+import store from './store'
 // import Search from '@/components/table/search'
 // import Wrapper from '@/components/table/wrapper'
 // import KalixDialog from '@/components/table/dialog'
@@ -25,12 +25,12 @@ Vue.use(ElementUI)
 //   Vue.component(item.name, com)
 // }
 
+// 注册全局组件
 GlobalComponent.forEach((item) => {
   console.log('[kalix] registry name is: ' + item.name, '; registry path is: ' + item.path)
   Vue.component(item.name, require('' + item.path))
 })
 
-// 注册全局组件
 // Vue.component('kalix-search', Search)
 // Vue.component('kalix-wrapper', Wrapper)
 // Vue.component('input-cell', InputCell)
@@ -38,6 +38,7 @@ GlobalComponent.forEach((item) => {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<App/>',
   components: {App}

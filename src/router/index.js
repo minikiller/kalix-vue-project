@@ -12,7 +12,7 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/hello',
+      path: '/demo',
       name: 'hello',
       component: Hello
     },
