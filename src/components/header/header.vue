@@ -12,10 +12,10 @@
         ul.s-flex_item.menu
           li
             label.s-check__label.link-btn(for="menuChk")
-              input.s-check(type="checkbox" id="menuChk" v-on:change="menuChkChange" v-model="menuChk")
+              input.s-check(type="checkbox" id="menuChk" v-on:change="menuChkChange" v-model="headerMenuChk")
               i.el-icon-d-arrow-left
           li(v-for="item in menuList")
-            router-link.link-btn(tag="div" :to="{path:'/'+item.id}")
+            router-link.link-btn(tag="div" v-bind:to="{path:'/'+item.id}")
               i(:class="bindClass(item.iconCls)")
               | {{item.text}}
         ul.aside
@@ -32,8 +32,8 @@
           li
             el-button(type="text" icon="close") 0
           li
-            el-select(v-model="themeValue" placeholder="请选择" :style="{width:'80px'}")
-              el-option(v-for="item in themeOptions" :key="item.value" :label="item.label" :value="item.value")
+            el-select(v-model="themeValue" placeholder="请选择" v-bind:style="{width:'80px'}")
+              el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
 
 <script type="text/ecmascript-6">
@@ -61,7 +61,8 @@
           {value: '选项5', label: '经典'},
           {value: '选项6', label: '灰色'}
         ],
-        themeValue: '浅蓝'
+        themeValue: '浅蓝',
+        headerMenuChk: this.menuChk
       }
     },
     mounted() {
@@ -113,7 +114,7 @@
         return e
       },
       menuChkChange() {
-        this.$emit('onSmall', this.menuChk)
+        this.$emit('onSmall', this.headerMenuChk)
       }
     },
     components: {},

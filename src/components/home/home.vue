@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   div.home
-    kalix-header(:menuChk="isSmall" @onSmall="setSmall")
+    kalix-header(:menuChk="isSmall" v-on:onSmall="setSmall")
     div.s-flex.container
       kalix-nav(:menuChk="isSmall")
       div.s-flex_item.article
