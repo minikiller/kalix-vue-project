@@ -45,8 +45,8 @@
       onSubmitClick() {
         this.$refs.dialogForm.validate((valid) => {
           if (valid) {
-            console.log('onSubmitClick', this.dataUrl)
-            console.log('onSubmitClick', this.formModel)
+//            console.log('onSubmitClick', this.dataUrl)
+//            console.log('onSubmitClick', this.formModel)
             Vue.axios.request({
               method: 'POST',
               url: this.dataUrl,

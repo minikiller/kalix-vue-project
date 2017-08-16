@@ -1,46 +1,49 @@
 <template lang="pug">
-  div.kalix-wrapper
-    div.kalix-wrapper-hd
-      i.iconfont.icon-dict-management
-      | 字典列表
-    div.kalix-wrapper-bd
-      kalix-tool-bar(@onAddClick="onAddClick" @onRefreshClick="onRefreshClick")
-      div.kalix-table-container(ref="kalixTableContainer")
-        el-table( :data="tableData" style="width: 100%" v-loading.body="loading" v-bind:height="tableHegiht")
-          //table的字段
-          div(v-if="tableData && tableData.length > 0" v-for="field in fields" v-bind:key="field.prop")
-            el-table-column( :prop="field.prop" v-bind:label="field.label")
-          //  table的工具按钮
-          slot(name="tableToolSlot")
-            kalix-table-tool(:btnList="btnList" v-on:onTableToolClick="btnClick")
-        div.no-list(v-if="!tableData || !tableData.length > 0" v-bind:style="{'height':tableHegiht+'px'}")
-          div 暂无数据
-      div.kalix-table-pagination
-        el-pagination(v-if="pager.totalCount"
-        v-on:size-change="pagerSizeChange"
-        v-on:current-change="pagerCurrentChange"
-        v-bind:current-page="pager.currentPage"
-        v-bind:page-sizes="pager.pageSizes"
-        v-bind:page-size="1"
-        layout="total, sizes, prev, pager, next, jumper"
-        v-bind:total="pager.totalCount")
-    <!--el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible")-->
-    <!--slot(name="dialogFormSlot")-->
-    <!--kalix-dialog(ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")-->
-    component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules"
-    v-on:refreshData="refresh")
-
+  div.kalix-article
+    component(:is="bizSearch" ref="mySearch" v-if="bizSearch" v-on:onSearch="changeRequestData")
+    div.kalix-wrapper(v-bind:style="setWrapperStyle()")
+      div.kalix-wrapper-hd
+        i.iconfont.icon-dict-management
+        | 字典列表
+      div.kalix-wrapper-bd
+        kalix-tool-bar(@onAddClick="onAddClick" v-on:onRefreshClick="onRefreshClick")
+        div.kalix-table-container(ref="kalixTableContainer")
+          el-table(:data="tableData" style="width: 100%" v-loading.body="loading" v-bind:height="tableHegiht")
+            //table的字段
+            div(v-if="tableData && tableData.length > 0" v-for="field in fields" v-bind:key="field.prop")
+              el-table-column( :prop="field.prop" v-bind:label="field.label")
+            //  table的工具按钮
+            slot(name="tableToolSlot")
+              kalix-table-tool(:btnList="btnList" v-on:onTableToolClick="btnClick")
+          div.no-list(v-if="!tableData || !tableData.length > 0" v-bind:style="{'height':tableHegiht+'px'}")
+            div 暂无数据
+        div.kalix-table-pagination
+          el-pagination(v-if="pager.totalCount"
+          v-on:size-change="pagerSizeChange"
+          v-on:current-change="pagerCurrentChange"
+          v-bind:current-page="pager.currentPage"
+          v-bind:page-sizes="pager.pageSizes"
+          v-bind:page-size="1"
+          layout="total, sizes, prev, pager, next, jumper"
+          v-bind:total="pager.totalCount")
+      component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules"
+      v-on:refreshData="refresh")
 </template>
 <script type="text/ecmascript-6">
   import {PageConfig, ToolButtonList} from 'config/global.toml'
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
   import Dialog from './baseDialog'
+  import UserSearch from './userSearch.vue'
+  import userSearchBak from './userSearchBak.vue'
+  import BaseSearch from './baseSearch.vue'
   import Message from 'common/message'
-  import UserAdd from './userAdd.vue'
 
   export default {
     props: {
+      bizSearch: {
+        type: String
+      },
       bizDialog: {
         type: Array
       },
@@ -81,20 +84,27 @@
           limit: PageConfig.limit,
           start: 0
         },
-        tableHegiht: 0
+        tableHegiht: 0,
+        requestData: {}
       }
     },
     created() {
       this.getData()
     },
     mounted() {
-      this._getTableHeight()
       const that = this
-      window.addEventListener('resize', () => {
+      setTimeout(() => {
         that._getTableHeight()
-      })
+        window.addEventListener('resize', () => {
+          that._getTableHeight()
+        })
+      }, 20)
     },
     methods: {
+      changeRequestData(_requestData) {
+        this.requestData = _requestData
+        this.refresh()
+      },
       onAddClick() {
         this.whichBizDialog = ''
         let that = this
@@ -181,6 +191,7 @@
           start: this.pager.start,
           limit: this.pager.limit
         }
+        _data = Object.assign(_data, this.requestData)
         this.$http.get(this.targetURL, {
           params: _data
         }).then(response => {
@@ -194,6 +205,12 @@
           console.log('this.loading = false', this.tableData.length)
         })
       },
+      setWrapperStyle() {
+        if (!this.bizSearch) {
+          return {'top': 0}
+        }
+        return {}
+      },
       _getTableHeight() {
         this.tableHegiht = this.$refs.kalixTableContainer.clientHeight
       }
@@ -202,10 +219,11 @@
       KalixTableTool: TableTool,
       KalixToolBar: ToolBar,
       KalixDialog: Dialog,
-      UserAdd
+      KailxSearch: BaseSearch,
+      UserSearch,
+      userSearchBak
     },
-    computed: {
-    }
+    computed: {}
 
   }
 </script>
@@ -216,7 +234,7 @@
     border 1px solid border-color_1
     position absolute
     bottom 0
-    top 96px
+    top 118px
     left 0
     box-sizing border-box
     right 0
