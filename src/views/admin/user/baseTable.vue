@@ -13,6 +13,8 @@
           //  table的工具按钮
           slot(name="tableToolSlot")
             kalix-table-tool(:btnList="btnList" v-on:onTableToolClick="btnClick")
+        div.no-list(v-if="!tableData || !tableData.length > 0" v-bind:style="{'height':tableHegiht+'px'}")
+          div 暂无数据
       div.kalix-table-pagination
         el-pagination(v-if="pager.totalCount"
         v-on:size-change="pagerSizeChange"
@@ -189,6 +191,7 @@
           document.querySelector('.el-table__body-wrapper').scrollTop = 0
         }).catch(() => {
           this.loading = false
+          console.log('this.loading = false', this.tableData.length)
         })
       },
       _getTableHeight() {
@@ -200,6 +203,8 @@
       KalixToolBar: ToolBar,
       KalixDialog: Dialog,
       UserAdd
+    },
+    computed: {
     }
 
   }
@@ -224,7 +229,7 @@
     .kalix-wrapper-bd
       .kalix-table-container
         position absolute
-        padding 0 12px
+        margin 0 12px
         overflow hidden
         bottom 48px
         right 0
