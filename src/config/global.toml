@@ -13,6 +13,7 @@ admin = "/camel/rest/system/applications/admin"
 common = "/camel/rest/system/applications/common"
 oa = "/camel/rest/system/applications/oa"
 schedule = "/camel/rest/system/applications/schedule"
+research = "/camel/rest/system/applications/research"
 
 [PageConfig]
   sizes = [10, 20, 30, 40]
