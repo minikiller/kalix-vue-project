@@ -19,13 +19,13 @@
               li(v-for="item in item.children")
                 router-link.tit(tag="div" :to="{path:'/'+item.routeId}")
                   i.tit_icon(:class="bindClass(item.iconCls)")
-                  |{{item.text}}
+                  | {{item.text}}
 </template>
 
 <script type="text/ecmascript-6">
   import Vue from 'vue'
   import Cache from 'common/cache'
-  import {cacheTime, systemApplications} from 'config/global.toml'
+  import {cacheTime, systemApplicationsBaseURL} from 'config/global.toml'
 
   export default {
     props: {
@@ -62,7 +62,7 @@
         } else {
           const data = {_dc: cd, node: 'root'}
           Vue.axios({
-            url: systemApplications[this.currApp],
+            url: systemApplicationsBaseURL + this.currApp,
             method: 'get',
 //            headers: {'AccessToken': accessToken, JSESSIONID: userToken},
             params: data
