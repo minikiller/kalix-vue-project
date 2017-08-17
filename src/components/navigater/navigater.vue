@@ -14,7 +14,7 @@
           div.arrow
             i(:class="showIcon(item.isShow)")
         el-collapse-transition
-          div.mn(v-show="setShow(item)")
+          div.mn(v-show="item.isShow")
             ul
               li(v-for="item in item.children")
                 router-link.tit(tag="div" v-bind:to="{path:'/'+item.routeId}")
@@ -80,17 +80,18 @@
             }
           })
         }
+        this.setItemShow()
       },
-      setShow(item) {
+      setItemShow() {
         let routeName = this.currApp + '/' + this.currFun
-        if (item.children) {
+        this.treeData.forEach((item) => {
           let temp = item.children.find(function (e) {
             return e.routeId === routeName
           })
-          return temp != null || item.isShow
-        } else {
-          return false
-        }
+          if (temp) {
+            item.isShow = true
+          }
+        })
       },
       bindClass(e) {
         return e
