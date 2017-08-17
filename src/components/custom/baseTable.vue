@@ -4,7 +4,7 @@
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
         i.iconfont.icon-dict-management
-        | 字典列表
+        | {{title}}
       div.kalix-wrapper-bd
         kalix-tool-bar(@onAddClick="onAddClick" v-on:onRefreshClick="onRefreshClick")
         div.kalix-table-container(ref="kalixTableContainer")
@@ -37,13 +37,15 @@
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
   import Dialog from './baseDialog'
-  import UserSearch from '../../views/admin/user/userSearch.vue'
-  import userSearchBak from '../../views/admin/user/userSearchBak.vue'
   import BaseSearch from './baseSearch.vue'
   import Message from 'common/message'
 
   export default {
     props: {
+      title: {
+        type: String,
+        required: true
+      },
       bizSearch: {
         type: String
       },
@@ -227,9 +229,7 @@
       KalixTableTool: TableTool,
       KalixToolBar: ToolBar,
       KalixDialog: Dialog,
-      KailxSearch: BaseSearch,
-      UserSearch,
-      userSearchBak
+      KailxSearch: BaseSearch
     },
     computed: {
       rowNo() {

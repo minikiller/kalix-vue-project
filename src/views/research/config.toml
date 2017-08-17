@@ -1,0 +1,14 @@
+ResearchDictsURL = "/camel/rest/research/dicts"
+TeacherURL = "/camel/rest/teachers"
+StudentURL = "/camel/rest/students"
+WorkerURL = "/camel/rest/workers"
+
+[[TeacherComponent]]
+  path = "./teacherView"
+  name = "ResearchTeacherView"
+[[TeacherComponent]]
+  path = "./teacherAdd"
+  name = "ResearchTeacherAdd"
+[[TeacherComponent]]
+  path = "./teacherSearch"
+  name = "ResearchTeacherSearch"

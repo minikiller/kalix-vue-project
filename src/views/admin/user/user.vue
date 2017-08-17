@@ -1,18 +1,15 @@
 <template lang="pug">
   div
-    base-table(v-bind:fields="fields" v-bind:targetURL="targetURL"
+    base-table(title='用户列表' v-bind:fields="fields" v-bind:targetURL="targetURL"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     v-bind:biz-search="'userSearch'"
     v-on:resetFormModel="resetFormModel"
     v-on:setFormModel="setFormModel")
 </template>
 <script type="text/ecmascript-6">
-  import BaseTable from '../../../components/custom/baseTable'
-  import UserSearch from './userSearch.vue'
+  import BaseTable from '@/components/custom/baseTable'
   import {usersURL} from 'config/global.toml'
-  import Vue from 'vue'
 
-  Vue.component('KalixUserAdd', require('@/views/admin/user/userAdd'))
   export default {
     data() {
       return {
@@ -59,7 +56,6 @@
       }
     },
     components: {
-      UserSearch,
       BaseTable
 //      KalixUserAdd: UserAdd
     }
