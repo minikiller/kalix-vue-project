@@ -33,11 +33,10 @@
       v-on:refreshData="refresh")
 </template>
 <script type="text/ecmascript-6">
-  import {PageConfig, ToolButtonList} from 'config/global.toml'
+  import {PageConfig, ToolButtonList, SecurityBtnUrl} from 'config/global.toml'
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
   import Dialog from './baseDialog'
-  import BaseSearch from './baseSearch.vue'
   import Message from 'common/message'
 
   export default {
@@ -45,6 +44,10 @@
       title: {  // 表格组件标题名
         type: String,
         required: true
+      },
+      buttonPermissionPrefix: { //  table中tool的按钮组件认证前缀
+        type: String,
+        default: ''   // 为空时候，不校验权限
       },
       bizSearch: {  //  使用的搜索组件名称
         type: String
@@ -199,7 +202,6 @@
         this.$http.get(this.targetURL, {
           params: _data
         }).then(response => {
-//          if(response.data)
           this.tableData = response.data.data.map((item, index) => {
             item.rowNumber = index + that.rowNo
             return item
@@ -212,6 +214,36 @@
           this.loading = false
           console.log('this.loading = false', this.tableData.length)
         })
+        this._validateButton()
+      },
+      /**
+       * 发送按钮权限认证
+       * @private
+       */
+      _validateButton() {
+        if (this.buttonPermissionPrefix === '') { // 默认为空不校验
+          let _permissionData = []
+          this.btnList.map(item => {  // 组成按钮验证字符串
+            item.permission = this.buttonPermissionPrefix + item.id
+            if (item.isPermission) {  // 判断是否参与校验
+              _permissionData.push(this.buttonPermissionPrefix + item.id)
+            }
+          })
+          // 发送按钮验证
+          if (_permissionData.length > 0) {
+            this.$http.get(`${SecurityBtnUrl}${_permissionData.join('_')}`).then(res => {
+              res.data.buttons.forEach(item => {
+                let tmp = this.btnList.find(e => {
+                  if (e.permission === item.permission) {
+                    return e
+                  }
+                })
+                tmp.isShow = item.status  // 根据返回的权限确定按钮是否显示
+              })
+            })
+          }
+          console.log(`[Kalix] table tool button list is ${this.btnList}`)
+        }
       },
       setWrapperStyle() {
         if (!this.bizSearch) {
@@ -226,8 +258,7 @@
     components: {
       KalixTableTool: TableTool,
       KalixToolBar: ToolBar,
-      KalixDialog: Dialog,
-      KailxSearch: BaseSearch
+      KalixDialog: Dialog
     },
     computed: {
       rowNo() {

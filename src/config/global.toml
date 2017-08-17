@@ -1,3 +1,5 @@
+# 全局变量配置文件
+
 cacheTime = 7200000 #缓存校验时间
 baseURL = "http://localhost:8181"
 
@@ -5,18 +7,17 @@ systemApplicationsBaseURL = "/camel/rest/system/applications/"
 loginUrl = "/login.jsp"
 logoutUrl = "/logout"
 applicationURL = "/camel/rest/system/applications"
+#按钮 权限认证的地址
+SecurityBtnUrl = "/camel/rest/system/applications/modules/children/buttons/"
+
+
 usersURL = "/camel/rest/users"
+userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 
 ScheduleDictsURL = "/camel/rest/schedule/dicts"
 ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 
-#[systemApplications]
-#admin = "/camel/rest/system/applications/admin"
-#common = "/camel/rest/system/applications/common"
-#oa = "/camel/rest/system/applications/oa"
-#schedule = "/camel/rest/system/applications/schedule"
-#research = "/camel/rest/system/applications/research"
-
+# 全局table分页的配置
 [PageConfig]
   sizes = [10, 20, 30, 40]
   limit = 10
@@ -26,19 +27,19 @@ ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 # table 的默认按钮定义
 [[ToolButtonList]]
   id = "view"
-  type = "text"
-  size = "small"
   title = "查看"
+  isShow = true    # 是否显示
+  isPermission = true   # 是否进行权限认证
 [[ToolButtonList]]
   id = "edit"
-  type = "text"
-  size = "small"
   title = "编辑"
+  isShow = true
+  isPermission = true
 [[ToolButtonList]]
   id = "delete"
-  type = "text"
-  size = "small"
   title = "删除"
+  isShow = true
+  isPermission = true
 
 [[GlobalComponent]]
   path = "./views/demo/world"

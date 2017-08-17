@@ -1,31 +1,29 @@
-<template lang="pug">
+<!--
+描述：table中column中的tool组件的按钮封装
+开发人：sunlf
+开发日期：2017年8月17日
+-->
+<template lang='pug'>
   div
-    el-table-column(label="操作" width="150")
-      template(scope="scope")
-        el-button(v-for="btn in btnList" :key="btn.id" v-on:click="toggle(scope.row,btn.id)"
-          :type="btn.type" :size="btn.size") {{btn.title}}
-        //el-button(v-if="btnView" v-on:click="tableView(scope.row)" type="text" size="small") 查看
-        //el-button(v-if="btnEdit" v-on:click="tableEdit(scope.row)" type="text" size="small") 编辑
-        //el-button(v-if="btnDelete" v-on:click="tableDelete(scope.row)" type="text" size="small") 删除
+    el-table-column(label='操作' width='150')
+      template(scope='scope')
+        el-button(v-for='btn in btnList' v-if='btn.isShow' v-bind:key='btn.id' v-on:click='toggle(scope.row,btn.id)'
+        type='text' size='small') {{btn.title}}
 </template>
-<script type="text/ecmascript-6">
-  const ON_CLICK_TABLE_VIEW = 'onTableView'
-  const ON_CLICK_TABLE_EDIT = 'onTableEdit'
-  const ON_CLICK_TABLE_DELETE = 'onTableDelete'
+<script type='text/ecmascript-6'>
   const ON_TABLE_TOOL_CLICK = 'onTableToolClick'
-
-  import Message from 'common/message'
 
   export default {
     props: {
-      btnOption: {
-        type: Array,
-        default: () => {
-          return ['btnView', 'btnEdit', 'btnDelete']
-        }
-      },
       btnList: {  // 工具按钮的列表
-        type: Array
+        type: Array,
+        required: true,
+        default: () => {
+          return [
+            {id: 'view', title: '查看', isShow: true},
+            {id: 'edit', title: '编辑', isShow: true},
+            {id: 'delete', title: '删除', isShow: true}]
+        }
       }
     },
     data() {
@@ -43,47 +41,11 @@
       }
     },
     methods: {
-      toggle(row, btnId) {
+      toggle(row, btnId) { // toolbar click event
         this.$emit(ON_TABLE_TOOL_CLICK, row, btnId)
-      },
-      tableView(row) {
-        console.log('view button is click ', row)
-        if (this._events[ON_CLICK_TABLE_VIEW]) {
-          this.$emit(ON_CLICK_TABLE_VIEW, row)
-        }
-      },
-      tableEdit(row) {
-        console.log('edit button is click ', row)
-        if (this._events[ON_CLICK_TABLE_EDIT]) {
-          this.$emit(ON_CLICK_TABLE_EDIT, row)
-        }
-      },
-      tableDelete(row) {
-        if (this._events[ON_CLICK_TABLE_DELETE]) {
-          this.$emit(ON_CLICK_TABLE_DELETE, row)
-        } else {
-          this.$confirm('确定要删除吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            return this.axios.request({
-              method: 'DELETE',
-              url: this.$parent.targetURL + '/' + row.id,
-              params: {},
-              data: {
-                id: row.id
-              }
-            })
-          }).then(response => {
-            this.refresh()
-            Message.success(response.data.msg)
-          }).catch(() => {
-          })
-        }
       }
     }
   }
 </script>
-<style scoped lang="stylus" type="text/stylus">
+<style scoped lang='stylus' type='text/stylus'>
 </style>
