@@ -1,6 +1,6 @@
 <template lang="pug">
   div.kalix-article
-    component(:is="bizSearch" ref="mySearch" v-if="bizSearch" v-on:onSearch="changeRequestData")
+    component(:is="bizSearch" ref="mySearch" v-if="bizSearch" v-on:onSearch="onSearchClick")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
         i.iconfont.icon-dict-management
@@ -8,7 +8,7 @@
       div.kalix-wrapper-bd
         kalix-tool-bar(@onAddClick="onAddClick" v-on:onRefreshClick="onRefreshClick")
         div.kalix-table-container(ref="kalixTableContainer")
-          el-table(:data="tableData" stripe style="width: 100%" v-loading.body="loading" v-bind:height="tableHegiht")
+          el-table(:data="tableData" stripe style="width: 100%" v-loading.body="loading" v-bind:height="tableHeight")
             //table的字段
             el-table-column(v-if="tableData && tableData.length > 0" label="行号" width="70")
               template(scope="scope")
@@ -18,7 +18,7 @@
             //  table的工具按钮
             slot(name="tableToolSlot")
               kalix-table-tool(:btnList="btnList" v-on:onTableToolClick="btnClick")
-          div.no-list(v-if="!tableData || !tableData.length > 0" v-bind:style="{'height':tableHegiht+'px'}")
+          div.no-list(v-if="!tableData || !tableData.length > 0" v-bind:style="{'height':tableHeight+'px'}")
             div 暂无数据
         div.kalix-table-pagination
           el-pagination(v-if="pager.totalCount"
@@ -88,7 +88,7 @@
           limit: PageConfig.limit,
           start: 0
         },
-        tableHegiht: 0,
+        tableHeight: 0,
         requestData: {}
       }
     },
@@ -105,7 +105,7 @@
       }, 20)
     },
     methods: {
-      changeRequestData(_requestData) {
+      onSearchClick(_requestData) {
         this.requestData = _requestData
         this.refresh()
       },
@@ -221,7 +221,7 @@
         return {}
       },
       _getTableHeight() {
-        this.tableHegiht = this.$refs.kalixTableContainer.clientHeight
+        this.tableHeight = this.$refs.kalixTableContainer.clientHeight
       }
     },
     components: {
