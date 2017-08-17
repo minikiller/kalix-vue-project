@@ -10,6 +10,9 @@
         div.kalix-table-container(ref="kalixTableContainer")
           el-table(:data="tableData" style="width: 100%" v-loading.body="loading" v-bind:height="tableHegiht")
             //table的字段
+            el-table-column(v-if="tableData && tableData.length > 0" label="行号" width="70")
+              template(scope="scope")
+                div(style="text-align: center") {{ scope.row.rowNumber }}
             div(v-if="tableData && tableData.length > 0" v-for="field in fields" v-bind:key="field.prop")
               el-table-column( :prop="field.prop" v-bind:label="field.label")
             //  table的工具按钮
@@ -183,6 +186,7 @@
         this.getData()
       },
       getData() {
+        let that = this
 //        console.log('baseTable', 'getData')
         this.loading = true
         let _data = {
@@ -196,7 +200,10 @@
           params: _data
         }).then(response => {
 //          if(response.data)
-          this.tableData = response.data.data
+          this.tableData = response.data.data.map((item, index) => {
+            item.rowNumber = index + that.rowNo
+            return item
+          })
           this.pager.totalCount = response.data.totalCount
           this.loading = false
           document.querySelector('.el-table__body-wrapper').scrollTop = 0
@@ -224,8 +231,12 @@
       UserSearch,
       userSearchBak
     },
-    computed: {}
-
+    computed: {
+      rowNo() {
+        // 返回当前行号
+        return (1 + ((this.pager.currentPage - 1) * this.pager.limit))
+      }
+    }
   }
 </script>
 <style scoped lang="stylus" type="text/stylus">
