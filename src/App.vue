@@ -12,5 +12,6 @@
 </script>
 
 <style lang="stylus" type="text/stylus">
+  @import "~@/assets/css/icon-font.css"
   @import "~@/assets/stylus/comm.styl"
 </style>
