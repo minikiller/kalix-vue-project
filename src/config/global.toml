@@ -1,6 +1,6 @@
 cacheTime = 7200000 #缓存校验时间
 baseURL = "http://localhost:8181"
-# header 访问的地址
+
 systemApplicationsBaseURL = "/camel/rest/system/applications/"
 loginUrl = "/login.jsp"
 logoutUrl = "/logout"
@@ -58,3 +58,7 @@ ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 [[GlobalComponent]]
   path = "./views/admin/user/userEdit"
   name = "KalixUserEdit"
+[[GlobalComponent]]
+  path = "./views/admin/user/userSearch"
+  name = "userSearch"
+
