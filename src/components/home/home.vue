@@ -31,14 +31,14 @@
       }
     },
     mounted() {
-      this.fetchdata()
+      this.fetchData()
     },
-    watch: {'$route': 'fetchdata'},
+    watch: {'$route': 'fetchData'},
     methods: {
       setSmall(e) {
         this.isSmall = e
       },
-      fetchdata() {
+      fetchData() {
         let app = this.$route.params.app // 应用名称
         let fun = this.$route.params.fun // 功能名称
         if (fun !== undefined) {

@@ -17,11 +17,11 @@
       }
     },
     mounted() {
-      this.fetchdata()
+      this.fetchData()
     },
-    watch: {'$route': 'fetchdata'},
+    watch: {'$route': 'fetchData'},
     methods: {
-      fetchdata() {
+      fetchData() {
         this.name = this.$route.params.app
 //        console.log(this.$route.params.name);
       }

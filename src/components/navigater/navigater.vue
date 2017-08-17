@@ -45,11 +45,11 @@
       }
     },
     mounted() {
-      this.fetchdata()
+      this.fetchData()
     },
-    watch: {'$route': 'fetchdata'},
+    watch: {'$route': 'fetchData'},
     methods: {
-      fetchdata() {
+      fetchData() {
         let d = new Date()
         let cd = d.getTime()
         let treeListData = {}
