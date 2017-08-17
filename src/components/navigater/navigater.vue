@@ -40,7 +40,8 @@
         currFun: '',
         activeName: '1',
         obj: {'name': 'aa'},
-        treeData: []
+        treeData: [],
+        clickedNode: null
       }
     },
     mounted() {
@@ -68,39 +69,46 @@
             params: data
           }).then(response => {
             let nowDate = new Date()
-            this.treeData = response.data
-            this.treeData.forEach(function (e, i) {
-              Vue.set(e, 'isShow', false)
-            })
-            treeListData[this.currApp] = this.treeData
-            treeListData.createDate = nowDate.getTime()
-            Cache.save('treeListData', JSON.stringify(treeListData))
+            if (response.data.code !== 401) {
+              this.treeData = response.data
+              this.treeData.forEach(function (e, i) {
+                Vue.set(e, 'isShow', false)
+              })
+              treeListData[this.currApp] = this.treeData
+              treeListData.createDate = nowDate.getTime()
+              Cache.save('treeListData', JSON.stringify(treeListData))
+            }
           })
         }
       },
       setShow(item) {
-        let routeName = this.currApp + '/' + this.currFun
-        if (item.children) {
-          let temp = item.children.find(function (e) {
-            return e.routeId === routeName
-          })
-          return temp != null || item.isShow
+        console.log(this.clickedNode === item)
+        if (this.clickedNode === item) {
+          let routeName = this.currApp + '/' + this.currFun
+          if (item.children) {
+            let temp = item.children.find(function (e) {
+              return e.routeId === routeName
+            })
+            return temp != null || item.isShow
+          } else {
+            return false
+          }
         } else {
-          return false
+          return item.isShow
         }
       },
       bindClass(e) {
         return e
       },
       showTree(e) {
-        let _item = (this.treeData.filter(function (item) {
+        this.clickedNode = e
+        this.treeData.forEach((item) => {
           if (item !== e) {
             item.isShow = false
           } else {
-            return e
+            item.isShow = !item.isShow
           }
-        }))[0]
-        e.isShow = !_item.isShow
+        })
       },
       showIcon(e) {
         return e ? 'el-icon-caret-bottom' : 'el-icon-caret-right'
