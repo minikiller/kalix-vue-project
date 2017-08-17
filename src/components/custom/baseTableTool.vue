@@ -3,6 +3,7 @@
 开发人：sunlf
 开发日期：2017年8月17日
 -->
+
 <template lang='pug'>
   div
     el-table-column(label='操作' width='150')
@@ -10,6 +11,7 @@
         el-button(v-for='btn in btnList' v-if='btn.isShow' v-bind:key='btn.id' v-on:click='toggle(scope.row,btn.id)'
         type='text' size='small') {{btn.title}}
 </template>
+
 <script type='text/ecmascript-6'>
   const ON_TABLE_TOOL_CLICK = 'onTableToolClick'
 
@@ -47,5 +49,6 @@
     }
   }
 </script>
+
 <style scoped lang='stylus' type='text/stylus'>
 </style>

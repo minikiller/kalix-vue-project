@@ -1,6 +1,6 @@
 <template lang="pug">
   kalix-dialog.user-add(
-  ref="kalixDialog" v-bind:form-model="formModel" v-bind:dataUrl="dataUrl"
+  ref="kalixDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
   v-on:refreshData="refreshData"
   )
     div.el-form(slot="dialogFormSlot")
@@ -79,7 +79,7 @@
           mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
           available: [{required: true, message: '请输入 available', trigger: 'blur'}]
         },
-        dataUrl: usersURL
+        targetURL: usersURL
       }
     },
     created() {

@@ -1,5 +1,11 @@
+<!--
+描述：el-dialog组件的二次封装
+开发人：sunlf
+开发日期：2017年8月17日
+-->
+
 <template lang="pug">
-  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="close")
+  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onBeforeClose")
     el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
       slot(name="dialogFormSlot")
     div.dialog-footer(slot="footer")
@@ -9,22 +15,24 @@
         el-button(v-on:click="onCancelClick") 取 消
         el-button(type="primary" v-on:click="onSubmitClick") 提 交
 </template>
+
 <script type="text/ecmascript-6">
   import Message from 'common/message'
   import Vue from 'vue'
 
   export default {
     props: {
-      formModel: {
-        type: Object
-//        required: true
+      formModel: { // dialog中的form的数据模型，由父组件传递
+        type: Object,
+        required: true
       },
-      rules: {
-        type: Object
-//        required: true
+      rules: {  // form的校验规则
+        type: Object,
+        required: true
       },
-      dataUrl: {
-        type: String
+      targetURL: {  // 业务数据提交的url,包括add，delete，update
+        type: String,
+        required: true
       }
     },
     render() {
@@ -45,11 +53,9 @@
       onSubmitClick() {
         this.$refs.dialogForm.validate((valid) => {
           if (valid) {
-//            console.log('onSubmitClick', this.dataUrl)
-//            console.log('onSubmitClick', this.formModel)
             Vue.axios.request({
               method: 'POST',
-              url: this.dataUrl,
+              url: this.targetURL,
               data: this.formModel,
               params: {}
             }).then(response => {
@@ -70,10 +76,10 @@
             return false
           }
         })
-        console.log('dialog submit button clicked !')
+        console.log('[kalix] dialog submit button clicked !')
 //        this.close()
       },
-      close() {
+      onBeforeClose() {
         this.$refs.dialogForm.resetFields()
         this.visible = false
       },
@@ -85,5 +91,6 @@
     }
   }
 </script>
+
 <style scoped lang="stylus" type="text/stylus">
 </style>

@@ -3,6 +3,7 @@
 开发人：桑杨
 开发日期：2017年7月14日
 -->
+
 <template lang="pug">
   div.home
     kalix-header(:menuChk="isSmall" v-on:onSmall="setSmall")
@@ -55,7 +56,6 @@
       KalixContent: content // 动态显示组件
     }
   }
-
 </script>
 
 <style scoped lang="stylus">

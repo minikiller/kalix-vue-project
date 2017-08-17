@@ -1,9 +1,11 @@
 # 科研管理項目配置文件
+
 ResearchDictsURL = "/camel/rest/research/dicts"
 TeacherURL = "/camel/rest/teachers"
 StudentURL = "/camel/rest/students"
 WorkerURL = "/camel/rest/workers"
 
+# 需要自动注册成全局的Teacher组件
 [[TeacherComponent]]
   path = "./teacherView"
   name = "ResearchTeacherView"

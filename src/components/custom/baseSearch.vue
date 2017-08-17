@@ -1,3 +1,9 @@
+<!--
+描述：table上方查询组件的二次封装
+开发人：sunlf
+开发日期：2017年8月17日
+-->
+
 <template lang="pug">
   div.kalix-search
     div.kalix-search-hd
@@ -6,7 +12,7 @@
     div.kalix-search-bd
       el-form.search-container(ref="searchForm" v-bind:rules="formRules" v-bind:model="form" v-bind:inline="true")
         slot(name="searchFormSlot")
-          el-form-item(v-for="item in filters" v-bind:label="item.label" v-bind:prop="item.prop" v-bind:key="item.prop")
+          el-form-item(v-for="item in searchFields" v-bind:label="item.label" v-bind:prop="item.prop" v-bind:key="item.prop")
             el-select(v-if="item.type==='select'" v-model="form[item.prop]")
               el-option(v-for="option in item.options" v-bind:key="option.value" v-bind:label="option.label" v-bind:value="option.value")
             el-input-number(v-else-if="item.type==='number'" v-model="form[item.prop]")
@@ -23,8 +29,9 @@
 <script>
   import {strToUnicode} from 'common/unicode-convert'
   import {isEmptyObject} from 'common/util'
+  import EventBus from 'common/eventbus'
 
-  const ON_SEARCH = 'onSearch'
+  const ON_SEARCH_CLICK = 'onSearchClick'
   export default {
     data() {
       return {
@@ -40,8 +47,8 @@
         type: String,
         default: ''
       },
-      formRules: {},
-      filters: {
+      formRules: {}, // 查询校验规则
+      searchFields: { // 搜索查询的字段
         type: Array
       }
     },
@@ -79,7 +86,7 @@
             }
             if (requestDatas.length > 0) {
               this.isSearch = true
-              this.$emit(ON_SEARCH, {jsonStr: requestDatas.join(',')})
+              EventBus.$emit(ON_SEARCH_CLICK, {jsonStr: requestDatas.join(',')})
             }
           } else {
             console.log('ERR')
@@ -90,7 +97,7 @@
       onResetClick() {
         this.$refs.searchForm.resetFields()
         if (this.isSearch) {
-          this.$emit(ON_SEARCH, {})
+          EventBus.$emit(ON_SEARCH_CLICK, {})
           this.isSearch = false
         }
       }

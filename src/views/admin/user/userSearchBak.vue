@@ -1,5 +1,5 @@
 <template lang="pug">
-  kailx-search(title="用户查询" v-bind:search-form="formModel" v-on:onSearch="onSearch" v-bind:form-rules="rules")
+  kailx-search(title="用户查询" v-bind:search-form="formModel" v-bind:form-rules="rules")
     div.el-form(slot="searchFormSlot")
       el-form-item(label="bak-登录名" prop="loginName")
         el-input(v-model="formModel.loginName")
@@ -17,7 +17,7 @@
           loginName: '',
           name: ''
         },
-        filters: [
+        searchFields: [
           {label: '登录名', prop: 'loginName'},
           {label: '姓名', prop: 'name'}
         ],

@@ -3,15 +3,18 @@
 开发人：sunlf
 开发日期：2017年8月17日
 -->
+
 <template>
   <div>
     <el-button v-if="isShow" type="text" size="large">{{title}}</el-button>
   </div>
 </template>
+
 <script type="text/ecmascript-6">
   import {SecurityBtnUrl} from 'config/global.toml'
 
   const NO_PERMISSION = 'no_permission'  // 无需授权
+
   export default {
     data() {
       return {
@@ -52,5 +55,6 @@
     }
   }
 </script>
-<style>
+
+<style  scoped lang="stylus" type="text/stylus">
 </style>

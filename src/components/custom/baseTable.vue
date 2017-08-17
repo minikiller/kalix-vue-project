@@ -1,6 +1,12 @@
+<!--
+描述：table 组件的二次封装
+开发人：sunlf
+开发日期：2017年8月17日
+-->
+
 <template lang="pug">
   div.kalix-article
-    component(:is="bizSearch" ref="mySearch" v-if="bizSearch" v-on:onSearch="onSearchClick")
+    component(:is="bizSearch" ref="mySearch" v-if="bizSearch")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
         i.iconfont.icon-dict-management
@@ -32,12 +38,14 @@
       component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules"
       v-on:refreshData="refresh")
 </template>
+
 <script type="text/ecmascript-6">
   import {PageConfig, ToolButtonList, SecurityBtnUrl} from 'config/global.toml'
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
   import Dialog from './baseDialog'
   import Message from 'common/message'
+  import EventBus from 'common/eventbus'
 
   export default {
     props: {
@@ -98,6 +106,7 @@
       this.getData()
     },
     mounted() {
+      EventBus.$on('onSearchClick', this.onSearchClick)
       const that = this
       setTimeout(() => {
         that._getTableHeight()
@@ -108,6 +117,7 @@
     },
     methods: {
       onSearchClick(_requestData) {
+        console.log('base table search clicked')
         this.requestData = _requestData
         this.refresh()
       },
@@ -252,7 +262,9 @@
         return {}
       },
       _getTableHeight() {
-        this.tableHeight = this.$refs.kalixTableContainer.clientHeight
+        if (this.$refs.kalixTableContainer.clientHeight) {
+          this.tableHeight = this.$refs.kalixTableContainer.clientHeight
+        }
       }
     },
     components: {
@@ -268,6 +280,7 @@
     }
   }
 </script>
+
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/color"
   .kalix-wrapper
