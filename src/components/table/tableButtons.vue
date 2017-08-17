@@ -18,7 +18,5 @@
   }
 </script>
 
-<style scoped lang='scss' type='text/scss'>
-  .kalix-table-buttons {
-  }
+<style scoped lang='stylus' type='text/stylus'>
 </style>

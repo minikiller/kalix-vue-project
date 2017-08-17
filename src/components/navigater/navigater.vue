@@ -111,5 +111,5 @@
 </script>
 
 <style scoped lang="stylus">
-  @import "./nav.styl"
+  @import "navigater.styl"
 </style>

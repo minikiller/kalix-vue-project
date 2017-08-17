@@ -3,7 +3,7 @@
   v-bind:filters="filters" v-bind:form-rules="rules")
 </template>
 <script type="text/ecmascript-6">
-  import BaseSearch from './baseSearch.vue'
+  import BaseSearch from '../../../components/custom/baseSearch.vue'
   import {isEmptyObject} from 'common/util'
 
   export default {

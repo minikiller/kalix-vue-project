@@ -34,8 +34,8 @@
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
   import Dialog from './baseDialog'
-  import UserSearch from './userSearch.vue'
-  import userSearchBak from './userSearchBak.vue'
+  import UserSearch from '../../views/admin/user/userSearch.vue'
+  import userSearchBak from '../../views/admin/user/userSearchBak.vue'
   import BaseSearch from './baseSearch.vue'
   import Message from 'common/message'
 
@@ -200,6 +200,7 @@
           this.pager.totalCount = response.data.totalCount
           this.loading = false
           document.querySelector('.el-table__body-wrapper').scrollTop = 0
+          document.querySelector('.el-table__body-wrapper').style.overflowX = 'hidden'
         }).catch(() => {
           this.loading = false
           console.log('this.loading = false', this.tableData.length)

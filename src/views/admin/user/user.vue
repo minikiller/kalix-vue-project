@@ -7,7 +7,7 @@
     v-on:setFormModel="setFormModel")
 </template>
 <script type="text/ecmascript-6">
-  import BaseTable from './baseTable'
+  import BaseTable from '../../../components/custom/baseTable'
   import UserSearch from './userSearch.vue'
   import {usersURL} from 'config/global.toml'
   import Vue from 'vue'

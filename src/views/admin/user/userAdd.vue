@@ -27,7 +27,7 @@
 
 </template>
 <script type="text/ecmascript-6">
-  import Dialog from './baseDialog.vue'
+  import Dialog from '../../../components/custom/baseDialog.vue'
   import {usersURL} from 'config/global.toml'
 
   export default {

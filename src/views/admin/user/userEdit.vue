@@ -10,7 +10,7 @@
           el-input(v-model="formModel.confirmPassword"  type="password")
 </template>
 <script type="text/ecmascript-6">
-  import Dialog from './baseDialog.vue'
+  import Dialog from '../../../components/custom/baseDialog.vue'
 
   export default {
     props: {

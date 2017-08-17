@@ -14,7 +14,7 @@
 
 <script type="text/ecmascript-6">
   import Header from '@/components/header/header'
-  import Nav from '@/components/nav/nav'
+  import Navigater from '@/components/navigater/navigater'
   import Welcome from '@/views/admin/welcome'
   //  import user from '@/views/admin/user'
   //  var mmc = user
@@ -50,7 +50,7 @@
     },
     components: {
       KalixHeader: Header,
-      KalixNav: Nav,
+      KalixNav: Navigater,
       Welcome: Welcome,
       KalixContent: content // 动态显示组件
     }

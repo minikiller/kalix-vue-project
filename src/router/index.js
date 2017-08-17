@@ -32,7 +32,7 @@ const router = new Router({
       component: Home,
       children: [
         {path: '/:app', name: 'header', component: Home},
-        {path: '/:app/:fun', name: 'nav', component: Home}
+        {path: '/:app/:fun', name: 'navigater', component: Home}
       ]
     }
   ]
