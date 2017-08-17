@@ -8,6 +8,7 @@
   kalix-search(title="教师查询"
   v-bind:searchFields="searchFields" v-bind:form-rules="rules")
 </template>
+
 <script type="text/ecmascript-6">
   import BaseSearch from '@/components/custom/baseSearch.vue'
 
@@ -30,5 +31,6 @@
     methods: {}
   }
 </script>
+
 <style scoped lang="stylus" type="text/stylus">
 </style>

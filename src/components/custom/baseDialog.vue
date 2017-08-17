@@ -27,13 +27,14 @@
         required: true
       },
       rules: {  // form的校验规则
-        type: Object,
-        required: true
+        type: Object
+//        required: true
       },
       targetURL: {  // 业务数据提交的url,包括add，delete，update
         type: String,
         required: true
-      }
+      },
+      isView: false
     },
     render() {
 
@@ -41,14 +42,13 @@
     data() {
       return {
         title: '',
-        visible: false,
-        isView: false
+        visible: false
       }
     },
     methods: {
       onCancelClick() {
         console.log('dialog cancel button clicked !')
-        this.close()
+        this.visible = false
       },
       onSubmitClick() {
         this.$refs.dialogForm.validate((valid) => {
@@ -61,8 +61,9 @@
             }).then(response => {
               if (response.data.success) {
                 Message.success(response.data.msg)
+                this.visible = false
                 // 关闭对话框
-                this.close()
+//                this.close()
                 // 刷新列表
                 this.$emit('refreshData')
                 // 清空form
@@ -77,16 +78,15 @@
           }
         })
         console.log('[kalix] dialog submit button clicked !')
-//        this.close()
+        this.visible = false
       },
       onBeforeClose() {
         this.$refs.dialogForm.resetFields()
         this.visible = false
       },
-      open(title, isView = false) {
+      open(title) {
         this.title = title
         this.visible = true
-        this.isView = isView
       }
     }
   }

@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     el-form(ref="kalixForm" v-bind:model="formModel" v-bind:rules="formRules")
-      div(v-for="field in fields")
+      div(v-for="field in tableFields")
         el-form-item(:label="field.label" :prop="field.prop")
           el-input(v-model="formModel[field.prop]")
     el-button(v-on:click="submit") submit
@@ -13,7 +13,7 @@
     props: {
       formModel: {}, // 父组件属性，用于提供模型
       formRules: {},  // 模型验证
-      fields: {
+      tableFields: {
         type: Array
       }
     },

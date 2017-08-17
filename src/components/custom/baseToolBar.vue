@@ -15,13 +15,15 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {ON_ADD_BUTTON_CLICK, ON_REFRESH_BUTTON_CLICK} from './event.toml'
+
   export default {
     methods: {
       onAddClick() {
-        this.$emit('onAddClick')
+        this.$emit(ON_ADD_BUTTON_CLICK)
       },
       onRefreshClick() {
-        this.$emit('onRefreshClick')
+        this.$emit(ON_REFRESH_BUTTON_CLICK)
       }
     }
   }

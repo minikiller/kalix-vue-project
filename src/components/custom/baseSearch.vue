@@ -30,8 +30,8 @@
   import {strToUnicode} from 'common/unicode-convert'
   import {isEmptyObject} from 'common/util'
   import EventBus from 'common/eventbus'
+  import {ON_SEARCH_BUTTON_CLICK} from './event.toml'
 
-  const ON_SEARCH_CLICK = 'onSearchClick'
   export default {
     data() {
       return {
@@ -86,7 +86,7 @@
             }
             if (requestDatas.length > 0) {
               this.isSearch = true
-              EventBus.$emit(ON_SEARCH_CLICK, {jsonStr: requestDatas.join(',')})
+              EventBus.$emit(ON_SEARCH_BUTTON_CLICK, {jsonStr: requestDatas.join(',')})
             }
           } else {
             console.log('ERR')
@@ -97,7 +97,7 @@
       onResetClick() {
         this.$refs.searchForm.resetFields()
         if (this.isSearch) {
-          EventBus.$emit(ON_SEARCH_CLICK, {})
+          EventBus.$emit(ON_SEARCH_BUTTON_CLICK, {})
           this.isSearch = false
         }
       }
