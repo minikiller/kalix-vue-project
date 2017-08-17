@@ -15,13 +15,9 @@
     data() {
       return {
         filters: [
-          {label: '登录名', prop: 'loginName'},
           {label: '姓名', prop: 'name'}
         ],
         rules: {
-          loginName: [
-            {required: true, message: '请输入登录名', trigger: 'blur'}
-          ],
           name: [
             {required: true, message: '请输入姓名', trigger: 'blur'}
           ]

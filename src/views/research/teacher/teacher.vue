@@ -27,31 +27,34 @@
       return {
         targetURL: TeacherURL,
         fields: [
-          {prop: 'id', label: '工号'},
-          {prop: 'loginName', label: '登录名'},
+          {prop: 'identificationCard', label: '身份证号'},
           {prop: 'name', label: '姓名'},
           {prop: 'sex', label: '性别'},
-          {prop: 'workGroup', label: '工作组'}
+          {prop: 'mobile', label: '手机'},
+          {prop: 'positionalTitles', label: '职称'},
+          {prop: 'resume', label: '个人简历'},
+          {prop: 'introduction', label: '个人说明'}
         ],
         bizDialog: [{id: 'view', dialog: 'ResearchUserEdit'},
           {id: 'add', dialog: 'ResearchTeacherAdd'}
         ],
         formModel: {
-          code: '',
-          loginName: '',
+          identificationCard: '',
           name: '',
           sex: '',
-          password: '',
-          confirmPassword: '',
-          position: '',
-          available: 1
+          mobile: '',
+          positionalTitles: '',
+          resume: '',
+          introduction: '',
+          learning: '',
+          teaching: ''
         },
         formRules: {
           name: [
-            {required: true, message: '请输入 name', trigger: 'blur'}
+            {required: true, message: '请输入姓名', trigger: 'blur'}
           ],
-          label: [
-            {required: true, message: '请输入 label', trigger: 'blur'}
+          identificationCard: [
+            {required: true, message: '请输入身份证号', trigger: 'blur'}
           ]
         }
       }

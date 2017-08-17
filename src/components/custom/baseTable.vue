@@ -8,7 +8,7 @@
       div.kalix-wrapper-bd
         kalix-tool-bar(@onAddClick="onAddClick" v-on:onRefreshClick="onRefreshClick")
         div.kalix-table-container(ref="kalixTableContainer")
-          el-table(:data="tableData" style="width: 100%" v-loading.body="loading" v-bind:height="tableHegiht")
+          el-table(:data="tableData" stripe style="width: 100%" v-loading.body="loading" v-bind:height="tableHegiht")
             //table的字段
             el-table-column(v-if="tableData && tableData.length > 0" label="行号" width="70")
               template(scope="scope")
@@ -75,7 +75,6 @@
     },
     data() {
       return {
-        title: '',
         visible: false,
         btnList: ToolButtonList,
         loading: true,

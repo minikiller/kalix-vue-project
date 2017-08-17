@@ -9,27 +9,26 @@
   v-on:refreshData="refreshData"
   )
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="工号" prop="code" v-bind:rules="rules.code")
-        el-input(v-model="formModel.code")
-      el-form-item(label="登录名" prop="loginName" v-bind:rules="rules.loginName")
-        el-input(v-model="formModel.loginName")
+      el-form-item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard")
+        el-input(v-model="formModel.identificationCard")
       el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
         el-input(v-model="formModel.name")
       el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
         el-radio-group(v-model="formModel.sex")
           el-radio(label="男")
           el-radio(label="女")
-      el-form-item(label="密码" prop="password" v-bind:rules="rules.password")
-        el-input(v-model="formModel.password" type="password")
-      el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
-        el-input(v-model="formModel.confirmPassword" type="password")
-      el-form-item(label="岗位名称")
-        el-select(v-model="formModel.position" placeholder="请选择岗位名称")
-          el-option(label="岗位一" value="1")
-          el-option(label="岗位二" value="2")
-      el-form-item(label="状态")
-        el-switch(v-model="formModel.available" on-text="" off-text="" on-value="1" off-value="0")
-
+      el-form-item(label="手机" prop="mobile" v-bind:rules="rules.mobile")
+        el-input(v-model="formModel.mobile")
+      el-form-item(label="职称")
+        el-input(v-model="formModel.positionalTitles")
+      el-form-item(label="个人简历")
+        el-input(type="textarea" v-model="formModel.resume")
+      el-form-item(label="个人说明")
+        el-input(type="textarea" v-model="formModel.introduction")
+      el-form-item(label="学术研究")
+        el-input(type="textarea" v-model="formModel.learning")
+      el-form-item(label="教学情况")
+        el-input(type="textarea" v-model="formModel.teaching")
 </template>
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
@@ -89,7 +88,7 @@
     },
     created() {
       console.log('this.formRules.name:', this.formRules.name)
-      console.log('[userAdd.vue created] this.formModel:', this.formModel)
+      console.log('[teacherAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
       KalixDialog: Dialog
@@ -99,7 +98,7 @@
         alert('dfdf')
       },
       open(title) {
-        console.log('[userAdd.vue methods] formModel', this.formModel)
+        console.log('[teacherAdd.vue methods] formModel', this.formModel)
         this.$refs.kalixDialog.open(title)
       },
       refreshData() {
