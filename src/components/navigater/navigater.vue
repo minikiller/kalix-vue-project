@@ -14,7 +14,7 @@
           div.arrow
             i(:class="showIcon(item.isShow)")
         el-collapse-transition
-          div.mn(v-show="setShow(item)")
+          div.mn(v-show="item.isShow")
             ul
               li(v-for="item in item.children")
                 router-link.tit(tag="div" v-bind:to="{path:'/'+item.routeId}")
@@ -40,15 +40,16 @@
         currFun: '',
         activeName: '1',
         obj: {'name': 'aa'},
-        treeData: []
+        treeData: [],
+        clickedNode: null
       }
     },
     mounted() {
-      this.fetchdata()
+      this.fetchData()
     },
-    watch: {'$route': 'fetchdata'},
+    watch: {'$route': 'fetchData'},
     methods: {
-      fetchdata() {
+      fetchData() {
         let d = new Date()
         let cd = d.getTime()
         let treeListData = {}
@@ -68,39 +69,42 @@
             params: data
           }).then(response => {
             let nowDate = new Date()
-            this.treeData = response.data
-            this.treeData.forEach(function (e, i) {
-              Vue.set(e, 'isShow', false)
-            })
-            treeListData[this.currApp] = this.treeData
-            treeListData.createDate = nowDate.getTime()
-            Cache.save('treeListData', JSON.stringify(treeListData))
+            if (response.data.code !== 401) {
+              this.treeData = response.data
+              this.treeData.forEach(function (e, i) {
+                Vue.set(e, 'isShow', false)
+              })
+              treeListData[this.currApp] = this.treeData
+              treeListData.createDate = nowDate.getTime()
+              Cache.save('treeListData', JSON.stringify(treeListData))
+            }
           })
         }
+        this.setItemShow()
       },
-      setShow(item) {
+      setItemShow() {
         let routeName = this.currApp + '/' + this.currFun
-        if (item.children) {
+        this.treeData.forEach((item) => {
           let temp = item.children.find(function (e) {
             return e.routeId === routeName
           })
-          return temp != null || item.isShow
-        } else {
-          return false
-        }
+          if (temp) {
+            item.isShow = true
+          }
+        })
       },
       bindClass(e) {
         return e
       },
       showTree(e) {
-        let _item = (this.treeData.filter(function (item) {
+        this.clickedNode = e
+        this.treeData.forEach((item) => {
           if (item !== e) {
             item.isShow = false
           } else {
-            return e
+            item.isShow = !item.isShow
           }
-        }))[0]
-        e.isShow = !_item.isShow
+        })
       },
       showIcon(e) {
         return e ? 'el-icon-caret-bottom' : 'el-icon-caret-right'
