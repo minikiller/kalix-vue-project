@@ -75,7 +75,6 @@
     },
     data() {
       return {
-        title: '',
         visible: false,
         btnList: ToolButtonList,
         loading: true,

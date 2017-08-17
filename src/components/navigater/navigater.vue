@@ -82,19 +82,14 @@
         }
       },
       setShow(item) {
-        console.log(this.clickedNode === item)
-        if (this.clickedNode === item) {
-          let routeName = this.currApp + '/' + this.currFun
-          if (item.children) {
-            let temp = item.children.find(function (e) {
-              return e.routeId === routeName
-            })
-            return temp != null || item.isShow
-          } else {
-            return false
-          }
+        let routeName = this.currApp + '/' + this.currFun
+        if (item.children) {
+          let temp = item.children.find(function (e) {
+            return e.routeId === routeName
+          })
+          return temp != null || item.isShow
         } else {
-          return item.isShow
+          return false
         }
       },
       bindClass(e) {
