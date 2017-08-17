@@ -42,45 +42,44 @@
 
   export default {
     props: {
-      title: {
+      title: {  // 表格组件标题名
         type: String,
         required: true
       },
-      bizSearch: {
+      bizSearch: {  //  使用的搜索组件名称
         type: String
       },
-      bizDialog: {
+      bizDialog: {  //  使用的对话框组件名称
         type: Array
       },
-      formModel: {
+      formModel: {  //  新建，查看，编辑使用的 form 对象模型
         type: Object
 //        required: true
       },
-      formRules: {
+      formRules: {  //  from 对象验证参数
         type: Object
 //        required: true
       },
-      targetURL: {
+      targetURL: {  //  列表操作请求的 URL 地址
         type: String,
         required: true
       },
-      jsonStr: {
+      jsonStr: {  //  数据列表请求的查询条件
         type: String,
         default: ''
       },
-      fields: {
+      fields: {   //  数据列表的列名
         type: Array,
         required: true
       }
     },
     data() {
       return {
-        visible: false,
         btnList: ToolButtonList,
         loading: true,
         tableData: [],
         totalCount: 0,
-        whichBizDialog: '',
+        whichBizDialog: '', //
         pager: {
           totalCount: 0,
           pageSizes: PageConfig.sizes,
@@ -88,8 +87,8 @@
           limit: PageConfig.limit,
           start: 0
         },
-        tableHeight: 0,
-        requestData: {}
+        tableHeight: 0, //  列表组件高度
+        requestData: {} //  列表查询条件
       }
     },
     created() {
