@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   div.treeList(:class="{'small':menuChk}")
-    ul.bd
+    ul.bd.bg(v-if="!menuChk")
       li(v-for="item in treeData")
         div.s-flex.tit(@click="showTree(item,$event)")
           div.s-flex_item
@@ -20,6 +20,16 @@
                 router-link.tit(tag="div" v-bind:to="{path:'/'+item.routeId}")
                   i.tit_icon(:class="bindClass(item.iconCls)")
                   | {{item.text}}
+    ul.bd.samll(v-if="menuChk")
+      li(v-for="item in treeData")
+        div.s-flex.tit(v-bind:class="{'active':item.isShow}")
+          i.tit_icon(:class="bindClass(item.iconCls)")
+          div.mn
+            div.txt {{item.text}}
+            ul
+              router-link.tit(tag="li" v-for="item in item.children" v-bind:to="{path:'/'+item.routeId}")
+                i.tit_icon(:class="bindClass(item.iconCls)")
+                | {{item.text}}
 </template>
 
 <script type="text/ecmascript-6">

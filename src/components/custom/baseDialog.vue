@@ -5,7 +5,8 @@
 -->
 
 <template lang="pug">
-  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onBeforeClose")
+  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="close"
+  v-bind:close-on-click-modal="false")
     el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
       slot(name="dialogFormSlot")
     div.dialog-footer(slot="footer")
@@ -44,8 +45,7 @@
     data() {
       return {
         title: '',
-        visible: false,
-        isEdit: false
+        visible: false
       }
     },
     methods: {
