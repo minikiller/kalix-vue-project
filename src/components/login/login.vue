@@ -6,15 +6,16 @@
 
 <template lang="pug">
   div.login
-    div.form
-      div.logo
-      el-form.loginForm(v-bind:model="loginForm" v-bind:rules="rules" ref="loginForm" label-width="100px")
-        el-form-item(label="账号" prop="name")
-          el-input(v-model="loginForm.name")
-        el-form-item(label="密码" prop="pass")
-          el-input(type="password" v-model="loginForm.pass" auto-complete="off")
-        el-form-item(label=" ")
-          el-button.btn-submit(type="primary" v-on:click="onSubmit('loginForm')" size="large") 立即登录
+    div.from-warpper
+      div.form
+        div.logo
+        el-form.loginForm(v-bind:model="loginForm" v-bind:rules="rules" ref="loginForm" label-width="100px")
+          el-form-item(label="账号" prop="name")
+            el-input(v-model="loginForm.name")
+          el-form-item(label="密码" prop="pass")
+            el-input(type="password" v-model="loginForm.pass" auto-complete="off")
+          el-form-item(label=" ")
+            el-button.btn-submit(type="primary" v-on:click="onSubmit('loginForm')" size="large") 立即登录
 </template>
 
 <script type="text/ecmascript-6">
