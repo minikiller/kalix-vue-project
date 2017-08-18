@@ -3,10 +3,10 @@
 开发人：sunlf
 开发日期：2017年8月17日
 -->
+
 <template lang="pug">
   kalix-dialog.user-add(
-  ref="kalixDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-  v-on:refreshData="refreshData"
+  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
   )
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard")
@@ -30,6 +30,7 @@
       el-form-item(label="教学情况")
         el-input(type="textarea" v-model="formModel.teaching")
 </template>
+
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import {TeacherURL} from '../config.toml'
@@ -94,15 +95,9 @@
       KalixDialog: Dialog
     },
     methods: {
-      open(title) {
-        console.log('[teacherAdd.vue methods] formModel', this.formModel)
-        this.$refs.kalixDialog.open(title)
-      },
-      refreshData() {
-        this.$emit('refreshData')
-      }
     }
   }
 </script>
+
 <style scoped lang="scss" type="text/scss">
 </style>

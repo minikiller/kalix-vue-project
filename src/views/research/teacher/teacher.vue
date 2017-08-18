@@ -3,12 +3,11 @@
 开发人：sunlf
 开发日期：2017年8月17日
 -->
+
 <template lang="pug">
   base-table(title='教师列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-  v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-  v-bind:biz-search="'ResearchTeacherSearch'"
-  v-on:resetFormModel="resetFormModel"
-  v-on:setFormModel="setFormModel")
+  v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
+  v-bind:bizSearch="'ResearchTeacherSearch'")
 </template>
 
 <script type="text/ecmascript-6">
@@ -62,15 +61,9 @@
       }
     },
     created() {
-      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     methods: {
-      resetFormModel() {
-        this.formModel = JSON.parse(this.tempFormModel)
-      },
-      setFormModel(model) {
-        this.formModel = model
-      }
     },
     components: {
       BaseTable

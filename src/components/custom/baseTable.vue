@@ -35,8 +35,7 @@
           v-bind:page-size="1"
           layout="total, sizes, prev, pager, next, jumper"
           v-bind:total="pager.totalCount")
-      component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules"
-      v-on:refreshData="refresh")
+      component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
 </template>
 
 <script type="text/ecmascript-6">
@@ -46,11 +45,15 @@
   import Dialog from './baseDialog'
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
+  import propsync from 'common/propsync'
   import {
-    ON_SEARCH_BUTTON_CLICK
+    ON_SEARCH_BUTTON_CLICK,
+    ON_REFRESH_DATA
   } from './event.toml'
 
   export default {
+    name: 'baseTable',
+    mixins: [propsync],
     props: {
       title: {  // 表格组件标题名
         type: String,
@@ -106,11 +109,13 @@
       }
     },
     created() {
+      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
       this.getData()
     },
     mounted() {
       // 注册事件接受
       EventBus.$on(ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
+      EventBus.$on(ON_REFRESH_DATA, this.refresh)
 
       const that = this
       setTimeout(() => {
@@ -136,8 +141,9 @@
         console.log(dig[0].dialog)
         this.whichBizDialog = dig[0].dialog
         setTimeout(() => {
-          that.$emit('resetFormModel')
-          that.$refs.kalixDialog.open('添加')
+//          that.$emit('resetFormModel')
+          this.formModel = JSON.parse(this.tempFormModel)
+          that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
         }, 20)
       },
       onRefreshClick() { // 刷新按钮点击事件
@@ -151,7 +157,6 @@
         switch (btnId) {
           case 'view': {
             let that = this
-            this.$emit('setFormModel', row)
             let dig =
               this.bizDialog.filter((item) => {
                 return item.id === 'view'
@@ -159,7 +164,8 @@
             console.log(dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              that.$refs.kalixDialog.open('查看')
+              that.formModel = row
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
             }, 20)
 //            this.$refs.kalixDialog.open('查看')
             console.log('view is clicked')
@@ -167,16 +173,16 @@
           }
 
           case 'edit': {
-            this.$emit('setFormModel', row)
+
             let dig =
               this.bizDialog.filter((item) => {
                 return item.id === 'edit'
               })
             console.log(dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
-//            this.$refs.kalixDialog.$props.isView = true
             setTimeout(() => {
-              this.$refs.kalixDialog.open('编辑')
+              this.formModel = row
+              this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
             }, 20)
             console.log('edit is clicked')
             break

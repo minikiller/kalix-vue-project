@@ -1,6 +1,6 @@
 <template lang="pug">
   div.user-add
-    kalix-dialog(ref="kalixDialog" v-bind:form-model="formModel")
+    kalix-dialog(ref="kalixBizDialog" v-bind:form-model="formModel")
       div(slot="dialogFormSlot")
         el-form-item(label="类型" prop="name" v-bind:rules="formRules.name")
           el-input(v-model="formModel.name")
@@ -9,6 +9,7 @@
         el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
           el-input(v-model="formModel.confirmPassword"  type="password")
 </template>
+
 <script type="text/ecmascript-6">
   import Dialog from '../../../components/custom/baseDialog.vue'
 
@@ -68,14 +69,7 @@
     components: {
       KalixDialog: Dialog
     },
-    methods: {
-      hello() {
-        alert('dfdf')
-      },
-      open(title) {
-        this.$refs.kalixDialog.open(title)
-      }
-    }
+    methods: {}
   }
 </script>
 <style scoped lang="scss" type="text/scss">

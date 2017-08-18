@@ -3,7 +3,7 @@
     base-table(title='用户列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    v-bind:biz-search="'userSearch'"
+    v-bind:bizSearch="'userSearch'"
     v-on:resetFormModel="resetFormModel"
     v-on:setFormModel="setFormModel")
 </template>
@@ -47,16 +47,8 @@
       }
     },
     created() {
-      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
-    methods: {
-      resetFormModel() {
-        this.formModel = JSON.parse(this.tempFormModel)
-      },
-      setFormModel(model) {
-        this.formModel = model
-      }
-    },
+    methods: {},
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd

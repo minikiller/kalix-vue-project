@@ -19,6 +19,8 @@
 <script type="text/ecmascript-6">
   import Message from 'common/message'
   import Vue from 'vue'
+  import EventBus from 'common/eventbus'
+  import {ON_REFRESH_DATA} from './event.toml'
 
   export default {
     props: {
@@ -42,7 +44,8 @@
     data() {
       return {
         title: '',
-        visible: false
+        visible: false,
+        isEdit: false
       }
     },
     methods: {
@@ -54,8 +57,8 @@
         this.$refs.dialogForm.validate((valid) => {
           if (valid) {
             Vue.axios.request({
-              method: 'POST',
-              url: this.targetURL,
+              method: this.isEdit ? 'PUT' : 'POST',
+              url: this.isEdit ? `${this.targetURL}/${this.formModel.id}` : this.targetURL,
               data: this.formModel,
               params: {}
             }).then(response => {
@@ -65,7 +68,7 @@
                 // 关闭对话框
 //                this.close()
                 // 刷新列表
-                this.$emit('refreshData')
+                EventBus.$emit(ON_REFRESH_DATA)
                 // 清空form
 //                this.$parent.resetDialogForm()
 //                this.$emit('resetDialogForm')
@@ -84,9 +87,10 @@
         this.$refs.dialogForm.resetFields()
         this.visible = false
       },
-      open(title) {
+      open(title, isEdit = false) {
         this.title = title
         this.visible = true
+        this.isEdit = isEdit
       }
     }
   }

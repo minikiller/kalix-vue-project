@@ -1,8 +1,6 @@
 <template lang="pug">
   kalix-dialog.user-add(
-  ref="kalixDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-  v-on:refreshData="refreshData"
-  )
+  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="工号" prop="code" v-bind:rules="rules.code")
         el-input(v-model="formModel.code")
@@ -89,18 +87,7 @@
     components: {
       KalixDialog: Dialog
     },
-    methods: {
-      hello() {
-        alert('dfdf')
-      },
-      open(title) {
-        console.log('[userAdd.vue methods] formModel', this.formModel)
-        this.$refs.kalixDialog.open(title)
-      },
-      refreshData() {
-        this.$emit('refreshData')
-      }
-    }
+    methods: {}
   }
 </script>
 <style scoped lang="scss" type="text/scss">

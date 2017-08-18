@@ -86,8 +86,8 @@
     mounted() {
     },
     methods: {
-      onRefresh(_requestData) {
-        this.searchParam = _requestData
+      onRefresh(_searchParam) {
+        this.searchParam = _searchParam
         this.refresh()
       },
       addData() {
@@ -99,8 +99,7 @@
         this.$refs.myWrapper.refresh()
       },
       resetDialogForm() {
-        // 清空form
-        this.formModel = JSON.parse(this.tempFormModel)
+        this.formModel = JSON.parse(this.tempFormModel) // 清空form
       },
       tableView(row) {
         Object.assign(this.formModel, row)
