@@ -47,7 +47,8 @@
   import EventBus from 'common/eventbus'
   import {
     ON_SEARCH_BUTTON_CLICK,
-    ON_REFRESH_DATA
+    ON_REFRESH_DATA,
+    ON_INIT_DIALOG_DATA
   } from './event.toml'
 
   export default {
@@ -107,7 +108,7 @@
       }
     },
     created() {
-      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+      this.tempFormModel = Object.assign({}, this.formModel)
       this.getData()
     },
     mounted() {
@@ -137,7 +138,7 @@
             return item.id === 'add'
           })
         console.log(dig[0].dialog)
-        EventBus.$emit('initData', JSON.parse(this.tempFormModel))
+        EventBus.$emit(ON_INIT_DIALOG_DATA, this.tempFormModel)
 //        console.log(this.tempFormModel)
         this.whichBizDialog = dig[0].dialog
         setTimeout(() => {
@@ -161,7 +162,7 @@
               })
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              EventBus.$emit('initData', row)
+              EventBus.$emit(ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
             }, 20)
             break
@@ -175,7 +176,7 @@
             console.log(dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              EventBus.$emit('initData', row)
+              EventBus.$emit(ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
             }, 20)
             console.log('edit is clicked')

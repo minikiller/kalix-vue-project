@@ -21,7 +21,7 @@
   import Message from 'common/message'
   import Vue from 'vue'
   import EventBus from 'common/eventbus'
-  import {ON_REFRESH_DATA} from './event.toml'
+  import {ON_REFRESH_DATA, ON_INIT_DIALOG_DATA} from './event.toml'
 
   export default {
     props: {
@@ -101,7 +101,7 @@
       }
     },
     mounted() {
-      EventBus.$on('initData', this.initData)
+      EventBus.$on(ON_INIT_DIALOG_DATA, this.initData)
     }
   }
 </script>
