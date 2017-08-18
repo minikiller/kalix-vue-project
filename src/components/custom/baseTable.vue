@@ -173,7 +173,6 @@
           }
 
           case 'edit': {
-
             let dig =
               this.bizDialog.filter((item) => {
                 return item.id === 'edit'
