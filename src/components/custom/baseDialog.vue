@@ -87,6 +87,10 @@
         this.$refs.dialogForm.resetFields()
         this.visible = false
       },
+      close() {
+        this.$refs.dialogForm.resetFields()
+        this.visible = false
+      },
       open(title, isEdit = false) {
         this.title = title
         this.visible = true

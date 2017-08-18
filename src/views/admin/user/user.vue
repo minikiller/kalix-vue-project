@@ -3,9 +3,7 @@
     base-table(title='用户列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    v-bind:bizSearch="'userSearch'"
-    v-on:resetFormModel="resetFormModel"
-    v-on:setFormModel="setFormModel")
+    bizSearch="userSearch")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
