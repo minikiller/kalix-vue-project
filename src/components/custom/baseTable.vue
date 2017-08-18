@@ -45,7 +45,6 @@
   import Dialog from './baseDialog'
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
-  import propsync from 'common/propsync'
   import {
     ON_SEARCH_BUTTON_CLICK,
     ON_REFRESH_DATA
@@ -53,7 +52,6 @@
 
   export default {
     name: 'baseTable',
-    mixins: [propsync],
     props: {
       title: {  // 表格组件标题名
         type: String,
