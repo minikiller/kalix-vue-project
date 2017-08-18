@@ -1,23 +1,29 @@
+<!--
+描述：table 组件的二次封装
+开发人：sunlf
+开发日期：2017年8月17日
+-->
+
 <template lang="pug">
   div.kalix-article
-    component(:is="bizSearch" ref="mySearch" v-if="bizSearch" v-on:onSearch="onSearchClick")
+    component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch" v-on:onSearchBtnClick="onSearchClick")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
         i.iconfont.icon-dict-management
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar(@onAddClick="onAddClick" v-on:onRefreshClick="onRefreshClick")
+        kalix-tool-bar( v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
         div.kalix-table-container(ref="kalixTableContainer")
           el-table(:data="tableData" stripe style="width: 100%" v-loading.body="loading" v-bind:height="tableHeight")
             //table的字段
             el-table-column(v-if="tableData && tableData.length > 0" label="行号" width="70")
               template(scope="scope")
                 div(style="text-align: center") {{ scope.row.rowNumber }}
-            div(v-if="tableData && tableData.length > 0" v-for="field in fields" v-bind:key="field.prop")
+            div(v-if="tableData && tableData.length > 0" v-for="field in tableFields" v-bind:key="field.prop")
               el-table-column( :prop="field.prop" v-bind:label="field.label")
             //  table的工具按钮
             slot(name="tableToolSlot")
-              kalix-table-tool(:btnList="btnList" v-on:onTableToolClick="btnClick")
+              kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick")
           div.no-list(v-if="!tableData || !tableData.length > 0" v-bind:style="{'height':tableHeight+'px'}")
             div 暂无数据
         div.kalix-table-pagination
@@ -32,19 +38,27 @@
       component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules"
       v-on:refreshData="refresh")
 </template>
+
 <script type="text/ecmascript-6">
-  import {PageConfig, ToolButtonList} from 'config/global.toml'
+  import {PageConfig, ToolButtonList, SecurityBtnUrl} from 'config/global.toml'
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
   import Dialog from './baseDialog'
-  import BaseSearch from './baseSearch.vue'
   import Message from 'common/message'
+  import EventBus from 'common/eventbus'
+  import {
+    ON_SEARCH_BUTTON_CLICK
+  } from './event.toml'
 
   export default {
     props: {
       title: {  // 表格组件标题名
         type: String,
         required: true
+      },
+      buttonPermissionPrefix: { //  table中tool的按钮组件认证前缀
+        type: String,
+        default: ''   // 为空时候，不校验权限
       },
       bizSearch: {  //  使用的搜索组件名称
         type: String
@@ -68,7 +82,7 @@
         type: String,
         default: ''
       },
-      fields: {   //  数据列表的列名
+      tableFields: {   //  数据列表的列名
         type: Array,
         required: true
       }
@@ -88,13 +102,16 @@
           start: 0
         },
         tableHeight: 0, //  列表组件高度
-        requestData: {} //  列表查询条件
+        searchParam: {} //  列表查询条件
       }
     },
     created() {
       this.getData()
     },
     mounted() {
+      // 注册事件接受
+      EventBus.$on(ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
+
       const that = this
       setTimeout(() => {
         that._getTableHeight()
@@ -104,11 +121,12 @@
       }, 20)
     },
     methods: {
-      onSearchClick(_requestData) {
-        this.requestData = _requestData
+      onSearchClick(_searchParam) { // 查询按钮点击事件
+        console.log('[kalix] base table search clicked')
+        this.searchParam = _searchParam
         this.refresh()
       },
-      onAddClick() {
+      onAddClick() {  // 添加按钮点击事件
         this.whichBizDialog = ''
         let that = this
         let dig =
@@ -122,16 +140,16 @@
           that.$refs.kalixDialog.open('添加')
         }, 20)
       },
-      onRefreshClick() {
+      onRefreshClick() { // 刷新按钮点击事件
         this.getData()
       },
-      refresh() {
+      refresh() { // 刷新表格数据
         this.getData()
       },
-      btnClick(row, btnId) {
+      btnClick(row, btnId) { // table工具栏点击事件
         console.log(row, btnId)
         switch (btnId) {
-          case 'view':
+          case 'view': {
             let that = this
             this.$emit('setFormModel', row)
             let dig =
@@ -146,11 +164,24 @@
 //            this.$refs.kalixDialog.open('查看')
             console.log('view is clicked')
             break
-          case 'edit':
+          }
+
+          case 'edit': {
             this.$emit('setFormModel', row)
-            this.$refs.kalixDialog.open('编辑')
+            let dig =
+              this.bizDialog.filter((item) => {
+                return item.id === 'edit'
+              })
+            console.log(dig[0].dialog)
+            this.whichBizDialog = dig[0].dialog
+//            this.$refs.kalixDialog.$props.isView = true
+            setTimeout(() => {
+              this.$refs.kalixDialog.open('编辑')
+            }, 20)
             console.log('edit is clicked')
             break
+          }
+
           case 'delete': {
             console.log('delete is clicked')
             this.$confirm('确定要删除吗?', '提示', {
@@ -175,13 +206,11 @@
           }
         }
       },
-      pagerSizeChange(val) {
-        //  改变每页记录数
+      pagerSizeChange(val) { //  改变每页记录数
         this.pager.limit = val
         this.getData()
       },
-      pagerCurrentChange(val) {
-        //  翻页
+      pagerCurrentChange(val) { //  翻页
         this.pager.currentPage = val
         this.getData()
       },
@@ -195,11 +224,10 @@
           start: this.pager.start,
           limit: this.pager.limit
         }
-        _data = Object.assign(_data, this.requestData)
+        _data = Object.assign(_data, this.searchParam)
         this.$http.get(this.targetURL, {
           params: _data
         }).then(response => {
-//          if(response.data)
           this.tableData = response.data.data.map((item, index) => {
             item.rowNumber = index + that.rowNo
             return item
@@ -212,6 +240,36 @@
           this.loading = false
           console.log('this.loading = false', this.tableData.length)
         })
+        this._validateButton()
+      },
+      /**
+       * 发送按钮权限认证
+       * @private
+       */
+      _validateButton() {
+        if (this.buttonPermissionPrefix !== '') { // 默认为空不校验
+          let _permissionData = []
+          this.btnList.map(item => {  // 组成按钮验证字符串
+            item.permission = this.buttonPermissionPrefix + item.id
+            if (item.isPermission) {  // 判断是否参与校验
+              _permissionData.push(this.buttonPermissionPrefix + item.id)
+            }
+          })
+          // 发送按钮验证
+          if (_permissionData.length > 0) {
+            this.$http.get(`${SecurityBtnUrl}${_permissionData.join('_')}`).then(res => {
+              res.data.buttons.forEach(item => {
+                let tmp = this.btnList.find(e => {
+                  if (e.permission === item.permission) {
+                    return e
+                  }
+                })
+                tmp.isShow = item.status  // 根据返回的权限确定按钮是否显示
+              })
+            })
+          }
+          console.log(`[Kalix] table tool button list is `, this.btnList)
+        }
       },
       setWrapperStyle() {
         if (!this.bizSearch) {
@@ -220,23 +278,24 @@
         return {}
       },
       _getTableHeight() {
-        this.tableHeight = this.$refs.kalixTableContainer.clientHeight
+        if (this.$refs.kalixTableContainer && this.$refs.kalixTableContainer.clientHeight) {
+          this.tableHeight = this.$refs.kalixTableContainer.clientHeight
+        }
       }
     },
     components: {
       KalixTableTool: TableTool,
       KalixToolBar: ToolBar,
-      KalixDialog: Dialog,
-      KailxSearch: BaseSearch
+      KalixDialog: Dialog
     },
     computed: {
       rowNo() {
-        // 返回当前行号
-        return (1 + ((this.pager.currentPage - 1) * this.pager.limit))
+        return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
       }
     }
   }
 </script>
+
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/color"
   .kalix-wrapper

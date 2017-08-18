@@ -3,17 +3,18 @@
 开发人：桑杨
 开发日期：2017年7月14日
 -->
+
 <template lang="pug">
   div.login
     div.form
       div.logo
-      el-form.loginForm(:model="loginForm" :rules="rules" ref="loginForm" label-width="100px")
+      el-form.loginForm(v-bind:model="loginForm" v-bind:rules="rules" ref="loginForm" label-width="100px")
         el-form-item(label="账号" prop="name")
           el-input(v-model="loginForm.name")
         el-form-item(label="密码" prop="pass")
           el-input(type="password" v-model="loginForm.pass" auto-complete="off")
         el-form-item(label=" ")
-          el-button.btn-submit(type="primary" @click="onSubmit('loginForm')" size="large") 立即登录
+          el-button.btn-submit(type="primary" v-on:click="onSubmit('loginForm')" size="large") 立即登录
 </template>
 
 <script type="text/ecmascript-6">

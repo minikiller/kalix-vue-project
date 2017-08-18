@@ -12,7 +12,7 @@
     )
     kalix-wrapper(ref='myWrapper' title="字典列表" icon="iconfont icon-dict-management"
     v-bind:data-url="dataUrl"
-    v-bind:request-data="requestData"
+    v-bind:request-data="searchParam"
     v-on:tableView="tableView"
     v-on:tableEdit="tableEdit")
       <!-- 按钮 -->
@@ -51,7 +51,7 @@
       return {
         dataUrl: ScheduleDictsURL,
         // 请求参数
-        requestData: {},
+        searchParam: {},
         // 搜索框
         search: {
           filters: [
@@ -87,7 +87,7 @@
     },
     methods: {
       onRefresh(_requestData) {
-        this.requestData = _requestData
+        this.searchParam = _requestData
         this.refresh()
       },
       addData() {

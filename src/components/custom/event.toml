@@ -1,0 +1,6 @@
+# 事件常量定义
+
+ON_ADD_BUTTON_CLICK = "onAddBtnClick"
+ON_REFRESH_BUTTON_CLICK = "onRefreshBtnClick"
+ON_SEARCH_BUTTON_CLICK = "onSearchBtnClick"
+ON_TABLE_TOOLBAR_CLICK = "onTableToolBarClick"

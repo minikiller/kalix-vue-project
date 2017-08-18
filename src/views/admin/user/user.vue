@@ -1,6 +1,7 @@
 <template lang="pug">
   div
-    base-table(title='用户列表' v-bind:fields="fields" v-bind:targetURL="targetURL"
+    base-table(title='用户列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     v-bind:biz-search="'userSearch'"
     v-on:resetFormModel="resetFormModel"
@@ -8,13 +9,14 @@
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {usersURL} from 'config/global.toml'
+  import {usersURL, userBtnPermissionPrefix} from 'config/global.toml'
 
   export default {
     data() {
       return {
+        buttonPermissionPrefix: userBtnPermissionPrefix,
         targetURL: usersURL,
-        fields: [
+        tableFields: [
           {prop: 'id', label: '工号'},
           {prop: 'loginName', label: '登录名'},
           {prop: 'name', label: '姓名'},

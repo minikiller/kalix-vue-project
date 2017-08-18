@@ -112,7 +112,7 @@
           limit: that.limit
         }
         // 合并参数
-        _data = Object.assign(_data, this.requestData)
+        _data = Object.assign(_data, this.searchParam)
         Vue.axios.request({
           method: 'GET',
           params: _data,

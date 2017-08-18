@@ -11,7 +11,7 @@
         v-bind:target-url="dataUrl"
         v-bind:btn-option="btnOption"
         v-bind:is-scroll="tableIsScroll"
-        v-bind:request-data="requestData"
+        v-bind:request-data="searchParam"
         v-bind:current-page="pager.currentPage"
         v-bind:limit="pager.limit"
         v-bind:height="tableHeight"

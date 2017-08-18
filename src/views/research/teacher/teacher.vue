@@ -4,7 +4,7 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  base-table(title='教师列表' v-bind:fields="fields" v-bind:targetURL="targetURL"
+  base-table(title='教师列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
   v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
   v-bind:biz-search="'ResearchTeacherSearch'"
   v-on:resetFormModel="resetFormModel"
@@ -26,7 +26,7 @@
     data() {
       return {
         targetURL: TeacherURL,
-        fields: [
+        tableFields: [
           {prop: 'identificationCard', label: '身份证号'},
           {prop: 'name', label: '姓名'},
           {prop: 'sex', label: '性别'},
@@ -35,7 +35,9 @@
           {prop: 'resume', label: '个人简历'},
           {prop: 'introduction', label: '个人说明'}
         ],
-        bizDialog: [{id: 'view', dialog: 'ResearchUserEdit'},
+        bizDialog: [
+          {id: 'view', dialog: 'ResearchTeacherView'},
+          {id: 'edit', dialog: 'ResearchTeacherAdd'},
           {id: 'add', dialog: 'ResearchTeacherAdd'}
         ],
         formModel: {
