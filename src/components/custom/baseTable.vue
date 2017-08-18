@@ -137,11 +137,12 @@
             return item.id === 'add'
           })
         console.log(dig[0].dialog)
+        EventBus.$emit('initData', JSON.parse(this.tempFormModel))
+//        console.log(this.tempFormModel)
         this.whichBizDialog = dig[0].dialog
         setTimeout(() => {
-          this.formModel = JSON.parse(this.tempFormModel)
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
-        }, 1000)
+        }, 20)
       },
       onRefreshClick() { // 刷新按钮点击事件
         this.getData()
@@ -160,7 +161,7 @@
               })
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              Object.assign(that.formModel, row)
+              EventBus.$emit('initData', row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
             }, 20)
             break
@@ -174,7 +175,7 @@
             console.log(dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              Object.assign(this.formModel, row)
+              EventBus.$emit('initData', row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
             }, 20)
             console.log('edit is clicked')

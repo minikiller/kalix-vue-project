@@ -95,7 +95,13 @@
         this.title = title
         this.visible = true
         this.isEdit = isEdit
+      },
+      initData(row) {
+        Object.assign(this.formModel, row)
       }
+    },
+    mounted() {
+      EventBus.$on('initData', this.initData)
     }
   }
 </script>
