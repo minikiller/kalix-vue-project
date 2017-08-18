@@ -24,7 +24,8 @@
             el-button(type="text" icon="message") 0
           li
             el-dropdown(@command="handleCommand")
-              span.el-dropdown-link {{userName}}
+              div.s-flex.el-dropdown-link
+                div.avatar
                 i.el-icon-caret-bottom.el-icon--right
               el-dropdown-menu(slot="dropdown")
                 el-dropdown-item(command="changeInfo") 个人信息修改

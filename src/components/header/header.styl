@@ -1,3 +1,4 @@
+@import "~@/assets/stylus/base.styl"
 #ToolBar
   position fixed
   top 0
@@ -36,5 +37,20 @@
           margin-right 20px
           li
             margin-top 5px
+            vertical-align top
           button
             line-height 36px
+          .el-dropdown-link
+            align-items: center;
+            margin-top: 8px;
+            .avatar
+              flex 1
+              width 40px
+              height 40px
+              border-radius 50%
+              background-color transparent
+              margin-right 8px
+              border 1px solid border-color_1
+              box-sizing border-box
+          .el-select
+            margin-top 10px
