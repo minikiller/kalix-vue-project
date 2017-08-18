@@ -141,10 +141,9 @@
         console.log(dig[0].dialog)
         this.whichBizDialog = dig[0].dialog
         setTimeout(() => {
-//          that.$emit('resetFormModel')
           this.formModel = JSON.parse(this.tempFormModel)
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
-        }, 20)
+        }, 1000)
       },
       onRefreshClick() { // 刷新按钮点击事件
         this.getData()
@@ -161,14 +160,11 @@
               this.bizDialog.filter((item) => {
                 return item.id === 'view'
               })
-            console.log(dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              that.formModel = row
+              Object.assign(that.formModel, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
             }, 20)
-//            this.$refs.kalixDialog.open('查看')
-            console.log('view is clicked')
             break
           }
 
@@ -180,7 +176,7 @@
             console.log(dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              this.formModel = row
+              Object.assign(this.formModel, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
             }, 20)
             console.log('edit is clicked')

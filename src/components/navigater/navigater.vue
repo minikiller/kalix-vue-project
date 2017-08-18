@@ -3,10 +3,11 @@
 开发人：桑杨
 开发日期：2017年7月14日
 -->
+
 <template lang="pug">
   div.treeList(:class="{'small':menuChk}")
     ul.bd.bg(v-if="!menuChk")
-      li(v-for="item in treeData")
+      li(v-for="item in treeData" v-bind:key="item.id")
         div.s-flex.tit(@click="showTree(item,$event)")
           div.s-flex_item
             i.tit_icon(:class="bindClass(item.iconCls)")
@@ -16,7 +17,7 @@
         el-collapse-transition
           div.mn(v-show="item.isShow")
             ul
-              li(v-for="item in item.children")
+              li(v-for="item in item.children" v-bind:key="item.id")
                 router-link.tit(tag="div" v-bind:to="{path:'/'+item.routeId}")
                   i.tit_icon(:class="bindClass(item.iconCls)")
                   | {{item.text}}
@@ -27,7 +28,7 @@
           div.mn
             div.txt {{item.text}}
             ul
-              router-link.tit(tag="li" v-for="item in item.children" v-bind:to="{path:'/'+item.routeId}")
+              router-link.tit(tag="li" v-for="item in item.children" v-bind:to="{path:'/'+item.routeId}" v-bind:key="item.id")
                 i.tit_icon(:class="bindClass(item.iconCls)")
                 | {{item.text}}
 </template>
