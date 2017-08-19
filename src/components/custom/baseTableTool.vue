@@ -28,11 +28,13 @@
         }
       }
     },
+    created() {
+      console.log(`[kalix] table tool button is `, this.btnList)
+    },
     data() {
       return {}
     },
-    computed: {
-    },
+    computed: {},
     methods: {
       toggle(row, btnId) { // toolbar click event
         this.$emit(ON_TABLE_TOOLBAR_CLICK, row, btnId)

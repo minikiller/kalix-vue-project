@@ -7,13 +7,13 @@
 <template lang="pug">
   base-table(title='教师列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
   v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-  v-bind:bizSearch="'ResearchTeacherSearch'")
+  v-bind:bizSearch="'ResearchTeacherSearch'" v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
-  import {TeacherURL, TeacherComponent} from '../config.toml'
+  import {TeacherURL, TeacherComponent, ToolButtonList} from '../config.toml'
 
   // 注册全局组件
   TeacherComponent.forEach((item) => {
@@ -24,6 +24,7 @@
   export default {
     data() {
       return {
+        btnList: ToolButtonList,
         targetURL: TeacherURL,
         tableFields: [
           {prop: 'identificationCard', label: '身份证号'},
@@ -63,8 +64,7 @@
     created() {
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
-    methods: {
-    },
+    methods: {},
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd

@@ -3,15 +3,16 @@
     base-table(title='用户列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    bizSearch="userSearch")
+    bizSearch="userSearch"  v-bind:btnList="btnList")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {usersURL, userBtnPermissionPrefix} from 'config/global.toml'
+  import {usersURL, userBtnPermissionPrefix, ToolButtonList} from 'config/global.toml'
 
   export default {
     data() {
       return {
+        btnList: ToolButtonList,
         buttonPermissionPrefix: userBtnPermissionPrefix,
         targetURL: usersURL,
         tableFields: [

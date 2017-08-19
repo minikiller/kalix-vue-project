@@ -39,7 +39,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {PageConfig, ToolButtonList, SecurityBtnUrl} from 'config/global.toml'
+  import {PageConfig, SecurityBtnUrl} from 'config/global.toml'
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
   import Dialog from './baseDialog'
@@ -87,11 +87,14 @@
       tableFields: {   //  数据列表的列名
         type: Array,
         required: true
+      },
+      btnList: {   //  table中按钮数组
+        type: Array,
+        required: true
       }
     },
     data() {
       return {
-        btnList: ToolButtonList,
         loading: true,
         tableData: [],
         totalCount: 0,
@@ -269,7 +272,7 @@
               })
             })
           }
-          console.log(`[Kalix] table tool button list is `, this.btnList)
+//          console.log(`[Kalix] table tool button list is `, this.btnList)
         }
       },
       setWrapperStyle() {
