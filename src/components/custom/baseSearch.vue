@@ -33,6 +33,12 @@
   import {ON_SEARCH_BUTTON_CLICK} from './event.toml'
 
   export default {
+    activated() {
+      console.log('[kalix] base search ' + '  is activated')
+    },
+    deactivated() {
+      console.log('[kalix] base search ' + '  is deactivated')
+    },
     data() {
       return {
         form: {},

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  keep-alive
     base-table(bizKey="user" title='用户列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"

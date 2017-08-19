@@ -88,23 +88,11 @@
       }
     },
     created() {
-      console.log('this.formRules.name:', this.formRules.name)
-      console.log('[teacherAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
       KalixDialog: Dialog
     },
     methods: {
-      hello() {
-        alert('dfdf')
-      },
-      open(title) {
-        console.log('[teacherAdd.vue methods] formModel', this.formModel)
-        this.$refs.kalixDialog.open(title)
-      },
-      refreshData() {
-        this.$emit('refreshData')
-      }
     }
   }
 </script>

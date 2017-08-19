@@ -5,9 +5,10 @@
 -->
 
 <template lang="pug">
-  base-table(bizKey="note" title='新闻列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-  v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-  bizSearch="CommonNewsSearch" v-bind:btnList="btnList")
+  keep-alive
+    base-table(bizKey="news" title='新闻列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
+    bizSearch="CommonNewsSearch" v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">

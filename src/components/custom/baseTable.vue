@@ -6,7 +6,8 @@
 
 <template lang="pug">
   div.kalix-article
-    component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch" v-on:onSearchBtnClick="onSearchClick")
+    keep-alive
+      component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch" v-on:onSearchBtnClick="onSearchClick")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
         i.iconfont.icon-dict-management
@@ -35,7 +36,8 @@
           v-bind:page-size="1"
           layout="total, sizes, prev, pager, next, jumper"
           v-bind:total="pager.totalCount")
-      component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
+        keep-alive
+          component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
 </template>
 
 <script type="text/ecmascript-6">
@@ -120,14 +122,16 @@
     },
     activated() {
       console.log(this.bizKey + '  is activated')
+      EventBus.$on(ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
+      EventBus.$on(ON_REFRESH_DATA, this.refresh)
     },
     deactivated() {
       console.log(this.bizKey + '  is deactivated')
+      EventBus.$off(ON_SEARCH_BUTTON_CLICK)
+      EventBus.$off(ON_REFRESH_DATA)
     },
     mounted() {
       // 注册事件接受
-      EventBus.$on(this.bizKey + ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
-      EventBus.$on(this.bizKey + ON_REFRESH_DATA, this.refresh)
 
       const that = this
       setTimeout(() => {
