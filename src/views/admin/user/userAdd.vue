@@ -1,5 +1,5 @@
 <template lang="pug">
-  kalix-dialog.user-add(
+  kalix-dialog.user-add(bizKey="user"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="工号" prop="code" v-bind:rules="rules.code")

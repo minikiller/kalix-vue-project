@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    base-table(title='用户列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    base-table(bizKey="user" title='用户列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     bizSearch="userSearch"  v-bind:btnList="btnList")

@@ -54,6 +54,10 @@
   export default {
     name: 'baseTable',
     props: {
+      bizKey: {  // 主鍵
+        type: String,
+        required: true
+      },
       title: {  // 表格组件标题名
         type: String,
         required: true
@@ -114,10 +118,16 @@
       this.tempFormModel = Object.assign({}, this.formModel)
       this.getData()
     },
+    activated() {
+      console.log(this.bizKey + '  is activated')
+    },
+    deactivated() {
+      console.log(this.bizKey + '  is deactivated')
+    },
     mounted() {
       // 注册事件接受
-      EventBus.$on(ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
-      EventBus.$on(ON_REFRESH_DATA, this.refresh)
+      EventBus.$on(this.bizKey + ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
+      EventBus.$on(this.bizKey + ON_REFRESH_DATA, this.refresh)
 
       const that = this
       setTimeout(() => {
@@ -152,6 +162,7 @@
         this.getData()
       },
       refresh() { // 刷新表格数据
+        console.log('[kalix] ' + this.title + ' refresh is trigger!')
         this.getData()
       },
       btnClick(row, btnId) { // table工具栏点击事件

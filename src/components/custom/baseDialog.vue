@@ -25,6 +25,7 @@
 
   export default {
     props: {
+      bizKey: String,
       formModel: { // dialog中的form的数据模型，由父组件传递
         type: Object,
         required: true
@@ -68,7 +69,7 @@
                 // 关闭对话框
 //                this.close()
                 // 刷新列表
-                EventBus.$emit(ON_REFRESH_DATA)
+                EventBus.$emit(this.bizKey + ON_REFRESH_DATA)
                 // 清空form
 //                this.$parent.resetDialogForm()
 //                this.$emit('resetDialogForm')
@@ -97,11 +98,12 @@
         this.isEdit = isEdit
       },
       initData(row) {
+        console.log(`[kalix] init base dialog ${this.bizKey}`)
         Object.assign(this.formModel, row)
       }
     },
     mounted() {
-      EventBus.$on(ON_INIT_DIALOG_DATA, this.initData)
+      EventBus.$on(this.bizKey + ON_INIT_DIALOG_DATA, this.initData)
     }
   }
 </script>

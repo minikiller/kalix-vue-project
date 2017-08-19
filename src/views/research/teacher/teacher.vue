@@ -5,7 +5,7 @@
 -->
 
 <template lang="pug">
-  base-table(title='教师列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+  base-table(bizKey="note" title='教师列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
   v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
   v-bind:bizSearch="'ResearchTeacherSearch'" v-bind:btnList="btnList")
 </template>
@@ -22,6 +22,12 @@
   })
 
   export default {
+    activated() {
+      console.log(this.bizKey + '  is activated')
+    },
+    deactivated() {
+      console.log(this.bizKey + '  is deactivated')
+    },
     data() {
       return {
         btnList: ToolButtonList,
