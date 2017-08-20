@@ -148,7 +148,7 @@
         this.refresh()
       },
       onAddClick() {  // 添加按钮点击事件
-        this.whichBizDialog = ''
+//        this.whichBizDialog = ''
         let that = this
         let dig =
           this.bizDialog.filter((item) => {
@@ -178,9 +178,9 @@
               this.bizDialog.filter((item) => {
                 return item.id === 'view'
               })
+            EventBus.$emit(ON_INIT_DIALOG_DATA, row)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              EventBus.$emit(ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
             }, 20)
             break
@@ -191,10 +191,10 @@
               this.bizDialog.filter((item) => {
                 return item.id === 'edit'
               })
-            console.log(dig[0].dialog)
+            console.log('[kalix] edit dialog is: ' + dig[0].dialog)
+            EventBus.$emit(ON_INIT_DIALOG_DATA, row)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              EventBus.$emit(ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
             }, 20)
             console.log('edit is clicked')

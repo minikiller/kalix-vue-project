@@ -6,8 +6,7 @@
 <template lang="pug">
   kalix-dialog.user-add(
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-  v-on:refreshData="refreshData" v-bind:isView="readonly"
-  )
+  v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard" )
         el-input(v-model="formModel.identificationCard" v-bind:readonly="readonly")

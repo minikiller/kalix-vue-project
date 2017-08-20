@@ -1,8 +1,20 @@
 # 科研管理項目配置文件
 
-CommonDictsURL = "/camel/rest/common/dicts"
+CommonDictURL = "/camel/rest/common/dicts"
+CommonDictsTypesListURL = "/camel/rest/common/dicts/types/list"
 NewsURL = "/camel/rest/newss"
 NoteURL = "/camel/rest/notes"
+
+# 需要自动注册成全局的News组件
+[[CommonDictComponent]]
+  path = "./commondictView"
+  name = "CommonDictView"
+[[CommonDictComponent]]
+  path = "./commondictAdd"
+  name = "CommonDictAdd"
+[[CommonDictComponent]]
+  path = "./commondictSearch"
+  name = "CommonDictSearch"
 
 # 需要自动注册成全局的News组件
 [[NewsComponent]]

@@ -39,8 +39,6 @@
         targetURL: NewsURL
       }
     },
-    created() {
-    },
     components: {
       KalixDialog: Dialog
     },

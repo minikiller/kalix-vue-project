@@ -43,8 +43,6 @@
         readonly: true
       }
     },
-    created() {
-    },
     components: {
       KalixDialog: Dialog
     },
@@ -52,5 +50,4 @@
     }
   }
 </script>
-<style scoped lang="scss" type="text/scss">
-</style>
+
