@@ -4,54 +4,41 @@
 开发日期：2017年7月17日
 -->
 <template lang="pug">
-  div.schedule-dict
-    kalix-search(ref="mySearch" title="字典查询"
-    v-bind:filters="search.filters"
-    v-bind:formRules="search.rules"
-    v-on:onDataRefresh="onRefresh"
-    )
-    kalix-wrapper(ref='myWrapper' title="字典列表" icon="iconfont icon-dict-management"
-    v-bind:data-url="dataUrl"
-    v-bind:request-data="searchParam"
-    v-on:tableView="tableView"
-    v-on:tableEdit="tableEdit")
-      <!-- 按钮 -->
-      div(slot="toolbar")
-        el-button(v-on:click="addData" type="primary")
-          i.iconfont.icon-add
-          | 添加
-        el-button(v-on:click="refresh" type="primary")
-          i.iconfont.icon-refresh
-          | 刷新
-      kalix-table-columns(slot="container")
-    kalix-dialog(ref="kalixDialog"
-    form-name="kalixScheduleDitDialogForm"
-    v-bind:formModel="formModel"
-    v-bind:rules="rules"
-    v-bind:data-url="dataUrl"
-    v-on:refreshData ="()=>{$refs.myWrapper.refresh()}")
-      kalix-dialog-form(slot="dialog-container"
-      ref="kalixScheduleDitDialogForm"
-      parent-ref-name="kalixDialog"
-      v-bind:parent-refs="$refs"
-      v-bind:formModel="formModel")
+  keep-alive
+    base-table(bizKey="scheduleDict"
+    title='字典查询'
+    v-bind:tableFields="tableFields"
+    v-bind:targetURL="targetURL"
+    v-bind:formModel.sync="formModel"
+    v-bind:formRules="formRules"
+    v-bind:bizDialog="bizDialog"
+    v-bind:bizSearch="'ResearchScheduleDictSearch'"
+    v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
-  import {ScheduleDictsURL} from 'config/global.toml'
+  import BaseTable from '@/components/custom/baseTable'
+  import Vue from 'vue'
+  import {ScheduleDictsURL, ScheduleDictsComponent, ToolButtonList} from '../config.toml'
 
-  import KalixTableButtons from '@/components/table/tableButtons.vue'
-  import KalixTableColumns from './scheduledictColumns'
-  import ScheduleDitDialogForm from './scheduledictForm'
-  import ScheduleDictSearch from './scheduledictSearch'
+  // 注册全局组件
+  ScheduleDictsComponent.forEach((item) => {
+    console.log('[kalix]-[research] registry name is: ' + item.name, '; registry path is: ' + item.path)
+    Vue.component(item.name, require('' + item.path))
+  })
 
   export default {
     name: 'scheculedict',
+    activated() {
+      console.log(this.bizKey + '  is activated')
+    },
+    deactivated() {
+      console.log(this.bizKey + '  is deactivated')
+    },
     data() {
       return {
-        dataUrl: ScheduleDictsURL,
-        // 请求参数
-        searchParam: {},
+        btnList: ToolButtonList,
+        targetURL: ScheduleDictsURL,
         // 搜索框
         search: {
           filters: [
@@ -64,59 +51,34 @@
           }
         },
         formModel: {
-          id: 0,
           type: '',
           label: '',
-          description: '',
-          types: []
+          description: ''
         },
         // 对话框表单验证项
-        rules: {
+        formRules: {
           type: [
             {required: true, message: '请选择类型', trigger: 'blur'}
           ],
           label: [
             {required: true, message: '请输入标签名', trigger: 'blur'}]
-        }
-      }
-    },
-    created() {
-      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
-    },
-    mounted() {
-    },
-    methods: {
-      onRefresh(_searchParam) {
-        this.searchParam = _searchParam
-        this.refresh()
-      },
-      addData() {
-        // 打开对话框
-        this.resetDialogForm()
-        this.$refs.kalixDialog.open('添加')
-      },
-      refresh() {
-        this.$refs.myWrapper.refresh()
-      },
-      resetDialogForm() {
-        this.formModel = JSON.parse(this.tempFormModel) // 清空form
-      },
-      tableView(row) {
-        Object.assign(this.formModel, row)
-        // 打开对话框
-        this.$refs.kalixDialog.open('查看', true)
-      },
-      tableEdit(row) {
-        Object.assign(this.formModel, row)
-        // 打开对话框
-        this.$refs.kalixDialog.open('修改')
+        },
+        bizDialog: [
+          {id: 'view', dialog: 'ResearchScheduleDictView'},
+          {id: 'edit', dialog: 'ResearchScheduleDictAdd'},
+          {id: 'add', dialog: 'ResearchScheduleDictAdd'}
+        ],
+        tableFields: [
+          {prop: 'type', label: '类型'},
+          {prop: 'label', label: '签名'},
+          {prop: 'value', label: '数值'},
+          {prop: 'createBy', label: '创建人'},
+          {prop: 'creationDate', label: '创建日期'}
+        ]
       }
     },
     components: {
-      KalixTableButtons,
-      KalixTableColumns,
-      KalixDialogForm: ScheduleDitDialogForm,
-      KalixScheduleDictSearch: ScheduleDictSearch
+      BaseTable
     }
   }
 </script>
