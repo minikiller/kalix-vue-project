@@ -111,7 +111,7 @@
       }
     },
     mounted() {
-      EventBus.$on(this.bizKey + ON_INIT_DIALOG_DATA, this.initData)
+      EventBus.$on(this.bizKey + '-' + ON_INIT_DIALOG_DATA, this.initData)
     }
   }
 </script>
