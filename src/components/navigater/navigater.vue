@@ -80,7 +80,7 @@
             params: data
           }).then(response => {
             let nowDate = new Date()
-            if (response.data.code !== 401) {
+            if (response.data && response.data.code !== 401) {
               this.treeData = response.data
               this.treeData.forEach(function (e, i) {
                 Vue.set(e, 'isShow', false)
