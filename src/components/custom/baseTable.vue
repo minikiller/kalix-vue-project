@@ -36,8 +36,7 @@
           v-bind:page-size="1"
           layout="total, sizes, prev, pager, next, jumper"
           v-bind:total="pager.totalCount")
-        keep-alive
-          component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
+        component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
 </template>
 
 <script type="text/ecmascript-6">
@@ -53,6 +52,7 @@
     ON_INIT_DIALOG_DATA
   } from './event.toml'
 
+  const DIALOG_INIT_EVENT = this.bizKey + '-' + ON_INIT_DIALOG_DATA
   export default {
     name: 'baseTable',
     props: {
@@ -117,7 +117,7 @@
       }
     },
     created() {
-      this.tempFormModel = Object.assign({}, this.formModel)
+      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
       this.getData()
     },
     activated() {
@@ -154,11 +154,9 @@
           this.bizDialog.filter((item) => {
             return item.id === 'add'
           })
-        console.log(dig[0].dialog)
-        EventBus.$emit(ON_INIT_DIALOG_DATA, this.tempFormModel)
-//        console.log(this.tempFormModel)
         this.whichBizDialog = dig[0].dialog
         setTimeout(() => {
+          EventBus.$emit(DIALOG_INIT_EVENT, JSON.parse(this.tempFormModel))
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
         }, 20)
       },
@@ -178,9 +176,9 @@
               this.bizDialog.filter((item) => {
                 return item.id === 'view'
               })
-            EventBus.$emit(ON_INIT_DIALOG_DATA, row)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
+              EventBus.$emit(DIALOG_INIT_EVENT, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
             }, 20)
             break
@@ -191,13 +189,11 @@
               this.bizDialog.filter((item) => {
                 return item.id === 'edit'
               })
-            console.log('[kalix] edit dialog is: ' + dig[0].dialog)
-            EventBus.$emit(ON_INIT_DIALOG_DATA, row)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
+              EventBus.$emit(DIALOG_INIT_EVENT, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
             }, 20)
-            console.log('edit is clicked')
             break
           }
 

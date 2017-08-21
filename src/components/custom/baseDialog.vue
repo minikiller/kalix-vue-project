@@ -24,14 +24,14 @@
   import {ON_REFRESH_DATA, ON_INIT_DIALOG_DATA} from './event.toml'
 
   export default {
-    activated() {
-      console.log('base dialog ' + this.bizKey + '  is activated')
-      EventBus.$on(ON_INIT_DIALOG_DATA, this.initData)
-    },
-    deactivated() {
-      console.log('base dialog ' + this.bizKey + '  is deactivated')
-      EventBus.$off(ON_INIT_DIALOG_DATA)
-    },
+//    activated() {
+//      console.log('base dialog ' + this.bizKey + '  is activated')
+//      EventBus.$on(ON_INIT_DIALOG_DATA, this.initData)
+//    },
+//    deactivated() {
+//      console.log('base dialog ' + this.bizKey + '  is deactivated')
+//      EventBus.$off(ON_INIT_DIALOG_DATA)
+//    },
     props: {
       bizKey: String,
       formModel: { // dialog中的form的数据模型，由父组件传递
@@ -111,7 +111,7 @@
       }
     },
     mounted() {
-
+      EventBus.$on(this.bizKey + ON_INIT_DIALOG_DATA, this.initData)
     }
   }
 </script>
