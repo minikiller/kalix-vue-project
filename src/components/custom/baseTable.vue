@@ -154,9 +154,10 @@
           this.bizDialog.filter((item) => {
             return item.id === 'add'
           })
+//        console.log(dig[0].dialog)3
         this.whichBizDialog = dig[0].dialog
         setTimeout(() => {
-          EventBus.$emit(DIALOG_INIT_EVENT, JSON.parse(this.tempFormModel))
+          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
         }, 20)
       },
@@ -178,7 +179,7 @@
               })
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              EventBus.$emit(DIALOG_INIT_EVENT, row)
+              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
             }, 20)
             break
@@ -189,11 +190,13 @@
               this.bizDialog.filter((item) => {
                 return item.id === 'edit'
               })
+            console.log('[kalix] edit dialog is: ' + dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              EventBus.$emit(DIALOG_INIT_EVENT, row)
+              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
             }, 20)
+            console.log('edit is clicked')
             break
           }
 
