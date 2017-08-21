@@ -55,6 +55,7 @@
   export default {
     name: 'baseTable',
     props: {
+      dialogOptions: {},
       bizKey: {  // 主鍵
         type: String,
         required: true
@@ -82,8 +83,8 @@
 //        required: true
       },
       targetURL: {  //  列表操作请求的 URL 地址
-        type: String,
-        required: true
+        type: String
+//        required: true
       },
       jsonStr: {  //  数据列表请求的查询条件
         type: String,
@@ -158,6 +159,9 @@
         setTimeout(() => {
           EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
+          if (typeof (this.$refs.kalixDialog.init) === 'function') {
+            that.$refs.kalixDialog.init(this.dialogOptions)
+          }
         }, 20)
       },
       onRefreshClick() { // 刷新按钮点击事件
@@ -194,6 +198,9 @@
             setTimeout(() => {
               EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
+              if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                this.$refs.kalixDialog.init(this.dialogOptions)
+              }
             }, 20)
             console.log('edit is clicked')
             break

@@ -22,10 +22,21 @@
 
   export default {
     props: {
-      dictTypesListURL: String,
-      targetURL: String
+      formModel: {
+        type: Object,
+        required: true
+      },
+      formRules: {
+        type: Object,
+        required: true
+      }
     },
     methods: {
+      init(options) {
+        console.log(options)
+        this.targetURL = options.targetURL
+        this.dictTypesListURL = options.dictTypesListURL
+      },
       visibleChange() {
         // 加载类型选项
 //        let that = this
@@ -50,6 +61,8 @@
     },
     data() {
       return {
+        dictTypesListURL: String,
+        targetURL: String,
         rules: {
           type: [{required: true, message: '请输入标题', trigger: 'blur'}],
           label: [{required: true, message: '请输入标签名', trigger: 'blur'}]

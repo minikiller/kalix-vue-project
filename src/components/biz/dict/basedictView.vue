@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="commondict"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL" v-bind:isView="readonly"
+  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:isView="readonly"
   )
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="类型" prop="type")
@@ -24,7 +24,6 @@
 
   export default {
     props: {
-      targetURL: String,
       formModel: {
         type: Object,
         required: true

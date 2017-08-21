@@ -7,17 +7,21 @@
 <template lang="pug">
   keep-alive
     kalix-base-dict(ref="baseTableRef" v-bind:bizKey="bizKey" v-bind:bizDialog="bizDialog" v-bind:dictComponent="dictComponent"
-    v-bind:targetURL="targetURL")
+    v-bind:targetURL="targetURL" v-bind:dialogOptions="dialogOptions")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseDict from '@/components/biz/dict/basedict'
-//  import Vue from 'vue'
-  import {CommonDictURL, CommonDictComponent} from '../config.toml'
+  //  import Vue from 'vue'
+  import {CommonDictURL, CommonDictComponent, CommonDictsTypesListURL} from '../config.toml'
 
   export default {
     data() {
       return {
+        dialogOptions: {
+          targetURL: CommonDictURL,
+          dictTypesListURL: CommonDictsTypesListURL
+        },
         bizKey: 'commondict',
         dictComponent: CommonDictComponent,
         targetURL: CommonDictURL,

@@ -6,9 +6,9 @@
 
 <template lang="pug">
   keep-alive
-    base-table(title='字典列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    base-table(v-bind:bizKey="bizKey" title='字典列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    bizSearch="basedictSearch" v-bind:btnList="btnList")
+    bizSearch="basedictSearch" v-bind:btnList="btnList" v-bind:dialogOptions="dialogOptions")
 </template>
 
 <script type="text/ecmascript-6">
@@ -18,6 +18,7 @@
 
   export default {
     props: {
+      dialogOptions: {},
       targetURL: String,
       bizDialog: Array,
       bizKey: String,
