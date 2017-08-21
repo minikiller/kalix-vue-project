@@ -52,7 +52,6 @@
     ON_INIT_DIALOG_DATA
   } from './event.toml'
 
-  const DIALOG_INIT_EVENT = this.bizKey + '-' + ON_INIT_DIALOG_DATA
   export default {
     name: 'baseTable',
     props: {
