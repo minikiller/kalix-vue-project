@@ -20,7 +20,8 @@
       return {
         dialogOptions: {
           targetURL: CommonDictURL,
-          dictTypesListURL: CommonDictsTypesListURL
+          dictTypesListURL: CommonDictsTypesListURL,
+          bizKey: 'commondict'
         },
         bizKey: 'commondict',
         dictComponent: CommonDictComponent,

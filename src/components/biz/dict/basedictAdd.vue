@@ -5,7 +5,8 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
+  kalix-dialog.user-add(ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="dictTargetURL"
+  v-bind:bizKey="dictBizKey" )
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="类型" prop="type")
         el-select(v-model="formModel.type" v-on:visible-change="visibleChange")
@@ -34,8 +35,9 @@
     methods: {
       init(options) {
         console.log(options)
-        this.targetURL = options.targetURL
+        this.dictTargetURL = options.targetURL
         this.dictTypesListURL = options.dictTypesListURL
+        this.dictBizKey = options.bizKey
       },
       visibleChange() {
         // 加载类型选项
@@ -61,8 +63,9 @@
     },
     data() {
       return {
-        dictTypesListURL: String,
-        targetURL: String,
+        dictTypesListURL: '',
+        dictTargetURL: '',
+        dictBizKey: '',
         rules: {
           type: [{required: true, message: '请输入标题', trigger: 'blur'}],
           label: [{required: true, message: '请输入标签名', trigger: 'blur'}]
