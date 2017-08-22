@@ -21,9 +21,9 @@
         dialogOptions: {
           targetURL: CommonDictURL,
           dictTypesListURL: CommonDictsTypesListURL,
-          bizKey: 'commondict'
+          bizKey: 'dict'
         },
-        bizKey: 'commondict',
+        bizKey: 'dict',
         dictComponent: CommonDictComponent,
         targetURL: CommonDictURL,
         bizDialog: [
