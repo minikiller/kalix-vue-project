@@ -16,6 +16,17 @@ WorkerURL = "/camel/rest/workers"
   path = "./teacherSearch"
   name = "ResearchTeacherSearch"
 
+# 需要自动注册成全局的Worker组件
+[[WorkerComponent]]
+  path = "./workerView"
+  name = "ResearchWorkerView"
+[[WorkerComponent]]
+  path = "./workerAdd"
+  name = "ResearchWorkerAdd"
+[[WorkerComponent]]
+  path = "./workerSearch"
+  name = "ResearchWorkerSearch"
+
 # table 的默认按钮定义
 [[ToolButtonList]]
   id = "view"

@@ -13,3 +13,5 @@ https://github.com/crossjs/vuex-localstorage
 https://github.com/nbubna/store
 https://github.com/tsironis/lockr
 
+##  cheatsheet
+https://vuejs-tips.github.io/cheatsheet/
