@@ -43,8 +43,8 @@
 //        required: true
       },
       targetURL: {  // 业务数据提交的url,包括add，delete，update
-        type: String,
-        required: true
+        type: String
+//        required: true
       },
       isView: false
     },

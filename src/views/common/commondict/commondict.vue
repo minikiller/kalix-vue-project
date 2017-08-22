@@ -6,61 +6,43 @@
 
 <template lang="pug">
   keep-alive
-    base-table(bizKey="commondict" title='字典列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    bizSearch="CommonDictSearch" v-bind:btnList="btnList")
+    kalix-base-dict(ref="baseTableRef" v-bind:bizKey="bizKey" v-bind:bizDialog="bizDialog" v-bind:dictComponent="dictComponent"
+    v-bind:targetURL="targetURL" v-bind:dialogOptions="dialogOptions")
 </template>
 
 <script type="text/ecmascript-6">
-  import BaseTable from '@/components/custom/baseTable'
-  import Vue from 'vue'
-  import {CommonDictURL, CommonDictComponent, ToolButtonList} from '../config.toml'
-
-  // 注册全局组件
-  CommonDictComponent.forEach((item) => {
-    console.log('[kalix]-[research] registry name is: ' + item.name, '; registry path is: ' + item.path)
-    Vue.component(item.name, require('' + item.path))
-  })
+  import BaseDict from '@/components/biz/dict/basedict'
+  //  import Vue from 'vue'
+  import {CommonDictURL, CommonDictComponent, CommonDictsTypesListURL} from '../config.toml'
 
   export default {
     data() {
       return {
-        btnList: ToolButtonList,
-        targetURL: CommonDictURL,
-        tableFields: [
-          {prop: 'type', label: '类型'},
-          {prop: 'label', label: '签名'},
-//          {prop: 'value', label: '数值'},
-          {prop: 'description', label: '备注'},
-          {prop: 'createBy', label: '创建人'},
-          {prop: 'creationDate', label: '创建日期'}
-        ],
-        bizDialog: [
-          {id: 'view', dialog: 'CommonDictView'},
-          {id: 'edit', dialog: 'CommonDictAdd'},
-          {id: 'add', dialog: 'CommonDictAdd'}
-        ],
-        formModel: {
-          type: '',
-          label: '',
-          value: '',
-          description: '',
-          createBy: '',
-          creationDate: ''
+        dialogOptions: {
+          targetURL: CommonDictURL,
+          dictTypesListURL: CommonDictsTypesListURL,
+          bizKey: 'commondict'
         },
-        formRules: {
-          type: [
-            {required: true, message: '请输入类型', trigger: 'blur'}
-          ]
-        }
+        bizKey: 'commondict',
+        dictComponent: CommonDictComponent,
+        targetURL: CommonDictURL,
+        bizDialog: [
+          {id: 'view', dialog: 'basedictView'},
+          {id: 'edit', dialog: 'basedictAdd'},
+          {id: 'add', dialog: 'basedictAdd'}
+        ]
       }
     },
     created() {
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+//      this.dictComponent.forEach((item) => {
+//        console.log(`[kalix]-[${this.bizKey}] registry name is:  ${item.name}, registry path is: ${item.path}`)
+//        Vue.component(item.name, require('' + item.path))
+//      })
     },
     methods: {},
     components: {
-      BaseTable
+      KalixBaseDict: BaseDict
 //      KalixUserAdd: UserAdd
     }
   }

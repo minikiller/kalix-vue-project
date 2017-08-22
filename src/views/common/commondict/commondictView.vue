@@ -5,49 +5,23 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="commondict"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL" v-bind:isView="readonly"
-  )
-    div.el-form(slot="dialogFormSlot")
-      el-form-item(label="类型" prop="type")
-        el-input(v-model="formModel.type" v-bind:readonly="readonly" auto-complete="off")
-      el-form-item(label="标签名" prop="label")
-        input(type="hidden" v-model="formModel.id")
-        el-input(v-model="formModel.label"  v-bind:readonly="readonly" placeholder="请输入标签名" auto-complete="off")
-      el-form-item(label="备注")
-        el-input(v-model="formModel.description" v-bind:readonly="readonly" type="textarea" v-bind:rows="3" placeholder="请输入内容")
+  kalix-basedict-view(v-bind:targetURL="targetURL")
 </template>
 
 <script type="text/ecmascript-6">
-  import Dialog from '@/components/custom/baseDialog.vue'
   import {CommonDictURL} from '../config.toml'
+  import BasedictView from '@/components/biz/dict/basedictView'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
-        rules: {
-          type: [{required: true, message: '请输入类型', trigger: 'blur'}],
-          label: [{required: true, message: '请输入标签名', trigger: 'blur'}]
-        },
-        targetURL: CommonDictURL,
-        readonly: true
+        targetURL: CommonDictURL
       }
     },
     components: {
-      KalixDialog: Dialog
+      KalixBasedictView: BasedictView
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
 
