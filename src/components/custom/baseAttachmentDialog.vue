@@ -4,58 +4,58 @@
       i.iconfont.icon-attachment-column
       | 附件管理
     el-button.upload
-      i.iconfont.icon-workflow-view
-      | 选择文件
+      i.iconfont.icon-upload
+      | 上 传
       input(type="file" v-on:change="selectedFile")
     div.file-list
       el-table(v-bind:data="files"   style="width: 100%")
-        el-table-column(prop="attachmentName" label="附件名")
-        el-table-column(prop="attachmentSize" label="大小")
-        el-table-column(prop="attachmentType" label="类型")
-        el-table-column(label="操作")
+        el-table-column(label="行号" width="70")
           template(scope="scope")
-            el-button(size="small" type="danger" v-on:click="deleteSelectFile(scope.$index, scope.row)")
-              i.iconfont.icon-schedule-task-failure
+            div(style="text-align: center") {{ scope.row.rowNumber }}
+        el-table-column(prop="attachmentName" label="名称")
+        el-table-column(label="大小(MB)")
+          template(scope="scope")
+            span {{setFileSize(scope.row.attachmentSize)}}
+        el-table-column(prop="attachmentType" label="类型")
+        el-table-column(prop="creationDate" label="上传日期" width="180")
+        el-table-column(label="操作" width="120")
+          template(scope="scope")
+            el-button(size="mini" type="danger" v-on:click="deleteSelectFile(scope.$index, scope.row)")
               | 删除
+            a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
+              | 下载
     div.dialog-footer(slot="footer")
-      el-button(v-on:click="onCancelClick") 关 闭
-      el-button(type="primary" v-on:click="onSubmitClick")
-        i.iconfont.icon-upload
-        | 上 传
+      el-button(type="primary" v-on:click="onCancelClick") 关 闭
 </template>
 <script type="text/ecmascript-6">
+  import Message from 'common/message'
+  import {AttachmentURL, PageConfig} from 'config/global.toml'
+
   export default {
     data() {
       return {
         title: '',
         visible: false,
-        files: []
+        files: [],
+        pager: {
+          totalCount: 0,
+          pageSizes: PageConfig.sizes,
+          currentPage: 1,
+          limit: PageConfig.limit,
+          start: 0
+        }
       }
     },
     methods: {
+      setFileSize(size) {
+        return (size / (1024 * 1024)).toFixed(2)
+      },
       onSubmitClick() {
         console.log('dialog cancel button clicked !')
         if (this.files.length > 0) {
           this._fileUpload(0)
         }
         this.close()
-      },
-      _fileUpload(i, callBack) {
-        let item = this.files[i]
-        item.mainId = this.row.id
-        this.$http.post('/camel/rest/attachments', item).then(res => {
-          if (res.data.success) {
-            i++
-            if (i < this.files.length) {
-              this._fileUpload(i)
-            } else {
-              console.log('完成')
-              if (typeof callBack === 'function') {
-                callBack()
-              }
-            }
-          }
-        })
       },
       onCancelClick() {
         this.close()
@@ -67,28 +67,84 @@
         console.log('scheduledictAttachment', 'openDialog')
         this.visible = true
         this.row = _row
+        this._getFilesList()
       },
       selectedFile(e) {
+        let that = this
         let file = event.target.files[0]
         let formData = new FormData()
         formData.append('file', file)
         this.$http.post('/camel/rest/upload', formData).then(res => {
           if (res.data.success) {
-            this.files.push({
+            this._fileUpload({
+              mainId: that.row.id,
               attachmentId: res.data.attachmentId,
               attachmentName: res.data.attachmentName,
               attachmentPath: res.data.attachmentPath,
               attachmentRev: res.data.attachmentRev,
               attachmentSize: res.data.attachmentSize,
               attachmentType: res.data.attachmentType
+            }, () => {
+              this._getFilesList()
             })
           }
         })
       },
       deleteSelectFile(_index, row) {
-        this.files = this.files.filter((e, i) => {
-          return i !== _index
+        this.$confirm('确定要删除吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          return this.axios.request({
+            method: 'DELETE',
+            url: AttachmentURL + '/' + row.id,
+            params: {},
+            data: {
+              id: row.id
+            }
+          })
+        }).then(res => {
+          if (res.data.success) {
+            this.files = this.files.filter((e, i) => {
+              return i !== _index
+            })
+            Message.success(res.data.msg)
+          } else {
+            Message.error(res.data.msg)
+          }
+        }).catch(() => {
         })
+      },
+      _fileUpload(item, callBack) {
+        this.$http.post(AttachmentURL, item).then(res => {
+          if (res.data.success) {
+            Message.success(res.data.msg)
+            if (typeof callBack === 'function') {
+              callBack()
+            }
+          }
+        })
+      },
+      _getFilesList() {
+        this.files = []
+        let _data = {
+          page: this.pager.currentPage,
+          limit: this.pager.limit,
+          start: this.pager.start
+        }
+        this.$http.get(AttachmentURL, {params: _data})
+          .then(res => {
+            this.files = res.data.data.map((item, index) => {
+              item.rowNumber = index + this.rowNo
+              return item
+            })
+          })
+      }
+    },
+    computed: {
+      rowNo() {
+        return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
       }
     }
   }
@@ -106,4 +162,9 @@
       font-size 100px
       cursor pointer
       opacity 0
+
+  .file-list
+    .el-button
+      vertical-align top
+      text-decoration none
 </style>
