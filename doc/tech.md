@@ -110,4 +110,26 @@ GlobalComponent.forEach((item) => {
   <component :is="whichtoshow" v-bind="subdata"></component>
 ```
 
+## async loading vue from vue-router
+> remove following code
 
+```
+import Massive from '@/components/Massive'
+```
+
+> change to
+
+```
+const Massive = resolve =>
+require(['../components/Massive.vue'], resolve)
+```
+
+> also can do it
+
+```
+{
+      path: '/show',
+      name: 'Show',
+      component: import('../components/Show.vue')
+    }
+```
