@@ -37,8 +37,6 @@ GlobalComponent.forEach((item) => {
 // Vue.component('kalix-dialog', KalixDialog)
 /* eslint-disable no-new */
 
-Vue.component('AttachmentDialog', require('' + '@/components/custom/baseAttachmentDialog'))
-
 new Vue({
   el: '#app',
   store,
