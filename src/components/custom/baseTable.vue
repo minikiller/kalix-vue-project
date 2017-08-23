@@ -228,6 +228,14 @@
             })
             break
           }
+
+          case 'attachment':
+            console.log('attachment is clicked')
+            let that = this
+            this.whichBizDialog = 'AttachmentDialog'
+            setTimeout(() => {
+              that.$refs.kalixDialog.openDialog(row)
+            }, 20)
         }
       },
       pagerSizeChange(val) { //  改变每页记录数
