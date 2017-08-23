@@ -129,6 +129,7 @@
       _getFilesList() {
         this.files = []
         let _data = {
+//          jsonStr:'{"%mainid%":"40"}',
           page: this.pager.currentPage,
           limit: this.pager.limit,
           start: this.pager.start
