@@ -29,11 +29,13 @@
 </template>
 <script type="text/ecmascript-6">
   import Message from 'common/message'
+  import EventBus from 'common/eventbus'
   import {AttachmentURL, PageConfig} from 'config/global.toml'
 
   export default {
     data() {
       return {
+        bizKey: '',
         title: '',
         visible: false,
         files: [],
@@ -62,11 +64,13 @@
       },
       close() {
         this.visible = false
+        this._afterDialogClose()
       },
-      openDialog(_row) {
+      openDialog(_row, _bizKey) {
         console.log('scheduledictAttachment', 'openDialog')
         this.visible = true
         this.row = _row
+        this.bizKey = _bizKey
         this._getFilesList()
       },
       selectedFile(e) {
@@ -141,6 +145,9 @@
               return item
             })
           })
+      },
+      _afterDialogClose() {
+        EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose')
       }
     },
     computed: {

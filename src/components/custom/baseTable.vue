@@ -38,7 +38,9 @@
           v-bind:page-size="1"
           layout="total, sizes, prev, pager, next, jumper"
           v-bind:total="pager.totalCount")
-        component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
+        component(:is="whichBizDialog" ref="kalixDialog"
+        v-bind:formModel="formModel"
+        v-bind:formRules="formRules")
 </template>
 
 <script type="text/ecmascript-6">
@@ -134,10 +136,13 @@
     },
     mounted() {
       // 注册事件接受
-
       const that = this
       window.addEventListener('resize', () => {
         that._getTableHeight()
+      })
+      EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', () => {
+//        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
+        this.whichBizDialog = ''
       })
     },
     methods: {
@@ -180,38 +185,28 @@
                 return item.id === 'view'
               })
             this.whichBizDialog = dig[0].dialog
-            this.$nextTick(() => {
+            setTimeout(() => {
               EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
-            })
-//            setTimeout(() => {
-//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
-//              that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
-//            }, 20)
+            }, 20)
             break
           }
 
           case 'edit': {
+            this.whichBizDialog = ''
             let dig =
               this.bizDialog.filter((item) => {
                 return item.id === 'edit'
               })
             console.log('[kalix] edit dialog is: ' + dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
-            this.$nextTick(() => {
+            setTimeout(() => {
               EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 this.$refs.kalixDialog.init(this.dialogOptions)
               }
-            })
-//            setTimeout(() => {
-//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
-//              this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
-//              if (typeof (this.$refs.kalixDialog.init) === 'function') {
-//                this.$refs.kalixDialog.init(this.dialogOptions)
-//              }
-//            }, 20)
+            }, 20)
             console.log('edit is clicked')
             break
           }
@@ -244,7 +239,7 @@
             let that = this
             this.whichBizDialog = 'AttachmentDialog'
             setTimeout(() => {
-              that.$refs.kalixDialog.openDialog(row)
+              that.$refs.kalixDialog.openDialog(row, this.bizKey)
             }, 20)
         }
       },

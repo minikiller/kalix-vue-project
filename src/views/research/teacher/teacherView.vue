@@ -4,7 +4,7 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  kalix-dialog.user-add(
+  kalix-dialog.user-add(bizKey="teacher"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
   v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot")
@@ -91,7 +91,6 @@
     components: {
       KalixDialog: Dialog
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
