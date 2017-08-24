@@ -11,8 +11,11 @@
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard")
         el-input(v-model="formModel.identificationCard")
+
       el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
         el-input(v-model="formModel.name")
+      el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
+        kalix-dict-select(v-model="formModel.name" appName="oa" dictType="工作流状态")
       el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
         el-radio-group(v-model="formModel.sex")
           el-radio(label="男")
@@ -29,10 +32,12 @@
         el-input(type="textarea" v-model="formModel.learning")
       el-form-item(label="教学情况")
         el-input(type="textarea" v-model="formModel.teaching")
+
 </template>
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
   import {TeacherURL} from '../config.toml'
 
   export default {
@@ -92,10 +97,10 @@
       console.log('[teacherAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      KalixDictSelect: BaseDictSelect
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
 
