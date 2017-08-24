@@ -1,6 +1,7 @@
 # 科研管理項目配置文件
 
 ResearchDictsURL = "/camel/rest/research/dicts"
+ResearchDictsTypesListURL = "/camel/rest/research/dicts/types/list"
 TeacherURL = "/camel/rest/teachers"
 StudentURL = "/camel/rest/students"
 WorkerURL = "/camel/rest/workers"

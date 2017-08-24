@@ -1,35 +1,49 @@
 <!--
-描述：科研管理-字典维护组件
+描述：科研管理-数据字典组件
 开发人：sunlf
 开发日期：2017年8月17日
 -->
-<template lang="pug">
-  div
-    el-select(v-on:visible-change="visibleChange")
-      el-option(v-for="item in items" v-bind:key="item.name" v-bind:label="item.label" v-bind:value="item.value")
 
+<template lang="pug">
+  keep-alive
+    kalix-base-dict(ref="baseTableRef" v-bind:bizKey="bizKey" v-bind:bizDialog="bizDialog" v-bind:dictComponent="dictComponent"
+    v-bind:targetURL="targetURL" v-bind:dialogOptions="dialogOptions")
 </template>
 
 <script type="text/ecmascript-6">
-  import Cache from 'common/cache'
+  import BaseDict from '@/components/biz/dict/basedict'
+  //  import Vue from 'vue'
+  import {ResearchDictsURL, ResearchDictComponent, ResearchDictsTypesListURL} from '../config.toml'
 
   export default {
-    methods: {
-      visibleChange() {
-        const DictKey = `OA-DICT-KEY`
-        let mydata = JSON.parse(Cache.get(DictKey))
-        console.log(mydata)
-        this.items = mydata.filter(item => {
-          return item.type === this.dictType
-        })
-        console.log(this.items)
-      }
-    },
     data() {
       return {
-        dictType: '印章类型',
-        items: []
+        dialogOptions: {
+          targetURL: ResearchDictsURL,
+          dictTypesListURL: ResearchDictsTypesListURL,
+          bizKey: 'dict'
+        },
+        bizKey: 'dict',
+        dictComponent: ResearchDictComponent,
+        targetURL: ResearchDictsURL,
+        bizDialog: [
+          {id: 'view', dialog: 'basedictView'},
+          {id: 'edit', dialog: 'basedictAdd'},
+          {id: 'add', dialog: 'basedictAdd'}
+        ]
       }
+    },
+    created() {
+//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+//      this.dictComponent.forEach((item) => {
+//        console.log(`[kalix]-[${this.bizKey}] registry name is:  ${item.name}, registry path is: ${item.path}`)
+//        Vue.component(item.name, require('' + item.path))
+//      })
+    },
+    methods: {},
+    components: {
+      KalixBaseDict: BaseDict
+//      KalixUserAdd: UserAdd
     }
   }
 </script>
