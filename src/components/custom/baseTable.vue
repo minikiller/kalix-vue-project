@@ -181,10 +181,14 @@
                 return item.id === 'view'
               })
             this.whichBizDialog = dig[0].dialog
-            setTimeout(() => {
+            this.$nextTick(() => {
               EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
-            }, 20)
+            })
+//            setTimeout(() => {
+//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+//              that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+//            }, 20)
             break
           }
 
@@ -195,13 +199,20 @@
               })
             console.log('[kalix] edit dialog is: ' + dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
-            setTimeout(() => {
+            this.$nextTick(() => {
               EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 this.$refs.kalixDialog.init(this.dialogOptions)
               }
-            }, 20)
+            })
+//            setTimeout(() => {
+//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+//              this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
+//              if (typeof (this.$refs.kalixDialog.init) === 'function') {
+//                this.$refs.kalixDialog.init(this.dialogOptions)
+//              }
+//            }, 20)
             console.log('edit is clicked')
             break
           }

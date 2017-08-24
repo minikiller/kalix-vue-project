@@ -37,6 +37,6 @@ ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
   isPermission = true
 [[ToolButtonList]]
   id = "attachment"
-  title = "附件管理"
+  title = "附件"
   isShow = true
   isPermission = true
