@@ -8,15 +8,18 @@
       | 上 传
       input(type="file" v-on:change="selectedFile")
     div.file-list
-      el-table(v-bind:data="files"   style="width: 100%")
+      el-table(v-bind:data="files" style="width: 100%"
+      v-bind:height="tableHeight")
         el-table-column(label="行号" width="70")
           template(scope="scope")
             div(style="text-align: center") {{ scope.row.rowNumber }}
         el-table-column(prop="attachmentName" label="名称")
-        el-table-column(label="大小(MB)")
+          template(scope="scope")
+            div.attachment-name {{scope.row.attachmentName}}
+        el-table-column(label="大小(MB)" width="100")
           template(scope="scope")
             span {{setFileSize(scope.row.attachmentSize)}}
-        el-table-column(prop="attachmentType" label="类型")
+        el-table-column(prop="attachmentType" label="类型" width="116")
         el-table-column(prop="creationDate" label="上传日期" width="180")
         el-table-column(label="操作" width="120")
           template(scope="scope")
@@ -24,6 +27,14 @@
               | 删除
             a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
               | 下载
+    el-pagination.kalix-table-pagination(v-if="pager.totalCount"
+    v-on:size-change="pagerSizeChange"
+    v-on:current-change="pagerCurrentChange"
+    v-bind:current-page="pager.currentPage"
+    v-bind:page-sizes="pager.pageSizes"
+    v-bind:page-size="1"
+    layout="total, sizes, prev, pager, next, jumper"
+    v-bind:total="pager.totalCount")
     div.dialog-footer(slot="footer")
       el-button(type="primary" v-on:click="onCancelClick") 关 闭
 </template>
@@ -32,6 +43,8 @@
   import EventBus from 'common/eventbus'
   import {AttachmentURL, PageConfig} from 'config/global.toml'
 
+  const MAX_TABLE_HTIGHT = 450
+  const MIN_TABLE_HTIGHT = 0
   export default {
     data() {
       return {
@@ -39,6 +52,7 @@
         title: '',
         visible: false,
         files: [],
+        tableHeight: MAX_TABLE_HTIGHT,
         pager: {
           totalCount: 0,
           pageSizes: PageConfig.sizes,
@@ -120,6 +134,14 @@
         }).catch(() => {
         })
       },
+      pagerSizeChange(val) { //  改变每页记录数
+        this.pager.limit = val
+        this._getFilesList()
+      },
+      pagerCurrentChange(val) { //  翻页
+        this.pager.currentPage = val
+        this._getFilesList()
+      },
       _fileUpload(item, callBack) {
         this.$http.post(AttachmentURL, item).then(res => {
           if (res.data.success) {
@@ -144,6 +166,7 @@
               item.rowNumber = index + this.rowNo
               return item
             })
+            this.pager.totalCount = res.data.totalCount
           })
       },
       _afterDialogClose() {
@@ -175,4 +198,11 @@
     .el-button
       vertical-align top
       text-decoration none
+    .attachment-name
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+
+  .kalix-table-pagination
+    margin-top 20px
 </style>
