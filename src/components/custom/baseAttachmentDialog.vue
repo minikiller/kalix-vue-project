@@ -44,7 +44,6 @@
   import {AttachmentURL, PageConfig} from 'config/global.toml'
 
   const MAX_TABLE_HTIGHT = 450
-  const MIN_TABLE_HTIGHT = 0
   export default {
     data() {
       return {
