@@ -14,6 +14,9 @@
 
       el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
         el-input(v-model="formModel.name")
+      el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
+        kalix-user-select(v-model="formModel.name")
+          kalix-user-optin(:userList="$parent.$data.userList")
       el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
         el-radio-group(v-model="formModel.sex")
           el-radio(label="男")
@@ -37,6 +40,8 @@
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import UserSelect from '@/components/biz/userselect/userselect'
+  import UserOption from '@/components/biz/userselect/useroption'
   import {TeacherURL} from '../config.toml'
 
   export default {
@@ -97,7 +102,9 @@
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect
+      KalixDictSelect: BaseDictSelect,
+      KalixUserSelect: UserSelect,
+      KalixUserOption: UserOption
     },
     methods: {}
   }

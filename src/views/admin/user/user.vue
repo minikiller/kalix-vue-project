@@ -7,7 +7,7 @@
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {usersURL, userBtnPermissionPrefix, ToolButtonList} from 'config/global.toml'
+  import {usersURL, userBtnPermissionPrefix, ToolButtonList} from '../config.toml'
 
   export default {
     data() {
