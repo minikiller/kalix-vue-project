@@ -71,7 +71,18 @@
     created() {
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
-    methods: {},
+    filter: {
+    },
+    methods: {
+      getValue(val) {
+        const DictKey = `RESEARCH-DICT-KEY`
+        let data_ = JSON.parse(Cache.get(DictKey)) // get data from cache
+        let items = data_.filter(item => {
+          return item.type === '职称' && item.value === val
+        })
+        return items[0]
+      }
+    },
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd

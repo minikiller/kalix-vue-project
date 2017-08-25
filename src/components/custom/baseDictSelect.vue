@@ -1,12 +1,11 @@
 <!--
 描述：数据字典select组件
 开发人：sunlf
-开发日期：2017年8月17日
+开发日期：2017年8月24日
 -->
 <template lang="pug">
   div
-    el-select(value="")
-      el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
+    el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
 
 <script type="text/ecmascript-6">

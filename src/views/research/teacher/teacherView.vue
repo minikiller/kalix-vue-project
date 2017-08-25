@@ -18,8 +18,9 @@
           el-radio(label="女")
       el-form-item(label="手机" prop="mobile" v-bind:rules="rules.mobile")
         el-input(v-model="formModel.mobile"  v-bind:readonly="readonly")
-      el-form-item(label="职称")
-        el-input(v-model="formModel.positionalTitles"  v-bind:readonly="readonly")
+      el-form-item(label="职称" prop="positionalTitles")
+        el-select(v-model="formModel.positionalTitles" v-bind:disabled="readonly")
+          kalix-dict-select( appName="research" dictType="职称")
       el-form-item(label="个人简历")
         el-input(type="textarea" v-model="formModel.resume"  v-bind:readonly="readonly")
       el-form-item(label="个人说明")
@@ -31,6 +32,7 @@
 </template>
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
   import {TeacherURL} from '../config.toml'
 
   export default {
@@ -89,7 +91,8 @@
     created() {
     },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      KalixDictSelect: BaseDictSelect
     },
     methods: {}
   }
