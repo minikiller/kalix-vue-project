@@ -33,8 +33,6 @@
         el-input(type="textarea" v-model="formModel.teaching")
       el-form-item(label="教学情况")
         kalix-user-select(v-model="formModel.teaching")
-      el-form-item(label="教学情况")
-        kalix-test-input(v-model="formModel.teaching")
 </template>
 
 <script type="text/ecmascript-6">
