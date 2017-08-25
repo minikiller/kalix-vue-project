@@ -277,7 +277,8 @@
           })
 
           if (this.restructureFunction) {
-            this.tableData = this.restructureFunction(this.tableData)
+            // 如果没有传入 restructureFunction 函数就不执行以下函数
+            this.restructureFunction(this.tableData)
           }
           this.pager.totalCount = response.data.totalCount
           this.loading = false

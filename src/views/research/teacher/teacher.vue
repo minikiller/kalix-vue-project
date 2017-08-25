@@ -11,15 +11,14 @@
     v-bind:formModel.sync="formModel" v-bind:formRules="formRules"
     v-bind:bizDialog="bizDialog"
     v-bind:bizSearch="'ResearchTeacherSearch'" v-bind:btnList="btnList"
-    v-bind:restructureFunction="restructureFunction")
+    v-bind:restructureFunction="dataRestucture")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {TeacherURL, TeacherComponent, ToolButtonList} from '../config.toml'
-  import Cache from 'common/cache'
-  import DataRestructure from './DataRestructure'
+  import {dictKeyObject} from 'common/keyValueObject'
 
   // 注册全局组件
   TeacherComponent.forEach((item) => {
@@ -77,26 +76,20 @@
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     mounted() {
-      const DictKey = `${this.$route.params.app.toUpperCase()}-DICT-KEY`
-      console.log(JSON.parse(Cache.get(DictKey)))
-//      setTimeout(() => {
-//        let types = {0: '中级工程师', 1: '工程师', 2: '高级工程师'}
-//        document.querySelectorAll('.positionalTitles').forEach(item => {
-//          item.innerHTML = types[item.innerText]
-//        })
-//      }, 200)
     },
     filter: {},
     methods: {
-      getValue(val) {
-        const DictKey = `RESEARCH-DICT-KEY`
-        let data_ = JSON.parse(Cache.get(DictKey)) // get data from cache
-        let items = data_.filter(item => {
-          return item.type === '职称' && item.value === val
+      dataRestucture(_data) {
+        //  获取 对应的键值对 对象
+        let _keyObj = dictKeyObject(`RESEARCH-DICT-KEY`, 'value', 'label')
+        _data.forEach(function (e) {
+          //  检测 _keyObj 是否存在
+          if (_keyObj) {
+            // 替换对应的列值
+            e.positionalTitles = _keyObj[e.positionalTitles]
+          }
         })
-        return items[0]
-      },
-      restructureFunction: DataRestructure
+      }
     },
     components: {
       BaseTable
