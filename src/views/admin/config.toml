@@ -3,38 +3,8 @@
 AdminDictURL = "/camel/rest/admin/dicts"
 AdminDictsTypesListURL = "/camel/rest/admin/dicts/types/list"
 
-# 需要自动注册成全局的News组件
-[[CommonDictComponent]]
-  path = "./commondictView.vue"
-  name = "CommonDictView"
-[[CommonDictComponent]]
-  path = "./commondictAdd"
-  name = "CommonDictAdd"
-#[[CommonDictComponent]]
-#  path = "./commondictSearch"
-#  name = "CommonDictSearch"
-
-# 需要自动注册成全局的News组件
-[[NewsComponent]]
-  path = "./newsView"
-  name = "CommonNewsView"
-[[NewsComponent]]
-  path = "./newsAdd"
-  name = "CommonNewsAdd"
-[[NewsComponent]]
-  path = "./newsSearch"
-  name = "CommonNewsSearch"
-
-# 需要自动注册成全局的Note组件
-[[NoteComponent]]
-  path = "./noteView"
-  name = "CommonNoteView"
-[[NoteComponent]]
-  path = "./noteAdd"
-  name = "CommonNoteAdd"
-[[NoteComponent]]
-  path = "./noteSearch"
-  name = "CommonNoteSearch"
+usersURL = "/camel/rest/users"
+userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 
 # table 的默认按钮定义
 [[ToolButtonList]]
