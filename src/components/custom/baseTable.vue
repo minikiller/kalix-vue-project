@@ -15,13 +15,17 @@
       div.kalix-wrapper-bd
         kalix-tool-bar( v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
         div.kalix-table-container(ref="kalixTableContainer")
-          el-table(:data="tableData" stripe style="width: 100%" v-loading.body="loading" v-bind:height="tableHeight")
+          el-table(:data="tableData" stripe style="width: 100%"
+          v-loading.body="loading"
+          v-bind:height="tableHeight")
             //table的字段
             el-table-column(v-if="tableData && tableData.length > 0" label="行号" width="70")
               template(scope="scope")
                 div(style="text-align: center") {{ scope.row.rowNumber }}
-            div(v-if="tableData && tableData.length > 0" v-for="field in tableFields" v-bind:key="field.prop")
-              el-table-column( :prop="field.prop" v-bind:label="field.label")
+            el-table-column(v-if="tableData && tableData.length > 0" v-for="field in tableFields"
+            v-bind:key="field.prop" v-bind:prop="field.prop" v-bind:label="field.label")
+              template(scope="scope")
+                div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
             //  table的工具按钮
             slot(name="tableToolSlot")
               kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick")
@@ -36,7 +40,9 @@
           v-bind:page-size="1"
           layout="total, sizes, prev, pager, next, jumper"
           v-bind:total="pager.totalCount")
-        component(:is="whichBizDialog" ref="kalixDialog" v-bind:formModel="formModel" v-bind:formRules="formRules")
+        component(:is="whichBizDialog" ref="kalixDialog"
+        v-bind:formModel="formModel"
+        v-bind:formRules="formRules")
 </template>
 
 <script type="text/ecmascript-6">
@@ -97,6 +103,10 @@
       btnList: {   //  table中按钮数组
         type: Array,
         required: true
+      },
+      restructureFunction: {  // 数据重构函数
+        type: Function,
+        default: null
       }
     },
     data() {
@@ -132,14 +142,14 @@
     },
     mounted() {
       // 注册事件接受
-
       const that = this
-      setTimeout(() => {
+      window.addEventListener('resize', () => {
         that._getTableHeight()
-        window.addEventListener('resize', () => {
-          that._getTableHeight()
-        })
-      }, 20)
+      })
+      EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', () => {
+//        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
+        this.whichBizDialog = ''
+      })
     },
     methods: {
       onSearchClick(_searchParam) { // 查询按钮点击事件
@@ -189,6 +199,7 @@
           }
 
           case 'edit': {
+            this.whichBizDialog = ''
             let dig =
               this.bizDialog.filter((item) => {
                 return item.id === 'edit'
@@ -228,6 +239,14 @@
             })
             break
           }
+
+          case 'attachment':
+            console.log('attachment is clicked')
+            let that = this
+            this.whichBizDialog = 'AttachmentDialog'
+            setTimeout(() => {
+              that.$refs.kalixDialog.openDialog(row, this.bizKey)
+            }, 20)
         }
       },
       pagerSizeChange(val) { //  改变每页记录数
@@ -256,10 +275,16 @@
             item.rowNumber = index + that.rowNo
             return item
           })
+
+          if (this.restructureFunction) {
+            // 如果没有传入 restructureFunction 函数就不执行以下函数
+            this.restructureFunction(this.tableData)
+          }
           this.pager.totalCount = response.data.totalCount
           this.loading = false
           document.querySelector('.el-table__body-wrapper').scrollTop = 0
           document.querySelector('.el-table__body-wrapper').style.overflowX = 'hidden'
+          this._getTableHeight()
         }).catch(() => {
           this.loading = false
           console.log('this.loading = false', this.tableData.length)

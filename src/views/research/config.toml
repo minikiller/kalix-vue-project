@@ -1,6 +1,7 @@
 # 科研管理項目配置文件
 
 ResearchDictsURL = "/camel/rest/research/dicts"
+ResearchDictsTypesListURL = "/camel/rest/research/dicts/types/list"
 TeacherURL = "/camel/rest/teachers"
 StudentURL = "/camel/rest/students"
 WorkerURL = "/camel/rest/workers"
@@ -26,6 +27,17 @@ WorkerURL = "/camel/rest/workers"
 [[WorkerComponent]]
   path = "./workerSearch"
   name = "ResearchWorkerSearch"
+
+ # 需要自动注册成全局的Student组件
+  [[StudentComponent]]
+    path = "./studentView"
+    name = "ResearchStudentView"
+  [[StudentComponent]]
+    path = "./studentAdd"
+    name = "ResearchStudentAdd"
+  [[StudentComponent]]
+    path = "./studentSearch"
+    name = "ResearchStudentSearch"
 
 # table 的默认按钮定义
 [[ToolButtonList]]

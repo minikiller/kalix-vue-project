@@ -6,15 +6,19 @@
 
 <template lang="pug">
   keep-alive
-    base-table(bizKey="teacher" title='教师列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    v-bind:bizSearch="'ResearchTeacherSearch'" v-bind:btnList="btnList")
+    base-table(bizKey="teacher" title='教师列表' v-bind:tableFields="tableFields"
+    v-bind:targetURL="targetURL"
+    v-bind:formModel.sync="formModel" v-bind:formRules="formRules"
+    v-bind:bizDialog="bizDialog"
+    v-bind:bizSearch="'ResearchTeacherSearch'" v-bind:btnList="btnList"
+    v-bind:restructureFunction="dataRestucture")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {TeacherURL, TeacherComponent, ToolButtonList} from '../config.toml'
+  import {dictKeyObject} from 'common/keyValueObject'
 
   // 注册全局组件
   TeacherComponent.forEach((item) => {
@@ -71,7 +75,22 @@
     created() {
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
-    methods: {},
+    mounted() {
+    },
+    filter: {},
+    methods: {
+      dataRestucture(_data) {
+        //  获取 对应的键值对 对象
+        let _keyObj = dictKeyObject(`RESEARCH-DICT-KEY`, 'value', 'label')
+        _data.forEach(function (e) {
+          //  检测 _keyObj 是否存在
+          if (_keyObj) {
+            // 替换对应的列值
+            e.positionalTitles = _keyObj[e.positionalTitles]
+          }
+        })
+      }
+    },
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd

@@ -8,7 +8,7 @@ WorkerURL = "/camel/rest/workers"
 ScheduleDictsURL = "/camel/rest/schedule/dicts"
 ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 
-# 需要自动注册成全局的Teacher组件
+# 需要自动注册成全局的 ScheduleDict 组件
 [[ScheduleDictsComponent]]
   path = "./scheduledictView"
   name = "ResearchScheduleDictView"
@@ -33,5 +33,10 @@ ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 [[ToolButtonList]]
   id = "delete"
   title = "删除"
+  isShow = true
+  isPermission = true
+[[ToolButtonList]]
+  id = "attachment"
+  title = "附件"
   isShow = true
   isPermission = true

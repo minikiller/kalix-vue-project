@@ -6,7 +6,7 @@
 
 <template lang="pug">
   div
-    el-table-column(label="操作" width="150")
+    el-table-column(label="操作" v-bind:width="columnWidth")
       template(scope="scope")
         el-button(v-for="btn in btnList" v-if="btn.isShow" v-bind:key="btn.id" v-on:click="toggle(scope.row,btn.id)"
         type="text" size="small") {{btn.title}}
@@ -34,7 +34,17 @@
     data() {
       return {}
     },
-    computed: {},
+    computed: {
+      columnWidth() {
+        let width = 65
+        let len = this.btnList.length
+        let btnWidth = 34
+        if (len > 1) {
+          width += btnWidth * (len - 1)
+        }
+        return width
+      }
+    },
     methods: {
       toggle(row, btnId) { // toolbar click event
         this.$emit(ON_TABLE_TOOLBAR_CLICK, row, btnId)

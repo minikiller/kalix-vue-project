@@ -1,32 +1,27 @@
+<!--
+描述：支持远程查询的用户select组件
+开发人：sunlf
+开发日期：2017年8月17日
+-->
 <template>
   <el-select
-    v-model='dataModel'
     filterable
     remote
     placeholder='请输入用户名称'
     :remote-method='remoteMethod'
     :loading='loading'>
-    <el-option
-      v-for='user in userList'
-      :key='user.id'
-      :label='user.name'
-      :value='user.id'>
-    </el-option>
   </el-select>
 </template>
 
 <script>
   import {strToUnicode} from 'common/unicode-convert'
-  import {usersURL} from '../config.toml'
+  import {usersURL} from 'views/admin/config.toml'
+  import UserOption from './useroption.vue'
 
   export default {
-    props: {
-      dataModel: String
-    },
     data() {
       return {
         userList: [],
-        value9: [],
         loading: false
       }
     },
@@ -56,6 +51,10 @@
           this.userList = []
         }
       }
+    },
+    components: {
+      UserOption
     }
   }
 </script>
+

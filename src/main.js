@@ -36,6 +36,7 @@ GlobalComponent.forEach((item) => {
 // Vue.component('input-cell', InputCell)
 // Vue.component('kalix-dialog', KalixDialog)
 /* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   store,

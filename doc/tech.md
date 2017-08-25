@@ -52,5 +52,84 @@ GlobalComponent.forEach((item) => {
 })
 ```
 
+## dynamic set props
+> Hello.vue
 
+```
+<template>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <component :is="whichtoshow" v-bind="subdata"></component>
+    <button type="button" @click="click">click</button>
+  </div>
+</template>
 
+<script>
+  import Vue from 'vue'
+
+  var Comp = Vue.extend(require('./comp.vue'))
+  var Comp1 = Vue.extend(require('./comp1.vue'))
+
+  export default {
+    name: 'hello',
+    methods: {
+      click() {
+        if (this.toggle) {
+          this.whichtoshow = 'subcomponent'
+          this.toggle = false
+        } else {
+          this.whichtoshow = 'subcomponent1'
+          this.toggle = true
+        }
+      }
+    },
+    data() {
+      return {
+        msg: 'Welcome to Your Vue.js App',
+        subdata: {
+          propA: 'valA11',
+          propB: 'valB22'
+        },
+        whichtoshow: '',
+        toggle: false
+      }
+    },
+    mounted() {
+    },
+    components: {
+      subcomponent: Comp,
+      subcomponent1: Comp1
+    }
+  }
+</script>
+```
+
+> 技术关键
+```
+  Vue.extend(require('./comp.vue'))
+  <component :is="whichtoshow" v-bind="subdata"></component>
+```
+
+## async loading vue from vue-router
+> remove following code
+
+```
+import Massive from '@/components/Massive'
+```
+
+> change to
+
+```
+const Massive = resolve =>
+require(['../components/Massive.vue'], resolve)
+```
+
+> also can do it
+
+```
+{
+      path: '/show',
+      name: 'Show',
+      component: import('../components/Show.vue')
+    }
+```

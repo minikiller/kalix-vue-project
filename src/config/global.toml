@@ -11,11 +11,13 @@ applicationURL = "/camel/rest/system/applications"
 SecurityBtnUrl = "/camel/rest/system/applications/modules/children/buttons/"
 
 
-usersURL = "/camel/rest/users"
-userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
+
 
 ScheduleDictsURL = "/camel/rest/schedule/dicts"
 ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
+
+# 附件管理请求地址
+AttachmentURL="/camel/rest/attachments"
 
 # 全局table分页的配置
 [PageConfig]
@@ -62,4 +64,7 @@ ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 [[GlobalComponent]]
   path = "./views/admin/user/userSearch"
   name = "userSearch"
-
+# 附件管理
+[[GlobalComponent]]
+  path = "./components/custom/baseAttachmentDialog"
+  name = "AttachmentDialog"

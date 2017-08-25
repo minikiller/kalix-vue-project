@@ -79,6 +79,11 @@
     },
     components: {
       BaseTable
+    },
+    methods: {
+      openAttachmentUpload() {
+        this.$refs.attachmentUpload.open()
+      }
     }
   }
 </script>

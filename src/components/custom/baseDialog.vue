@@ -61,6 +61,7 @@
       onCancelClick() {
         console.log('dialog cancel button clicked !')
         this.visible = false
+        this._afterDialogClose()
       },
       onSubmitClick() {
         this.$refs.dialogForm.validate((valid) => {
@@ -78,6 +79,7 @@
 //                this.close()
                 // 刷新列表
                 EventBus.$emit(ON_REFRESH_DATA)
+                this._afterDialogClose()
                 // 清空form
 //                this.$parent.resetDialogForm()
 //                this.$emit('resetDialogForm')
@@ -93,12 +95,11 @@
         this.visible = false
       },
       onBeforeClose() {
-        this.$refs.dialogForm.resetFields()
-        this.visible = false
+        this.close()
       },
       close() {
         this.$refs.dialogForm.resetFields()
-        this.visible = false
+        this.onCancelClick()
       },
       open(title, isEdit = false) {
         this.title = title
@@ -108,6 +109,9 @@
       initData(row) {
         console.log(`[kalix] init base dialog ${this.bizKey}`)
         Object.assign(this.formModel, row)
+      },
+      _afterDialogClose() {
+        EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose')
       }
     },
     mounted() {
