@@ -33,13 +33,15 @@
         btnList: ToolButtonList,
         targetURL: WorkerURL,
         tableFields: [
-          {prop: 'identificationCard', label: '身份证号'},
           {prop: 'name', label: '姓名'},
+          {prop: 'email', label: '电子邮件'},
+          {prop: 'phone', label: '联系电话'},
+          {prop: 'identificationCard', label: '身份证号'},
+          {prop: 'age', label: '年龄'},
           {prop: 'sex', label: '性别'},
-          {prop: 'mobile', label: '手机'},
-          {prop: 'positionalTitles', label: '职称'},
-          {prop: 'resume', label: '个人简历'},
-          {prop: 'introduction', label: '个人说明'}
+          {prop: 'lastTitle', label: '职称'},
+          {prop: 'education', label: '学历'},
+          {prop: 'school;', label: '毕业院校'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'ResearchWorkerView'},
@@ -47,13 +49,15 @@
           {id: 'add', dialog: 'ResearchWorkerAdd'}
         ],
         formModel: {
-          identificationCard: '',
           name: '',
+          email: '',
+          phone: '',
+          identificationCard: '',
+          age: '',
           sex: '',
-          mobile: '',
-          positionalTitles: '',
-          resume: '',
-          introduction: ''
+          lastTitle: '',
+          education: '',
+          school: ''
         },
         formRules: {
           name: [
