@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   div#welcome
-    div Welcome to
+    div Welcome to &nbsp;
       b {{name}}
 </template>
 
@@ -24,8 +24,11 @@
     watch: {'$route': 'fetchData'},
     methods: {
       fetchData() {
-        this.name = this.$route.params.app
-        this.getDict()
+        if (this.$route.name !== 'login') {
+          this.name = this.$route.params.app || this.name
+          this.getDict()
+        }
+
 //        console.log(this.$route.params.name);
       },
       getDict() {
@@ -40,8 +43,10 @@
           this.axios.get(DictURL, {
             params: data
           }).then(response => {
-            Cache.save(DictKey, JSON.stringify(response.data.data))
-            console.log(`dict cached under key ${DictKey}`, response.data)
+            if (response.data) {
+              Cache.save(DictKey, JSON.stringify(response.data.data))
+              console.log(`dict cached under key ${DictKey}`, response.data)
+            }
           })
         }
       }

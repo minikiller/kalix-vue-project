@@ -21,7 +21,7 @@
         type: String,
         required: true
       },
-      disabled: Boolean,
+      disabled: Boolean, // 是否禁止
       value: Number
     },
     mounted() {
