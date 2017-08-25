@@ -22,8 +22,10 @@
             el-table-column(v-if="tableData && tableData.length > 0" label="行号" width="70")
               template(scope="scope")
                 div(style="text-align: center") {{ scope.row.rowNumber }}
-            div(v-if="tableData && tableData.length > 0" v-for="field in tableFields" v-bind:key="field.prop")
-              el-table-column( :prop="field.prop" v-bind:label="field.label")
+            el-table-column(v-if="tableData && tableData.length > 0" v-for="field in tableFields"
+            v-bind:key="field.prop" v-bind:prop="field.prop" v-bind:label="field.label")
+              template(scope="scope")
+                div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
             //  table的工具按钮
             slot(name="tableToolSlot")
               kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick")
@@ -101,6 +103,10 @@
       btnList: {   //  table中按钮数组
         type: Array,
         required: true
+      },
+      restructureFunction: {  // 数据重构函数
+        type: Function,
+        default: null
       }
     },
     data() {
@@ -269,6 +275,10 @@
             item.rowNumber = index + that.rowNo
             return item
           })
+
+          if (this.restructureFunction) {
+            this.tableData = this.restructureFunction(this.tableData)
+          }
           this.pager.totalCount = response.data.totalCount
           this.loading = false
           document.querySelector('.el-table__body-wrapper').scrollTop = 0
