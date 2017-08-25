@@ -7,7 +7,7 @@
 <template lang="pug">
   div
     el-input(placeholder="输入关键字进行过滤" v-model="filterText")
-    el-tree.filter-tree(:data="data2" v-bind:props="defaultProps" default-expand-all :filter-node-method="filterNode" ref="tree2")
+    el-tree.filter-tree(:data="data2" v-bind:props="defaultProps" v-bind:filter-node-method="filterNode" ref="tree2")
 </template>
 
 <script type="text/ecmascript-6">
