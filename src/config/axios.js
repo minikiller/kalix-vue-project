@@ -24,7 +24,7 @@ axios.interceptors.request.use(config => {
     config.headers.AccessToken = accessToken
     config.headers.JSESSIONID = userToken
   }
-  console.log(`[kalix] axios interceptor request config is `, config)
+  console.log(`[kalix]-[axios.js] axios interceptor request config is `, config)
   return config
 }, error => {
   // loadinginstace.close()
@@ -37,7 +37,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(res => {
   // 响应成功关闭loading
   // loadinginstace.close()
-  console.log(`[kalix] axios interceptor response data is `, res)
+  console.log(`[kalix]-[axios.js] axios interceptor response data is `, res)
   if (res.data.code === 401) {
     Cache.clear()
     Router.push({path: '/login'})
