@@ -11,12 +11,12 @@
     div.el-form(slot="dialogFormSlot")
       div.s-flex
         el-form-item.s-flex_item(label="姓名" prop="name" v-bind:rules="rules.name")
-         el-input(v-model="formModel.name")
-        div.s-flex_item
+          el-input(v-model="formModel.name")
+        div.dd
         el-form-item.s-flex_item(label="学生性别" prop="sex" v-bind:rules="rules.sex")
           el-radio-group(v-model="formModel.sex")
-           el-radio(label="男")
-           el-radio(label="女")
+            el-radio(label="男")
+            el-radio(label="女")
       div.s-flex
         el-form-item.s-flex_item(label="学号" prop="studentNo")
           el-input(v-model="formModel.studentNo")
@@ -98,7 +98,10 @@
     components: {
       KalixDialog: Dialog
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
+<style scoped lang="stylus">
+  .dd
+    width 20px
+</style>
