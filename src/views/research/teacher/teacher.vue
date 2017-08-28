@@ -11,14 +11,14 @@
     v-bind:formModel.sync="formModel" v-bind:formRules="formRules"
     v-bind:bizDialog="bizDialog"
     v-bind:bizSearch="'ResearchTeacherSearch'" v-bind:btnList="btnList"
-    v-bind:restructureFunction="dataRestructure")
+    v-bind:restructureFunction="dataRestucture")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
-  import {TeacherURL, TeacherComponent, ToolButtonList, ResearchCacheKey} from '../config.toml'
-  import {DictKeyValueObject} from 'common/keyValueObject'
+  import {TeacherURL, TeacherComponent, ToolButtonList} from '../config.toml'
+  import {dictKeyObject} from 'common/keyValueObject'
 
   // 注册全局组件
   TeacherComponent.forEach((item) => {
@@ -42,7 +42,7 @@
           {prop: 'name', label: '姓名'},
           {prop: 'sex', label: '性别'},
           {prop: 'mobile', label: '手机'},
-          {prop: 'positionalTitlesDict', label: '职称'},
+          {prop: 'positionalTitles', label: '职称'},
           {prop: 'resume', label: '个人简历'},
           {prop: 'introduction', label: '个人说明'}
         ],
@@ -56,7 +56,7 @@
           name: '',
           sex: '',
           mobile: '',
-          positionalTitles: 0,
+          positionalTitles: 2,
           resume: '',
           introduction: '',
           learning: '',
@@ -79,15 +79,14 @@
     },
     filter: {},
     methods: {
-      dataRestructure(_data) {
+      dataRestucture(_data) {
         //  获取 对应的键值对 对象
-        let _keyObj = DictKeyValueObject(ResearchCacheKey, '职称')
-        console.log('should get key is ', _keyObj)
+        let _keyObj = dictKeyObject(`RESEARCH-DICT-KEY`, 'value', 'label')
         _data.forEach(function (e) {
           //  检测 _keyObj 是否存在
           if (_keyObj) {
             // 替换对应的列值
-            e.positionalTitlesDict = _keyObj[e.positionalTitles]
+            e.positionalTitles = _keyObj[e.positionalTitles]
           }
         })
       }

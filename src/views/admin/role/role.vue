@@ -29,7 +29,7 @@
         userList: [],
         value9: [],
         loading: false,
-        currentValue: this.value
+        currentValue: this.value ? '' : ''
       }
     },
     mounted() {
