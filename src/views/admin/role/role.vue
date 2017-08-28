@@ -1,6 +1,6 @@
 <template>
   <el-select
-    v-model='dataModel'
+    v-model='currentValue'
     filterable
     remote
     placeholder='请输入用户名称'
@@ -21,20 +21,24 @@
 
   export default {
     props: {
-      dataModel: String
+      dataModel: String,
+      value: Number
     },
     data() {
       return {
         userList: [],
         value9: [],
-        loading: false
+        loading: false,
+        currentValue: this.value ? '' : ''
       }
     },
     mounted() {
     },
     methods: {
       remoteMethod(query) {
+        console.log('this.currentValue', this.currentValue)
         if (query !== '') {
+          this.$emit('input', this.currentValue)
           this.loading = true
           setTimeout(() => {
             this.loading = false
@@ -56,6 +60,13 @@
           this.userList = []
         }
       }
-    }
+    },
+    watch: {
+      value(newVal) {
+        this.currentValue = newVal
+      }
+    },
+    computed: {}
+
   }
 </script>

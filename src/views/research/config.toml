@@ -6,6 +6,8 @@ TeacherURL = "/camel/rest/teachers"
 StudentURL = "/camel/rest/students"
 WorkerURL = "/camel/rest/workers"
 
+ResearchCacheKey = "RESEARCH-DICT-KEY"
+
 # 需要自动注册成全局的Teacher组件
 [[TeacherComponent]]
   path = "./teacherView"

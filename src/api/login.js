@@ -29,7 +29,7 @@ export default {
       },
       data: _data
     }).then((res) => {
-      console.log('remoteLogin function return data is: ', res.data)
+      console.log('[kalix]-[login.js] remoteLogin function return data is: ', res.data)
       return Promise.resolve(res.data)
     })
   }
