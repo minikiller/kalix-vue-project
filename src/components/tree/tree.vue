@@ -29,7 +29,7 @@
         if (!value) {
           return true
         } else {
-          return data.label.indexOf(value) !== -1
+          return data.name.indexOf(value) !== -1
         }
       },
       fentch () {
