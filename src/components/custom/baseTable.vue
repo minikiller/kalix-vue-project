@@ -29,7 +29,7 @@
             //  table的工具按钮
             slot(name="tableToolSlot")
               kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick")
-          div.no-list(v-if="!tableData || !tableData.length > 0" v-bind:style="{'height':tableHeight+'px'}")
+          div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
         div.kalix-table-pagination
           el-pagination(v-if="pager.totalCount"
@@ -381,7 +381,7 @@
         position absolute
         left 1px
         top 1px
-        height 744px
+        height 100%
         width 100%
         color #5e7382
         font-size 14px

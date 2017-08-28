@@ -61,6 +61,9 @@
     watch: {'$route': 'fetchData'},
     methods: {
       fetchData() {
+        if (this.$route.name === 'login') {
+          return
+        }
         let d = new Date()
         let cd = d.getTime()
         let treeListData = {}

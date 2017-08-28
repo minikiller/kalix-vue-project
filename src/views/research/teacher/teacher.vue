@@ -56,7 +56,7 @@
           name: '',
           sex: '',
           mobile: '',
-          positionalTitles: '',
+          positionalTitles: 2,
           resume: '',
           introduction: '',
           learning: '',

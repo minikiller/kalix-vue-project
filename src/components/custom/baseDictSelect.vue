@@ -4,7 +4,7 @@
 开发日期：2017年8月24日
 -->
 <template lang="pug">
-  div
+  el-select(v-model='currentValue' v-on:input="change($event)" v-bind:disabled="disabled" placeholder='请选择')
     el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
 
@@ -13,13 +13,24 @@
 
   export default {
     props: {
-      appName: '',   // 应用名称
-      dictType: ''   // 数据字典类别
+      appName: {  // 应用名称
+        type: String,
+        required: true
+      },
+      dictType: { // 数据字典类别
+        type: String,
+        required: true
+      },
+      disabled: Boolean, // 是否禁止
+      value: Number
     },
     mounted() {
       this.visibleChange()
     },
     methods: {
+      change: function (val) {
+        this.$emit('input', val)
+      },
       visibleChange() {
         const DictKey = `${this.appName.toUpperCase()}-DICT-KEY`
         let data_ = JSON.parse(Cache.get(DictKey)) // get data from cache
@@ -30,7 +41,8 @@
     },
     data() {
       return {
-        items: []
+        items: [],
+        currentValue: this.value
       }
     }
   }

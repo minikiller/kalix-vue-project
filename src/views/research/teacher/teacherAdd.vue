@@ -11,12 +11,8 @@
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard")
         el-input(v-model="formModel.identificationCard")
-
       el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
         el-input(v-model="formModel.name")
-      el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
-        kalix-user-select(v-model="formModel.name")
-          kalix-user-optin(:userList="$parent.$data.userList")
       el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
         el-radio-group(v-model="formModel.sex")
           el-radio(label="男")
@@ -24,8 +20,9 @@
       el-form-item(label="手机" prop="mobile" v-bind:rules="rules.mobile")
         el-input(v-model="formModel.mobile")
       el-form-item(label="职称" prop="positionalTitles")
-        el-select(v-model="formModel.positionalTitles")
-          kalix-dict-select( appName="research" dictType="职称")
+        el-input(v-model="formModel.positionalTitles")
+      el-form-item(label="职称" prop="positionalTitles")
+          kalix-dict-select(v-model="formModel.positionalTitles" appName="research" dictType="职称")
       el-form-item(label="个人简历")
         el-input(type="textarea" v-model="formModel.resume")
       el-form-item(label="个人说明")
@@ -34,14 +31,14 @@
         el-input(type="textarea" v-model="formModel.learning")
       el-form-item(label="教学情况")
         el-input(type="textarea" v-model="formModel.teaching")
-
+      el-form-item(label="教学情况")
+        kalix-user-select(v-model="formModel.teaching")
 </template>
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserSelect from '@/components/biz/userselect/userselect'
-  import UserOption from '@/components/biz/userselect/useroption'
   import {TeacherURL} from '../config.toml'
 
   export default {
@@ -103,8 +100,7 @@
     components: {
       KalixDialog: Dialog,
       KalixDictSelect: BaseDictSelect,
-      KalixUserSelect: UserSelect,
-      KalixUserOption: UserOption
+      KalixUserSelect: UserSelect
     },
     methods: {}
   }
