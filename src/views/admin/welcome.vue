@@ -24,10 +24,11 @@
     watch: {'$route': 'fetchData'},
     methods: {
       fetchData() {
-        if (this.$route.name !== 'login') {
-          this.name = this.$route.params.app || this.name
-          this.getDict()
+        if (this.$route.name === 'login' || this.$route.name === 'workflow') {
+          return
         }
+        this.name = this.$route.params.app || this.name
+        this.getDict()
 
 //        console.log(this.$route.params.name);
       },
