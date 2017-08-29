@@ -10,7 +10,7 @@
       component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch" v-on:onSearchBtnClick="onSearchClick")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
-        i.iconfont.icon-dict-management
+        i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
         kalix-tool-bar( v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
@@ -52,6 +52,7 @@
   import Dialog from './baseDialog'
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
+  import Cache from 'common/cache'
   import {
     ON_SEARCH_BUTTON_CLICK,
     ON_REFRESH_DATA,
@@ -111,6 +112,7 @@
     },
     data() {
       return {
+        iconCls: '',
         loading: true,
         tableData: [],
         totalCount: 0,
@@ -150,6 +152,11 @@
 //        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
         this.whichBizDialog = ''
       })
+      //  绑定表格 icon 图标
+      const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
+      if (currentTreeListItem) {
+        this.iconCls = currentTreeListItem.iconCls
+      }
     },
     methods: {
       onSearchClick(_searchParam) { // 查询按钮点击事件
