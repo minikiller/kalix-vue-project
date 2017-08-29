@@ -136,6 +136,7 @@ require(['../components/Massive.vue'], resolve)
 
 ## unit test
 > https://github.com/mzabriskie/moxios
+
 > https://github.com/ctimmerm/axios-mock-adapter
 
 整理一下配置测试环境所需要的依赖：
@@ -153,3 +154,6 @@ require(['../components/Massive.vue'], resolve)
 * karma-spec-reporter //在终端输出测试结果
 * istanbul-instrumenter-loader //代码覆盖率统计工具 istanbul
 * karma-coverage-istanbul-reporter //代码覆盖率报告产出插件
+
+> !测试框架 Mocha 实例教程[http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html]
+

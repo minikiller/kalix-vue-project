@@ -1,4 +1,4 @@
-import List from '@/components/List'
+import List from '@/views/demo/List'
 import Vue from 'vue'
 
 describe('List.vue', () => {

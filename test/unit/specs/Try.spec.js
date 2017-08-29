@@ -4,7 +4,7 @@ import ChangeInput from '@/views/demo/ChangeInput'
 const Constructor = Vue.extend(ChangeInput)
 const vm = new Constructor().$mount()
 
-describe('my app', () => {
+describe('ChangeInput.vue', () => {
   beforeEach(() => {
   })
 
