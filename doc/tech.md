@@ -139,17 +139,17 @@ require(['../components/Massive.vue'], resolve)
 > https://github.com/ctimmerm/axios-mock-adapter
 
 整理一下配置测试环境所需要的依赖：
-1. karma //test runner，提供测试所需的浏览器环境、监测代码改变自动重测、整合持续集成等功能
-*. phantomjs-prebuilt //phantomjs，在终端运行的浏览器虚拟机
-*. mocha //test framework，测试框架，运行测试
-*. chai //assertion framework, 断言库，提供多种断言，与测试框架配合使用
-*. sinon //测试辅助工具，提供 spy、stub、mock 三种测试手段，帮助捏造特定场景
-*. karma-webpack //karma 中的 webpack 插件
-*. karma-mocha //karma 中的 mocha 插件
-*. karma-sinon-chai //karma 中的 sinon-chai 插件
-*. sinon-chai //karma 中的 chai 插件
-*. karma-sourcemap-loader //karma 中的 sourcemap 插件
-*. karma-phantomjs-launcher //karma 中的 phantomjs 插件
-*. karma-spec-reporter //在终端输出测试结果
-*. istanbul-instrumenter-loader //代码覆盖率统计工具 istanbul
-*. karma-coverage-istanbul-reporter //代码覆盖率报告产出插件
+* karma //test runner，提供测试所需的浏览器环境、监测代码改变自动重测、整合持续集成等功能
+* phantomjs-prebuilt //phantomjs，在终端运行的浏览器虚拟机
+* mocha //test framework，测试框架，运行测试
+* chai //assertion framework, 断言库，提供多种断言，与测试框架配合使用
+* sinon //测试辅助工具，提供 spy、stub、mock 三种测试手段，帮助捏造特定场景
+* karma-webpack //karma 中的 webpack 插件
+* karma-mocha //karma 中的 mocha 插件
+* karma-sinon-chai //karma 中的 sinon-chai 插件
+* sinon-chai //karma 中的 chai 插件
+* karma-sourcemap-loader //karma 中的 sourcemap 插件
+* karma-phantomjs-launcher //karma 中的 phantomjs 插件
+* karma-spec-reporter //在终端输出测试结果
+* istanbul-instrumenter-loader //代码覆盖率统计工具 istanbul
+* karma-coverage-istanbul-reporter //代码覆盖率报告产出插件
