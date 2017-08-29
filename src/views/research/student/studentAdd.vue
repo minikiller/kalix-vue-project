@@ -10,59 +10,62 @@
   )
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="姓名" prop="name" v-bind:rules="rules.name")
+        el-form-item.s-flex_item(label="学生姓名" prop="name" v-bind:rules="rules.name" label-width="120px" )
          el-input(v-model="formModel.name")
-        div.s-flex_item
-        el-form-item.s-flex_item(label="学生性别" prop="sex" v-bind:rules="rules.sex")
+        div.dd
+        el-form-item.s-flex_item(label="所属民族" prop="nation" label-width="120px")
+          el-input(v-model="formModel.nation" )
+      div.s-flex
+        el-form-item.s-flex_item(label="学生性别" prop="sex" v-bind:rules="rules.sex" label-width="120px")
           el-radio-group(v-model="formModel.sex")
-           el-radio(label="男")
-           el-radio(label="女")
-      div.s-flex
-        el-form-item.s-flex_item(label="学号" prop="studentNo")
-          el-input(v-model="formModel.studentNo")
-        div.s-flex_item
-        el-form-item.s-flex_item(label="身份证号" prop="identificationCard")
-          el-input(v-model="formModel.identificationCard")
-      div.s-flex
-        el-form-item.s-flex_item(label="院部" prop="college")
-          el-input(v-model="formModel.college")
-        div.s-flex_item
-        el-form-item.s-flex_item(label="学习专业" prop="major")
-          el-input(v-model="formModel.major")
-      div.s-flex
-        el-form-item.s-flex_item(label="班级" prop="sclass")
-          el-input(v-model="formModel.sclass")
-        div.s-flex_item
-        el-form-item.s-flex_item(label="辅导人员" prop="instructor")
-          el-input(v-model="formModel.instructor")
-      div.s-flex
-        el-form-item.s-flex_item(label="民族" prop="nation")
-          el-input(v-model="formModel.nation")
-        div.s-flex_item
-        el-form-item.s-flex_item(label="政治面貌" prop="politicalStatus")
+            el-radio(label="男")
+            el-radio(label="女")
+        div.dd
+        el-form-item.s-flex_item(label="政治面貌" prop="politicalStatus" label-width="120px")
           el-input(v-model="formModel.politicalStatus")
       div.s-flex
-        el-form-item.s-flex_item(label="联系地址" prop="address")
-          el-input(v-model="formModel.address")
-        div.s-flex_item
-        el-form-item.s-flex_item(label="邮政编码" prop="postalcode")
-          el-input(v-model="formModel.postalcode")
-      div.s-flex
-        el-form-item.s-flex_item(label="籍贯" prop="placeOfOrigin")
+        el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="120px")
+          el-input(v-model="formModel.identificationCard")
+        div.dd
+        el-form-item.s-flex_item(label="原始籍贯" prop="placeOfOrigin" label-width="120px")
           el-input(v-model="formModel.placeOfOrigin")
-        div.s-flex_item
-        el-form-item.s-flex_item(label="生源省份" prop="province")
+      div.s-flex
+        el-form-item.s-flex_item(label="学生学号" prop="studentNo" label-width="120px")
+          el-input(v-model="formModel.studentNo")
+        div.dd
+        el-form-item.s-flex_item(label="生源省份" prop="province" label-width="120px")
           el-input(v-model="formModel.joinPartyDate")
       div.s-flex
-        el-form-item.s-flex_item(label="入学年份" prop="entranceYear")
-          el-input(v-model="formModel.entranceYear")
-        div.s-flex_item
-        el-form-item.s-flex_item(label="学习年限" prop="period")
-          el-input(v-model="formModel.period")
+        el-form-item.s-flex_item(label="所在院部" prop="college" label-width="120px")
+          el-input(v-model="formModel.college")
+        div.dd
+        el-form-item.s-flex_item(label="家庭电话" prop="homePhone" label-width="120px")
+          el-input(v-model="formModel.homePhone")
       div.s-flex
-        el-form-item.s-flex_item(label="学生培养层次" prop="trainingLevel")
+        el-form-item.s-flex_item(label="学习专业" prop="major" label-width="120px")
+          el-input(v-model="formModel.major")
+        div.dd
+        el-form-item.s-flex_item(label="联系地址" prop="address" label-width="120px")
+          el-input(v-model="formModel.address")
+      div.s-flex
+        el-form-item.s-flex_item(label="所属班级" prop="sclass" label-width="120px")
+          el-input(v-model="formModel.sclass")
+        div.dd
+        el-form-item.s-flex_item(label="邮政编码" prop="postalcode" label-width="120px")
+          el-input(v-model="formModel.postalcode")
+      div.s-flex
+        el-form-item.s-flex_item(label="辅导人员" prop="instructor" label-width="120px")
+          el-input(v-model="formModel.instructor")
+        div.dd
+        el-form-item.s-flex_item(label="培养层次" prop="trainingLevel" label-width="120px")
           el-input(v-model="formModel.trainingLevel")
-        div.s-flex_item
+      div.s-flex
+        el-form-item.s-flex_item(label="入学年份" prop="entranceYear" label-width="120px")
+          el-input(v-model="formModel.entranceYear")
+        div.dd
+        el-form-item.s-flex_item(label="学习年限" prop="period" label-width="120px")
+          el-input(v-model="formModel.period")
+
 
 </template>
 
@@ -98,7 +101,10 @@
     components: {
       KalixDialog: Dialog
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
+<style scoped lang="stylus">
+  .dd
+    width 50px
+</style>

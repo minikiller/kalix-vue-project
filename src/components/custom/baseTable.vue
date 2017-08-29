@@ -10,7 +10,7 @@
       component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch" v-on:onSearchBtnClick="onSearchClick")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
-        i.iconfont.icon-dict-management
+        i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
         kalix-tool-bar( v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
@@ -29,7 +29,7 @@
             //  table的工具按钮
             slot(name="tableToolSlot")
               kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick")
-          div.no-list(v-if="!tableData || !tableData.length > 0" v-bind:style="{'height':tableHeight+'px'}")
+          div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
         div.kalix-table-pagination
           el-pagination(v-if="pager.totalCount"
@@ -52,6 +52,7 @@
   import Dialog from './baseDialog'
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
+  import Cache from 'common/cache'
   import {
     ON_SEARCH_BUTTON_CLICK,
     ON_REFRESH_DATA,
@@ -111,6 +112,7 @@
     },
     data() {
       return {
+        iconCls: '',
         loading: true,
         tableData: [],
         totalCount: 0,
@@ -150,6 +152,11 @@
 //        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
         this.whichBizDialog = ''
       })
+      //  绑定表格 icon 图标
+      const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
+      if (currentTreeListItem) {
+        this.iconCls = currentTreeListItem.iconCls
+      }
     },
     methods: {
       onSearchClick(_searchParam) { // 查询按钮点击事件
@@ -381,7 +388,7 @@
         position absolute
         left 1px
         top 1px
-        height 744px
+        height 100%
         width 100%
         color #5e7382
         font-size 14px
