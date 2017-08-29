@@ -87,12 +87,14 @@
             let nowDate = new Date()
             if (response.data && response.data.code !== 401) {
               this.treeData = response.data
-              this.treeData.forEach(function (e, i) {
-                Vue.set(e, 'isShow', false)
-              })
-              treeListData[this.currApp] = this.treeData
-              treeListData.createDate = nowDate.getTime()
-              Cache.save('treeListData', JSON.stringify(treeListData))
+              if (this.treeData.length) {
+                this.treeData.forEach(function (e, i) {
+                  Vue.set(e, 'isShow', false)
+                })
+                treeListData[this.currApp] = this.treeData
+                treeListData.createDate = nowDate.getTime()
+                Cache.save('treeListData', JSON.stringify(treeListData))
+              }
             }
           })
         }
