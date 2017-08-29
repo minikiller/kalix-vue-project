@@ -4,6 +4,7 @@ CommonDictURL = "/camel/rest/common/dicts"
 CommonDictsTypesListURL = "/camel/rest/common/dicts/types/list"
 NewsURL = "/camel/rest/newss"
 NoteURL = "/camel/rest/notes"
+SenderURL = "/camel/rest/messages/sender"
 
 # 需要自动注册成全局的News组件
 [[CommonDictComponent]]
@@ -37,6 +38,14 @@ NoteURL = "/camel/rest/notes"
 [[NoteComponent]]
   path = "./noteSearch"
   name = "CommonNoteSearch"
+
+# 需要自动注册成全局的 Sender 组件
+[[SenderComponent]]
+  path = "./senderView"
+  name = "CommonSenderView"
+[[SenderComponent]]
+  path = "./senderSearch"
+  name = "CommonSenderSearch"
 
 # table 的默认按钮定义
 [[ToolButtonList]]
