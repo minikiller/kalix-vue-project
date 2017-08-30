@@ -18,7 +18,7 @@
           div.mn(v-show="item.isShow")
             ul
               li(v-for="item in item.children" v-bind:key="item.id")
-                router-link.tit(tag="div" v-bind:to="{path:'/'+item.routeId}")
+                div.tit(v-on:click="selectItem(item)" v-bind:class="currentCls(item)")
                   i.tit_icon(:class="bindClass(item.iconCls)")
                   | {{item.text}}
     ul.bd.samll(v-if="menuChk")
@@ -28,7 +28,9 @@
           div.mn
             div.txt {{item.text}}
             ul
-              router-link.tit(tag="li" v-for="item in item.children" v-bind:to="{path:'/'+item.routeId}" v-bind:key="item.id")
+              li.tit(v-for="item in item.children"
+              v-bind:key="item.id"
+              v-on:click="selectItem(item)")
                 i.tit_icon(:class="bindClass(item.iconCls)")
                 | {{item.text}}
 </template>
@@ -85,22 +87,25 @@
             let nowDate = new Date()
             if (response.data && response.data.code !== 401) {
               this.treeData = response.data
-              this.treeData.forEach(function (e, i) {
-                Vue.set(e, 'isShow', false)
-              })
-              treeListData[this.currApp] = this.treeData
-              treeListData.createDate = nowDate.getTime()
-              Cache.save('treeListData', JSON.stringify(treeListData))
+              if (this.treeData.length) {
+                this.treeData.forEach(function (e, i) {
+                  Vue.set(e, 'isShow', false)
+                })
+                treeListData[this.currApp] = this.treeData
+                treeListData.createDate = nowDate.getTime()
+                Cache.save('treeListData', JSON.stringify(treeListData))
+              }
             }
           })
         }
         this.setItemShow()
       },
       setItemShow() {
-        let routeName = this.currApp + '/' + this.currFun
+//        let routeName = this.currApp + '/' + this.currFun
+        let routeName = this.currFun
         this.treeData.forEach((item) => {
           let temp = item.children.find(function (e) {
-            return e.routeId === routeName
+            return e.routeId.split('/').pop() === routeName
           })
           if (temp) {
             item.isShow = true
@@ -122,6 +127,13 @@
       },
       showIcon(e) {
         return e ? 'el-icon-caret-bottom' : 'el-icon-caret-right'
+      },
+      selectItem(item) {
+        this.$router.push({path: `/${this.currApp}/${item.routeId.split('/').pop()}`})
+        Cache.save('currentTreeListItem', JSON.stringify(item))
+      },
+      currentCls(item) {
+        return item.routeId.split('/').pop() === this.currFun ? 'active' : ''
       }
     },
     components: {}

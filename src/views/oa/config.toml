@@ -2,7 +2,7 @@
 
 OaDictURL = "/camel/rest/oa/dicts"
 OaDictsTypesListURL = "/camel/rest/oa/dicts/types/list"
-
+CategoryURL = "camel/rest/categorys"
 
 # 需要自动注册成全局的News组件
 [[CommonDictComponent]]

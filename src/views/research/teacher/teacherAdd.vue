@@ -22,7 +22,7 @@
       el-form-item(label="职称" prop="positionalTitles")
         el-input(v-model="formModel.positionalTitles")
       el-form-item(label="职称" prop="positionalTitles")
-          kalix-dict-select(v-model="formModel.positionalTitles" appName="research" dictType="职称")
+        kalix-dict-select(v-model="formModel.positionalTitles" appName="research" dictType="职称")
       el-form-item(label="个人简历")
         el-input(type="textarea" v-model="formModel.resume")
       el-form-item(label="个人说明")
@@ -31,8 +31,8 @@
         el-input(type="textarea" v-model="formModel.learning")
       el-form-item(label="教学情况")
         el-input(type="textarea" v-model="formModel.teaching")
-      el-form-item(label="教学情况")
-        kalix-user-select(v-model="formModel.teaching")
+      el-form-item(label="教学情况" )
+        kalix-user-select(v-bind:params="params" v-model="formModel.teaching" v-on:userSelected="onUserSelected")
 </template>
 
 <script type="text/ecmascript-6">
@@ -73,6 +73,7 @@
         }
       }
       return {
+        params: {userType: 0},
         rules: {
           name: [{required: true, message: '请输入 name', trigger: 'blur'}],
           sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
@@ -102,7 +103,11 @@
       KalixDictSelect: BaseDictSelect,
       KalixUserSelect: UserSelect
     },
-    methods: {}
+    methods: {
+      onUserSelected(user) {
+        console.log(user)
+      }
+    }
   }
 </script>
 
