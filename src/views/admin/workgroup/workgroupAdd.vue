@@ -1,5 +1,5 @@
 <template lang="pug">
-  kalix-dialog.workgroup-add(bizKey="workGroup"
+  kalix-dialog.workgroup-add(bizKey="workgroup"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="组名称" prop="name" v-bind:rules="rules.name")

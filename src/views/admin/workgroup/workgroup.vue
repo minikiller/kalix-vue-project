@@ -1,6 +1,6 @@
 <template lang="pug">
   keep-alive
-    base-table(bizKey="workGroup" title='组列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    base-table(bizKey="workgroup" title='组列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     bizSearch="AdminWorkGroupSearch"  v-bind:btnList="btnList")
