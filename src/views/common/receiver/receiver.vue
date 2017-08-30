@@ -19,18 +19,18 @@
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {DictKeyValueObject} from 'common/keyValueObject'
-  import {ReceiverURL, ReceiverComponent, ToolButtonList} from '../config.toml'
+  import {ReceiverURL, ReceiverComponent, SenderToolButtonList} from '../config.toml'
 
   // 注册全局组件
   ReceiverComponent.forEach((item) => {
     console.log('[kalix]-[research] registry name is: ' + item.name, '; registry path is: ' + item.path)
     Vue.component(item.name, require('' + item.path))
   })
-
+  const RECEIVER_CATEGORY = 2
   export default {
     data() {
       return {
-        btnList: ToolButtonList,
+        btnList: SenderToolButtonList,
         targetURL: ReceiverURL,
         tableFields: [
           {prop: 'senderName', label: '发件人'},
@@ -41,13 +41,14 @@
 
         ],
         bizDialog: [
-          {id: 'view', dialog: 'CommonNoteView'}
+          {id: 'view', dialog: 'CommonReceiverView'},
+          {id: 'add', dialog: 'CommonReceiverAdd'}
         ],
         formModel: {
           title: '',
           content: '',
-          publishPeople: '',
-          publishDate: ''
+          receiverIds: [],
+          category: RECEIVER_CATEGORY
         },
         formRules: {
           title: [
