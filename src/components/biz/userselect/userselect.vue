@@ -11,7 +11,7 @@
     remote
     placeholder='请输入用户名称'
     :remote-method='remoteMethod'
-    :loading='loading'>
+    :loading='loading' v-on:change="onChange">
     <el-option
       v-for='user in userList'
       :key='user.id'
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-//  import {strToUnicode} from 'common/unicode-convert'
+  //  import {strToUnicode} from 'common/unicode-convert'
   import {usersURL} from 'views/admin/config.toml'
 
   export default {
@@ -34,12 +34,21 @@
       return {
         userList: [],
         loading: false,
-        currentValue: this.value
+        currentValue: this.value,
+        selectUser: {}
       }
     },
     mounted() {
     },
     methods: {
+      onChange(value) {
+        let users = this.userList.filter((item) => {
+          return item.id === value
+        })
+        this.selectUser = users[0] || {}
+        console.log(`[kalix]-[userselect.vue] current user is `, this.selectUser)
+        this.$emit('userSelected', this.selectUser)
+      },
       remoteMethod(query) {
         if (query !== '') {
           this.$emit('input', this.currentValue)  // 设置model的数值

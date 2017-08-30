@@ -31,8 +31,8 @@
         el-input(type="textarea" v-model="formModel.learning")
       el-form-item(label="教学情况")
         el-input(type="textarea" v-model="formModel.teaching")
-      el-form-item(label="教学情况")
-        kalix-user-select(v-bind:params="params" v-model="formModel.teaching")
+      el-form-item(label="教学情况" )
+        kalix-user-select(v-bind:params="params" v-model="formModel.teaching" v-on:userSelected="onUserSelected")
 </template>
 
 <script type="text/ecmascript-6">
@@ -103,7 +103,11 @@
       KalixDictSelect: BaseDictSelect,
       KalixUserSelect: UserSelect
     },
-    methods: {}
+    methods: {
+      onUserSelected(user) {
+        console.log(user)
+      }
+    }
   }
 </script>
 
