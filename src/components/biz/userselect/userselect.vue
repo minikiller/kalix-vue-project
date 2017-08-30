@@ -9,6 +9,7 @@
     v-model='currentValue'
     filterable
     remote
+    multiple="multiple"
     placeholder='请输入用户名称'
     :remote-method='remoteMethod'
     :loading='loading' v-on:change="onChange">
@@ -28,7 +29,8 @@
   export default {
     props: {
       value: String,   // 用于绑定v-model
-      params: {}
+      multiple: Boolean, // 是否允许多选
+      params: {} // 附加搜索参数
     },
     data() {
       return {
@@ -47,7 +49,7 @@
         })
         this.selectUser = users[0] || {}
         console.log(`[kalix]-[userselect.vue] current user is `, this.selectUser)
-        this.$emit('userSelected', this.selectUser)
+        this.$emit('userSelected', this.selectUser)  // 发送事件
       },
       remoteMethod(query) {
         if (query !== '') {
