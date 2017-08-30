@@ -1,0 +1,33 @@
+<template lang="pug">
+  kalix-dialog.workgroup-view(bizKey="workgroup"
+  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:isView="readonly")
+    div.el-form(slot="dialogFormSlot")
+      el-form-item(label="工作组名称" prop="name" )
+        el-input(v-model="formModel.name" v-bind:readonly="readonly")
+      el-form-item(label="工作组名称12" prop="app" )
+        el-input(v-model="formModel.app" v-bind:readonly="readonly")
+</template>
+
+<script type="text/ecmascript-6">
+  import Dialog from '@/components/custom/baseDialog.vue'
+
+  export default {
+    props: {
+      formModel: {
+        type: Object,
+        required: true
+      }
+    },
+    data() {
+      return {
+        readonly: true
+      }
+    },
+    created() {
+    },
+    components: {
+      KalixDialog: Dialog
+    },
+    methods: {}
+  }
+</script>

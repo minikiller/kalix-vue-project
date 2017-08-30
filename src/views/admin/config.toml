@@ -4,6 +4,7 @@ AdminDictURL = "/camel/rest/admin/dicts"
 AdminDictsTypesListURL = "/camel/rest/admin/dicts/types/list"
 
 usersURL = "/camel/rest/users"
+workgroupURL = "/camel/rest/workgroups"
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 
 # table 的默认按钮定义
@@ -22,3 +23,13 @@ userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
   title = "删除"
   isShow = true
   isPermission = true
+
+ [[WorkGroupComponent]]
+   path = "./workgroupView"
+   name = "AdminWorkGroupView"
+ [[WorkGroupComponent]]
+   path = "./workgroupAdd"
+   name = "AdminWorkGroupAdd"
+ [[WorkGroupComponent]]
+   path = "./workgroupSearch"
+   name = "AdminWorkGroupSearch"
