@@ -4,7 +4,7 @@
 开发日期：2017年8月22日
 -->
 <template lang="pug">
-  kalix-dialog.user-add(
+  kalix-dialog.user-add(bizKey="worker"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
   v-bind:isView="readonly")
    div.el-form(slot="dialogFormSlot")
@@ -15,7 +15,7 @@
         el-input(v-model="formModel.identificationCard" v-bind:readonly="readonly")
     div.s-flex
       el-form-item.s-flex_item(label="性别" prop="sex" v-bind:rules="rules.sex" label-width="200px")
-        el-radio-group(v-model="formModel.sex")
+        el-radio-group(v-model="formModel.sex" v-bind:disabled="readonly")
           el-radio(label="男")
           el-radio(label="女")
       el-form-item.s-flex_item(label="籍贯" prop="placeOfOrigin" label-width="200px")

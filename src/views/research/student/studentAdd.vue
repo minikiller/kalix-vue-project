@@ -11,10 +11,11 @@
     div.el-form(slot="dialogFormSlot")
       div.s-flex
         el-form-item.s-flex_item(label="学生姓名" prop="name" v-bind:rules="rules.name" label-width="120px" )
-         el-input(v-model="formModel.name")
+          kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name"
+          v-on:userSelected="onUserSelected")
         div.dd
         el-form-item.s-flex_item(label="所属民族" prop="nation" label-width="120px")
-          el-input(v-model="formModel.nation" )
+          el-input(v-model="formModel.name" )
       div.s-flex
         el-form-item.s-flex_item(label="学生性别" prop="sex" v-bind:rules="rules.sex" label-width="120px")
           el-radio-group(v-model="formModel.sex")
@@ -72,7 +73,9 @@
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import {StudentURL} from '../config.toml'
-
+  import UserSelect from '@/components/biz/userselect/userselect'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import EventBus from 'common/eventbus'
   export default {
     props: {
       formModel: {
@@ -86,6 +89,7 @@
     },
     data() {
       return {
+        params: {userType: 0},
         rules: {
           name: [{required: true, message: '请输入 name', trigger: 'blur'}],
           identificationCard: [{required: true, message: '请输入 identificationCard', trigger: 'blur'}],
@@ -99,9 +103,15 @@
       console.log('[teacherAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      KalixDictSelect: BaseDictSelect,
+      KalixUserSelect: UserSelect
     },
-    methods: {}
+    methods: {
+      onUserSelected(user) {
+        EventBus.$emit('updateStudentModel', user)
+      }
+    }
   }
 </script>
 <style scoped lang="stylus">
