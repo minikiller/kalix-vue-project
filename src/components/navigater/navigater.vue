@@ -18,7 +18,7 @@
           div.mn(v-show="item.isShow")
             ul
               li(v-for="item in item.children" v-bind:key="item.id")
-                div.tit(v-on:click="selectItem(item)")
+                div.tit(v-on:click="selectItem(item)" v-bind:class="currentCls(item)")
                   i.tit_icon(:class="bindClass(item.iconCls)")
                   | {{item.text}}
     ul.bd.samll(v-if="menuChk")
@@ -131,6 +131,9 @@
       selectItem(item) {
         this.$router.push({path: `/${this.currApp}/${item.routeId.split('/').pop()}`})
         Cache.save('currentTreeListItem', JSON.stringify(item))
+      },
+      currentCls(item) {
+        return item.routeId.split('/').pop() === this.currFun ? 'active' : ''
       }
     },
     components: {}
