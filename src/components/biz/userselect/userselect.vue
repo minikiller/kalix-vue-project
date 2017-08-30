@@ -28,7 +28,9 @@
 
   export default {
     props: {
-      value: String,   // 用于绑定v-model
+      value: {
+        required: true
+      },   // 用于绑定v-model
       multiple: Boolean, // 是否允许多选
       params: {} // 附加搜索参数
     },
