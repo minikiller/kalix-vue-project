@@ -21,7 +21,7 @@
               | {{item.text}}
         ul.aside
           li
-            el-button(type="text" icon="message") 0
+            el-button(type="text" icon="message") {{msgCount}}
           li
             el-dropdown(@command="handleCommand")
               div.s-flex.el-dropdown-link
@@ -42,7 +42,7 @@
   import Vue from 'vue'
   import router from 'router'
   import Cache from 'common/cache'
-  import {cacheTime, applicationURL, logoutURL} from 'config/global.toml'
+  import {cacheTime, applicationURL, logoutURL, msgCountURL, msgURL} from 'config/global.toml'
 
   export default {
     props: {
@@ -64,7 +64,8 @@
           {value: '选项6', label: '灰色'}
         ],
         themeValue: '浅蓝',
-        headerMenuChk: this.menuChk
+        headerMenuChk: this.menuChk,
+        msgCount: 0
       }
     },
     mounted() {
@@ -94,6 +95,12 @@
           Cache.save('toolListData', JSON.stringify(toolListData))
         })
       }
+      // 消息通知轮训
+      let that = this
+      that.getMsg()
+      setInterval(function () {
+        that.getMsg()
+      }, 10000)
     },
     methods: {
       handleCommand(command) {
@@ -117,6 +124,28 @@
       },
       menuChkChange() {
         this.$emit('onSmall', this.headerMenuChk)
+      },
+      getMsg() {
+        //  消息通知
+        this.$http.get(msgCountURL).then(res => {
+          //  获取消息数量
+          this.msgCount = res.data.tag
+        })
+        this.$http.get(msgURL).then(res => {
+          //  获取最新消息
+          if (res.data.tag.length > 0) {
+            let msg = JSON.parse(res.data.tag)
+            this.$notify({
+              title: msg.title,
+              message: msg.content,
+              type: 'success',
+              duration: 10000,
+              onClick() {
+                this.$router.push({path: `/common/receiver`})
+              }
+            })
+          }
+        })
       }
     },
     components: {},
