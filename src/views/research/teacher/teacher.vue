@@ -11,14 +11,13 @@
     v-bind:formModel.sync="formModel" v-bind:formRules="formRules"
     v-bind:bizDialog="bizDialog"
     v-bind:bizSearch="'ResearchTeacherSearch'" v-bind:btnList="btnList"
-    v-bind:restructureFunction="dataRestructure")
+    v-bind:dictDefine="dictDefine")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {TeacherURL, TeacherComponent, ToolButtonList, ResearchCacheKey} from '../config.toml'
-  import {DictKeyValueObject} from 'common/keyValueObject'
 
   // 注册全局组件
   TeacherComponent.forEach((item) => {
@@ -35,6 +34,12 @@
     },
     data() {
       return {
+        dictDefine: [{ // 定义数据字典的显示
+          cacheKey: ResearchCacheKey,
+          type: '职称',
+          targetField: 'positionalTitlesDict',
+          sourceField: 'positionalTitles'
+        }],
         btnList: ToolButtonList,
         targetURL: TeacherURL,
         tableFields: [
@@ -78,20 +83,7 @@
     mounted() {
     },
     filter: {},
-    methods: {
-      dataRestructure(_data) {
-        //  获取 对应的键值对 对象
-        let _keyObj = DictKeyValueObject(ResearchCacheKey, '职称')
-        console.log('should get key is ', _keyObj)
-        _data.forEach(function (e) {
-          //  检测 _keyObj 是否存在
-          if (_keyObj) {
-            // 替换对应的列值
-            e.positionalTitlesDict = _keyObj[e.positionalTitles]
-          }
-        })
-      }
-    },
+    methods: {},
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd

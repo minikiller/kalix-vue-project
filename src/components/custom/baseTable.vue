@@ -53,6 +53,7 @@
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
   import Cache from 'common/cache'
+  import {DictKeyValueObject} from 'common/keyValueObject'
   import {
     ON_SEARCH_BUTTON_CLICK,
     ON_REFRESH_DATA,
@@ -105,9 +106,8 @@
         type: Array,
         required: true
       },
-      restructureFunction: {  // 数据重构函数
-        type: Function,
-        default: null
+      dictDefine: {  // 数据字典定义
+        type: Array
       }
     },
     data() {
@@ -159,6 +159,20 @@
       }
     },
     methods: {
+      setDictDefine(_data) { // 处理数据字典
+        this.dictDefine.forEach((item) => {
+          //  获取 对应的键值对 对象
+          let _keyObj = DictKeyValueObject(item.cacheKey, item.type)
+          console.log('[kalix]-[baseTable.vue] dict should get key is ', _keyObj)
+          _data.forEach(function (e) {
+            //  检测 _keyObj 是否存在
+            if (_keyObj) {
+              // 替换对应的列值
+              e[item.targetField] = _keyObj[e[item.sourceField]]
+            }
+          })
+        })
+      },
       onSearchClick(_searchParam) { // 查询按钮点击事件
         console.log('[kalix] base table search clicked')
         this.searchParam = _searchParam
@@ -283,9 +297,8 @@
             return item
           })
 
-          if (this.restructureFunction) {
-            // 如果没有传入 restructureFunction 函数就不执行以下函数
-            this.restructureFunction(this.tableData)
+          if (this.dictDefine) { // 设置数据字典
+            this.setDictDefine(this.tableData)
           }
           this.pager.totalCount = response.data.totalCount
           this.loading = false
