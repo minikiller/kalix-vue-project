@@ -19,7 +19,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {DictKeyValueObject} from 'common/keyValueObject'
-  import {SenderURL, SenderComponent, ToolButtonList} from '../config.toml'
+  import {SenderURL, SenderComponent, SenderToolButtonList} from '../config.toml'
 
   // 注册全局组件
   SenderComponent.forEach((item) => {
@@ -30,16 +30,16 @@
   export default {
     data() {
       return {
-        btnList: ToolButtonList,
+        btnList: SenderToolButtonList,
         targetURL: SenderURL,
         tableFields: [
           {prop: 'receiverNames', label: '收件人'},
           {prop: 'categoryName', label: '消息类别'},
-          {prop: 'content', label: '消息主题'},
+          {prop: 'title', label: '消息主题'},
           {prop: 'creationDate', label: '发布时间'}
         ],
         bizDialog: [
-          {id: 'view', dialog: 'CommonNoteView'}
+          {id: 'view', dialog: 'CommonSenderView'}
         ],
         formModel: {
           title: '',
@@ -61,6 +61,7 @@
       dataRestucture(_data) {
         //  获取 对应的键值对 对象
         let _keyObj = DictKeyValueObject(`COMMON-DICT-KEY`, '消息类别')
+        console.log('_keyObj', _keyObj)
         _data.forEach(function (e) {
           //  检测 _keyObj 是否存在
           if (_keyObj) {

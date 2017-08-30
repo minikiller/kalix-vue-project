@@ -7,14 +7,16 @@
   kalix-dialog.user-add(bizKey="note"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL" v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="标题" prop="title" v-bind:rules="rules.title")
+      el-form-item(label="收件人")
+        el-input(v-model="formModel.receiverNames" v-bind:readonly="readonly")
+      el-form-item(label="消息类别")
+        el-input(v-model="formModel.category"  v-bind:readonly="readonly")
+      el-form-item(label="消息主题")
         el-input(v-model="formModel.title" v-bind:readonly="readonly")
-      el-form-item(label="内容" prop="content" v-bind:rules="rules.content")
+      el-form-item(label="消息内容")
         el-input(v-model="formModel.content" type="area" v-bind:readonly="readonly")
-      el-form-item(label="发布人" prop="publishPeople" v-bind:rules="rules.publishPeople")
-        el-input(v-model="formModel.publishPeople" v-bind:readonly="readonly")
-      el-form-item(label="发布时间" prop="publishDate" v-bind:rules="rules.publishDate")
-        el-input(v-model="formModel.publishDate" v-bind:readonly="readonly")
+      el-form-item(label="发件时间")
+        el-input(v-model="formModel.creationDate" v-bind:readonly="readonly")
 </template>
 
 <script type="text/ecmascript-6">
@@ -47,7 +49,6 @@
     components: {
       KalixDialog: Dialog
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
