@@ -22,12 +22,13 @@
 </template>
 
 <script>
-  import {strToUnicode} from 'common/unicode-convert'
+//  import {strToUnicode} from 'common/unicode-convert'
   import {usersURL} from 'views/admin/config.toml'
 
   export default {
     props: {
-      value: String   // 用于绑定v-model
+      value: String,   // 用于绑定v-model
+      params: {}
     },
     data() {
       return {
@@ -45,9 +46,11 @@
           this.loading = true
           setTimeout(() => {
             this.loading = false
-            let val = strToUnicode(query)
+//            let val = strToUnicode(query)
+            let _jsonStr = {'%name%': query}
+            _jsonStr = Object.assign(_jsonStr, this.params)
             let _data = {
-              jsonStr: `{"%name%": "` + val + `"}`,
+              jsonStr: JSON.stringify(_jsonStr),
               page: 1,
               start: 0,
               limit: 200
