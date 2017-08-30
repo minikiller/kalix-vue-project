@@ -4,7 +4,7 @@
 开发日期：2017年8月22日
 -->
 <template lang="pug">
-  kalix-dialog.user-add(
+  kalix-dialog.user-add(bizKey="student"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
   v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot")
@@ -15,7 +15,7 @@
           el-input(v-model="formModel.nation" v-bind:readonly="readonly" )
       div.s-flex
         el-form-item.s-flex_item(label="学生性别" prop="sex" label-width="200px")
-          el-radio-group(v-model="formModel.sex" )
+          el-radio-group(v-model="formModel.sex" v-bind:disabled="readonly" )
             el-radio(label="男")
             el-radio(label="女")
         el-form-item.s-flex_item(label="政治面貌" prop="politicalStatus" label-width="200px")
@@ -72,36 +72,10 @@
       }
     },
     data() {
-      var validatePassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'))
-        } else {
-          if (this.formModel.confirmPassword !== '') {
-            this.$refs.kalixDialog.$refs.dialogForm.validateField('confirmPassword')
-          }
-          callback()
-        }
-      }
-      var validateConfirmPassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.formModel.password) {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
-      }
       return {
         rules: {
           name: [{required: true, message: '请输入 name', trigger: 'blur'}],
           sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          password: [
-            {validator: validatePassword, trigger: 'blur'}
-          ],
-          confirmPassword: [
-            {validator: validateConfirmPassword, trigger: 'blur'}
-          ],
-
           homePhone: [{required: true, message: '请输入 phone', trigger: 'blur'}]
         },
         targetURL: StudentURL,

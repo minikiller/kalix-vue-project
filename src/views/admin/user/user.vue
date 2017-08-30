@@ -20,7 +20,8 @@
           {prop: 'loginName', label: '登录名'},
           {prop: 'name', label: '姓名'},
           {prop: 'sex', label: '性别'},
-          {prop: 'workGroup', label: '工作组'}
+          {prop: 'workGroup', label: '工作组'},
+          {prop: 'usertype', label: '用户类型'}
         ],
         bizDialog: [{id: 'view', dialog: 'KalixUserEdit'},
           {id: 'add', dialog: 'KalixUserAdd'}
@@ -33,6 +34,7 @@
           password: '',
           confirmPassword: '',
           position: '',
+          usertype: '',
           available: 1
         },
         formRules: {

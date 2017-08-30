@@ -14,6 +14,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {StudentURL, StudentComponent, ToolButtonList} from '../config.toml'
+  import EventBus from 'common/eventbus'
 
   // 注册全局组件
   StudentComponent.forEach((item) => {
@@ -23,7 +24,7 @@
 
   export default {
     activated() {
-      console.log(this.bizKey + '  is activated')
+      console.log('c%' + this.bizKey + ' student  is activated', 'color:#ff00fe')
     },
     deactivated() {
       console.log(this.bizKey + '  is deactivated')
@@ -63,6 +64,7 @@
           postalcode: '',
           province: '',
           trainingLevel: '',
+          phone: '',
           period: ''
         },
         formRules: {
@@ -78,10 +80,18 @@
     created() {
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
-    methods: {},
+    methods: {
+      changeFormModel(model) {
+        console.log('changeFormModel', model)
+        this.formModel = model
+      }
+    },
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd
+    },
+    mounted() {
+      EventBus.$on('updateStudentModel', this.changeFormModel)
     }
   }
 </script>
