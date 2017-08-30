@@ -72,5 +72,5 @@ orgsURL = "/camel/rest/orgs"
   name = "AttachmentDialog"
 # 注册全局组件-组织机构树控件
 [[GlobalComponent]]
-  path = "./components/tree/tree"
+  path = "./components/tree/basetree2"
   name = "orgTree"

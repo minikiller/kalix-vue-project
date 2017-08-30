@@ -9,9 +9,10 @@
     v-model='currentValue'
     filterable
     remote
+    multiple="multiple"
     placeholder='请输入用户名称'
     :remote-method='remoteMethod'
-    :loading='loading'>
+    :loading='loading' v-on:change="onChange">
     <el-option
       v-for='user in userList'
       :key='user.id'
@@ -22,32 +23,45 @@
 </template>
 
 <script>
-  import {strToUnicode} from 'common/unicode-convert'
+  //  import {strToUnicode} from 'common/unicode-convert'
   import {usersURL} from 'views/admin/config.toml'
 
   export default {
     props: {
-      value: String   // 用于绑定v-model
+      value: String,   // 用于绑定v-model
+      multiple: Boolean, // 是否允许多选
+      params: {} // 附加搜索参数
     },
     data() {
       return {
         userList: [],
         loading: false,
-        currentValue: this.value
+        currentValue: this.value,
+        selectUser: {}
       }
     },
     mounted() {
     },
     methods: {
+      onChange(value) {
+        let users = this.userList.filter((item) => {
+          return item.id === value
+        })
+        this.selectUser = users[0] || {}
+        console.log(`[kalix]-[userselect.vue] current user is `, this.selectUser)
+        this.$emit('userSelected', this.selectUser)  // 发送事件
+      },
       remoteMethod(query) {
         if (query !== '') {
           this.$emit('input', this.currentValue)  // 设置model的数值
           this.loading = true
           setTimeout(() => {
             this.loading = false
-            let val = strToUnicode(query)
+//            let val = strToUnicode(query)
+            let _jsonStr = {'%name%': query}
+            _jsonStr = Object.assign(_jsonStr, this.params)
             let _data = {
-              jsonStr: `{"%name%": "` + val + `"}`,
+              jsonStr: JSON.stringify(_jsonStr),
               page: 1,
               start: 0,
               limit: 200

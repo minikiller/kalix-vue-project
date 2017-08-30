@@ -1,5 +1,5 @@
 <!--
-描述：Tree 树形控件
+描述：basetree 树形控件
 开发人：hqj
 开发日期：2017年8月23日
 -->
@@ -7,7 +7,8 @@
 <template lang="pug">
   div
     el-input(placeholder="输入关键字进行过滤" v-model="filterText")
-    el-tree.filter-tree(:data="data2" v-bind:props="defaultProps" v-bind:filter-node-method="filterNode" ref="tree2")
+    el-tree.filter-tree(:data="data2" v-bind:props="defaultProps" v-bind:filter-node-method="filterNode" ref="tree2"
+      v-on:node-click="handleNodeClick")
 </template>
 
 <script type="text/ecmascript-6">
@@ -37,6 +38,9 @@
           this.data2 = response.data
           console.log('optionOrgTree is ', response.data)
         })
+      },
+      handleNodeClick (data) {
+        this.$emit('nodeClick', data)
       }
     },
 
@@ -52,3 +56,10 @@
     }
   }
 </script>
+
+<style scoped lang="stylus" type="text/stylus">
+  .el-tree
+    position absolute
+    z-index 99
+    min-width 100%
+</style>
