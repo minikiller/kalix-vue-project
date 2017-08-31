@@ -3,11 +3,13 @@
 </template>
 <script type="text/ecmascript-6">
   import BaseSearch from '@/components/custom/baseSearch.vue'
+
   export default {
     data() {
       return {
         searchFields: [
-          {label: '类型', prop: 'type'}
+          {label: '类型', prop: 'type'},
+          {label: '签名', prop: 'label', cls: 'label', dataType: 'number'}
         ],
         rules: {
           type: [

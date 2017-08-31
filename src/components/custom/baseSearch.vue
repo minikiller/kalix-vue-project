@@ -2,6 +2,8 @@
 描述：table上方查询组件的二次封装
 开发人：sunlf
 开发日期：2017年8月17日
+
+2017年8月31日
 -->
 
 <template lang="pug">
@@ -13,10 +15,10 @@
       el-form.search-container(ref="searchForm" v-bind:rules="formRules" v-bind:model="form" v-bind:inline="true")
         slot(name="searchFormSlot")
           el-form-item(v-for="item in searchFields" v-bind:label="item.label" v-bind:prop="item.prop" v-bind:key="item.prop")
-            el-select(v-if="item.type==='select'" v-model="form[item.prop]")
+            el-select(v-if="item.type==='select'" v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
               el-option(v-for="option in item.options" v-bind:key="option.value" v-bind:label="option.label" v-bind:value="option.value")
-            el-input-number(v-else-if="item.type==='number'" v-model="form[item.prop]")
-            el-input(v-else v-model="form[item.prop]")
+            el-input-number(v-else-if="item.type==='number'" v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
+            el-input(v-else v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
             i.iconfont.icon-query
@@ -46,6 +48,10 @@
       }
     },
     props: {
+      bizKey: {
+        type: String,
+        default: ''
+      },
       searchForm: {
         type: Object
       },
@@ -64,6 +70,12 @@
     mounted() {
     },
     methods: {
+      bindCls(label) {
+        if (label) {
+          return label.length > 0 ? `${this.bizKey}-${label}` : ''
+        }
+        return ''
+      },
       _currentForm() {
         if (!isEmptyObject(this.searchForm)) {
           this.form = this.searchForm
@@ -73,21 +85,37 @@
       onSubmitClick() {
         this._currentForm()
         this.$refs.searchForm.validate((valid) => {
+//
           if (valid) {
 //            todo: 增加查询组成json串
             let requestDatas = []
             for (let item in this.form) {
               const itemVal = this.form[item]
-              if (itemVal.length > 0) {
-                const dateType = typeof itemVal
-                console.log(item, itemVal)
-                let val = null
-                if (dateType === 'string' && itemVal.length) {
-                  val = strToUnicode(itemVal)
-                } else {
-                  val = itemVal
+              if (itemVal) {
+                let dataType = typeof itemVal
+                let field = item
+                let docItems = document.getElementsByClassName(`${this.bizKey}-${item}`)  //  根据 bizKey 和 v-model名 查找 dom 标签
+                if (docItems && docItems.length === 1) {
+                  //  如果 docItems 存在并且只有一个，获取当前字段的数据类型并赋值给 dataType
+                  let docItem = docItems[0]
+                  dataType = docItem.getAttribute('data-type')
+                  field = docItem.getAttribute('field')
+                  console.log('dataType', field)
+                  console.log('field', field)
                 }
-                requestDatas.push(`{"%${item}%": "` + val + `"}`)
+                console.log(`%c${item}`, 'color:#ed05ff', itemVal)
+                if (itemVal.length) {
+                  let key = `"${field}"`   //  绑定 查询 key
+                  let val = `${itemVal}`  //  绑定 查询 value
+                  switch (dataType) {
+                    case 'string':
+                      //  如果 dataType 是字符串格式，key 和 val 增加双引号
+                      key = `"%${field}%"`
+                      val = `"${strToUnicode(itemVal)}"`
+                      break
+                  }
+                  requestDatas.push(`{${key}: ${val}}`)
+                }
               }
             }
             if (requestDatas.length > 0) {
@@ -106,6 +134,11 @@
           EventBus.$emit(ON_SEARCH_BUTTON_CLICK, {})
           this.isSearch = false
         }
+      },
+      // 是否是数字
+      isNumberData(_data) {
+        const regNumber = /^[0-9]+.?[0-9]*$/
+        return regNumber.test(_data)
       }
     },
     components: {},
