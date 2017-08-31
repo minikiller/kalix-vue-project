@@ -108,6 +108,9 @@
       },
       dictDefine: {  // 数据字典定义
         type: Array
+      },
+      customRender: { // 对table的数据进行自定义的修饰
+        type: Function
       }
     },
     data() {
@@ -300,6 +303,11 @@
           if (this.dictDefine) { // 设置数据字典
             this.setDictDefine(this.tableData)
           }
+
+          if (this.customRender) { // 对table的数据进行自定义的修饰
+            this.customRender(this.tableData)
+          }
+
           this.pager.totalCount = response.data.totalCount
           this.loading = false
           document.querySelector('.el-table__body-wrapper').scrollTop = 0

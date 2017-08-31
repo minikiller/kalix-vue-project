@@ -1,8 +1,13 @@
 # baseTable
 ## props
-> buttonPermissionPrefix
+### buttonPermissionPrefix
+> 用于button权限认证的前缀，例如：
 
-table中tool的按钮组件认证前缀,为空时候，不校验权限
+!> table中tool的按钮组件认证前缀,为空时候，不校验权限
+
+### dictDefine 
+
+> 数据字典的定义，用于table中column的显示。
 
 ## data
 

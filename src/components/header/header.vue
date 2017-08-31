@@ -21,7 +21,8 @@
               | {{item.text}}
         ul.aside
           li
-            el-button(type="text" icon="message") {{msgCount}}
+            el-badge(:value="msgCount")
+              el-button(icon="message" @click="onMsgClick") 消息
           li
             el-dropdown(@command="handleCommand")
               div.s-flex.el-dropdown-link {{userName}}  &nbsp;
@@ -106,6 +107,9 @@
       }
     },
     methods: {
+      onMsgClick() {
+        this.$router.push({path: `/common/receiver`})
+      },
       decode(s) {
         return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'))
       },
