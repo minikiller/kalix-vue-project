@@ -53,36 +53,11 @@
       }
     },
     data() {
-      var validatePassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'))
-        } else {
-          if (this.formModel.confirmPassword !== '') {
-            this.$refs.kalixDialog.$refs.dialogForm.validateField('confirmPassword')
-          }
-          callback()
-        }
-      }
-      var validateConfirmPassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.formModel.password) {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
-      }
       return {
         params: {userType: 0},
         rules: {
           name: [{required: true, message: '请输入 name', trigger: 'blur'}],
           sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          password: [
-            {validator: validatePassword, trigger: 'blur'}
-          ],
-          confirmPassword: [
-            {validator: validateConfirmPassword, trigger: 'blur'}
-          ],
           email: [
             {required: true, message: '请输入邮箱地址', trigger: 'blur'},
             {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
