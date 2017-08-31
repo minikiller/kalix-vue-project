@@ -1,5 +1,4 @@
 <!-- docs/_sidebar.md -->
-
 - [Home](/)
 - [Install](install.md)
 - [faq](faq.md)

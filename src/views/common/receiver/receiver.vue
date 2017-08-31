@@ -5,14 +5,15 @@
 -->
 <template lang="pug">
   keep-alive
-    base-table(bizKey="note" title='收件列表'
+    base-table(bizKey="receiver" title='收件列表'
     v-bind:tableFields="tableFields"
     v-bind:targetURL="targetURL"
     v-bind:formModel.sync="formModel"
     v-bind:formRules="formRules"
     v-bind:bizDialog="bizDialog"
     v-bind:btnList="btnList"
-    v-bind:restructureFunction="dataRestucture"
+    v-bind:dictDefine="dictDefine"
+    v-bind:customRender="customRender"
     bizSearch="CommonReceiverSearch")
 </template>
 <script type="text/ecmascript-6">
@@ -30,6 +31,12 @@
   export default {
     data() {
       return {
+        dictDefine: [{ // 定义数据字典的显示
+          cacheKey: 'COMMON-DICT-KEY',
+          type: '消息类别',
+          targetField: 'categoryName',
+          sourceField: 'category'
+        }],
         btnList: SenderToolButtonList,
         targetURL: ReceiverURL,
         tableFields: [
@@ -61,15 +68,8 @@
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     methods: {
-      dataRestucture(_data) {
-        //  获取 对应的键值对 对象
-        let _keyObj = DictKeyValueObject(`COMMON-DICT-KEY`, '消息类别')
+      customRender(_data) {
         _data.forEach(function (e) {
-          //  检测 _keyObj 是否存在
-          if (_keyObj) {
-            // 替换对应的列值
-            e.categoryName = _keyObj[e.category]
-          }
           e.isRead = e.read ? '是' : '否'
         })
       }

@@ -4,7 +4,7 @@
 开发日期：2017年8月30日
 -->
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="note"
+  kalix-dialog.user-add(bizKey="receiver"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL" v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="标题" prop="title" v-bind:rules="rules.title")

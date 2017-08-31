@@ -5,7 +5,7 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="note"
+  kalix-dialog.user-add(bizKey="sender"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="收件人")
@@ -25,7 +25,7 @@
 <script type="text/ecmascript-6">
   import BaseDictSelect from '@/components/custom/baseDictSelect.vue'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {NoteURL} from '../config.toml'
+  import {SenderURL} from '../config.toml'
 
   export default {
     props: {
@@ -44,7 +44,7 @@
           title: [{required: true, message: '请输入消息主题', trigger: 'blur'}],
           content: [{required: true, message: '请输入消息内容', trigger: 'blur'}]
         },
-        targetURL: NoteURL
+        targetURL: SenderURL
       }
     },
     created() {
