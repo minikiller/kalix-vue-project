@@ -7,6 +7,9 @@ systemApplicationsBaseURL = "/camel/rest/system/applications/"
 loginUrl = "/login.jsp"
 logoutUrl = "/logout"
 applicationURL = "/camel/rest/system/applications"
+msgCountURL = "/camel/rest/messages/polling/msgCount"
+msgURL = "/camel/rest/messages/polling/msg"
+
 #按钮 权限认证的地址
 SecurityBtnUrl = "/camel/rest/system/applications/modules/children/buttons/"
 
