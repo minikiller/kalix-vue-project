@@ -23,7 +23,8 @@
       // 组件初始化
       fentch () {
         // 获取机构数据
-        Vue.axios.get(orgsURL).then((response) => {
+        let getOrgsURL = orgsURL + '?isAll=' + this.isAll
+        Vue.axios.get(getOrgsURL).then((response) => {
           let obj = response.data
           // 如果根节点id=-1,去掉根节点
           if (obj.id === -1) {
@@ -78,13 +79,13 @@
     props: {
       value: {
         type: Number
+      },
+      isAll: {
+        type: Boolean,
+        default: false
       }
     },
-    watch: {
-      selectedOptions(nval) {
-        // this.value = nval.pop()
-      }
-    },
+    watch: {},
     computed: {}
   }
 </script>
