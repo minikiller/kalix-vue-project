@@ -6,6 +6,7 @@ AdminDictsTypesListURL = "/camel/rest/admin/dicts/types/list"
 usersURL = "/camel/rest/users"
 workgroupURL = "/camel/rest/workgroups"
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
+workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
 
 # table 的默认按钮定义
 [[ToolButtonList]]
