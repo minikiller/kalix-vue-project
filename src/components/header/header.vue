@@ -21,7 +21,7 @@
               | {{item.text}}
         ul.aside
           li
-            el-badge(:value="msgCount" class="item")
+            el-badge(:value="msgCount")
               el-button(icon="message" @click="onMsgClick") 消息
           li
             el-dropdown(@command="handleCommand")
@@ -181,7 +181,4 @@
   .avatar
     background url('./default_user.png') 50% 50% no-repeat
     background-size contain
-  .item
-    margin-top 10px
-    margin-right 40px
 </style>

@@ -18,7 +18,6 @@
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
-  import {DictKeyValueObject} from 'common/keyValueObject'
   import {SenderURL, SenderComponent, SenderToolButtonList} from '../config.toml'
 
   // 注册全局组件
