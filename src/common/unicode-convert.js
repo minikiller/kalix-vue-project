@@ -16,9 +16,9 @@ export function strToUnicode(str) {
 }
 
 // Unicode 转 字符串
-export function unicodeToStr(str) {
+export function unicodeToStr(str, f = '\\') {
   if (str === '') return ''
-  let strs = str.split('\\u')
+  let strs = str.split(f + 'u')
   let r = ''
   for (let i = 0; i < strs.length; i++) {
     r += String.fromCharCode(parseInt(strs[i], 16).toString(10))

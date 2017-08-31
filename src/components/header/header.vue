@@ -24,15 +24,14 @@
             el-button(type="text" icon="message") {{msgCount}}
           li
             el-dropdown(@command="handleCommand")
-              div.s-flex.el-dropdown-link
+              div.s-flex.el-dropdown-link {{userName}}  &nbsp;
                 div.avatar
+                  img(v-bind:src="icon" v-show="icon.length > 0")
                 i.el-icon-caret-bottom.el-icon--right
               el-dropdown-menu(slot="dropdown")
                 el-dropdown-item(command="changeInfo") 个人信息修改
                 el-dropdown-item(command="changePwd") 修改密码
                 el-dropdown-item(command="logout") 登出
-          li
-            el-button(type="text" icon="close") 0
           li
             el-select(v-model="themeValue" placeholder="请选择" v-bind:style="{width:'80px'}")
               el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
@@ -43,6 +42,7 @@
   import router from 'router'
   import Cache from 'common/cache'
   import {cacheTime, applicationURL, logoutURL, msgCountURL, msgURL} from 'config/global.toml'
+  import {getCookie} from 'common/util'
 
   export default {
     props: {
@@ -53,6 +53,7 @@
     data() {
       return {
         name: 'kalixHeader',
+        isPollMsg: false, // 是否进行消息轮询
         userName: Cache.get('user_name'),
         menuList: [],
         themeOptions: [
@@ -65,7 +66,8 @@
         ],
         themeValue: '浅蓝',
         headerMenuChk: this.menuChk,
-        msgCount: 0
+        msgCount: 0,
+        icon: ''
       }
     },
     mounted() {
@@ -95,14 +97,25 @@
           Cache.save('toolListData', JSON.stringify(toolListData))
         })
       }
-      // 消息通知轮训
-      let that = this
-      that.getMsg()
-      setInterval(function () {
-        that.getMsg()
-      }, 10000)
+      if (this.isPollMsg) {
+        this.pollMsg()
+      }
+      this.icon = this.decode(getCookie('currentUserIcon')) // 如果为null，则取默认的图标
+      if (this.icon === 'null') {
+        this.icon = ''
+      }
     },
     methods: {
+      decode(s) {
+        return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'))
+      },
+      pollMsg() { // 消息通知轮询
+        let that = this
+        that.getMsg()
+        setInterval(function () {
+          that.getMsg()
+        }, 10000)
+      },
       handleCommand(command) {
         switch (command) {
           case 'changeInfo' :
@@ -161,4 +174,7 @@
 
 <style scoped lang="stylus">
   @import "./header.styl"
+  .avatar
+    background url('./default_user.png') 50% 50% no-repeat
+    background-size contain
 </style>
