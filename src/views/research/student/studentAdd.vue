@@ -11,7 +11,7 @@
     div.el-form(slot="dialogFormSlot")
       div.s-flex
         el-form-item.s-flex_item(label="学生姓名" prop="name" v-bind:rules="rules.name" label-width="120px" )
-          kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name"
+          kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
           v-on:userSelected="onUserSelected")
         div.dd
         el-form-item.s-flex_item(label="所属民族" prop="nation" label-width="120px")
