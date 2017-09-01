@@ -55,7 +55,7 @@
     },
     data() {
       return {
-        params: {userType: 0},
+        params: {userType: 1},
         rules: {
           name: [{required: true, message: '请输入 name', trigger: 'blur'}],
           sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
