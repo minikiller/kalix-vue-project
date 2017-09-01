@@ -13,12 +13,14 @@
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar( v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
+        kalix-tool-bar(v-if="isShowToolBar" v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
         div.kalix-table-container(ref="kalixTableContainer")
           el-table(:data="tableData" stripe style="width: 100%"
           v-loading.body="loading"
-          v-bind:height="tableHeight")
+          v-bind:height="tableHeight"
+          v-on:selection-change="onTableSelectionChange")
             //table的字段
+            el-table-column(v-if="hasTableSelection && tableData && tableData.length > 0" type="selection" width="55")
             el-table-column(v-if="tableData && tableData.length > 0" label="行号" width="70")
               template(scope="scope")
                 div(style="text-align: center") {{ scope.row.rowNumber }}
@@ -63,6 +65,14 @@
   export default {
     name: 'baseTable',
     props: {
+      hasTableSelection: { // 表格是否有选择框
+        type: Boolean,
+        default: false
+      },
+      isShowToolBar: { // 是否显示工具栏
+        type: Boolean,
+        default: true
+      },
       dialogOptions: {},
       bizKey: {  // 主鍵
         type: String,
@@ -162,6 +172,9 @@
       }
     },
     methods: {
+      onTableSelectionChange(val) {
+        this.$emit('tableSelectionChange', val)
+      },
       setDictDefine(_data) { // 处理数据字典
         this.dictDefine.forEach((item) => {
           //  获取 对应的键值对 对象
