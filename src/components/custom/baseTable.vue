@@ -13,7 +13,7 @@
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar( v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
+        kalix-tool-bar(v-if="isShowToolBar" v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
         div.kalix-table-container(ref="kalixTableContainer")
           el-table(:data="tableData" stripe style="width: 100%"
           v-loading.body="loading"
@@ -63,6 +63,10 @@
   export default {
     name: 'baseTable',
     props: {
+      isShowToolBar: { // 是否显示工具栏
+        type: Boolean,
+        default: true
+      },
       dialogOptions: {},
       bizKey: {  // 主鍵
         type: String,
