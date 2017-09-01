@@ -8,7 +8,7 @@
   keep-alive
     base-table(bizKey="category" title='流程分类列表' v-bind:tableFields="tableFields"
     v-bind:targetURL="targetURL"
-    v-bind:formModel="formModel"
+    v-bind:formModel.sync="formModel"
     v-bind:bizDialog="bizDialog"
     v-bind:bizSearch="'OaCategorySearch'"
     v-bind:btnList="btnList")
