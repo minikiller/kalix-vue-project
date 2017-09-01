@@ -9,7 +9,7 @@
         el-date-picker(v-model="beginDate_end" v-on:change="endChange" type="date"  v-bind:class="bindCls('beginDate_end')" field="beginDate:end:lt" placeholder="选择日期")
       el-form-item(label="cascader")
         el-cascader(v-bind:options="options" v-bind:class="bindCls('selectedOptions')" data-type="number" v-model="formModel.selectedOptions")
-      el-form-item(label="SELECT" )
+      el-form-item(label="SELECT")
         el-select(v-model="formModel.selectedA" v-bind:class="bindCls('selectedA')" data-type="number" placeholder="请选择")
           el-option(v-for="item in optionsA" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
       el-form-item(label="备选项")
