@@ -76,6 +76,7 @@
         }
         if (treeListData.createDate && (treeListData.createDate - cd) < cacheTime && treeListData[this.currApp]) {
           this.treeData = treeListData[this.currApp]
+          this.setItemShow()
         } else {
           const data = {_dc: cd, node: 'root'}
           Vue.axios({
@@ -93,17 +94,18 @@
                 })
                 treeListData[this.currApp] = this.treeData
                 treeListData.createDate = nowDate.getTime()
+                this.setItemShow()
                 Cache.save('treeListData', JSON.stringify(treeListData))
               }
             }
           })
         }
-        this.setItemShow()
       },
       setItemShow() {
 //        let routeName = this.currApp + '/' + this.currFun
         let routeName = this.currFun
         this.treeData.forEach((item) => {
+          item.isShow = false
           let temp = item.children.find(function (e) {
             return e.routeId.split('/').pop() === routeName
           })
