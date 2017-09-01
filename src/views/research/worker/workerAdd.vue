@@ -11,7 +11,8 @@
     div.el-form(slot="dialogFormSlot")
       div.s-flex
         el-form-item.s-flex_item(label="姓名" prop="name" v-bind:rules="rules.name" label-width="200px")
-          el-input(v-model="formModel.name")
+          kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
+          v-on:userSelected="onUserSelected")
         el-form-item.s-flex_item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard" label-width="200px")
           el-input(v-model="formModel.identificationCard")
 
@@ -62,7 +63,9 @@
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import {WorkerURL} from '../config.toml'
-
+  import UserSelect from '@/components/biz/userselect/userselect'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import EventBus from 'common/eventbus'
   export default {
     props: {
       formModel: {
@@ -75,42 +78,11 @@
       }
     },
     data() {
-      var validatePassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'))
-        } else {
-          if (this.formModel.confirmPassword !== '') {
-            this.$refs.kalixDialog.$refs.dialogForm.validateField('confirmPassword')
-          }
-          callback()
-        }
-      }
-      var validateConfirmPassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.formModel.password) {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
-      }
       return {
+        params: {userType: 0},
         rules: {
           name: [{required: true, message: '请输入 name', trigger: 'blur'}],
-          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          password: [
-            {validator: validatePassword, trigger: 'blur'}
-          ],
-          confirmPassword: [
-            {validator: validateConfirmPassword, trigger: 'blur'}
-          ],
-          email: [
-            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
-            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
-          ],
-          phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
-          mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
-          available: [{required: true, message: '请输入 available', trigger: 'blur'}]
+          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}]
         },
         targetURL: WorkerURL
       }
@@ -120,9 +92,14 @@
       console.log('[workerAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      KalixDictSelect: BaseDictSelect,
+      KalixUserSelect: UserSelect
     },
     methods: {
+      onUserSelected(user) {
+        EventBus.$emit('updateWorkerModel', user)
+      }
     }
   }
 </script>
