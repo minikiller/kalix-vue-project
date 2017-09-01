@@ -41,7 +41,7 @@
         tableFields: [
           {prop: 'senderName', label: '发件人'},
           {prop: 'categoryName', label: '消息类别'},
-          {prop: 'content', label: '消息主题'},
+          {prop: 'title', label: '消息主题'},
           {prop: 'creationDate', label: '发布时间'},
           {prop: 'isRead', label: '是否已读'}
 
@@ -53,8 +53,11 @@
         formModel: {
           title: '',
           content: '',
-          receiverIds: [],
-          category: RECEIVER_CATEGORY
+          receiverIds: '',
+          receiverNames: '',
+          category: RECEIVER_CATEGORY,
+          senderId: '',
+          senderName: ''
         },
         formRules: {
           title: [

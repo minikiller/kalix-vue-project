@@ -100,27 +100,31 @@
                   let docItem = docItems[0]
                   dataType = docItem.getAttribute('data-type')
                   field = docItem.getAttribute('field')
-                  console.log('dataType', field)
-                  console.log('field', field)
+//                  console.log('dataType', field)
+//                  console.log('field', field)
                 }
-                console.log(`%c${item}`, 'color:#ed05ff', itemVal)
-                if (itemVal.length) {
+//                console.log(`%c${item}`, 'color:#ed05ff', itemVal)
+                if (field && itemVal.length) {
                   let key = `"${field}"`   //  绑定 查询 key
                   let val = `${itemVal}`  //  绑定 查询 value
                   switch (dataType) {
                     case 'string':
-                      //  如果 dataType 是字符串格式，key 和 val 增加双引号
+                      //  如果 dataType 是 String 格式，key 和 val 增加双引号
                       key = `"%${field}%"`
                       val = `"${strToUnicode(itemVal)}"`
                       break
+                    case 'datetime':
+                      //  如果 dataType 是 Datetime 格式，val 增加双引号
+                      val = `"${itemVal}"`
+                      break
                   }
-                  requestDatas.push(`{${key}: ${val}}`)
+                  requestDatas.push(`${key}: ${val}`)
                 }
               }
             }
             if (requestDatas.length > 0) {
               this.isSearch = true
-              EventBus.$emit(ON_SEARCH_BUTTON_CLICK, {jsonStr: requestDatas.join(',')})
+              EventBus.$emit(ON_SEARCH_BUTTON_CLICK, {jsonStr: `{${requestDatas.join(',')}}`})
             }
           } else {
             console.log('ERR')

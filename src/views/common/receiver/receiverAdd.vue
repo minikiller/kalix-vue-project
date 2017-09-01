@@ -6,27 +6,23 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="receiver"
+  size="tiny"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
-    div.el-form(slot="dialogFormSlot")
-      el-form-item(label="收件人" prop="receiverIds" v-bind:rules="rules.receiverIds")
-        el-select(v-model="formModel.receiverIds"
-        multiple filterable remote placeholder="请输入关键词"
-        v-bind:remote-method="remoteMethod"
-        v-bind:loading="loading")
-          el-option(v-for="item in usersData" v-bind:key="item.id"
-          v-bind:label="item.name"
-          v-bind:value="item.id")
-        input(type="hidden" v-model="formModel.category")
+    div.el-form(slot="dialogFormSlot" style="padding: 0 40px 0 25px;")
+      el-form-item(label="收件人")
+        kalix-user-select(v-bind:params="params" style="width:100%"
+        v-model="receiverIds" v-bind:multiple="multiple"
+        v-on:userSelected="onUserSelected")
       el-form-item(label="消息主题" prop="title" v-bind:rules="rules.title")
         el-input(v-model="formModel.title")
       el-form-item(label="消息内容" prop="content" v-bind:rules="rules.content")
-        el-input(v-model="formModel.content" type="textarea" v-bind:autosize="{ minRows: 2, maxRows: 4}")
+        el-input(v-model="formModel.content" type="textarea" v-bind:autosize="{ minRows: 4, maxRows: 8}")
 </template>
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
-  import Cache from 'common/cache'
-  import {ReceiverURL, UsersURL} from '../config.toml'
+  import {SenderURL} from '../config.toml'
+  import UserSelect from '@/components/biz/userselect/userselect'
 
   export default {
     props: {
@@ -41,48 +37,39 @@
     },
     data() {
       return {
+        params: {},
         rules: {
           receiverIds: [{required: true, message: '请输入收件人', trigger: 'blur'}],
           title: [{required: true, message: '请输入标题', trigger: 'blur'}],
           content: [{required: true, message: '请输入内容', trigger: 'blur'}]
         },
-        targetURL: ReceiverURL,
-        loading: false,
-        usersData: []
+        targetURL: SenderURL,
+        receiverIds: [],
+        multiple: true
       }
     },
     created() {
-      this.getDate()
     },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      KalixUserSelect: UserSelect
     },
     methods: {
-      getDate() {
-        if (!Cache.get('USERS-DICT')) {
-          let _data = {
-            jsonStr: '{"%name%":""}',
-            page: 1,
-            start: 0,
-            limit: 1000
-          }
-          this.$http.get(UsersURL, {
-            params: _data
-          }).then(res => {
-            console.log(res.data.data)
-            Cache.save('USERS-DICT', JSON.stringify(res.data.data))
-          })
-        }
-        this.dataList = JSON.parse(Cache.get('USERS-DICT'))
-      },
-      remoteMethod(query) {
-        if (query !== '') {
-          this.usersData = this.dataList.filter(item => {
-            return item.name.indexOf(query) > -1
-          })
-        } else {
-          this.usersData = []
-        }
+      onUserSelected(users) {
+        console.log('onUserSelected', users)
+        let ids = []
+        let names = []
+        users.forEach(item => {
+          ids.push(item.id)
+          names.push(item.name)
+        })
+        this.formModel.receiverIds = ids.join(':')
+        this.formModel.receiverNames = names.join(',')
+      }
+    },
+    watch: {
+      receiverIds(newValue) {
+//        this.formModel.receiverIds = newValue.join(':')
       }
     }
   }
