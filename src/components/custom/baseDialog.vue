@@ -108,6 +108,7 @@
       },
       initData(row) {
         console.log(`[kalix] init base dialog ${this.bizKey}`)
+//        this.formModel = {}
         Object.assign(this.formModel, row)
       },
       _afterDialogClose() {

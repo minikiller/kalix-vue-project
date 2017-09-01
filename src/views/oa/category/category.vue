@@ -8,18 +8,19 @@
   keep-alive
     base-table(bizKey="category" title='流程分类列表' v-bind:tableFields="tableFields"
     v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:formRules="formRules"
+    v-bind:formModel.sync="formModel"
     v-bind:bizDialog="bizDialog"
-    v-bind:bizSearch="'OaCategorySearch'" v-bind:btnList="btnList")
+    v-bind:bizSearch="'OaCategorySearch'"
+    v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
-  import {CategoryURL, WorkflowComponent, ToolButtonList} from '../config.toml'
+  import {CategoryURL, OaCategoryComponent, ToolButtonList} from '../config.toml'
 
   // 注册全局组件
-  WorkflowComponent.forEach((item) => {
+  OaCategoryComponent.forEach((item) => {
     console.log('[kalix]-[oa] registry name is: ' + item.name, '; registry path is: ' + item.path)
     Vue.component(item.name, require('' + item.path))
   })
@@ -51,14 +52,6 @@
           key: '',
           icon: '',
           description: ''
-        },
-        formRules: {
-          name: [
-            {required: true, message: '请输入姓名', trigger: 'blur'}
-          ],
-          identificationCard: [
-            {required: true, message: '请输入身份证号', trigger: 'blur'}
-          ]
         }
       }
     },
@@ -68,8 +61,7 @@
     mounted() {
     },
     filter: {},
-    methods: {
-    },
+    methods: {},
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd

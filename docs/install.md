@@ -13,3 +13,14 @@ modify .eslintrc.js
   devtool: '#source-map',
 ```
 
+## install docsify-cli
+```xml
+npm i docsify-cli -g
+```
+
+### run docsify
+```xml
+docsify serve ./docs
+```
+
+

@@ -21,15 +21,11 @@
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {CategoryURL} from '../../oa/config.toml'
+  import {CategoryURL} from '../config.toml'
 
   export default {
     props: {
       formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
         type: Object,
         required: true
       }
@@ -37,15 +33,8 @@
     data() {
       return {
         rules: {
-          name: [{required: true, message: '请输入 name', trigger: 'blur'}],
-          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          email: [
-            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
-            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
-          ],
-          phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
-          mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
-          available: [{required: true, message: '请输入 available', trigger: 'blur'}]
+          name: [{required: true, message: '请输入分类名称', trigger: 'blur'}],
+          key: [{required: true, message: '请输入分类主键', trigger: 'blur'}]
         },
         targetURL: CategoryURL
       }

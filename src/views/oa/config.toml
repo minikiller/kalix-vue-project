@@ -4,38 +4,17 @@ OaDictURL = "/camel/rest/oa/dicts"
 OaDictsTypesListURL = "/camel/rest/oa/dicts/types/list"
 CategoryURL = "camel/rest/categorys"
 
-# 需要自动注册成全局的News组件
-[[CommonDictComponent]]
-  path = "./commondictView.vue"
-  name = "CommonDictView"
-[[CommonDictComponent]]
-  path = "./commondictAdd"
-  name = "CommonDictAdd"
-#[[CommonDictComponent]]
-#  path = "./commondictSearch"
-#  name = "CommonDictSearch"
+# 需要自动注册成全局的Category组件
+[[OaCategoryComponent]]
+  path = "./categoryView.vue"
+  name = "OaCategoryView"
+[[OaCategoryComponent]]
+  path = "./categoryAdd"
+  name = "OaCategoryAdd"
+[[OaCategoryComponent]]
+  path = "./categorySearch"
+  name = "OaCategorySearch"
 
-# 需要自动注册成全局的News组件
-[[NewsComponent]]
-  path = "./newsView"
-  name = "CommonNewsView"
-[[NewsComponent]]
-  path = "./newsAdd"
-  name = "CommonNewsAdd"
-[[NewsComponent]]
-  path = "./newsSearch"
-  name = "CommonNewsSearch"
-
-# 需要自动注册成全局的Note组件
-[[NoteComponent]]
-  path = "./noteView"
-  name = "CommonNoteView"
-[[NoteComponent]]
-  path = "./noteAdd"
-  name = "CommonNoteAdd"
-[[NoteComponent]]
-  path = "./noteSearch"
-  name = "CommonNoteSearch"
 
 # table 的默认按钮定义
 [[ToolButtonList]]

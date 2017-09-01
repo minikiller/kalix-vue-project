@@ -24,10 +24,6 @@
       formModel: {
         type: Object,
         required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
       }
     },
     data() {

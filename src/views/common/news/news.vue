@@ -7,7 +7,7 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="news" title='新闻列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
+    v-bind:formModel.sync="formModel" v-bind:bizDialog="bizDialog"
     bizSearch="CommonNewsSearch" v-bind:btnList="btnList")
 </template>
 
@@ -31,7 +31,7 @@
           {prop: 'title', label: '标题'},
           {prop: 'content', label: '内容'},
           {prop: 'publishPeople', label: '发布人'},
-            {prop: 'publishDate', label: '发布时间'}
+          {prop: 'publishDate', label: '发布时间'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'CommonNewsView'},
@@ -43,21 +43,14 @@
           content: '',
           publishPeople: '',
           publishDate: ''
-        },
-        formRules: {
-          title: [
-            {required: true, message: '请输入标题', trigger: 'blur'}
-          ]
         }
       }
     },
     created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     methods: {},
     components: {
       BaseTable
-//      KalixUserAdd: UserAdd
     }
   }
 </script>
