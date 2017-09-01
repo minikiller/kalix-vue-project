@@ -41,3 +41,6 @@ yarn test
 * mockjs
 * element-UI
 
+## doc url
+https://minikiller.github.io/kalix-vue-project
+
