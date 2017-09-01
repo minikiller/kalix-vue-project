@@ -10,18 +10,18 @@
   )
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="分类名称" prop="name" v-bind:rules="rules.name")
-        el-input(v-model="formModel.name")
+        el-input(v-model="formModel.name" readonly)
       el-form-item(label="分类主键" prop="key" v-bind:rules="rules.key")
-        el-input(v-model="formModel.key")
+        el-input(v-model="formModel.key" readonly)
       el-form-item(label="分类图标" prop="icon")
-        el-input(v-model="formModel.icon")
+        el-input(v-model="formModel.icon" readonly)
       el-form-item(label="分类描述" prop="description")
-        el-input(v-model="formModel.description")
+        el-input(v-model="formModel.description" readonly)
 </template>
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {CategoryURL} from '../../oa/config.toml'
+  import {CategoryURL} from '../config.toml'
 
   export default {
     props: {
