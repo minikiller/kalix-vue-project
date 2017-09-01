@@ -6,41 +6,30 @@
 <template lang="pug">
   kalix-dialog.user-add(bizKey="news"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-   v-bind:isView="readonly")
+  isView)
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="标题" prop="title" v-bind:rules="rules.title")
-        el-input(v-model="formModel.title" v-bind:readonly="readonly")
-      el-form-item(label="内容" prop="content" v-bind:rules="rules.content")
-        el-input(v-model="formModel.content" type="area" v-bind:readonly="readonly")
-      el-form-item(label="发布人" prop="publishPeople" v-bind:rules="rules.publishPeople")
-        el-input(v-model="formModel.publishPeople" v-bind:readonly="readonly")
-      el-form-item(label="发布时间" prop="publishDate" v-bind:rules="rules.publishDate")
-        el-input(v-model="formModel.publishDate" v-bind:readonly="readonly")
+      el-form-item(label="标题" prop="title")
+        el-input(v-model="formModel.title" readonly)
+      el-form-item(label="内容" prop="content")
+        el-input(v-model="formModel.content" type="area" readonly)
+      el-form-item(label="发布人" prop="publishPeople")
+        el-input(v-model="formModel.publishPeople" readonly)
+      el-form-item(label="发布时间" prop="publishDate" )
+        el-input(v-model="formModel.publishDate" readonly)
 </template>
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {NewsURL} from '../config.toml'
 
   export default {
     props: {
       formModel: {
         type: Object,
         required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
       }
     },
     data() {
       return {
-        rules: {
-          content: [{required: true, message: '请输入标题', trigger: 'blur'}],
-          title: [{required: true, message: '请输入内容', trigger: 'blur'}]
-        },
-        targetURL: NewsURL,
-        readonly: true
       }
     },
     components: {

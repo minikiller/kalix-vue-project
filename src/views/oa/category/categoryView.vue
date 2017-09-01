@@ -6,12 +6,12 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="category"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  ref="kalixBizDialog" v-bind:form-model="formModel" isView
   )
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="分类名称" prop="name" v-bind:rules="rules.name")
+      el-form-item(label="分类名称" prop="name")
         el-input(v-model="formModel.name" readonly)
-      el-form-item(label="分类主键" prop="key" v-bind:rules="rules.key")
+      el-form-item(label="分类主键" prop="key")
         el-input(v-model="formModel.key" readonly)
       el-form-item(label="分类图标" prop="icon")
         el-input(v-model="formModel.icon" readonly)
@@ -21,33 +21,16 @@
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {CategoryURL} from '../config.toml'
 
   export default {
     props: {
       formModel: {
         type: Object,
         required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
       }
     },
     data() {
       return {
-        rules: {
-          name: [{required: true, message: '请输入 name', trigger: 'blur'}],
-          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          email: [
-            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
-            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
-          ],
-          phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
-          mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
-          available: [{required: true, message: '请输入 available', trigger: 'blur'}]
-        },
-        targetURL: CategoryURL
       }
     },
     created() {
