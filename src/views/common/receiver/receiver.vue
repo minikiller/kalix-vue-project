@@ -14,6 +14,7 @@
     v-bind:btnList="btnList"
     v-bind:dictDefine="dictDefine"
     v-bind:customRender="customRender"
+    v-bind:hasTableSelection="hasTableSelection"
     bizSearch="CommonReceiverSearch")
 </template>
 <script type="text/ecmascript-6">
@@ -30,6 +31,7 @@
   export default {
     data() {
       return {
+        hasTableSelection: true,
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'COMMON-DICT-KEY',
           type: '消息类别',
@@ -41,7 +43,7 @@
         tableFields: [
           {prop: 'senderName', label: '发件人'},
           {prop: 'categoryName', label: '消息类别'},
-          {prop: 'content', label: '消息主题'},
+          {prop: 'title', label: '消息主题'},
           {prop: 'creationDate', label: '发布时间'},
           {prop: 'isRead', label: '是否已读'}
 
@@ -53,8 +55,11 @@
         formModel: {
           title: '',
           content: '',
-          receiverIds: [],
-          category: RECEIVER_CATEGORY
+          receiverIds: '',
+          receiverNames: '',
+          category: RECEIVER_CATEGORY,
+          senderId: '',
+          senderName: ''
         },
         formRules: {
           title: [

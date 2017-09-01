@@ -5,16 +5,21 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(bizKey="receiver"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL" v-bind:isView="readonly")
-    div.el-form(slot="dialogFormSlot")
-      el-form-item(label="标题" prop="title" v-bind:rules="rules.title")
+  ref="kalixBizDialog" v-bind:form-model="formModel"
+    size="tiny"
+    v-bind:targetURL="targetURL" v-bind:isView="readonly")
+    div.el-form(slot="dialogFormSlot" style="padding-right: 40px;")
+      el-form-item(label="标题")
         el-input(v-model="formModel.title" v-bind:readonly="readonly")
-      el-form-item(label="内容" prop="content" v-bind:rules="rules.content")
-        el-input(v-model="formModel.content" type="area" v-bind:readonly="readonly")
-      el-form-item(label="发布人" prop="publishPeople" v-bind:rules="rules.publishPeople")
-        el-input(v-model="formModel.publishPeople" v-bind:readonly="readonly")
-      el-form-item(label="发布时间" prop="publishDate" v-bind:rules="rules.publishDate")
-        el-input(v-model="formModel.publishDate" v-bind:readonly="readonly")
+      el-form-item(label="内容")
+        el-input(v-model="formModel.content"
+          type="textarea" v-bind:readonly="readonly"
+          v-bind:autosize="{ minRows: 4, maxRows: 8}")
+      div.s-flex
+        el-form-item.s-flex_item(label="发布人")
+          el-input(v-model="formModel.senderName" v-bind:readonly="readonly")
+        el-form-item.s-flex_item(label="发布时间" label-width="120px")
+          el-input(v-model="formModel.creationDate" v-bind:readonly="readonly")
 </template>
 
 <script type="text/ecmascript-6">
@@ -34,10 +39,6 @@
     },
     data() {
       return {
-        rules: {
-          title: [{required: true, message: '请输入标题', trigger: 'blur'}],
-          content: [{required: true, message: '请输入内容', trigger: 'blur'}]
-        },
         targetURL: NoteURL,
         readonly: true
       }
@@ -47,7 +48,6 @@
     components: {
       KalixDialog: Dialog
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>

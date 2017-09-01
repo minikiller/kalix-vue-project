@@ -9,7 +9,7 @@
     v-model='currentValue'
     filterable
     remote
-    multiple="multiple"
+    :multiple="multiple"
     placeholder='请输入用户名称'
     :remote-method='remoteMethod'
     :loading='loading' v-on:change="onChange">
@@ -31,7 +31,10 @@
       value: {
         required: true
       },   // 用于绑定v-model
-      multiple: Boolean, // 是否允许多选
+      multiple: { // 是否允许多选
+        type: Boolean,
+        default: false
+      },
       params: {} // 附加搜索参数
     },
     data() {
@@ -46,16 +49,23 @@
     },
     methods: {
       onChange(value) {
-        let users = this.userList.filter((item) => {
-          return item.id === value
-        })
-        this.selectUser = users[0] || {}
+        if (this.multiple) {  // 多选
+          let users = this.userList.filter((item) => {
+            return (value.indexOf(item.id) > -1)
+          })
+          this.selectUser = users || []
+        } else {  // 单选
+          let users = this.userList.filter((item) => {
+            return item.id === value
+          })
+          this.selectUser = users[0] || {}
+        }
         console.log(`[kalix]-[userselect.vue] current user is `, this.selectUser)
-        this.$emit('userSelected', this.selectUser)  // 发送事件
+        this.$emit('userSelected', this.selectUser)  // 发送事件}
       },
       remoteMethod(query) {
         if (query !== '') {
-          this.$emit('input', this.currentValue)  // 设置model的数值
+//          this.$emit('input', this.currentValue)  // 设置model的数值
           this.loading = true
           setTimeout(() => {
             this.loading = false
@@ -77,6 +87,11 @@
         } else {
           this.userList = []
         }
+      }
+    },
+    watch: {
+      currentValue(newValue) {
+        this.$emit('input', newValue)  // 设置model的数值
       }
     }
   }

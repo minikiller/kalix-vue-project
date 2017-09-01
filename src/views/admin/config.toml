@@ -4,6 +4,7 @@ AdminDictURL = "/camel/rest/admin/dicts"
 AdminDictsTypesListURL = "/camel/rest/admin/dicts/types/list"
 
 usersURL = "/camel/rest/users"
+appsURL = "/camel/rest/system/applications"
 workgroupURL = "/camel/rest/workgroups"
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
