@@ -8,11 +8,11 @@
     data() {
       return {
         searchFields: [
-          {label: '组名称', prop: 'name'}
+          {label: '工作组名称', prop: 'name'}
         ],
         rules: {
           groupName: [
-            {required: true, message: '请输入组名称', trigger: 'blur'}
+            {required: true, message: '请输入工作组名称', trigger: 'blur'}
           ]
         }
       }

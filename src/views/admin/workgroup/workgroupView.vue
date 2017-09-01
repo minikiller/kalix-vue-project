@@ -4,8 +4,10 @@
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="工作组名称" prop="name" )
         el-input(v-model="formModel.name" v-bind:readonly="readonly")
-      el-form-item(label="工作组名称12" prop="app" )
+      el-form-item(label="所属应用" prop="app" )
         el-input(v-model="formModel.app" v-bind:readonly="readonly")
+      el-form-item(label="备注" prop="remark")
+        el-input(v-model="formModel.remark" type="textarea" v-bind:readonly="readonly")
 </template>
 
 <script type="text/ecmascript-6">

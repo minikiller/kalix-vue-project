@@ -1,6 +1,6 @@
 <template lang="pug">
   keep-alive
-    base-table(bizKey="workgroup" title='组列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    base-table(bizKey="workgroup" title='工作组列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     bizSearch="AdminWorkGroupSearch"  v-bind:btnList="btnList")
@@ -10,10 +10,10 @@
   import BaseTable from '@/components/custom/baseTable'
   import {workgroupURL, workGroupBtnPermissionPrefix, ToolButtonList, WorkGroupComponent} from '../config.toml'
   import Vue from 'vue'
+  import EventBus from 'common/eventbus'
 
   // 注册全局组件
   WorkGroupComponent.forEach((item) => {
-    console.log('[kalix]-[research] registry name is: ' + item.name, '; registry path is: ' + item.path)
     Vue.component(item.name, require('' + item.path))
   })
 
@@ -25,9 +25,13 @@
         targetURL: workgroupURL,
         tableFields: [
           {prop: 'app', label: '所属应用'},
-          {prop: 'name', label: '工作组名称'}
+          {prop: 'name', label: '工作组名称'},
+          {prop: 'remark', label: '备注'},
+          {prop: 'createBy', label: '创建人'},
+          {prop: 'creationDate', label: '创建日期'}
         ],
-        bizDialog: [{id: 'view', dialog: 'AdminWorkGroupView'},
+        bizDialog: [
+          {id: 'view', dialog: 'AdminWorkGroupView'},
           {id: 'add', dialog: 'AdminWorkGroupAdd'},
           {id: 'edit', dialog: 'AdminWorkGroupAdd'}
         ],
@@ -46,9 +50,17 @@
         }
       }
     },
-    methods: {},
+    methods: {
+      changeFormModel(model) {
+        console.log('changeFormModel', model)
+        this.formModel = model
+      }
+    },
     components: {
       BaseTable
+    },
+    mounted() {
+      EventBus.$on('updateAppModel', this.changeFormModel)
     }
   }
 </script>
