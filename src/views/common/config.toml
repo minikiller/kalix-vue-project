@@ -6,7 +6,6 @@ NewsURL = "/camel/rest/newss"
 NoteURL = "/camel/rest/notes"
 SenderURL = "/camel/rest/messages/sender"
 ReceiverURL = "/camel/rest/messages/receiver"
-UsersURL = "/camel/rest/users"
 
 # 需要自动注册成全局的News组件
 [[CommonDictComponent]]

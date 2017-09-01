@@ -6,7 +6,7 @@
 
 <template lang="pug">
   el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="close"
-  v-bind:close-on-click-modal="false")
+  v-bind:close-on-click-modal="false" v-bind:size="size")
     el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
       slot(name="dialogFormSlot")
     div.dialog-footer(slot="footer")
@@ -33,6 +33,10 @@
 //      EventBus.$off(ON_INIT_DIALOG_DATA)
 //    },
     props: {
+      size: {
+        type: String,
+        default: 'small'
+      },
       bizKey: String,
       formModel: { // dialog中的form的数据模型，由父组件传递
         type: Object,
@@ -65,6 +69,7 @@
       },
       onSubmitClick() {
         this.$refs.dialogForm.validate((valid) => {
+          console.log('valid', valid)
           if (valid) {
             Vue.axios.request({
               method: this.isEdit ? 'PUT' : 'POST',
