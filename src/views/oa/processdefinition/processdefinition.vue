@@ -11,9 +11,9 @@
     v-bind:targetURL="targetURL"
     v-bind:formModel.sync="formModel"
     v-bind:bizDialog="bizDialog"
+    v-bind:customRender="customRender"
     bizSearch="ProcessDefinitionSearch"
     v-bind:btnList="btnList" v-bind:customTableTool="customTableTool")
-
 </template>
 
 <script type="text/ecmascript-6">
@@ -46,7 +46,7 @@
           {prop: 'key', label: '关键字'},
           {prop: 'description', label: '描述'},
           {prop: 'version', label: '版本'},
-          {prop: 'suspensionState', label: '状态'}
+          {prop: 'suspensionStateTransfer', label: '状态'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'OaProcessDefinitionView'},
@@ -63,6 +63,11 @@
     },
     filter: {},
     methods: {
+      customRender(_data) {
+        _data.forEach(function (e) {
+          e.suspensionStateTransfer = e.suspensionState === 1 ? '运行' : '停止'
+        })
+      },
       customTableTool(row, btnId) {
         switch (btnId) {
           case 'suspend': {

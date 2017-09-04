@@ -16,4 +16,5 @@
   - [新增组件(修改组件)](/crud/add) 
   - [查看组件](/crud/view)  
   - [数据字典](/crud/dict) 
-  - [数据列的自定义](/crud/custom) 
+  - [数据列显示的自定义](/crud/custom) 
+  - [table操作列的自定义](/crud/tableToolCustom) 
