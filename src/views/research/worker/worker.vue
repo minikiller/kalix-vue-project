@@ -14,6 +14,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {WorkerURL, WorkerComponent, ToolButtonList} from '../config.toml'
+  import EventBus from 'common/eventbus'
 
   // 注册全局组件
   WorkerComponent.forEach((item) => {
@@ -72,10 +73,18 @@
     created() {
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
-    methods: {},
+    methods: {
+      changeFormModel(model) {
+        console.log('changeFormModel', model)
+        this.formModel = model
+      }
+    },
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd
+    },
+    mounted() {
+      EventBus.$on('updateWorkerModel', this.changeFormModel)
     }
   }
 </script>

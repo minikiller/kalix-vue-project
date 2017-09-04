@@ -9,10 +9,11 @@
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
   )
     div.el-form(slot="dialogFormSlot")
+      el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
+        kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
+        v-on:userSelected="onUserSelected")
       el-form-item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard")
         el-input(v-model="formModel.identificationCard")
-      el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
-        el-input(v-model="formModel.name")
       el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
         el-radio-group(v-model="formModel.sex")
           el-radio(label="男")
@@ -32,7 +33,7 @@
       el-form-item(label="教学情况")
         el-input(type="textarea" v-model="formModel.teaching")
       el-form-item(label="教学情况" )
-        kalix-user-select(v-bind:params="params" v-model="formModel.teaching" v-on:userSelected="onUserSelected")
+        el-input(type="textarea" v-model="formModel.teaching")
 </template>
 
 <script type="text/ecmascript-6">
@@ -40,7 +41,7 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserSelect from '@/components/biz/userselect/userselect'
   import {TeacherURL} from '../config.toml'
-
+  import EventBus from 'common/eventbus'
   export default {
     props: {
       formModel: {
@@ -54,7 +55,7 @@
     },
     data() {
       return {
-        params: {userType: 0},
+        params: {userType: 1},
         rules: {
           name: [{required: true, message: '请输入 name', trigger: 'blur'}],
           sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
@@ -80,7 +81,7 @@
     },
     methods: {
       onUserSelected(user) {
-        console.log(user)
+        EventBus.$emit('updateTeacherModel', user)
       }
     }
   }

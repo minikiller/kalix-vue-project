@@ -18,7 +18,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {TeacherURL, TeacherComponent, ToolButtonList, ResearchCacheKey} from '../config.toml'
-
+  import EventBus from 'common/eventbus'
   // 注册全局组件
   TeacherComponent.forEach((item) => {
     console.log('[kalix]-[research] registry name is: ' + item.name, '; registry path is: ' + item.path)
@@ -81,9 +81,15 @@
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     mounted() {
+      EventBus.$on('updateTeacherModel', this.changeFormModel)
     },
     filter: {},
-    methods: {},
+    methods: {
+      changeFormModel(model) {
+        console.log('changeFormModel', model)
+        this.formModel = model
+      }
+    },
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd

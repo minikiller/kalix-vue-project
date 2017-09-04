@@ -13,6 +13,8 @@
     v-bind:bizDialog="bizDialog"
     v-bind:btnList="btnList"
     v-bind:dictDefine="dictDefine"
+    v-on:tableSelectionChange="onTableSelectionChange"
+    v-bind:hasTableSelection="hasTableSelection"
     bizSearch="CommonSenderSearch")
 </template>
 <script type="text/ecmascript-6">
@@ -29,6 +31,7 @@
   export default {
     data() {
       return {
+        hasTableSelection: true,
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'COMMON-DICT-KEY',
           type: '消息类别',
@@ -60,9 +63,11 @@
       }
     },
     created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     methods: {
+      onTableSelectionChange(val) {
+        console.log('onTableSelectionChange', val)
+      }
     },
     components: {
       BaseTable
