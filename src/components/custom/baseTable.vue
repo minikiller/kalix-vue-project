@@ -17,8 +17,8 @@
         component(v-bind:is="bizToolBar" v-if="isShowToolBar"
         v-on:onAddBtnClick="onAddClick"
         v-on:onRefreshBtnClick="onRefreshClick")
-        div.kalix-table-container(ref="kalixTableContainer")
-          el-table(:data="tableData" stripe style="width: 100%"
+        div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
+          el-table(:data="tableData" stripe style="width:100%"
           v-loading.body="loading"
           v-bind:height="tableHeight"
           v-on:selection-change="onTableSelectionChange")
@@ -389,6 +389,9 @@
     computed: {
       rowNo() {
         return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
+      },
+      tableContainerStyle() {
+        return {'top': (!this.isShowToolBar ? '56px' : '')}
       }
     }
   }
