@@ -13,8 +13,9 @@
         ul.s-flex_item.menu
           li
             label.s-check__label.link-btn(for="menuChk")
-              input.s-check(type="checkbox" id="menuChk" v-on:change="menuChkChange" v-model="headerMenuChk")
-              i.el-icon-d-arrow-left
+              input.s-check(type="checkbox" id="menuChk"
+              v-on:change="menuChkChange" v-model="headerMenuChk")
+              i(v-bind:class="{'el-icon-d-arrow-left':!menuChk,'el-icon-d-arrow-right':menuChk}")
           li(v-for="item in menuList")
             router-link.link-btn(tag="div" v-bind:to="{path:'/'+item.id}")
               i(:class="bindClass(item.iconCls)")
@@ -42,8 +43,8 @@
   import Vue from 'vue'
   import router from 'router'
   import Cache from 'common/cache'
-  import {cacheTime, applicationURL, logoutURL, msgCountURL, msgURL} from 'config/global.toml'
-  import {getCookie} from 'common/util'
+  import {applicationURL, logoutURL, msgCountURL, msgURL} from 'config/global.toml'
+  import {getCookie, isEmptyObject} from 'common/util'
 
   export default {
     props: {
@@ -71,42 +72,44 @@
         icon: ''
       }
     },
+    watch: {'$route': 'initMenu'},
     mounted() {
-      let d = new Date()
-      let cd = d.getTime()
-      let toolListData = {}
-
-      if (Cache.get('toolListData')) {
-        toolListData = JSON.parse(Cache.get('toolListData'))
-      }
-      if (toolListData.createDate && (toolListData.createDate - cd) < cacheTime && toolListData.data) {
-        this.menuList = toolListData.data
-      } else {
-        const data = {
-          _dc: cd,
-          page: 1,
-          start: 0,
-          limit: 25
-        }
-        Vue.axios.get(applicationURL, {
-          params: data
-        }).then(response => {
-          this.menuList = response.data
-          let nowDate = new Date()
-          toolListData.data = this.menuList
-          toolListData.createDate = nowDate.getTime()
-          Cache.save('toolListData', JSON.stringify(toolListData))
-        })
-      }
-      if (this.isPollMsg) {
-        this.pollMsg()
-      }
-      this.icon = this.decode(getCookie('currentUserIcon')) // 如果为null，则取默认的图标
-      if (this.icon === 'null') {
-        this.icon = ''
-      }
+      this.initMenu()
     },
     methods: {
+      initMenu() {
+        let d = new Date()
+        let cd = d.getTime()
+        let toolListData = {}
+
+        if (Cache.get('toolListData')) {
+          toolListData = JSON.parse(Cache.get('toolListData'))
+        }
+        if (!isEmptyObject(toolListData)) {
+          this.menuList = toolListData
+        } else {
+          const data = {
+            _dc: cd,
+            page: 1,
+            start: 0,
+            limit: 25
+          }
+          Vue.axios.get(applicationURL, {
+            params: data
+          }).then(response => {
+            this.menuList = response.data
+            toolListData.data = this.menuList
+            Cache.save('toolListData', JSON.stringify(toolListData.data))
+          })
+        }
+        if (this.isPollMsg) {
+          this.pollMsg()
+        }
+        this.icon = this.decode(getCookie('currentUserIcon')) // 如果为null，则取默认的图标
+        if (this.icon === 'null') {
+          this.icon = ''
+        }
+      },
       onMsgClick() {
         this.$router.push({path: `/common/receiver`})
       },
