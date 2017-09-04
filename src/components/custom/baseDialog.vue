@@ -50,14 +50,14 @@
         type: String
 //        required: true
       },
-      isView: false
+      isView: false,
+      title: ''
     },
     render() {
 
     },
     data() {
       return {
-        title: '',
         visible: false
       }
     },
@@ -107,7 +107,7 @@
         this.onCancelClick()
       },
       open(title, isEdit = false) {
-        this.title = title
+        this.$emit('update:title', title)
         this.visible = true
         this.isEdit = isEdit
       },

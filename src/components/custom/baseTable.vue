@@ -121,6 +121,9 @@
       },
       customRender: { // 对table的数据进行自定义的修饰
         type: Function
+      },
+      customTableTool: { // 对table的操作按钮进行自定义的操作
+        type: Function
       }
     },
     data() {
@@ -285,6 +288,10 @@
             setTimeout(() => {
               that.$refs.kalixDialog.openDialog(row, this.bizKey)
             }, 20)
+            break
+          default: // 默认转到调用props的方法
+            this.customTableTool(row, btnId)
+            break
         }
       },
       pagerSizeChange(val) { //  改变每页记录数

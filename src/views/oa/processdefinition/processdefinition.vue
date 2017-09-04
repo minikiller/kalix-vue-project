@@ -1,0 +1,102 @@
+<!--
+描述：办公自动化-流程定义管理组件
+开发人：sunlf
+开发日期：2017年8月17日
+-->
+
+<template lang="pug">
+  keep-alive
+    base-table(:isShowToolBar="isShowToolBar" bizKey="processDefinition" title='流程定义列表'
+    v-bind:tableFields="tableFields"
+    v-bind:targetURL="targetURL"
+    v-bind:formModel.sync="formModel"
+    v-bind:bizDialog="bizDialog"
+    bizSearch="ProcessDefinitionSearch"
+    v-bind:btnList="btnList" v-bind:customTableTool="customTableTool")
+
+</template>
+
+<script type="text/ecmascript-6">
+  import BaseTable from '@/components/custom/baseTable'
+  import {WorkflowURL, ProcessDefinitionButtonList, WorkflowSuspendURL, WorkflowActivateURL} from '../config.toml'
+  import {registerComp} from 'views/oa/comp'
+  import Vue from 'vue'
+  import Message from 'common/message'
+  import BaseTableTool from '@/components/custom/baseTableTool'
+  import EventBus from 'common/eventbus'
+  import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
+
+  Vue.component('ProcessDefinitionSearch', require('./processDefinitionSearch'))
+
+  export default {
+    activated() {
+      console.log(this.bizKey + '  is activated')
+    },
+    deactivated() {
+      console.log(this.bizKey + '  is deactivated')
+    },
+    data() {
+      return {
+        isShowToolBar: false,  // 不显示工具栏
+        btnList: ProcessDefinitionButtonList,
+        targetURL: WorkflowURL,
+        tableFields: [
+          {prop: 'id', label: '流程定义编号'},
+          {prop: 'name', label: '流程定义名称'},
+          {prop: 'key', label: '关键字'},
+          {prop: 'description', label: '描述'},
+          {prop: 'version', label: '版本'},
+          {prop: 'suspensionState', label: '状态'}
+        ],
+        bizDialog: [
+          {id: 'view', dialog: 'OaProcessDefinitionView'},
+          {id: 'suspend', dialog: 'OaProcessDefinitionView'}
+        ],
+        formModel: {}
+      }
+    },
+    created() {
+//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+    },
+    mounted() {
+      registerComp()
+    },
+    filter: {},
+    methods: {
+      customTableTool(row, btnId) {
+        switch (btnId) {
+          case 'suspend': {
+            this.$confirm('确定要执行该操作吗?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              return this.axios.request({
+                method: 'GET',
+                url: row.suspensionState === 1 ? WorkflowSuspendURL + row.key : WorkflowActivateURL + row.key,
+                params: {},
+                data: {
+                  id: row.id
+                }
+              })
+            }).then(response => {
+              EventBus.$emit(ON_REFRESH_DATA)
+              Message.success(response.data.msg)
+            }).catch(() => {
+            })
+            break
+          }
+        }
+      }
+    },
+    components: {
+      BaseTable,
+      KalixTableTool: BaseTableTool
+//      KalixUserAdd: UserAdd
+    }
+  }
+</script>
+
+<style scoped lang="stylus">
+
+</style>

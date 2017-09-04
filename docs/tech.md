@@ -158,3 +158,27 @@ require(['../components/Massive.vue'], resolve)
 > !测试框架 Mocha 实例教程[http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html]
 
 > vue unit testing https://github.com/eddyerburgh/avoriaz
+
+## 参数化一个属性
+- 参考`baseDialog.vue`中的title属性
+1. 设置title为props
+2. 外暴方式修改title
+```js
+open(title, isEdit = false) {
+        this.$emit('update:title', title)
+        this.visible = true
+        this.isEdit = isEdit
+      }
+```
+3. 直接在父组件中自定义title数值(参考`processDefinitionView.vue`)
+```js
+methods: {
+      initData(row) {
+        this.title = '流程定义查看-' + row.name
+        this.imgUrl = viewURL + row.id
+      }
+    }
+```
+
+## 定义table的列操作中的一个自定义按钮
+> (参考`processDefinition.vue`) 
