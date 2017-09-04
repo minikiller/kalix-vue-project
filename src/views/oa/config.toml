@@ -47,7 +47,7 @@ MyHistoryURL = "/camel/rest/workflow/myHistory"
   isPermission = true   # 是否进行权限认证
 [[ProcessDefinitionButtonList]]
   id = "suspend"
-  title = "无效"
+  title = "scope.suspensionState === 1 ? '运行' : '停止'"
   isShow = true    # 是否显示
   isPermission = true   # 是否进行权限认证
 

@@ -4,21 +4,21 @@
 开发日期：2017年8月17日
 -->
 
-<template lang="pug">
+<template lang='pug'>
   keep-alive
-    base-table(:isShowToolBar="isShowToolBar" bizKey="processDefinition" title='流程定义列表'
-    v-bind:tableFields="tableFields"
-    v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel"
-    v-bind:bizDialog="bizDialog"
-    v-bind:customRender="customRender"
-    bizSearch="ProcessDefinitionSearch"
-    v-bind:btnList="btnList" v-bind:customTableTool="customTableTool")
+    base-table(:isShowToolBar='isShowToolBar' bizKey='processDefinition' title='流程定义列表'
+    v-bind:tableFields='tableFields'
+    v-bind:targetURL='targetURL'
+    v-bind:formModel.sync='formModel'
+    v-bind:bizDialog='bizDialog'
+    v-bind:customRender='customRender'
+    bizSearch='ProcessDefinitionSearch'
+    v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
 </template>
 
-<script type="text/ecmascript-6">
+<script type='text/ecmascript-6'>
   import BaseTable from '@/components/custom/baseTable'
-  import {WorkflowURL, ProcessDefinitionButtonList, WorkflowSuspendURL, WorkflowActivateURL} from '../config.toml'
+  import {WorkflowURL, WorkflowSuspendURL, WorkflowActivateURL} from '../config.toml'
   import {registerComp} from 'views/oa/comp'
   import Vue from 'vue'
   import Message from 'common/message'
@@ -38,7 +38,18 @@
     data() {
       return {
         isShowToolBar: false,  // 不显示工具栏
-        btnList: ProcessDefinitionButtonList,
+        btnList: [{
+          id: 'view',
+          title: '查看',
+          isShow: true
+        }, {
+          id: 'suspend',
+          title: '',
+          isShow: true,
+          titleCompute: (scope) => {
+            return scope.row.suspensionState === 1 ? '停止' : '运行'
+          }
+        }],
         targetURL: WorkflowURL,
         tableFields: [
           {prop: 'id', label: '流程定义编号'},
@@ -50,9 +61,10 @@
         ],
         bizDialog: [
           {id: 'view', dialog: 'OaProcessDefinitionView'},
-          {id: 'suspend', dialog: 'OaProcessDefinitionView'}
+          {id: 'suspend', dialog: ''}
         ],
-        formModel: {}
+        formModel:
+          {}
       }
     },
     created() {
@@ -102,6 +114,6 @@
   }
 </script>
 
-<style scoped lang="stylus">
+<style scoped lang='stylus'>
 
 </style>

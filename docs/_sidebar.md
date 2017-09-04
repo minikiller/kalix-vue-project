@@ -18,3 +18,4 @@
   - [数据字典](/crud/dict) 
   - [数据列显示的自定义](/crud/custom) 
   - [table操作列的自定义](/crud/tableToolCustom) 
+  - [table操作列title的自定义](/crud/tableToolTitle) 

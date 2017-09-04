@@ -8,8 +8,13 @@
   div
     el-table-column(label="操作" v-bind:width="columnWidth")
       template(scope="scope")
-        el-button(v-for="btn in btnList" v-if="btn.isShow" v-bind:key="btn.id" v-on:click="toggle(scope.row,btn.id)"
-        type="text" size="small") {{btn.title}}
+        div(v-for="btn in btnList" v-bind:key="btn.id"  )
+          div(v-if="btn.titleCompute")
+            el-button( v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
+            type="text" size="small") {{btn.titleCompute(scope)}}
+          div(v-else)
+            el-button( v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
+            type="text" size="small") {{btn.title}}
 </template>
 
 <script type="text/ecmascript-6">
@@ -26,6 +31,9 @@
             {id: 'edit', title: '编辑', isShow: true},
             {id: 'delete', title: '删除', isShow: true}]
         }
+      },
+      titleComputer: {
+        type: Function
       }
     },
     created() {
