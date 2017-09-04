@@ -6,6 +6,7 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="receiver" title='收件列表'
+    ref="kalixTable"
     v-bind:tableFields="tableFields"
     v-bind:targetURL="targetURL"
     v-bind:formModel.sync="formModel"
@@ -15,11 +16,15 @@
     v-bind:dictDefine="dictDefine"
     v-bind:customRender="customRender"
     v-bind:hasTableSelection="hasTableSelection"
+    v-on:tableSelectionChange="onTableSelectionChange"
+    bizToolBar="CommonReceiverTableToolBar"
     bizSearch="CommonReceiverSearch")
 </template>
 <script type="text/ecmascript-6">
+  import EventBus from 'common/eventbus'
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
+  import Message from 'common/message'
   import {ReceiverURL, ReceiverComponent, SenderToolButtonList} from '../config.toml'
 
   // 注册全局组件
@@ -70,8 +75,39 @@
     },
     created() {
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+      EventBus.$on('deleteCheckedClick', this.onDeleteChecked)
     },
     methods: {
+      onDeleteChecked() {
+        // 删除选中
+        if (this.deleteList && this.deleteList.length > 0) {
+          let ids = []
+          this.deleteList.forEach(item => {
+            ids.push(item.id)
+          })
+          this.$confirm('确定要删除吗?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            return this.axios.request({
+              method: 'DELETE',
+              url: 'camel/rest/messages/receiver/remove',
+              params: {
+                ids: ids.join(':')
+              }
+            })
+          }).then(response => {
+            this.$refs.kalixTable.getData()
+            Message.success(response.data.msg)
+          }).catch(() => {
+          })
+        }
+      },
+      onTableSelectionChange(val) {
+        console.log(val)
+        this.deleteList = val
+      },
       customRender(_data) {
         _data.forEach(function (e) {
           e.isRead = e.read ? '是' : '否'

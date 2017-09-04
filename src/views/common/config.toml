@@ -70,6 +70,9 @@ ReceiverURL = "/camel/rest/messages/receiver"
 [[ReceiverComponent]]
   path = "./receiverSearch"
   name = "CommonReceiverSearch"
+[[ReceiverComponent]]
+  path = "./receiverTableToolBar"
+  name = "CommonReceiverTableToolBar"
 
 # table 的默认按钮定义
 [[ToolButtonList]]

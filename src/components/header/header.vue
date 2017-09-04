@@ -97,9 +97,11 @@
           Vue.axios.get(applicationURL, {
             params: data
           }).then(response => {
-            this.menuList = response.data
-            toolListData.data = this.menuList
-            Cache.save('toolListData', JSON.stringify(toolListData.data))
+            if (response && response.data) {
+              this.menuList = response.data
+              toolListData.data = this.menuList
+              Cache.save('toolListData', JSON.stringify(toolListData.data))
+            }
           })
         }
         if (this.isPollMsg) {

@@ -13,7 +13,10 @@
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar(v-if="isShowToolBar" v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
+        //kalix-tool-bar()
+        component(v-bind:is="bizToolBar" v-if="isShowToolBar"
+        v-on:onAddBtnClick="onAddClick"
+        v-on:onRefreshBtnClick="onRefreshClick")
         div.kalix-table-container(ref="kalixTableContainer")
           el-table(:data="tableData" stripe style="width: 100%"
           v-loading.body="loading"
@@ -65,6 +68,10 @@
   export default {
     name: 'baseTable',
     props: {
+      bizToolBar: {
+        type: String,
+        default: 'KalixToolBar'
+      },
       hasTableSelection: { // 表格是否有选择框
         type: Boolean,
         default: false
