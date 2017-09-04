@@ -15,6 +15,7 @@
     v-bind:dictDefine="dictDefine"
     v-on:tableSelectionChange="onTableSelectionChange"
     v-bind:hasTableSelection="hasTableSelection"
+    v-bind:isShowToolBar="isShowToolBar"
     bizSearch="CommonSenderSearch")
 </template>
 <script type="text/ecmascript-6">
@@ -31,6 +32,7 @@
   export default {
     data() {
       return {
+        isShowToolBar: false,
         hasTableSelection: true,
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'COMMON-DICT-KEY',

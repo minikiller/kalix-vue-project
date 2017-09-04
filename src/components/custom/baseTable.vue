@@ -13,9 +13,12 @@
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar(v-if="isShowToolBar" v-on:onAddBtnClick="onAddClick"  v-on:onRefreshBtnClick="onRefreshClick")
-        div.kalix-table-container(ref="kalixTableContainer")
-          el-table(:data="tableData" stripe style="width: 100%"
+        //kalix-tool-bar()
+        component(v-bind:is="bizToolBar" v-if="isShowToolBar"
+        v-on:onAddBtnClick="onAddClick"
+        v-on:onRefreshBtnClick="onRefreshClick")
+        div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
+          el-table(:data="tableData" stripe style="width:100%"
           v-loading.body="loading"
           v-bind:height="tableHeight"
           v-on:selection-change="onTableSelectionChange")
@@ -65,6 +68,10 @@
   export default {
     name: 'baseTable',
     props: {
+      bizToolBar: {
+        type: String,
+        default: 'KalixToolBar'
+      },
       hasTableSelection: { // 表格是否有选择框
         type: Boolean,
         default: false
@@ -389,6 +396,9 @@
     computed: {
       rowNo() {
         return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
+      },
+      tableContainerStyle() {
+        return {'top': (!this.isShowToolBar ? '56px' : '')}
       }
     }
   }
