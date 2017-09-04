@@ -38,7 +38,8 @@
         formModel: {
           name: '',
           app: '',
-          available: 1
+          available: 1,
+          remark: ''
         },
         formRules: {
           app: [

@@ -7,14 +7,12 @@
 <template>
   <el-select
     v-model='currentValue'
-    remote
-    :remote-method='remoteMethod'
-    :loading='loading' v-on:change="onChange">
+    v-on:change="onChange">
     <el-option
       v-for='app in appList'
       :key='app.id'
       :label='app.text'
-      :value='app.id'>
+      :value='app.text'>
     </el-option>
   </el-select>
 </template>
@@ -32,12 +30,14 @@
     data() {
       return {
         appList: [],
-        loading: false,
+        targetURL: appsURL,
+        loading: true,
         currentValue: this.value,
         selectApp: {}
       }
     },
     mounted() {
+      this.remoteMethod()
     },
     methods: {
       onChange(value) {
@@ -46,14 +46,15 @@
         })
         this.selectApp = apps[0] || {}
         console.log(`[kalix]-[appselect.vue] current app is `, this.selectApp)
-        this.$emit('appSelected', this.selectApp)  // 发送事件
+//        this.$emit('appSelected', this.selectApp)  // 发送事件
+        this.$emit('input', value)
       },
       remoteMethod(query) {
         if (query !== '') {
           this.$emit('input', this.currentValue)  // 设置model的数值
           this.loading = true
           setTimeout(() => {
-            this.loading = false
+            this.loading = true
             let _data = {
               page: 1,
               start: 0,
@@ -62,7 +63,8 @@
             this.axios.get(appsURL, {
               params: _data
             }).then(response => {
-              this.appList = response.data.data
+              this.appList = response.data
+              console.log(response.data)
             })
           }, 100)
         } else {
