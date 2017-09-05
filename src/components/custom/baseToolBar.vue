@@ -7,7 +7,7 @@
 <template lang="pug">
   div.kalix-base-tool-bar
     slot(name="toolBarSlot")
-      template(v-for="btn in defaultToolBarbtnList")
+      template(v-for="btn in defaultBtnList")
         el-button(v-if="btn.isShow" v-on:click="toggle(btn.id)" type="primary")
           i.iconfont(v-bind:class="btn.icon")
           | {{btn.title}}
@@ -25,7 +25,7 @@
     },
     data() {
       return {
-        defaultToolBarbtnList: GlobalToolBarButtonList
+        defaultBtnList: []
       }
     },
     created() {
@@ -33,20 +33,22 @@
     },
     methods: {
       initToolBtnList() {
+        let defaultToolBarBtnList = JSON.parse(JSON.stringify(GlobalToolBarButtonList))
         if (this.toolBarbtnList.length > 0) {
           this.toolBarbtnList.forEach(item => {
-            let item2 = this.defaultToolBarbtnList.find(e => {
+            let item2 = defaultToolBarBtnList.find(e => {
               if (e.id === item.id) {
-                e = Object.assign(e, item)
+                defaultToolBarBtnList.push(Object.assign(e, item))
                 return true
               }
               return false
             })
             if (!item2) {
-              this.defaultToolBarbtnList.push(item)
+              defaultToolBarBtnList.push(item)
             }
           })
         }
+        this.defaultBtnList = defaultToolBarBtnList
       },
       toggle(row, btnId) { // toolbar click event
         this.$emit(ON_TOOLBAR_CLICK, row, btnId)

@@ -5,7 +5,7 @@
 -->
 
 <template lang="pug">
-  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="close"
+  el-dialog.dialog-form(v-bind:title="dialogTitle" v-bind:visible="visible" v-bind:before-close="close"
   v-bind:close-on-click-modal="false" v-bind:size="size")
     el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
       slot(name="dialogFormSlot")
@@ -58,6 +58,7 @@
     },
     data() {
       return {
+        privateTitle: '',
         visible: false
       }
     },
@@ -106,8 +107,8 @@
         this.$refs.dialogForm.resetFields()
         this.onCancelClick()
       },
-      open(title, isEdit = false) {
-        this.$emit('update:title', title)
+      open(_title, isEdit = false) {
+        this.privateTitle = _title
         this.visible = true
         this.isEdit = isEdit
       },
@@ -122,6 +123,11 @@
     },
     mounted() {
       EventBus.$on(this.bizKey + '-' + ON_INIT_DIALOG_DATA, this.initData)
+    },
+    computed: {
+      dialogTitle() {
+        return this.title || this.privateTitle
+      }
     }
   }
 </script>

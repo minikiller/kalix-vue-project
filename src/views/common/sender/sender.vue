@@ -42,7 +42,7 @@
         hasTableSelection: true,
         toolBarbtnList: [
           {id: 'deleteChecked', icon: 'icon-delete', title: '删除选中', isShow: true},
-          {id: 'refresh', isShow: false}
+          {id: 'add', isShow: false}
         ],
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'COMMON-DICT-KEY',

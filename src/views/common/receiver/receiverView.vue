@@ -6,20 +6,19 @@
 <template lang="pug">
   kalix-dialog.user-add(bizKey="receiver"
   ref="kalixBizDialog" v-bind:form-model="formModel"
-    size="tiny"
-    v-bind:targetURL="targetURL" v-bind:isView="readonly")
+  size="tiny" v-bind:title="title"
+  v-bind:targetURL="targetURL" v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot" style="padding-right: 40px;")
       el-form-item(label="标题")
         el-input(v-model="formModel.title" v-bind:readonly="readonly")
       el-form-item(label="内容")
         el-input(v-model="formModel.content"
-          type="textarea" v-bind:readonly="readonly"
-          v-bind:autosize="{ minRows: 4, maxRows: 8}")
-      div.s-flex
-        el-form-item.s-flex_item(label="发布人")
-          el-input(v-model="formModel.senderName" v-bind:readonly="readonly")
-        el-form-item.s-flex_item(label="发布时间" label-width="120px")
-          el-input(v-model="formModel.creationDate" v-bind:readonly="readonly")
+        type="textarea" v-bind:readonly="readonly"
+        v-bind:autosize="{ minRows: 4, maxRows: 8}")
+      el-form-item.s-flex_item(label="发布人")
+        el-input(v-model="formModel.senderName" v-bind:readonly="readonly")
+      el-form-item.s-flex_item(label="发布时间" )
+        el-input(v-model="formModel.creationDate" v-bind:readonly="readonly")
 </template>
 
 <script type="text/ecmascript-6">
@@ -39,6 +38,7 @@
     },
     data() {
       return {
+        title: '查看',
         targetURL: NoteURL,
         readonly: true
       }

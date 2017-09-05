@@ -9,7 +9,7 @@
     ref="kalixTable"
     v-bind:tableFields="tableFields"
     v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel"
+    v-bind:formModel="formModel"
     v-bind:formRules="formRules"
     v-bind:bizDialog="bizDialog"
     v-bind:btnList="btnList"
