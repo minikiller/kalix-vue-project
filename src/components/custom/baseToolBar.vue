@@ -7,24 +7,49 @@
 <template lang="pug">
   div.kalix-base-tool-bar
     slot(name="toolBarSlot")
-      el-button(v-on:click="onAddClick" type="primary")
-        i.iconfont.icon-add
-        | 添加
-      el-button(v-on:click="onRefreshClick" type="primary")
-        i.iconfont.icon-refresh
-        | 刷新
+      template(v-for="btn in defaultToolBarbtnList")
+        el-button(v-if="btn.isShow" v-on:click="toggle(btn.id)" type="primary")
+          i.iconfont(v-bind:class="btn.icon")
+          | {{btn.title}}
 </template>
 
 <script type="text/ecmascript-6">
-  import {ON_ADD_BUTTON_CLICK, ON_REFRESH_BUTTON_CLICK} from './event.toml'
+  import {ON_TOOLBAR_CLICK} from './event.toml'
+  import {GlobalToolBarButtonList} from 'config/global.toml'
 
   export default {
+    props: {
+      toolBarbtnList: {
+        type: Array
+      }
+    },
+    data() {
+      return {
+        defaultToolBarbtnList: GlobalToolBarButtonList
+      }
+    },
+    created() {
+      this.initToolBtnList()
+    },
     methods: {
-      onAddClick() {
-        this.$emit(ON_ADD_BUTTON_CLICK)
+      initToolBtnList() {
+        if (this.toolBarbtnList.length > 0) {
+          this.toolBarbtnList.forEach(item => {
+            let item2 = this.defaultToolBarbtnList.find(e => {
+              if (e.id === item.id) {
+                e = Object.assign(e, item)
+                return true
+              }
+              return false
+            })
+            if (!item2) {
+              this.defaultToolBarbtnList.push(item)
+            }
+          })
+        }
       },
-      onRefreshClick() {
-        this.$emit(ON_REFRESH_BUTTON_CLICK)
+      toggle(row, btnId) { // toolbar click event
+        this.$emit(ON_TOOLBAR_CLICK, row, btnId)
       }
     }
   }

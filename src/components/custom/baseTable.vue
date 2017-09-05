@@ -13,10 +13,9 @@
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        //kalix-tool-bar()
-        component(v-bind:is="bizToolBar" v-if="isShowToolBar"
-        v-on:onAddBtnClick="onAddClick"
-        v-on:onRefreshBtnClick="onRefreshClick")
+        kalix-tool-bar(v-if="isShowToolBar"
+        v-bind:toolBarbtnList="toolBarbtnList"
+        v-on:onToolBarClick="onToolBarClick")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
           el-table(:data="tableData" stripe style="width:100%"
           v-loading.body="loading"
@@ -68,9 +67,11 @@
   export default {
     name: 'baseTable',
     props: {
-      bizToolBar: {
-        type: String,
-        default: 'KalixToolBar'
+      toolBarbtnList: {   //  toolBar 中按钮数组
+        type: Array,
+        default: () => {
+          return []
+        }
       },
       hasTableSelection: { // 表格是否有选择框
         type: Boolean,
@@ -131,6 +132,9 @@
       },
       customTableTool: { // 对table的操作按钮进行自定义的操作
         type: Function
+      },
+      customToolBar: { // 对 ToolBar 的操作按钮进行自定义的操作
+        type: Function
       }
     },
     data() {
@@ -152,6 +156,7 @@
       }
     },
     created() {
+      console.log('toolBarbtnList', this.toolBarbtnList)
       this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
       this.getData()
     },
@@ -182,6 +187,20 @@
       }
     },
     methods: {
+      onToolBarClick(btnId) {
+        // baseToolBar 回调事件
+        switch (btnId) {
+          case 'add':
+            this.onAddClick()
+            break
+          case 'refresh':
+            this.onRefreshClick()
+            break
+          default:
+            this.customToolBar(btnId)
+            break
+        }
+      },
       onTableSelectionChange(val) {
         this.$emit('tableSelectionChange', val)
       },
