@@ -42,5 +42,12 @@ yarn test
 * element-UI
 
 ## doc url
-https://minikiller.github.io/kalix-vue-project
+> command: 
+```
+docsify serve ./docs
+
+Serving D:\java-develop\project\kalix-vue-project\docs now.
+Listening at http://localhost:3000
+```
+访问地址： https://minikiller.github.io/kalix-vue-project
 
