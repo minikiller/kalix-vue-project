@@ -2931,7 +2931,7 @@ he@1.1.x, he@^1.1.0:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/he/download/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
-highcharts@^5.0.14:
+highcharts@^5.0.14, highcharts@^5.0.7:
   version "5.0.14"
   resolved "http://registry.npm.taobao.org/highcharts/download/highcharts-5.0.14.tgz#0ef14cca9f1345408568b533dae1478950d96810"
 
@@ -6353,7 +6353,14 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.5.3"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.5.3.tgz#22787de4e37ebd9339b74223bc467d1adee30545"
 
-vue@^2.4.2:
+vue2-highcharts@^1.1.4:
+  version "1.1.4"
+  resolved "http://registry.npm.taobao.org/vue2-highcharts/download/vue2-highcharts-1.1.4.tgz#1f886ec1b46bebb14eae6ea03e863b680afb0127"
+  dependencies:
+    highcharts "^5.0.7"
+    vue "^2.1.0"
+
+vue@^2.1.0, vue@^2.4.2:
   version "2.4.2"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.4.2.tgz#a9855261f191c978cc0dc1150531b8d08149b58c"
 

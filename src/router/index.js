@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Hello from 'views/demo/Hello'
 import Test from 'views/demo/test'
 import Show from 'views/demo/highcharts/show'
+import VueShow from 'views/demo/highcharts/vue-chart.vue'
 import Login from '@/components/login/login'
 import Cache from 'common/cache'
 import Home from '@/components/home/home'
@@ -31,6 +32,11 @@ const router = new Router({
       path: '/show',
       name: 'show',
       component: Show
+    },
+    {
+      path: '/vueshow',
+      name: 'VueShow',
+      component: VueShow
     },
     {
       path: '/',
