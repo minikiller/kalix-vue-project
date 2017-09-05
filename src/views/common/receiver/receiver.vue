@@ -15,8 +15,10 @@
     v-bind:btnList="btnList"
     v-bind:dictDefine="dictDefine"
     v-bind:customRender="customRender"
-    v-bind:hasTableSelection="hasTableSelection"
     v-on:tableSelectionChange="onTableSelectionChange"
+    v-bind:toolBarbtnList="toolBarbtnList"
+    v-bind:hasTableSelection="hasTableSelection"
+    v-bind:customToolBar="customToolBar"
     bizToolBar="CommonReceiverTableToolBar"
     bizSearch="CommonReceiverSearch")
 </template>
@@ -24,8 +26,8 @@
   import EventBus from 'common/eventbus'
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
-  import Message from 'common/message'
   import {ReceiverURL, ReceiverComponent, SenderToolButtonList} from '../config.toml'
+  import {receiverSenderMixin} from '../receiverSenderMixin'
 
   // 注册全局组件
   ReceiverComponent.forEach((item) => {
@@ -34,9 +36,14 @@
   })
   const RECEIVER_CATEGORY = 2
   export default {
+    mixins: [receiverSenderMixin],
     data() {
       return {
+        batchDeleteUrl: `${ReceiverURL}/remove`,
         hasTableSelection: true,
+        toolBarbtnList: [
+          {id: 'deleteChecked', icon: 'icon-delete', title: '删除选中', isShow: true}
+        ],
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'COMMON-DICT-KEY',
           type: '消息类别',
@@ -74,40 +81,9 @@
       }
     },
     created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
       EventBus.$on('deleteCheckedClick', this.onDeleteChecked)
     },
     methods: {
-      onDeleteChecked() {
-        // 删除选中
-        if (this.deleteList && this.deleteList.length > 0) {
-          let ids = []
-          this.deleteList.forEach(item => {
-            ids.push(item.id)
-          })
-          this.$confirm('确定要删除吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            return this.axios.request({
-              method: 'DELETE',
-              url: 'camel/rest/messages/receiver/remove',
-              params: {
-                ids: ids.join(':')
-              }
-            })
-          }).then(response => {
-            this.$refs.kalixTable.getData()
-            Message.success(response.data.msg)
-          }).catch(() => {
-          })
-        }
-      },
-      onTableSelectionChange(val) {
-        console.log(val)
-        this.deleteList = val
-      },
       customRender(_data) {
         _data.forEach(function (e) {
           e.isRead = e.read ? '是' : '否'

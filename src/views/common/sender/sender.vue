@@ -6,6 +6,7 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="sender" title='发件列表'
+    ref="kalixTable"
     v-bind:tableFields="tableFields"
     v-bind:targetURL="targetURL"
     v-bind:formModel.sync="formModel"
@@ -16,12 +17,15 @@
     v-on:tableSelectionChange="onTableSelectionChange"
     v-bind:hasTableSelection="hasTableSelection"
     v-bind:isShowToolBar="isShowToolBar"
+    v-bind:toolBarbtnList="toolBarbtnList"
+    v-bind:customToolBar="customToolBar"
     bizSearch="CommonSenderSearch")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {SenderURL, SenderComponent, SenderToolButtonList} from '../config.toml'
+  import {receiverSenderMixin} from '../receiverSenderMixin'
 
   // 注册全局组件
   SenderComponent.forEach((item) => {
@@ -30,10 +34,16 @@
   })
 
   export default {
+    mixins: [receiverSenderMixin],
     data() {
       return {
-        isShowToolBar: false,
+        batchDeleteUrl: `${SenderURL}/remove`,
+        isShowToolBar: true,
         hasTableSelection: true,
+        toolBarbtnList: [
+          {id: 'deleteChecked', icon: 'icon-delete', title: '删除选中', isShow: true},
+          {id: 'refresh', isShow: false}
+        ],
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'COMMON-DICT-KEY',
           type: '消息类别',
@@ -66,11 +76,7 @@
     },
     created() {
     },
-    methods: {
-      onTableSelectionChange(val) {
-        console.log('onTableSelectionChange', val)
-      }
-    },
+    methods: {},
     components: {
       BaseTable
     }

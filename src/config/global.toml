@@ -77,3 +77,15 @@ orgsURL = "/camel/rest/orgs"
 [[GlobalComponent]]
   path = "./components/tree/basetree2"
   name = "orgTree"
+
+# baseToolBar 的默认按钮定义
+[[GlobalToolBarButtonList]]
+  id = "add"
+  icon = "icon-add"
+  title = "添加"
+  isShow = true
+[[GlobalToolBarButtonList]]
+  id = "refresh"
+  icon = "icon-refresh"
+  title = "刷新"
+  isShow = true
