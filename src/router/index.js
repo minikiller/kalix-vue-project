@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'views/demo/Hello'
 import Test from 'views/demo/test'
+import Show from 'views/demo/highcharts/show'
 import Login from '@/components/login/login'
 import Cache from 'common/cache'
 import Home from '@/components/home/home'
@@ -25,6 +26,11 @@ const router = new Router({
       path: '/test',
       name: 'test',
       component: Test
+    },
+    {
+      path: '/show',
+      name: 'show',
+      component: Show
     },
     {
       path: '/',
