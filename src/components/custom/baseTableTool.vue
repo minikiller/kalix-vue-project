@@ -8,12 +8,12 @@
   div
     el-table-column(label="操作" v-bind:width="columnWidth")
       template(scope="scope")
-        div(v-for="btn in btnList" v-bind:key="btn.id"  )
-          div(v-if="btn.titleCompute")
-            el-button( v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
+        template(v-for="btn in btnList")
+          template(v-if="btn.titleCompute")
+            el-button(v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
             type="text" size="small") {{btn.titleCompute(scope)}}
-          div(v-else)
-            el-button( v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
+          template(v-else)
+            el-button(v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
             type="text" size="small") {{btn.title}}
 </template>
 
