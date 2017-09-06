@@ -50,17 +50,8 @@
     data() {
       return {
         isShowToolBar: false,  // 不显示工具栏
-        btnList: [],
+        btnList: WorkflowButtonList,
         targetURL: WorkflowHistoryURL,
-        tableFields: [
-          {prop: 'name', label: '编号', width: 280},
-          {prop: 'title', label: '业务名称', width: 270},
-          {prop: 'startUserId', label: '启动用户'},
-          {prop: 'startTime', label: '开始时间'},
-          {prop: 'endTime', label: '结束时间'},
-          {prop: 'durationInMillis', label: '持续时长'},
-          {prop: 'status', label: '状态'}
-        ],
         bizDialog: [
           {id: 'view', dialog: 'OaHistoryView'}
         ],
@@ -71,7 +62,6 @@
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     mounted() {
-      this.btnList = WorkflowButtonList
       registerComp()
     },
     filter: {},
