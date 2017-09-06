@@ -1,9 +1,43 @@
-<!--
-描述：办公自动化-我的流程组件
-开发人：sunlf
-开发日期：2017年8月17日
--->
-
+# 定制table行数据
+!> 开发过程中，会对table中的一行数据进行自定义的显示，下面以`views/oa/processhistory/processhistory.vue`为例进行说明。
+## 模板说明
+```js
+<template lang="pug">
+  keep-alive
+    base-table(:isShowToolBar="isShowToolBar" bizKey="myprocesshistory" title='我的流程列表'
+    v-bind:tableFields="tableFields"
+    v-bind:targetURL="targetURL"
+    v-bind:formModel.sync="formModel"
+    v-bind:bizDialog="bizDialog"
+    bizSearch="OaProcessHistorySearch"
+    v-bind:tableRowClassName="tableRowClassName"
+    v-bind:btnList="btnList")
+</template>
+```
+其中 `v-bind:tableRowClassName="tableRowClassName""` 即为自定义一行数据的声明。
+## 代码说明
+> tableRowClassName 方法定义
+```js
+methods: {
+      tableRowClassName(row, index) {
+        if (row.status === '结束') {
+          return 'finish-row'
+        } 
+        return ''
+      }
+    },
+```
+> 样式定义
+```stylus
+  .el-table
+    .finish-row
+      td
+        background-color #c9e5f5 !important
+```
+# 定制table列数据
+!> 开发过程中，会对table中的一列数据进行自定义的显示，下面以`views/oa/processhistory/processhistory.vue`为例进行说明。
+## 模板说明
+```js
 <template lang="pug">
   keep-alive
     base-table(:isShowToolBar="isShowToolBar" bizKey="myprocesshistory" title='我的流程列表'
@@ -34,55 +68,7 @@
             span(style="color:#f00" v-if="scope.row.status === '结束'") {{ scope.row.status }}
             span(v-else) {{ scope.row.status }}
 </template>
-
-<script type="text/ecmascript-6">
-  import BaseTable from '@/components/custom/baseTable'
-  import {WorkflowHistoryURL, WorkflowButtonList} from '../config.toml'
-  import {registerComp} from 'views/oa/comp'
-
-  export default {
-    activated() {
-      console.log(this.bizKey + '  is activated')
-    },
-    deactivated() {
-      console.log(this.bizKey + '  is deactivated')
-    },
-    data() {
-      return {
-        isShowToolBar: false,  // 不显示工具栏
-        btnList: WorkflowButtonList,
-        targetURL: WorkflowHistoryURL,
-        bizDialog: [
-          {id: 'view', dialog: 'OaHistoryView'}
-        ],
-        formModel: {}
-      }
-    },
-    created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
-    },
-    mounted() {
-      registerComp()
-    },
-    filter: {},
-    methods: {
-      tableRowClassName(row, index) {
-        if (row.status === '结束') {
-          return 'finish-row'
-        }
-        return ''
-      }
-    },
-    components: {
-      BaseTable
-//      KalixUserAdd: UserAdd
-    }
-  }
-</script>
-
-<style lang="stylus">
-  .el-table
-    .finish-row
-      td
-        background-color #c9e5f5 !important
-</style>
+```
+## 代码说明
+1. 去掉props的tableFields声明
+2. 使用baseTable中的`template(slot="tableColumnSlot")`

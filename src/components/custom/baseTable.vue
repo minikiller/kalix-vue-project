@@ -17,20 +17,22 @@
         v-bind:toolbarBtnList="toolbarBtnList"
         v-on:onToolBarClick="onToolBarClick")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-          el-table(:data="tableData" stripe style="width:100%"
-          v-loading.body="loading"
+          el-table(:data="tableData" stripe style="width:100%" v-bind:row-class-name="tableRowClassName"
+          v-loading.body="loading" border
           v-bind:height="tableHeight"
           v-on:selection-change="onTableSelectionChange")
             //table的字段
-            el-table-column(v-if="hasTableSelection && tableData && tableData.length > 0" type="selection" width="55")
-            el-table-column(v-if="tableData && tableData.length > 0" label="行号" width="70")
-              template(scope="scope")
-                div(style="text-align: center") {{ scope.row.rowNumber }}
-            el-table-column(v-if="tableData && tableData.length > 0" v-for="field in tableFields"
-            v-bind:key="field.prop" v-bind:prop="field.prop" v-bind:label="field.label")
-              template(scope="scope")
-                div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
-            //  table的工具按钮
+            template(v-if="tableData && tableData.length > 0")
+              el-table-column(v-if="hasTableSelection" type="selection" width="55")
+              el-table-column(label="行号" width="70")
+                template(scope="scope")
+                  div(style="text-align: center") {{ scope.row.rowNumber }}
+              slot(name="tableColumnSlot")
+                el-table-column(v-for="field in tableFields"
+                v-bind:key="field.prop" v-bind:prop="field.prop" v-bind:label="field.label" v-bind:width="field.width")
+                  template(scope="scope")
+                    div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
+              //  table的工具按钮
             slot(name="tableToolSlot")
               kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick")
           div.no-list(v-if="!tableData || !tableData.length > 0")
@@ -123,8 +125,7 @@
         default: ''
       },
       tableFields: {   //  数据列表的列名
-        type: Array,
-        required: true
+        type: Array
       },
       btnList: {   //  table中按钮数组
         type: Array,
@@ -140,6 +141,9 @@
         type: Function
       },
       customToolBar: { // 对 ToolBar 的操作按钮进行自定义的操作
+        type: Function
+      },
+      tableRowClassName: { // 对table的一行数据进行样式定制
         type: Function
       },
       deleteAllUrl: {
@@ -207,21 +211,17 @@
     methods: {
       onToolBarClick(btnId) {
         // baseToolBar 回调事件
-        this.toolbarClickEvent[btnId]()
-      },
-      initToolbarClickEvent() {
-        let that = this
-        this.toolbarClickEvent = concatObject(this.customToolbarClickEvents, {
-          add() {
-            that.onAddClick()
-          },
-          refresh() {
-            that.onRefreshClick()
-          },
-          deleteChecked() {
-            that.onDeleteChecked()
-          }
-        })
+        switch (btnId) {
+          case 'add':
+            this.onAddClick()
+            break
+          case 'refresh':
+            this.onRefreshClick()
+            break
+          default:
+            this.customToolBar(btnId)
+            break
+        }
       },
       onTableSelectionChange(val) {
         this.deleteList = val
