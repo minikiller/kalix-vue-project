@@ -16,7 +16,7 @@
     v-bind:dictDefine="dictDefine"
     v-bind:customRender="customRender"
     v-on:tableSelectionChange="onTableSelectionChange"
-    v-bind:toolBarbtnList="toolBarbtnList"
+    v-bind:toolbarBtnList="toolbarBtnList"
     v-bind:hasTableSelection="hasTableSelection"
     v-bind:customToolBar="customToolBar"
     bizToolBar="CommonReceiverTableToolBar"
@@ -41,8 +41,8 @@
       return {
         batchDeleteUrl: `${ReceiverURL}/remove`,
         hasTableSelection: true,
-        toolBarbtnList: [
-          {id: 'deleteChecked', icon: 'icon-delete', title: '删除选中', isShow: true}
+        toolbarBtnList: [
+          {id: 'deleteChecked', isShow: true}
         ],
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'COMMON-DICT-KEY',

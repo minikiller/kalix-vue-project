@@ -14,7 +14,7 @@
         | {{title}}
       div.kalix-wrapper-bd
         kalix-tool-bar(v-if="isShowToolBar"
-        v-bind:toolBarbtnList="toolBarbtnList"
+        v-bind:toolbarBtnList="toolbarBtnList"
         v-on:onToolBarClick="onToolBarClick")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
           el-table(:data="tableData" stripe style="width:100%"
@@ -35,15 +35,20 @@
               kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick")
           div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
-        div.kalix-table-pagination
-          el-pagination(v-if="pager.totalCount"
-          v-on:size-change="pagerSizeChange"
-          v-on:current-change="pagerCurrentChange"
-          v-bind:current-page="pager.currentPage"
-          v-bind:page-sizes="pager.pageSizes"
-          v-bind:page-size="1"
-          layout="total, sizes, prev, pager, next, jumper"
-          v-bind:total="pager.totalCount")
+        div.kalix-table-pagination.s-flex
+          div
+            el-pagination(v-if="pager.totalCount"
+            v-on:size-change="pagerSizeChange"
+            v-on:current-change="pagerCurrentChange"
+            v-bind:current-page="pager.currentPage"
+            v-bind:page-sizes="pager.pageSizes"
+            v-bind:page-size="1"
+            layout="total, sizes, prev, pager, next, jumper"
+            v-bind:total="pager.totalCount")
+          div.s-flex_item.btn-wrapper
+            el-button(type="primary" size="small" v-on:click="onRefreshClick")
+              i.iconfont.icon-refresh
+              | 刷新
         component(:is="whichBizDialog" ref="kalixDialog"
         v-bind:formModel="formModel"
         v-bind:formRules="formRules")
@@ -57,6 +62,7 @@
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
   import Cache from 'common/cache'
+  import {concatObject} from 'common/util'
   import {DictKeyValueObject} from 'common/keyValueObject'
   import {
     ON_SEARCH_BUTTON_CLICK,
@@ -67,7 +73,7 @@
   export default {
     name: 'baseTable',
     props: {
-      toolBarbtnList: {   //  toolBar 中按钮数组
+      toolbarBtnList: {   //  toolBar 中按钮数组
         type: Array,
         default: () => {
           return []
@@ -135,6 +141,16 @@
       },
       customToolBar: { // 对 ToolBar 的操作按钮进行自定义的操作
         type: Function
+      },
+      deleteAllUrl: {
+        type: String,
+        default: ''
+      },
+      customToolbarClickEvents: {
+        type: Object,
+        default: () => {
+          return {}
+        }
       }
     },
     data() {
@@ -171,6 +187,8 @@
       EventBus.$off(ON_REFRESH_DATA)
     },
     mounted() {
+      // 初始化 Toolbar 响应事件
+      this.initToolbarClickEvent()
       // 注册事件接受
       const that = this
       window.addEventListener('resize', () => {
@@ -189,20 +207,24 @@
     methods: {
       onToolBarClick(btnId) {
         // baseToolBar 回调事件
-        switch (btnId) {
-          case 'add':
-            this.onAddClick()
-            break
-          case 'refresh':
-            this.onRefreshClick()
-            break
-          default:
-            this.customToolBar(btnId)
-            break
-        }
+        this.toolbarClickEvent[btnId]()
+      },
+      initToolbarClickEvent() {
+        let that = this
+        this.toolbarClickEvent = concatObject(this.customToolbarClickEvents, {
+          add() {
+            that.onAddClick()
+          },
+          refresh() {
+            that.onRefreshClick()
+          },
+          deleteChecked() {
+            that.onDeleteChecked()
+          }
+        })
       },
       onTableSelectionChange(val) {
-        this.$emit('tableSelectionChange', val)
+        this.deleteList = val
       },
       setDictDefine(_data) { // 处理数据字典
         this.dictDefine.forEach((item) => {
@@ -243,6 +265,43 @@
       },
       onRefreshClick() { // 刷新按钮点击事件
         this.getData()
+      },
+      onDeleteChecked() {
+        // 删除选中
+        if (!this.deleteAllUrl.length) {
+          try {
+            var exception = {message: '必须指定 deleteAllUrl'}
+            throw exception
+          } catch (e) {
+            console.error(e.message)
+          }
+        }
+        if (this.deleteList && this.deleteList.length > 0) {
+          let ids = []
+          this.deleteList.forEach(item => {
+            ids.push(item.id)
+          })
+          this.$confirm('确定要删除吗?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            return this.axios.request({
+              method: 'DELETE',
+              url: this.deleteAllUrl,
+              params: {
+                ids: ids.join(':')
+              }
+            })
+          }).then(response => {
+            Message.success(response.data.msg)
+            this.getData()
+          }).catch(() => {
+          })
+        } else {
+          Message.error('至少选择一条数据')
+          return
+        }
       },
       refresh() { // 刷新表格数据
         console.log('[kalix] ' + this.title + ' refresh is trigger!')
@@ -424,51 +483,5 @@
 </script>
 
 <style scoped lang="stylus" type="text/stylus">
-  @import "~@/assets/stylus/color"
-  .kalix-wrapper
-    margin 5px
-    border 1px solid border-color_1
-    position absolute
-    bottom 0
-    top 118px
-    left 0
-    box-sizing border-box
-    right 0
-    .kalix-wrapper-hd
-      background-color bg-color_1
-      color #FFFFFF
-      line-height 44px
-      padding 0 15px
-      text-align left
-    .kalix-wrapper-bd
-      .kalix-table-container
-        position absolute
-        margin 0 12px
-        overflow hidden
-        bottom 48px
-        right 0
-        left 0
-        top 104px
-        text-align left
-      .kalix-table-pagination
-        text-align left
-        padding 8px 0
-        position absolute
-        bottom 0
-      .no-list
-        position absolute
-        left 1px
-        top 1px
-        height 100%
-        width 100%
-        color #5e7382
-        font-size 14px
-        text-align center
-        background-color #fff
-        display flex
-        box-pack center
-        justify-content center
-        box-align center
-        flex-align center
-        align-items center
+  @import "~@/assets/stylus/baseTable"
 </style>

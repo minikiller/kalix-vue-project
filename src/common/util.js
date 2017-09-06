@@ -22,3 +22,51 @@ export function getCookie(cookieName) {
   }
   return ''
 }
+
+/**
+ * 2017-9-6 桑杨
+ * 合并对象数组
+ * @param newArr 追加数组
+ * @param oldArr 原始数组
+ * @returns {Array} 合并后的数组
+ */
+export function concatArrayObject(newArr, oldArr) {
+  let retArr = []
+  if (newArr.length > 0) {
+    oldArr.forEach((e, i) => {
+      let _j = -1
+      var item = newArr.find((e2, j) => {
+        _j = j
+        return e2.id === e.id
+      })
+      if (item) {
+        retArr.push(Object.assign(e, item))
+        newArr.splice(_j, 1)
+      } else {
+        retArr.push(e)
+      }
+    })
+    if (newArr.length > 0) {
+      newArr.forEach(e => {
+        retArr.push(e)
+      })
+    }
+  } else {
+    retArr = oldArr
+  }
+  return retArr
+}
+
+/**
+ * 2017-9-6 桑杨
+ * 合并对象
+ * @param newObj 新对象
+ * @param oldObj 原对象
+ * @returns {*} 合并后的对象
+ */
+export function concatObject(newObj, oldObj) {
+  if (!isEmptyObject(newObj)) {
+    oldObj = Object.assign(newObj, oldObj)
+  }
+  return oldObj
+}
