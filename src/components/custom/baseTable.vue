@@ -64,7 +64,6 @@
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
   import Cache from 'common/cache'
-  import {concatObject} from 'common/util'
   import {DictKeyValueObject} from 'common/keyValueObject'
   import {
     ON_SEARCH_BUTTON_CLICK,
