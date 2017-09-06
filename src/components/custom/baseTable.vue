@@ -17,7 +17,7 @@
         v-bind:toolBarbtnList="toolBarbtnList"
         v-on:onToolBarClick="onToolBarClick")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-          el-table(:data="tableData" stripe style="width:100%"
+          el-table(:data="tableData" stripe style="width:100%" v-bind:row-class-name="tableRowClassName"
           v-loading.body="loading"
           v-bind:height="tableHeight"
           v-on:selection-change="onTableSelectionChange")
@@ -134,6 +134,9 @@
         type: Function
       },
       customToolBar: { // 对 ToolBar 的操作按钮进行自定义的操作
+        type: Function
+      },
+      tableRowClassName: { // 对table的一行数据进行样式定制
         type: Function
       }
     },

@@ -12,6 +12,7 @@
     v-bind:formModel.sync="formModel"
     v-bind:bizDialog="bizDialog"
     bizSearch="OaProcessHistorySearch"
+    v-bind:tableRowClassName="tableRowClassName"
     v-bind:btnList="btnList")
 </template>
 
@@ -54,7 +55,17 @@
       registerComp()
     },
     filter: {},
-    methods: {},
+    methods: {
+      tableRowClassName(row, index) {
+        if (row.status === '结束') {
+          console.log('finished!!!!')
+          return 'finish-row'
+        } else {
+          console.log('unfinished!!!!')
+        }
+        return ''
+      }
+    },
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd
@@ -62,6 +73,9 @@
   }
 </script>
 
-<style scoped lang="stylus">
-
+<style lang="stylus">
+  .el-table
+    .finish-row
+      td
+        background-color #c9e5f5 !important
 </style>
