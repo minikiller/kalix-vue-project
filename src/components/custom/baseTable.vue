@@ -27,7 +27,7 @@
               template(scope="scope")
                 div(style="text-align: center") {{ scope.row.rowNumber }}
             el-table-column(v-if="tableData && tableData.length > 0" v-for="field in tableFields"
-            v-bind:key="field.prop" v-bind:prop="field.prop" v-bind:label="field.label")
+            v-bind:key="field.prop" v-bind:prop="field.prop" v-bind:label="field.label" v-bind:width="field.width")
               template(scope="scope")
                 div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
             //  table的工具按钮

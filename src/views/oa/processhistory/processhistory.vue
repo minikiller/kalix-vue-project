@@ -34,8 +34,8 @@
         btnList: WorkflowButtonList,
         targetURL: WorkflowHistoryURL,
         tableFields: [
-          {prop: 'name', label: '编号'},
-          {prop: 'title', label: '业务名称'},
+          {prop: 'name', label: '编号', width: 280},
+          {prop: 'title', label: '业务名称', width: 270},
           {prop: 'startUserId', label: '启动用户'},
           {prop: 'startTime', label: '开始时间'},
           {prop: 'endTime', label: '结束时间'},
