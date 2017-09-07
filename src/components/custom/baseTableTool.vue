@@ -6,7 +6,7 @@
 
 <template lang="pug">
   div
-    el-table-column(label="操作" v-bind:width="columnWidth")
+    el-table-column(label="操作" v-bind:width="columnWidth" align="center")
       template(scope="scope")
         template(v-for="btn in btnList")
           template(v-if="btn.titleCompute")

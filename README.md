@@ -40,6 +40,7 @@ yarn test
 * axios
 * mockjs
 * element-UI
+* vue-ueditor 富文本编辑器
 
 ## doc url
 > command: 

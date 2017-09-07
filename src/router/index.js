@@ -46,7 +46,9 @@ const router = new Router({
         {path: '/:app', name: 'header', component: Home},
         {path: '/:app/:fun', name: 'navigater', component: Home}
       ]
-    }
+    },
+    {path: '/404', name: '404', component: require('@/views/errorPage/404')},
+    {path: '*', redirect: '/404', hidden: true}
   ]
 })
 
