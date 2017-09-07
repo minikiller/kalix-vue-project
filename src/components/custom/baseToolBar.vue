@@ -6,27 +6,25 @@
 
 <template lang="pug">
   div.kalix-base-tool-bar
-    slot(name="toolBarSlot")
-      template(v-for="btn in defaultBtnList")
-        el-button(v-if="btn.isShow" v-on:click="toggle(btn.id)" type="primary")
-          i.iconfont(v-bind:class="btn.icon")
-          | {{btn.title}}
+    template(v-for="btn in defaultBtnList")
+      el-button(v-if="btn.isShow" v-on:click="toggle(btn.id)" type="primary")
+        i.iconfont(v-bind:class="btn.icon")
+        | {{btn.title}}
 </template>
 
 <script type="text/ecmascript-6">
   import {ON_TOOLBAR_CLICK} from './event.toml'
   import {GlobalToolBarButtonList} from 'config/global.toml'
+  import {concatArrayObject} from 'common/util.js'
 
   export default {
     props: {
-      toolBarbtnList: {
+      toolbarBtnList: {
         type: Array
       }
     },
     data() {
-      return {
-        defaultBtnList: []
-      }
+      return {}
     },
     created() {
       this.initToolBtnList()
@@ -34,24 +32,10 @@
     methods: {
       initToolBtnList() {
         let defaultToolBarBtnList = JSON.parse(JSON.stringify(GlobalToolBarButtonList))
-        if (this.toolBarbtnList.length > 0) {
-          this.toolBarbtnList.forEach(item => {
-            let item2 = defaultToolBarBtnList.find(e => {
-              if (e.id === item.id) {
-                defaultToolBarBtnList.push(Object.assign(e, item))
-                return true
-              }
-              return false
-            })
-            if (!item2) {
-              defaultToolBarBtnList.push(item)
-            }
-          })
-        }
-        this.defaultBtnList = defaultToolBarBtnList
+        this.defaultBtnList = concatArrayObject(this.toolbarBtnList, defaultToolBarBtnList)
       },
-      toggle(row, btnId) { // toolbar click event
-        this.$emit(ON_TOOLBAR_CLICK, row, btnId)
+      toggle(btnId) {
+        this.$emit(ON_TOOLBAR_CLICK, btnId)
       }
     }
   }

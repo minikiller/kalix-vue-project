@@ -14,18 +14,17 @@
     v-bind:bizDialog="bizDialog"
     v-bind:btnList="btnList"
     v-bind:dictDefine="dictDefine"
-    v-on:tableSelectionChange="onTableSelectionChange"
     v-bind:hasTableSelection="hasTableSelection"
     v-bind:isShowToolBar="isShowToolBar"
-    v-bind:toolBarbtnList="toolBarbtnList"
-    v-bind:customToolBar="customToolBar"
+    v-bind:toolbarBtnList="toolbarBtnList"
+    v-bind:deleteAllUrl="deleteAllUrl"
+    v-bind:customToolbarClickEvents="customToolbarClickEvents"
     bizSearch="CommonSenderSearch")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {SenderURL, SenderComponent, SenderToolButtonList} from '../config.toml'
-  import {receiverSenderMixin} from '../receiverSenderMixin'
 
   // 注册全局组件
   SenderComponent.forEach((item) => {
@@ -34,14 +33,17 @@
   })
 
   export default {
-    mixins: [receiverSenderMixin],
     data() {
       return {
-        batchDeleteUrl: `${SenderURL}/remove`,
+        deleteAllUrl: `${SenderURL}/remove`,
         isShowToolBar: true,
         hasTableSelection: true,
-        toolBarbtnList: [
-          {id: 'deleteChecked', icon: 'icon-delete', title: '删除选中', isShow: true},
+        toolbarBtnList: [
+          {id: 'deleteChecked', isShow: true},
+          {id: 'customBtn1', icon: 'icon-edit', title: '自定义按钮 1', isShow: true},
+          {id: 'customBtn2', icon: 'icon-edit', title: '自定义按钮 2', isShow: true},
+          {id: 'customBtn3', icon: 'icon-edit', title: '自定义按钮 3', isShow: true},
+          {id: 'customBtn4', icon: 'icon-edit', title: '自定义按钮 4', isShow: true},
           {id: 'add', isShow: false}
         ],
         dictDefine: [{ // 定义数据字典的显示
@@ -75,8 +77,37 @@
       }
     },
     created() {
+//      this.customToolbarClickEvents = this
+      const that = this
+      this.customToolbarClickEvents = {
+        customBtn1() {
+          that.customEventBtn1()
+        },
+        customBtn2() {
+          that.customEventBtn2()
+        },
+        customBtn3() {
+          that.customEventBtn3()
+        },
+        customBtn4() {
+          that.customEventBtn4()
+        }
+      }
     },
-    methods: {},
+    methods: {
+      customEventBtn1() {
+        console.log('This is "自定义按钮 1" click event ~~~~')
+      },
+      customEventBtn2() {
+        console.log('This is "自定义按钮 2" click event ~~~~')
+      },
+      customEventBtn3() {
+        console.log('This is "自定义按钮 3" click event ~~~~')
+      },
+      customEventBtn4() {
+        console.log('This is "自定义按钮 4" click event ~~~~')
+      }
+    },
     components: {
       BaseTable
     }
