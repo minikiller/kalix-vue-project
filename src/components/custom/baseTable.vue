@@ -190,8 +190,6 @@
       EventBus.$off(ON_REFRESH_DATA)
     },
     mounted() {
-      // 初始化 Toolbar 响应事件
-      this.initToolbarClickEvent()
       // 注册事件接受
       const that = this
       window.addEventListener('resize', () => {

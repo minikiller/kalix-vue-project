@@ -32,28 +32,31 @@ export function getCookie(cookieName) {
  */
 export function concatArrayObject(newArr, oldArr) {
   let retArr = []
-  if (newArr.length > 0) {
-    oldArr.forEach((e, i) => {
-      let _j = -1
-      var item = newArr.find((e2, j) => {
-        _j = j
-        return e2.id === e.id
-      })
-      if (item) {
-        retArr.push(Object.assign(e, item))
-        newArr.splice(_j, 1)
-      } else {
-        retArr.push(e)
-      }
-    })
-    if (newArr.length > 0) {
-      newArr.forEach(e => {
-        retArr.push(e)
-      })
-    }
-  } else {
-    retArr = oldArr
+  let arr1 = oldArr
+  let arr2 = newArr
+  if (!arr1 || !arr1.length) {
+    arr1 = []
   }
+  if (!arr2 || !arr2.length) {
+    arr2 = []
+  }
+  arr1 = getNewObject(arr1)
+  arr2 = getNewObject(arr2)
+  arr1.forEach((e, i) => {
+    let j = -1
+    let item = arr2.find((e2, i2) => {
+      j = i2
+      return e.id === e2.id
+    })
+    if (item) {
+      arr2[j] = Object.assign(e, item)
+    } else {
+      retArr.push(e)
+    }
+  })
+  arr2.forEach(e => {
+    retArr.push(e)
+  })
   return retArr
 }
 
@@ -70,3 +73,14 @@ export function concatObject(newObj, oldObj) {
   }
   return oldObj
 }
+
+/**
+ * 2017-9-7 桑杨
+ * 获取一个全新的对象
+ * @param obj
+ * @returns {*} 全新的对象
+ */
+export function getNewObject(obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
