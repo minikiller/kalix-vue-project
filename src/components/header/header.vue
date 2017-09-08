@@ -44,7 +44,8 @@
   import router from 'router'
   import Cache from 'common/cache'
   import {applicationURL, logoutURL, msgCountURL, msgURL} from 'config/global.toml'
-  import {getCookie, isEmptyObject} from 'common/util'
+  import {isEmptyObject} from 'common/util'
+  import Cookie from 'js-cookie'
 
   export default {
     props: {
@@ -107,7 +108,7 @@
         if (this.isPollMsg) {
           this.pollMsg()
         }
-        this.icon = this.decode(getCookie('currentUserIcon')) // 如果为null，则取默认的图标
+        this.icon = this.decode(Cookie.get('currentUserIcon')) // 如果为null，则取默认的图标
         if (this.icon === 'null') {
           this.icon = ''
         }

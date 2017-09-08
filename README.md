@@ -41,6 +41,7 @@ yarn test
 * mockjs
 * element-UI
 * vue-ueditor 富文本编辑器
+* https://github.com/monterail/vue-multiselect
 
 ## doc url
 > command: 
