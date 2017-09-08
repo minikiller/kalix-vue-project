@@ -152,18 +152,18 @@
 
 </script>
 
-<style scoped lang='stylus' type='text/stylus'>
+<style  lang='stylus' type='text/stylus'>
   @import "~@/assets/stylus/color.styl"
   .kalix-search
     margin 5px
+    border 1px solid border-color_1
     .kalix-search-hd
-      background-color bg-color_1
       color txt-color_1
       line-height 44px
       padding 0 15px
       text-align left
     .kalix-search-bd
-      border 1px solid border-color_1
+      border-top 1px solid border-color_1
       font-size 0
       padding 5px 15px
       text-align left

@@ -35,7 +35,7 @@
                 el-dropdown-item(command="changePwd") 修改密码
                 el-dropdown-item(command="logout") 登出
           li
-            el-select(v-model="themeValue" placeholder="请选择" v-bind:style="{width:'80px'}")
+            el-select(v-model="themeValue" v-on:change="onChangeTheme" placeholder="请选择" v-bind:style="{width:'80px'}")
               el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
 
@@ -49,6 +49,10 @@
 
   export default {
     props: {
+      styleTheme: {
+        type: String,
+        default: ''
+      },
       menuChk: {
         default: false
       }
@@ -60,14 +64,14 @@
         userName: Cache.get('user_name'),
         menuList: [],
         themeOptions: [
-          {value: '选项1', label: '浅蓝'},
-          {value: '选项2', label: '黑色'},
-          {value: '选项3', label: '深蓝'},
-          {value: '选项4', label: '蓝灰'},
-          {value: '选项5', label: '经典'},
-          {value: '选项6', label: '灰色'}
+          {value: 'theme_1', label: '浅蓝'},
+          {value: 'theme_2', label: '黑色'},
+          {value: 'theme_3', label: '深蓝'},
+          {value: 'theme_4', label: '蓝灰'},
+          {value: 'theme_5', label: '经典'},
+          {value: 'theme_6', label: '灰色'}
         ],
-        themeValue: '浅蓝',
+        themeValue: this.styleTheme,
         headerMenuChk: this.menuChk,
         msgCount: 0,
         icon: ''
@@ -169,6 +173,9 @@
             })
           }
         })
+      },
+      onChangeTheme() {
+        this.$emit('onChangeTheme', this.themeValue)
       }
     },
     components: {},
