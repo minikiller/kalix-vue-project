@@ -15,3 +15,9 @@ https://github.com/tsironis/lockr
 
 ##  cheatsheet
 https://vuejs-tips.github.io/cheatsheet/
+
+## vue admin
+https://templateflip.com/vuejs-admin-templates/
+
+## vue material-input
+https://github.com/wemake-services/vue-material-input

@@ -18,17 +18,17 @@
         v-on:onToolBarClick="onToolBarClick")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
           el-table(:data="tableData" stripe style="width:100%" v-bind:row-class-name="tableRowClassName"
-          v-loading.body="loading" border
+          v-loading.body="loading" border fit
           v-bind:height="tableHeight"
           v-on:selection-change="onTableSelectionChange")
             //table的字段
             template(v-if="tableData && tableData.length > 0")
-              el-table-column(v-if="hasTableSelection" type="selection" width="55")
-              el-table-column(label="行号" width="70")
+              el-table-column(v-if="hasTableSelection" type="selection" width="55" align="center")
+              el-table-column(label="行号" width="70" align="center")
                 template(scope="scope")
                   div(style="text-align: center") {{ scope.row.rowNumber }}
               slot(name="tableColumnSlot")
-                el-table-column(v-for="field in tableFields"
+                el-table-column(v-for="field in tableFields" align="center"
                 v-bind:key="field.prop" v-bind:prop="field.prop" v-bind:label="field.label" v-bind:width="field.width")
                   template(scope="scope")
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}

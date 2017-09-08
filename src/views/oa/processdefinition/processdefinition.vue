@@ -7,13 +7,23 @@
 <template lang='pug'>
   keep-alive
     base-table(:isShowToolBar='isShowToolBar' bizKey='processDefinition' title='流程定义列表'
-    v-bind:tableFields='tableFields'
     v-bind:targetURL='targetURL'
     v-bind:formModel.sync='formModel'
     v-bind:bizDialog='bizDialog'
     v-bind:customRender='customRender'
     bizSearch='ProcessDefinitionSearch'
     v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
+      template(slot="tableColumnSlot")
+        el-table-column(prop="id" label="流程定义编号" width="280" align="center")
+        el-table-column(prop="name" label="流程定义名称" width="280" align="center")
+          template(scope="scope")
+            el-tag {{ scope.row.name }}
+        el-table-column(prop="key" label="关键字" align="center")
+        el-table-column(prop="description" label="描述" align="center")
+        el-table-column(prop="version" label="版本" align="center")
+        el-table-column(prop="status" label="状态" align="center")
+          template(scope="scope")
+            el-tag(:type="scope.row.suspensionStateTransfer | statusFilter") {{scope.row.suspensionStateTransfer }}
 </template>
 
 <script type='text/ecmascript-6'>
@@ -34,6 +44,15 @@
     },
     deactivated() {
       console.log(this.bizKey + '  is deactivated')
+    },
+    filters: {
+      statusFilter(status) {
+        const statusMap = {
+          运行中: 'success',
+          已停止: 'danger'
+        }
+        return statusMap[status]
+      }
     },
     data() {
       return {
@@ -77,7 +96,7 @@
     methods: {
       customRender(_data) {
         _data.forEach(function (e) {
-          e.suspensionStateTransfer = e.suspensionState === 1 ? '运行' : '停止'
+          e.suspensionStateTransfer = e.suspensionState === 1 ? '运行中' : '已停止'
         })
       },
       customTableTool(row, btnId) {
