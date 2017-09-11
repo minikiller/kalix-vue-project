@@ -21,3 +21,7 @@ https://templateflip.com/vuejs-admin-templates/
 
 ## vue material-input
 https://github.com/wemake-services/vue-material-input
+
+## vue 动态加载
+https://vuejs.org/v2/guide/components.html#Async-Components
+https://doc.webpack-china.org/guides/code-splitting#-dynamic-imports-
