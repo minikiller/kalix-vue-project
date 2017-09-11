@@ -1,4 +1,4 @@
-homeTheme(table_bg_color = #ffffff,table_hd_text_color = #ffffff)
+homeTheme(table_bg_color = #ffffff, table_hd_text_color = #ffffff)
   .kalix-search
     .kalix-search-hd
       background-color table_bg_color
@@ -15,7 +15,6 @@ homeTheme(table_bg_color = #ffffff,table_hd_text_color = #ffffff)
             .tit
               &:before
                 background-color table_bg_color
-  // Element UI 样式 在“蓝灰”主题下部分颜色显示差异不够明显，待优化
   .el-button--primary
     background-color table_bg_color
     border-color table_bg_color
@@ -23,5 +22,10 @@ homeTheme(table_bg_color = #ffffff,table_hd_text_color = #ffffff)
   .el-switch
     &.is-checked
       .el-switch__core
+        border-color table_bg_color
+        background-color table_bg_color
+  .el-pager
+    li
+      &.active
         border-color table_bg_color
         background-color table_bg_color

@@ -158,6 +158,7 @@
     margin 5px
     border 1px solid border-color_1
     .kalix-search-hd
+      background-color #5fa2dd
       color txt-color_1
       line-height 44px
       padding 0 15px
