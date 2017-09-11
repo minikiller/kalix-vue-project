@@ -12,25 +12,37 @@
               div.s-flex_item
                 div.details-name {{itemDetails.name}}
                 div.details-description {{itemDetails.description}}
-              div
-                el-button(type="primary") 查看
-                el-button(type="primary") 申请
+              div(v-if="itemDetails.name!=='暂无数据'")
+                el-button(type="text" v-on:click="onClick(itemDetails.name,itemDetails.processId)") 查看
+                el-button(type="text") 申请
+    process-definition-view(ref="kalixDialog")
 </template>
 
 <script type="text/ecmascript-6">
   import {WorkflowMainWorkURL} from '../config.toml'
+  import {ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
+  import EventBus from 'common/eventbus'
+  import ProcessDefinitionView from '@/views/oa/comp/processDefinitionView'
 
+  let _data = {
+    page: 1,
+    start: 0,
+    limit: 200
+  }
   export default {
     mounted() {
       this.getData()
     },
     methods: {
-      getData() {
-        let _data = {
-          page: 1,
-          start: 0,
-          limit: 200
+      onClick(_name, _id) {
+        let row = {
+          name: _name,
+          id: _id
         }
+        EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+        this.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+      },
+      getData() {
         this.axios.get(WorkflowMainWorkURL, {
           params: _data
         }).then(response => {
@@ -40,7 +52,6 @@
         })
       },
       getDetails(i) {
-        let _data = {page: 1, start: 0, limit: 200}
         let detailURL = '/camel/rest/categorys/getType?category='
         this.axios.get(detailURL + this.mainWorkList[i].key, {
           params: _data
@@ -56,8 +67,12 @@
     },
     data() {
       return {
-        workList: []
+        workList: [],
+        bizKey: 'processDefinition'
       }
+    },
+    components: {
+      ProcessDefinitionView
     }
   }
 </script>
@@ -126,7 +141,8 @@
   .mainwork-item:last-child:after {
     display: none;
   }
-  .el-card__header{
+
+  .el-card__header {
     padding: 5px 20px;
   }
 

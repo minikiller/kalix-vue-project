@@ -10,6 +10,7 @@ WorkflowMainWorkURL = "/camel/rest/categorys/getAll"
 WorkflowHistoryURL = "/camel/rest/workflow/historys"
 MyInvolvedURL = "/camel/rest/workflow/myInvolvedHistory"
 MyHistoryURL = "/camel/rest/workflow/myHistory"
+TaskURL = "/camel/rest/workflow/tasks"
 
 # 需要自动注册成全局的Category组件
 [[OaCategoryComponent]]
@@ -32,6 +33,12 @@ MyHistoryURL = "/camel/rest/workflow/myHistory"
 [[OaWorkflowComponent]]
   path = "./processDefinitionView.vue"
   name = "OaProcessDefinitionView"
+[[OaWorkflowComponent]]
+  path = "./taskView.vue"
+  name = "OaTaskView"
+[[OaWorkflowComponent]]
+  path = "./taskComplete.vue"
+  name = "OaTaskComplete"
 
 # workflow 的默认按钮定义
 [[WorkflowButtonList]]
