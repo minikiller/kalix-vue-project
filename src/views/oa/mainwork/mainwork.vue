@@ -13,8 +13,8 @@
                 div.details-name {{itemDetails.name}}
                 div.details-description {{itemDetails.description}}
               div(v-if="itemDetails.name!=='暂无数据'")
-                el-button(type="text" v-on:click="onClick(itemDetails.name,itemDetails.processId)") 查看
-                el-button(type="text") 申请
+                el-button(type="text" v-on:click="onViewClick(itemDetails.name,itemDetails.processId)") 查看
+                el-button(type="text" v-on:click="onApplyClick(itemDetails.key)") 申请
     process-definition-view(ref="kalixDialog")
 </template>
 
@@ -34,7 +34,10 @@
       this.getData()
     },
     methods: {
-      onClick(_name, _id) {
+      onApplyClick(_key) {
+        this.$router.push({path: `/oa/${_key}`})
+      },
+      onViewClick(_name, _id) {
         let row = {
           name: _name,
           id: _id
