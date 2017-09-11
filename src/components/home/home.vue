@@ -5,8 +5,10 @@
 -->
 
 <template lang="pug">
-  div.home
-    kalix-header(:menuChk="isSmall" v-on:onSmall="setSmall")
+  div.home(v-bind:class="themeValue")
+    kalix-header(:menuChk="isSmall"
+    v-bind:style-theme="themeValue"
+    v-on:onSmall="setSmall" v-on:onChangeTheme="changeTheme")
     div.s-flex.container
       kalix-nav(:menuChk="isSmall")
       div.s-flex_item.article
@@ -17,6 +19,7 @@
   import Header from '@/components/header/header'
   import Navigater from '@/components/navigater/navigater'
   import Welcome from '@/views/admin/welcome'
+  import Cache from '@/common/cache.js'
   //  import user from '@/views/admin/user'
   //  var mmc = user
   let content = {
@@ -28,8 +31,12 @@
       return {
         name: 'kalixHome',
         isSmall: false,
-        which_to_show: 'Welcome'
+        which_to_show: 'Welcome',
+        themeValue: 'theme_1'
       }
+    },
+    created() {
+      this.themeValue = Cache.get('styleTheme')
     },
     mounted() {
       this.fetchData()
@@ -47,6 +54,10 @@
         } else {
           this.which_to_show = (content[fun]) ? fun : 'Welcome'
         }
+      },
+      changeTheme(value) {
+        this.themeValue = value
+        Cache.save('styleTheme', value)
       }
     },
     components: {
@@ -58,6 +69,7 @@
   }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
   @import "./home.styl"
+  @import "~@/assets/stylus/theme/theme.styl"
 </style>

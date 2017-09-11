@@ -142,6 +142,6 @@
   }
 </script>
 
-<style scoped lang="stylus">
+<style  lang="stylus">
   @import "navigater.styl"
 </style>
