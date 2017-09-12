@@ -27,11 +27,21 @@ workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
   isPermission = true
 
  [[WorkGroupComponent]]
-   path = "./workgroupView"
+   path = "admin/workgroup/workgroupView"
    name = "AdminWorkGroupView"
  [[WorkGroupComponent]]
-   path = "./workgroupAdd"
+   path = "admin/workgroup/workgroupAdd"
    name = "AdminWorkGroupAdd"
  [[WorkGroupComponent]]
-   path = "./workgroupSearch"
+   path = "admin/workgroup/workgroupSearch"
    name = "AdminWorkGroupSearch"
+
+ [[UserComponent]]
+   path = "admin/user/userEdit"
+   name = "AdminUserEdit"
+ [[UserComponent]]
+   path = "admin/user/userAdd"
+   name = "AdminUserAdd"
+ [[UserComponent]]
+   path = "admin/user/userSearch"
+   name = "AdminUserSearch"

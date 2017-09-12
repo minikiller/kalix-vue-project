@@ -1,13 +1,18 @@
 <template lang="pug">
   keep-alive
-    base-table(bizKey="user" title='用户列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    base-table(bizKey="user" title='用户列表'
+    v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
     v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    bizSearch="userSearch"  v-bind:btnList="btnList")
+    bizSearch="AdminUserSearch"  v-bind:btnList="btnList")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {usersURL, userBtnPermissionPrefix, ToolButtonList} from '../config.toml'
+  import {usersURL, userBtnPermissionPrefix, ToolButtonList, UserComponent} from '../config.toml'
+  import {registerComponent} from '@/api/register'
+
+  // 注册全局组件
+  registerComponent(UserComponent)
 
   export default {
     data() {
