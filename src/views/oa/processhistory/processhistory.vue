@@ -14,7 +14,7 @@
     v-bind:tableRowClassName="tableRowClassName"
     v-bind:btnList="btnList")
       template(slot="tableColumnSlot")
-        el-table-column(prop="name" label="编号" width="280" align="center")
+        el-table-column(prop="name" label="业务编号" width="220" align="center")
           template(scope="scope")
             el-popover(trigger="hover" placement="top")
               p 业务名称: {{ scope.row.title }}

@@ -20,33 +20,34 @@ ReceiverURL = "/camel/rest/messages/receiver"
 
 # 需要自动注册成全局的News组件
 [[NewsComponent]]
-  path = "./newsView"
+  path = "common/news/newsView"
   name = "CommonNewsView"
 [[NewsComponent]]
-  path = "./newsAdd"
+  path = "common/news/newsAdd"
   name = "CommonNewsAdd"
 [[NewsComponent]]
-  path = "./newsSearch"
+  path = "common/news/newsSearch"
   name = "CommonNewsSearch"
 
 # 需要自动注册成全局的Note组件
 [[NoteComponent]]
-  path = "./noteView"
+  path = "common/note/noteView"
   name = "CommonNoteView"
 [[NoteComponent]]
-  path = "./noteAdd"
+  path = "common/note/noteAdd"
   name = "CommonNoteAdd"
 [[NoteComponent]]
-  path = "./noteSearch"
+  path = "common/note/noteSearch"
   name = "CommonNoteSearch"
 
 # 需要自动注册成全局的 Sender 组件
 [[SenderComponent]]
-  path = "./senderView"
+  path = "common/sender/senderView"
   name = "CommonSenderView"
 [[SenderComponent]]
-  path = "./senderSearch"
+  path = "common/sender/senderSearch"
   name = "CommonSenderSearch"
+
 # table 的默认按钮定义
 [[SenderToolButtonList]]
   id = "view"
@@ -62,13 +63,13 @@ ReceiverURL = "/camel/rest/messages/receiver"
 
 # 需要自动注册成全局的 Receiver 组件
 [[ReceiverComponent]]
-  path = "./receiverView"
+  path = "common/receiver/receiverView"
   name = "CommonReceiverView"
 [[ReceiverComponent]]
-  path = "./receiverAdd"
+  path = "common/receiver/receiverAdd"
   name = "CommonReceiverAdd"
 [[ReceiverComponent]]
-  path = "./receiverSearch"
+  path = "common/receiver/receiverSearch"
   name = "CommonReceiverSearch"
 
 # table 的默认按钮定义

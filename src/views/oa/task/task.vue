@@ -32,7 +32,7 @@
   import EventBus from 'common/eventbus'
   import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
 
-  Vue.component('TaskSearch', require('./taskSearch'))
+  Vue.component('TaskSearch', require('./taskSearch').default)
 
   export default {
     activated() {

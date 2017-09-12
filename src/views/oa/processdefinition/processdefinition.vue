@@ -36,7 +36,7 @@
   import EventBus from 'common/eventbus'
   import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
 
-  Vue.component('ProcessDefinitionSearch', require('./processDefinitionSearch'))
+  Vue.component('ProcessDefinitionSearch', require('./processDefinitionSearch').default)
 
   export default {
     activated() {

@@ -22,7 +22,7 @@
   import Cache from '@/common/cache.js'
   //  import user from '@/views/admin/user'
   //  var mmc = user
-//  const _import = require('./_import_' + process.env.NODE_ENV)
+  const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
   let content = {
     Welcome
@@ -52,7 +52,7 @@
         let app = this.$route.params.app // 应用名称
         let fun = this.$route.params.fun // 功能名称
         if (fun !== undefined) {
-          this.which_to_show = require(`@/views/${app}/${fun.toLowerCase()}/${fun.toLowerCase()}`).default
+          this.which_to_show = _import(`${app}/${fun.toLowerCase()}/${fun.toLowerCase()}`)
         } else {
           this.which_to_show = (content[fun]) ? fun : 'Welcome'
         }

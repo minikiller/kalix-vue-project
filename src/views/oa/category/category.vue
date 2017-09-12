@@ -16,14 +16,11 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import Vue from 'vue'
   import {CategoryURL, OaCategoryComponent, ToolButtonList} from '../config.toml'
+  import {registerComponent} from '@/api/register'
 
   // 注册全局组件
-  OaCategoryComponent.forEach((item) => {
-    console.log('[kalix]-[oa] registry name is: ' + item.name, '; registry path is: ' + item.path)
-    Vue.component(item.name, require('' + item.path))
-  })
+  registerComponent(OaCategoryComponent)
 
   export default {
     activated() {

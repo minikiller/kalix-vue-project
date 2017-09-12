@@ -10,35 +10,35 @@ ResearchCacheKey = "RESEARCH-DICT-KEY"
 
 # 需要自动注册成全局的Teacher组件
 [[TeacherComponent]]
-  path = "./teacherView"
+  path = "research/teacher/teacherView"
   name = "ResearchTeacherView"
 [[TeacherComponent]]
-  path = "./teacherAdd"
+  path = "research/teacher/teacherAdd"
   name = "ResearchTeacherAdd"
 [[TeacherComponent]]
-  path = "./teacherSearch"
+  path = "research/teacher/teacherSearch"
   name = "ResearchTeacherSearch"
 
 # 需要自动注册成全局的Worker组件
 [[WorkerComponent]]
-  path = "./workerView"
+  path = "research/worker/workerView"
   name = "ResearchWorkerView"
 [[WorkerComponent]]
-  path = "./workerAdd"
+  path = "research/worker/workerAdd"
   name = "ResearchWorkerAdd"
 [[WorkerComponent]]
-  path = "./workerSearch"
+  path = "research/worker/workerSearch"
   name = "ResearchWorkerSearch"
 
  # 需要自动注册成全局的Student组件
   [[StudentComponent]]
-    path = "./studentView"
+    path = "research/student/studentView"
     name = "ResearchStudentView"
   [[StudentComponent]]
-    path = "./studentAdd"
+    path = "research/student/studentAdd"
     name = "ResearchStudentAdd"
   [[StudentComponent]]
-    path = "./studentSearch"
+    path = "research/student/studentSearch"
     name = "ResearchStudentSearch"
 
 # table 的默认按钮定义

@@ -15,6 +15,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import Vue from 'vue'
   import {ToolButtonList} from 'config/global.toml'
+  import {registerComponent} from '@/api/register'
 
   export default {
     props: {
@@ -51,17 +52,14 @@
       }
     },
     created() {
-      Vue.component('basedictSearch', require('' + './basedictSearch.vue'))
-      Vue.component('basedictAdd', require('' + './basedictAdd.vue'))
-      Vue.component('basedictView', require('' + './basedictView.vue'))
+      Vue.component('basedictSearch', require('' + './basedictSearch.vue').default)
+      Vue.component('basedictAdd', require('' + './basedictAdd.vue').default)
+      Vue.component('basedictView', require('' + './basedictView.vue').default)
     },
     methods: {
       regGlobalComponent() {
         // 注册全局组件
-        this.dictComponent.forEach((item) => {
-          console.log(`[kalix]-[${this.bizKey}] registry name is:  ${item.name}, registry path is: ${item.path}`)
-          Vue.component(item.name, require('' + item.path))
-        })
+        registerComponent(this.dictComponent)
       }
     },
     components: {
