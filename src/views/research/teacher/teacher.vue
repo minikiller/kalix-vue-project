@@ -22,7 +22,7 @@
   // 注册全局组件
   TeacherComponent.forEach((item) => {
     console.log('[kalix]-[research] registry name is: ' + item.name, '; registry path is: ' + item.path)
-    Vue.component(item.name, require('' + item.path))
+    Vue.component(item.name, require('' + item.path).default)
   })
 
   export default {

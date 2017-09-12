@@ -13,7 +13,7 @@
     bizSearch='MeetApplySearch'
     v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
       template(slot="tableColumnSlot")
-        el-table-column(prop="title" label="名称" align="center")
+        el-table-column(prop="title" label="流程名称" align="center")
         el-table-column(prop="orgName" label="申请部门" align="center")
         el-table-column(prop="creationDate" label="申请时间" align="center")
         el-table-column(prop="meetingTopic" label="会议议题" align="center")
