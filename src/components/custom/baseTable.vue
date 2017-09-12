@@ -7,7 +7,8 @@
 <template lang="pug">
   div.kalix-article
     keep-alive
-      component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch" v-on:onSearchBtnClick="onSearchClick")
+      component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch"
+      v-on:onSearchBtnClick="onSearchClick")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
         i(v-bind:class="iconCls")
@@ -24,7 +25,8 @@
             //table的字段
             template(v-if="tableData && tableData.length > 0")
               el-table-column(v-if="hasTableSelection" type="selection" width="55" align="center")
-              el-table-column(label="行号" width="70" align="center")
+              el-table-column(label="行号" width="70" align="center"
+              v-bind:fixed="isFixedColumn")
                 template(scope="scope")
                   div(style="text-align: center") {{ scope.row.rowNumber }}
               slot(name="tableColumnSlot")
@@ -34,7 +36,8 @@
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
               //  table的工具按钮
             slot(name="tableToolSlot")
-              kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick")
+              kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick"
+              v-bind:isFixedColumn="isFixedColumn")
           div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
         div.kalix-table-pagination.s-flex
@@ -47,7 +50,7 @@
             v-bind:page-size="1"
             layout="total, sizes, prev, pager, next, jumper"
             v-bind:total="pager.totalCount")
-          div.s-flex_item.btn-wrapper
+          div.s-flex_item.btn-wrapper(v-if="tableData.length")
             el-button(type="primary" size="small" v-on:click="onRefreshClick")
               i.iconfont.icon-refresh
               | 刷新
@@ -74,6 +77,10 @@
   export default {
     name: 'baseTable',
     props: {
+      isFixedColumn: {
+        type: Boolean,
+        default: false
+      },
       toolbarBtnList: {   //  toolBar 中按钮数组
         type: Array,
         default: () => {
@@ -158,6 +165,7 @@
     },
     data() {
       return {
+        myFixed: true,
         iconCls: '',
         loading: true,
         tableData: [],
@@ -414,7 +422,9 @@
           this.pager.totalCount = response.data.totalCount
           this.loading = false
           document.querySelector('.el-table__body-wrapper').scrollTop = 0
-          document.querySelector('.el-table__body-wrapper').style.overflowX = 'hidden'
+          if (!this.isFixedColumn) {
+            document.querySelector('.el-table__body-wrapper').style.overflowX = 'hidden'
+          }
           this._getTableHeight()
         }).catch(() => {
           this.loading = false

@@ -4,19 +4,20 @@ ResearchDictsURL = "/camel/rest/research/dicts"
 TeacherURL = "/camel/rest/teachers"
 StudentURL = "/camel/rest/students"
 WorkerURL = "/camel/rest/workers"
+
 ## 字典管理
 ScheduleDictsURL = "/camel/rest/schedule/dicts"
 ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 
 # 需要自动注册成全局的 ScheduleDict 组件
 [[ScheduleDictsComponent]]
-  path = "./scheduledictView"
+  path = "schedule/scheduledict/scheduledictView"
   name = "ResearchScheduleDictView"
 [[ScheduleDictsComponent]]
-  path = "./scheduledictAdd"
+  path = "schedule/scheduledict/scheduledictAdd"
   name = "ResearchScheduleDictAdd"
 [[ScheduleDictsComponent]]
-  path = "./scheduledictSearch"
+  path = "schedule/scheduledict/scheduledictSearch"
   name = "ResearchScheduleDictSearch"
 
 # table 的默认按钮定义

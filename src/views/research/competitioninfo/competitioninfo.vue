@@ -52,15 +52,15 @@
           contactor: '',
           contentNeed: '',
           email: '',
-          lastevalstarttime: '',
-          lastevalendtime: '',
+          lastEvalStartTime: '',
+          lastEvalEndTime: '',
           phone: '',
-          preevalendtime: '',
-          preevalstarttime: '',
-          technologyneed: ''
+          preEvalEndTime: '',
+          preEvalStartTime: '',
+          technologyNeed: ''
         },
         formRules: {
-          cname: [
+          cName: [
             {required: true, message: '请输入展赛名称', trigger: 'blur'}
           ]
         }

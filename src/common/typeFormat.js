@@ -1,3 +1,10 @@
+/**
+ * 2017-9-12 桑杨
+ * 格式化日期类型
+ * @param date  datetime 对象
+ * @param fmt   格式
+ * @return {*}  格式化后的字符串
+ */
 export function formatDate(date, fmt) {
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
@@ -18,6 +25,12 @@ export function formatDate(date, fmt) {
   return fmt
 }
 
+/**
+ * 2017-9-12 桑杨
+ * 时间左侧补零
+ * @param str 时间
+ * @return {string} 补零后字符串
+ */
 function padLeftZero(str) {
   return ('00' + str).substr(str.length)
 }

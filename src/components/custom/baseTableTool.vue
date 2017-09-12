@@ -5,16 +5,16 @@
 -->
 
 <template lang="pug">
-  div
-    el-table-column(label="操作" v-bind:width="columnWidth" align="center")
-      template(scope="scope")
-        template(v-for="btn in btnList")
-          template(v-if="btn.titleCompute")
-            el-button(v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
-            type="text" size="small") {{btn.titleCompute(scope)}}
-          template(v-else)
-            el-button(v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
-            type="text" size="small") {{btn.title}}
+  el-table-column(label="操作" v-bind:width="columnWidth" align="center"
+  v-bind:fixed="isFiex")
+    template(scope="scope")
+      template(v-for="btn in btnList")
+        template(v-if="btn.titleCompute")
+          el-button(v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
+          type="text" size="small") {{btn.titleCompute(scope)}}
+        template(v-else)
+          el-button(v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
+          type="text" size="small") {{btn.title}}
 </template>
 
 <script type="text/ecmascript-6">
@@ -22,6 +22,10 @@
 
   export default {
     props: {
+      isFixedColumn: {
+        type: Boolean,
+        default: false
+      },
       btnList: {  // 工具按钮的列表
         type: Array,
         required: true,
@@ -51,6 +55,9 @@
           width += btnWidth * (len - 1)
         }
         return width
+      },
+      isFiex() {
+        return this.isFixedColumn ? 'right' : this.isFixedColumn
       }
     },
     methods: {
