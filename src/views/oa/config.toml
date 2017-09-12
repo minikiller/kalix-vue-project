@@ -20,41 +20,41 @@ MeetingApplyURL = "/camel/rest/meetingapplys"
 
 # 需要自动注册成全局的Category组件
 [[OaCategoryComponent]]
-  path = "./categoryView.vue"
+  path = "oa/category/categoryView"
   name = "OaCategoryView"
 [[OaCategoryComponent]]
-  path = "./categoryAdd"
+  path = "oa/category/categoryAdd"
   name = "OaCategoryAdd"
 [[OaCategoryComponent]]
-  path = "./categorySearch"
+  path = "oa/category/categorySearch"
   name = "OaCategorySearch"
 
 # 需要自动注册成全局的MeetingApply组件
 [[MeetingApplyComponent]]
-  path = "./meetingApplyView"
+  path = "oa/meetingapply/meetingApplyView"
   name = "OaMeetingApplyView"
 [[MeetingApplyComponent]]
-  path = "./meetingApplyAdd"
+  path = "oa/meetingapply/meetingApplyAdd"
   name = "OaMeetingApplyAdd"
 [[MeetingApplyComponent]]
-  path = "./meetingApplySearch"
+  path = "oa/meetingapply/meetingApplySearch"
   name = "OaMeetingApplySearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
-  path = "./processHistorySearch.vue"
+  path = "oa/comp/processHistorySearch"
   name = "OaProcessHistorySearch"
 [[OaWorkflowComponent]]
-  path = "./processHistoryView.vue"
+  path = "oa/comp/processHistoryView"
   name = "OaProcessHistoryView"
 [[OaWorkflowComponent]]
-  path = "./processDefinitionView.vue"
+  path = "oa/comp/processDefinitionView"
   name = "OaProcessDefinitionView"
 [[OaWorkflowComponent]]
-  path = "./taskView.vue"
+  path = "oa/comp/taskView"
   name = "OaTaskView"
 [[OaWorkflowComponent]]
-  path = "./taskComplete.vue"
+  path = "oa/comp/taskComplete"
   name = "OaTaskComplete"
 
 # workflow 的默认按钮定义
