@@ -259,6 +259,7 @@
           })
 //        console.log(dig[0].dialog)3
         this.whichBizDialog = dig[0].dialog
+        console.log('[onAddClick]', dig[0].dialog)
         setTimeout(() => {
           EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
           this.$emit('update:formModel', {})

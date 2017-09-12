@@ -5,34 +5,34 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="teacher"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-  )
-    div.el-form(slot="dialogFormSlot")
-      el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
-        kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false")
-      el-form-item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard")
-        el-input(v-model="formModel.identificationCard")
-      el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
-        el-radio-group(v-model="formModel.sex")
-          el-radio(label="男")
-          el-radio(label="女")
-      el-form-item(label="手机" prop="mobile" v-bind:rules="rules.mobile")
-        el-input(v-model="formModel.mobile")
-      el-form-item(label="职称" prop="positionalTitles")
-        el-input(v-model="formModel.positionalTitles")
-      el-form-item(label="职称" prop="positionalTitles")
-        kalix-dict-select(v-model="formModel.positionalTitles" appName="research" dictType="职称")
-      el-form-item(label="个人简历")
-        el-input(type="textarea" v-model="formModel.resume")
-      el-form-item(label="个人说明")
-        el-input(type="textarea" v-model="formModel.introduction")
-      el-form-item(label="学术研究")
-        el-input(type="textarea" v-model="formModel.learning")
-      el-form-item(label="教学情况")
-        el-input(type="textarea" v-model="formModel.teaching")
-      el-form-item(label="教学情况" )
-        el-input(type="textarea" v-model="formModel.teaching")
+  kalix-dialog.user-add(bizKey="meetapply" ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
+    div.el-form.kalix-form-table(slot="dialogFormSlot")
+      div.table-title 吉林动画学院会议申请表
+      el-form-item(label="名称" label-width="100px")
+        el-input(v-model="formModel.title")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" label-width="100px")
+          el-input(v-model="formModel.title")
+        el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" label-width="100px")
+          el-input(v-model="formModel.title")
+      el-form-item(label="会议议题" label-width="100px")
+        el-input(v-model="formModel.title")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="开始时间" label-width="100px")
+          el-input(v-model="formModel.title")
+        el-form-item.s-flex_item.kalix-form-table-td(label="结束时间" label-width="100px")
+          el-input(v-model="formModel.title")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="会议类型" label-width="100px")
+          el-input(v-model="formModel.title")
+        el-form-item.s-flex_item.kalix-form-table-td(label="会议纪要人员" label-width="100px")
+          el-input(v-model="formModel.title")
+      el-form-item(label="重要出席人" label-width="100px")
+        el-input(v-model="formModel.title")
+      el-form-item(label="其他出席人" label-width="100px")
+        el-input(v-model="formModel.title")
+
+
 </template>
 
 <script type="text/ecmascript-6">
@@ -40,13 +40,10 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserSelect from '@/components/biz/userselect/userselect'
   import {TeacherURL} from '../config.toml'
+
   export default {
     props: {
       formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
         type: Object,
         required: true
       }
@@ -54,22 +51,11 @@
     data() {
       return {
         params: {userType: 1},
-        rules: {
-          name: [{required: true, message: '请输入 name', trigger: 'blur'}],
-          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          email: [
-            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
-            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
-          ],
-          phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
-          mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
-          available: [{required: true, message: '请输入 available', trigger: 'blur'}]
-        },
+        rules: {},
         targetURL: TeacherURL
       }
     },
     created() {
-      console.log('this.formRules.name:', this.formRules.name)
       console.log('[teacherAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
@@ -77,8 +63,33 @@
       KalixDictSelect: BaseDictSelect,
       KalixUserSelect: UserSelect
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
 
+<style lang="stylus">
+
+  borderStyle = 1px solid #000000
+
+  .kalix-form-table
+    border 1px solid #000000
+    & > div
+      border-bottom borderStyle
+      &:last-child
+        border-bottom 0
+    .table-title
+      text-align center
+      font-size 18px
+      font-weight bold
+      padding 10px 0px
+    .el-form-item
+      margin-bottom 0
+      .el-form-item__label
+        border-right borderStyle
+      .el-input__inner
+        border 0
+    .kalix-form-table-td
+      border-left borderStyle
+      &:first-child
+        border-left none
+</style>
