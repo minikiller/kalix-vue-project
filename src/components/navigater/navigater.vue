@@ -70,7 +70,7 @@
         let cd = d.getTime()
         let treeListData = {}
         this.currApp = this.$route.params.app || 'admin'
-        this.currFun = this.$route.params.fun
+        this.currFun = this.$route.params.fun || ''
         if (Cache.get('treeListData')) {
           treeListData = JSON.parse(Cache.get('treeListData'))
         }
@@ -103,11 +103,12 @@
       },
       setItemShow() {
 //        let routeName = this.currApp + '/' + this.currFun
-        let routeName = this.currFun
+        let routeName = this.currFun.toLowerCase()
         this.treeData.forEach((item) => {
           item.isShow = false
           let temp = item.children.find(function (e) {
-            return e.routeId.split('/').pop() === routeName
+            let routeId = e.routeId.split('/').pop()
+            return routeId.toLowerCase() === routeName
           })
           if (temp) {
             item.isShow = true
@@ -135,13 +136,13 @@
         Cache.save('currentTreeListItem', JSON.stringify(item))
       },
       currentCls(item) {
-        return item.routeId.split('/').pop() === this.currFun ? 'active' : ''
+        return item.routeId.split('/').pop().toLowerCase() === this.currFun.toLowerCase() ? 'active' : ''
       }
     },
     components: {}
   }
 </script>
 
-<style  lang="stylus">
+<style lang="stylus">
   @import "navigater.styl"
 </style>
