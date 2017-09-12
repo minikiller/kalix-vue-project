@@ -10,46 +10,46 @@
   )
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="展赛名称" prop="cName" v-bind:rules="rules.cName" label-width="120px" )
+        el-form-item.s-flex_item(label="展赛名称" prop="cName" v-bind:rules="rules.cName" label-width="140px" )
           el-input(v-model="formModel.cName" )
         div.dd
-        el-form-item.s-flex_item(label="展赛地点" prop="cAddress" label-width="120px")
+        el-form-item.s-flex_item(label="展赛地点" prop="cAddress" label-width="140px")
           el-input(v-model="formModel.cAddress" )
       div.s-flex
-        el-form-item.s-flex_item(label="展赛类别" prop="cType" label-width="120px")
+        el-form-item.s-flex_item(label="展赛类别" prop="cType" label-width="140px")
           kalix-dict-select(v-model="formModel.cType" style="width:100%" appName="research" dictType="展赛类型")
         div.dd
-        el-form-item.s-flex_item(label="联系人" prop="contactor" label-width="120px")
+        el-form-item.s-flex_item(label="联系人" prop="contactor" label-width="140px")
           el-input(v-model="formModel.contactor")
       div.s-flex
-        el-form-item.s-flex_item(label="联系人电话" prop="phone" label-width="120px")
+        el-form-item.s-flex_item(label="联系人电话" prop="phone" label-width="140px")
           el-input(v-model="formModel.phone")
         div.dd
-        el-form-item.s-flex_item(label="联系人邮箱" prop="email" label-width="120px")
+        el-form-item.s-flex_item(label="联系人邮箱" prop="email" label-width="140px")
           el-input(v-model="formModel.email")
       div.s-flex
-        el-form-item.s-flex_item(label="作品征集开始时间" prop="collectionStartTime" label-width="120px")
-          el-date-picker(v-model="collectionStartTime" type="datetime" placeholder="选择开始时间")
+        el-form-item.s-flex_item(label="征集开始时间" prop="collectionStartTime" label-width="140px")
+          el-date-picker(v-model="collectionStartTime" type="datetime" placeholder="选择开始时间" style="width:100%")
         div.dd
-        el-form-item.s-flex_item(label="作品征集结束时间" prop="collectionEndTime" label-width="120px")
-          el-date-picker(v-model="collectionEndTime" type="datetime" placeholder="选择结束时间")
+        el-form-item.s-flex_item(label="征集结束时间" prop="collectionEndTime" label-width="140px")
+          el-date-picker(v-model="collectionEndTime" type="datetime" placeholder="选择结束时间"  style="width:100%")
       div.s-flex
-        el-form-item.s-flex_item(label="初评开始时间" prop="preEvalStartTime" label-width="120px")
-          el-date-picker(v-model="preEvalStartTime" type="datetime" placeholder="选择开始时间")
+        el-form-item.s-flex_item(label="初评开始时间" prop="preEvalStartTime" label-width="140px")
+          el-date-picker(v-model="preEvalStartTime" type="datetime" placeholder="选择开始时间" style="width:100%")
         div.dd
-        el-form-item.s-flex_item(label="初评结束时间" prop="preEvalEndTime" label-width="120px")
-          el-date-picker(v-model="preEvalEndTime" type="datetime" placeholder="选择结束时间")
+        el-form-item.s-flex_item(label="初评结束时间" prop="preEvalEndTime" label-width="140px")
+          el-date-picker(v-model="preEvalEndTime" type="datetime" placeholder="选择结束时间" style="width:100%")
       div.s-flex
-        el-form-item.s-flex_item(label="终评开始时间" prop="lastEvalStartTime" label-width="120px")
-          el-date-picker(v-model="lastEvalStartTime" type="datetime" placeholder="选择开始时间" )
+        el-form-item.s-flex_item(label="终评开始时间" prop="lastEvalStartTime" label-width="140px")
+          el-date-picker(v-model="lastEvalStartTime" type="datetime" placeholder="选择开始时间" style="width:100%" )
         div.dd
-        el-form-item.s-flex_item(label="终评结束时间" prop="lastEvalEndTime" label-width="120px")
-          el-date-picker(v-model="lastEvalEndTime" type="datetime" placeholder="选择结束时间" )
+        el-form-item.s-flex_item(label="终评结束时间" prop="lastEvalEndTime" label-width="140px")
+          el-date-picker(v-model="lastEvalEndTime" type="datetime" placeholder="选择结束时间" style="width:100%" )
       div.s-flex
         el-form-item.s-flex_item(label="作品内容要求" prop="contentNeed" label-width="140px")
           el-input(type="textarea" v-model="formModel.contentNeed")
         div.dd
-        el-form-item.s-flex_item(label="作品技术要求" prop="technologyNeed" label-width="120px")
+        el-form-item.s-flex_item(label="作品技术要求" prop="technologyNeed" label-width="140px")
           el-input(type="textarea" v-model="formModel.technologyNeed")
  </template>
 

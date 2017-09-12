@@ -53,3 +53,7 @@ Listening at http://localhost:3000
 ```
 访问地址： https://minikiller.github.io/kalix-vue-project
 
+## devtool url
+https://webpack.js.org/configuration/devtool/#devtool
+https://webpack.js.org/configuration/other-options/#cache
+
