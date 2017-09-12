@@ -5,6 +5,7 @@ ResearchDictsTypesListURL = "/camel/rest/research/dicts/types/list"
 TeacherURL = "/camel/rest/teachers"
 StudentURL = "/camel/rest/students"
 WorkerURL = "/camel/rest/workers"
+CompetitionInfoURL = "/camel/rest/competitionInfos"
 
 ResearchCacheKey = "RESEARCH-DICT-KEY"
 
@@ -40,6 +41,17 @@ ResearchCacheKey = "RESEARCH-DICT-KEY"
   [[StudentComponent]]
     path = "research/student/studentSearch"
     name = "ResearchStudentSearch"
+
+ # 需要自动注册成全局的CompetitionInfo组件
+  [[CompetitionInfoComponent]]
+    path = "research/competitioninfo/competitioninfoView"
+    name = "ResearchCompetitionInfoView"
+  [[CompetitionInfoComponent]]
+    path = "research/competitioninfo/competitioninfoAdd"
+    name = "ResearchCompetitionInfoAdd"
+  [[CompetitionInfoComponent]]
+    path = "research/competitioninfo/competitioninfoSearch"
+    name = "ResearchCompetitionInfoSearch"
 
 # table 的默认按钮定义
 [[ToolButtonList]]
