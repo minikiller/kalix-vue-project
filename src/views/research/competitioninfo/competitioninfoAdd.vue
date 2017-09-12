@@ -10,7 +10,7 @@
   )
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="展赛名称" prop="cName" v-bind:rules="rules.name" label-width="120px" )
+        el-form-item.s-flex_item(label="展赛名称" prop="cName" v-bind:rules="rules.cName" label-width="120px" )
           el-input(v-model="formModel.cName" )
         div.dd
         el-form-item.s-flex_item(label="展赛地点" prop="cAddress" label-width="120px")
@@ -34,11 +34,11 @@
         el-form-item.s-flex_item(label="作品征集结束时间" prop="collectionEndTime" label-width="120px")
           el-date-picker(v-model="collectionEndTime" type="datetime" placeholder="选择结束时间")
       div.s-flex
-        el-form-item.s-flex_item(label="初评开始时间" prop="preevalStartTime" label-width="120px")
-          el-date-picker(v-model="preevalStartTime" type="datetime" placeholder="选择开始时间")
+        el-form-item.s-flex_item(label="初评开始时间" prop="preEvalStartTime" label-width="120px")
+          el-date-picker(v-model="preEvalStartTime" type="datetime" placeholder="选择开始时间")
         div.dd
-        el-form-item.s-flex_item(label="初评结束时间" prop="preevalEndTime" label-width="120px")
-          el-date-picker(v-model="preevalEndTime" type="datetime" placeholder="选择结束时间")
+        el-form-item.s-flex_item(label="初评结束时间" prop="preEvalEndTime" label-width="120px")
+          el-date-picker(v-model="preEvalEndTime" type="datetime" placeholder="选择结束时间")
       div.s-flex
         el-form-item.s-flex_item(label="终评开始时间" prop="lastEvalStartTime" label-width="120px")
           el-date-picker(v-model="lastEvalStartTime" type="datetime" placeholder="选择开始时间" )
@@ -77,8 +77,8 @@
         targetURL: CompetitionInfoURL,
         collectionStartTime: '',
         collectionEndTime: '',
-        preevalStartTime: '',
-        preevalEndTime: '',
+        preEvalStartTime: '',
+        preEvalEndTime: '',
         lastEvalStartTime: '',
         lastEvalEndTime: ''
       }
@@ -94,22 +94,22 @@
 
     },
     watch: {
-      collectionstarttime(newValue) {
+      collectionStartTime(newValue) {
         this.formModel.collectionStartTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
       },
-      collectionendtime(newValue) {
+      collectionEndTime(newValue) {
         this.formModel.collectionEndTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
       },
-      preevalstarttime(newValue) {
-        this.formModel.preevalStartTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
+      preEvalStartTime(newValue) {
+        this.formModel.preEvalStartTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
       },
-      preevalendtime(newValue) {
-        this.formModel.preevalEndTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
+      preEvalEndTime(newValue) {
+        this.formModel.preEvalEndTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
       },
-      lastevalstarttime(newValue) {
+      lastEvalStartTime(newValue) {
         this.formModel.lastEvalStartTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
       },
-      lastevalendtime(newValue) {
+      lastEvalEndTime(newValue) {
         this.formModel.lastEvalEndTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
       }
     }

@@ -19,7 +19,7 @@
           {label: '展赛名称', prop: 'cname'}
         ],
         rules: {
-          cname: [{required: true, message: '请输入名称', trigger: 'blur'}]
+          cName: [{required: true, message: '请输入名称', trigger: 'blur'}]
         }
       }
     },
