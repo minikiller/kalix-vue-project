@@ -9,13 +9,11 @@
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import {workgroupURL, workGroupBtnPermissionPrefix, ToolButtonList, WorkGroupComponent} from '../config.toml'
-  import Vue from 'vue'
   import EventBus from 'common/eventbus'
+  import {registerComponent} from '@/api/register'
 
   // 注册全局组件
-  WorkGroupComponent.forEach((item) => {
-    Vue.component(item.name, require('' + item.path))
-  })
+  registerComponent(WorkGroupComponent)
 
   export default {
     data() {

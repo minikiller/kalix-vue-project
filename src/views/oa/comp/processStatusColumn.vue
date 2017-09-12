@@ -4,7 +4,7 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  el-table-column(prop="status" label="工作流状态" align="center")
+  el-table-column(prop="status" label="工作流状态" align="center" width="120")
     template(scope="scope")
       el-tag(:type="scope.row.status | statusFilter") {{scope.row.status | dictFilter }}
 </template>

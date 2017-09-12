@@ -64,12 +64,12 @@
         userName: Cache.get('user_name'),
         menuList: [],
         themeOptions: [
-          {value: 'theme_1', label: '浅蓝'},
-          {value: 'theme_2', label: '黑色'},
-          {value: 'theme_3', label: '深蓝'},
-          {value: 'theme_4', label: '蓝灰'},
-          {value: 'theme_5', label: '经典'},
-          {value: 'theme_6', label: '灰色'}
+          {value: 'theme-triton', label: '浅蓝'},
+          {value: 'theme-aria', label: '黑色'},
+          {value: 'theme-neptune', label: '深蓝'},
+          {value: 'theme-crisp', label: '蓝灰'},
+          {value: 'theme-classic', label: '经典'},
+          {value: 'theme-gray', label: '灰色'}
         ],
         themeValue: this.styleTheme,
         headerMenuChk: this.menuChk,
@@ -78,6 +78,8 @@
       }
     },
     watch: {'$route': 'initMenu'},
+    created() {
+    },
     mounted() {
       this.initMenu()
     },

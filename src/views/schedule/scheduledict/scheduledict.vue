@@ -18,14 +18,12 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import Vue from 'vue'
+  //  import Vue from 'vue'
   import {ScheduleDictsURL, ScheduleDictsComponent, ToolButtonList} from '../config.toml'
+  import {registerComponent} from '@/api/register'
 
   // 注册全局组件
-  ScheduleDictsComponent.forEach((item) => {
-    console.log('[kalix]-[research] registry name is: ' + item.name, '; registry path is: ' + item.path)
-    Vue.component(item.name, require('' + item.path))
-  })
+  registerComponent(ScheduleDictsComponent)
 
   export default {
     name: 'scheculedict',

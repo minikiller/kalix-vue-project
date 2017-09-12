@@ -20,8 +20,6 @@
   import Navigater from '@/components/navigater/navigater'
   import Welcome from '@/views/admin/welcome'
   import Cache from '@/common/cache.js'
-  //  import user from '@/views/admin/user'
-  //  var mmc = user
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
   let content = {
@@ -34,7 +32,7 @@
         name: 'kalixHome',
         isSmall: false,
         which_to_show: 'Welcome',
-        themeValue: 'theme_1'
+        themeValue: 'theme-triton'
       }
     },
     created() {
@@ -45,6 +43,16 @@
     },
     watch: {'$route': 'fetchData'},
     methods: {
+      initTheme() {
+        this.themeValue = Cache.get('theme')
+        if (!this.themeValue) {
+          let url = 'camel/rest/system/preferences/admin'
+          this.$http.get(url).then(res => {
+            Cache.save('theme', this.themeValue)
+            this.themeValue = res.data.theme
+          })
+        }
+      },
       setSmall(e) {
         this.isSmall = e
       },
@@ -56,6 +64,7 @@
         } else {
           this.which_to_show = (content[fun]) ? fun : 'Welcome'
         }
+        this.initTheme()
       },
       changeTheme(value) {
         this.themeValue = value
