@@ -10,7 +10,7 @@
     filterable
     remote
     :multiple="multiple"
-    placeholder='请输入用户名称'
+    :placeholder='placeholder'
     :remote-method='remoteMethod'
     :loading='loading' v-on:change="onChange">
     <el-option
@@ -28,6 +28,10 @@
 
   export default {
     props: {
+      placeholder: {
+        type: String,
+        default: '请输入用户名称'
+      },
       value: {
         required: true
       },   // 用于绑定v-model

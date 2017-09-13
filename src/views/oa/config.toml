@@ -14,6 +14,8 @@ TaskURL = "/camel/rest/workflow/tasks"
 
 # 工作流流程地址
 MeetingApplyURL = "/camel/rest/meetingapplys"
+UserOrgsURL = "/camel/rest/users/[usersId]/orgs"
+MeetingRoomsURL  = "/camel/rest/meetingrooms"
 
 
 

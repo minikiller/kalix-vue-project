@@ -6,6 +6,7 @@ TeacherURL = "/camel/rest/teachers"
 StudentURL = "/camel/rest/students"
 WorkerURL = "/camel/rest/workers"
 CompetitionInfoURL = "/camel/rest/competitionInfos"
+SignupURL = "/camel/rest/signups"
 
 ResearchCacheKey = "RESEARCH-DICT-KEY"
 
@@ -52,6 +53,17 @@ ResearchCacheKey = "RESEARCH-DICT-KEY"
   [[CompetitionInfoComponent]]
     path = "research/competitioninfo/competitioninfoSearch"
     name = "ResearchCompetitionInfoSearch"
+
+# 需要自动注册成全局的Signup组件
+  [[SignupComponent]]
+    path = "research/signup/signupView"
+    name = "ResearchSignupView"
+  [[SignupComponent]]
+    path = "research/signup/signupAdd"
+    name = "ResearchSignupAdd"
+  [[SignupComponent]]
+    path = "research/signup/signupSearch"
+    name = "ResearchSignupSearch"
 
 # table 的默认按钮定义
 [[ToolButtonList]]

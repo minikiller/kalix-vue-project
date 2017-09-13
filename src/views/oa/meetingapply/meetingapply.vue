@@ -42,6 +42,8 @@
   import TaskView from '@/views/oa/comp/taskView'
   import {ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
   import EventBus from 'common/eventbus'
+  import Cache from 'common/cache'
+
   // 注册全局组件
   registerComponent(MeetingApplyComponent)
 
@@ -58,7 +60,8 @@
           {id: 'progress', dialog: 'OaTaskView'}
         ],
         formModel: {
-          title: '',
+          title: '吉林动画学院会议申请表',
+          orgId: '',
           orgName: '',
           creationDate: '',
           meetingTopic: '',
@@ -68,12 +71,15 @@
           createBy: '',
           auditResult: '',
           currentNode: ''
-        },
-        btnList: workflowBtnList // 从comp获得btnList的定义啥时候
+        }
       }
     },
     mounted() {
       registerComp()
+    },
+    created() {
+      this._initDict(`${'UserOrgs'.toUpperCase()}-KEY`, UserOrgsURL.replace('[usersId]', Cache.get('id')))
+      this._initDict(`${'MeetingRooms'.toUpperCase()}-KEY`, MeetingRoomsURL)
     },
     methods: {
       customTableTool(row, btnId) {
@@ -91,6 +97,8 @@
     },
     components: {
       BaseTable,
+      KalixProcessStatusColumn:
+      ProcessStatusColumn
       KalixProcessStatusColumn: ProcessStatusColumn, // 工作流状态列
       KalixTaskView: TaskView
     }
