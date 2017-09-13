@@ -17,14 +17,8 @@
         kalix-biz-no-column(name="name")
         el-table-column(prop="title" label="业务名称" width="280" align="center")
         el-table-column(prop="startUserId" label="启动用户" align="center")
-        el-table-column(prop="startTime" label="开始时间" align="center" width="220")
-          template(scope="scope")
-            i(class="el-icon-time")
-            span {{scope.row.startTime}}
-        el-table-column(prop="endTime" label="结束时间" align="center"  width="220")
-          template(scope="scope")
-            i(class="el-icon-time")
-            span {{scope.row.endTime}}
+        kalix-date-column(prop="startTime" label="开始时间")
+        kalix-date-column(prop="endTime" label="结束时间")
         el-table-column(prop="durationInMillis" label="持续时长" align="center")
         el-table-column(prop="status" label="状态" align="center")
           template(scope="scope")
@@ -38,6 +32,7 @@
   import {WorkflowHistoryURL, WorkflowButtonList} from '../config.toml'
   import {registerComp} from 'views/oa/comp'
   import BizNoColumn from 'views/oa/comp/bizNoColumn'
+  import DateColumn from 'views/oa/comp/dateColumn'
 
   export default {
     activated() {
@@ -83,7 +78,8 @@
     },
     components: {
       BaseTable,
-      KalixBizNoColumn: BizNoColumn
+      KalixBizNoColumn: BizNoColumn,
+      KalixDateColumn: DateColumn
 //      KalixUserAdd: UserAdd
     }
   }
