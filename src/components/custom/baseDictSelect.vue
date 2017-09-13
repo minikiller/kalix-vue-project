@@ -4,7 +4,8 @@
 开发日期：2017年8月24日
 -->
 <template lang="pug">
-  el-select(v-model='currentValue' v-on:input="change($event)" v-bind:disabled="disabled" placeholder='请选择')
+  el-select(v-model='currentValue' v-on:input="change($event)" v-bind:disabled="disabled"
+    v-bind:placeholder='placeholder')
     el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
 
@@ -13,6 +14,10 @@
 
   export default {
     props: {
+      placeholder: {
+        type: String,
+        default: '请选择'
+      },
       appName: {  // 应用名称
         type: String,
         required: true

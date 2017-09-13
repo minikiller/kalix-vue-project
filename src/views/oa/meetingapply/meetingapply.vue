@@ -29,13 +29,21 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {MeetingApplyURL, MeetingApplyComponent, WorkflowToolButtonList} from '../config.toml'
+  import {
+    MeetingApplyURL,
+    MeetingApplyComponent,
+    WorkflowToolButtonList,
+    MeetingRoomsURL,
+    UserOrgsURL
+  } from '../config.toml'
   import {registerComponent} from '@/api/register'
   import ProcessStatusColumn from '@/views/oa/comp/processStatusColumn.vue'
+  import Cache from 'common/cache'
 
   // 注册全局组件
   registerComponent(MeetingApplyComponent)
 
+  const REQUEST_DATA = {page: 1, start: 0, limit: 20}
   export default {
     data() {
       return {
@@ -49,28 +57,46 @@
           {id: 'add', dialog: 'OaMeetingApplyAdd'}
         ],
         formModel: {
-          title: '',
+          title: '吉林动画学院会议申请表',
+          orgId: '',
           orgName: '',
           creationDate: '',
           meetingTopic: '',
+          meetingroomId: '',
           meetingroomName: '',
           beginTime: '',
           endTime: '',
           createBy: '',
           auditResult: '',
-          currentNode: ''
+          currentNode: '',
+          importantAttendeesName: '',
+          otherAttendeesName: ''
         }
       }
     },
     mounted() {
     },
+    created() {
+      this._initDict(`${'UserOrgs'.toUpperCase()}-KEY`, UserOrgsURL.replace('[usersId]', Cache.get('id')))
+      this._initDict(`${'MeetingRooms'.toUpperCase()}-KEY`, MeetingRoomsURL)
+    },
     methods: {
       customRender() {
+      },
+      _initDict(DictKey, reqUrl) {
+        if (!Cache.get(DictKey)) {
+          this.$http
+            .get(reqUrl, {params: REQUEST_DATA})
+            .then(res => {
+              Cache.save(DictKey, JSON.stringify(res.data.data))
+            })
+        }
       }
     },
     components: {
       BaseTable,
-      KalixProcessStatusColumn: ProcessStatusColumn
+      KalixProcessStatusColumn:
+      ProcessStatusColumn
     }
   }
 </script>
