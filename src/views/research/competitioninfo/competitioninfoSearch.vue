@@ -16,7 +16,7 @@
     data() {
       return {
         searchFields: [
-          {label: '展赛名称', prop: 'cname'}
+          {label: '展赛名称', prop: 'cName'}
         ],
         rules: {
           cName: [{required: true, message: '请输入名称', trigger: 'blur'}]
