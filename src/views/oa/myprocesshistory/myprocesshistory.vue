@@ -42,7 +42,7 @@
           {prop: 'status', label: '状态'}
         ],
         bizDialog: [
-          {id: 'view', dialog: 'OaHistoryView'}
+          {id: 'view', dialog: 'OaProcessHistoryView'}
         ],
         formModel: {}
       }

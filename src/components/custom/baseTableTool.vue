@@ -10,10 +10,10 @@
     template(scope="scope")
       template(v-for="btn in btnList")
         template(v-if="btn.titleCompute")
-          el-button(v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
+          el-button(v-if="(btn.isShow && !btn.cond) || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)"
           type="text" size="small") {{btn.titleCompute(scope)}}
         template(v-else)
-          el-button(v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)"
+          el-button(v-if="btn.isShow && !btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)"
           type="text" size="small") {{btn.title}}
 </template>
 
@@ -35,9 +35,6 @@
             {id: 'edit', title: '编辑', isShow: true},
             {id: 'delete', title: '删除', isShow: true}]
         }
-      },
-      titleComputer: {
-        type: Function
       }
     },
     created() {

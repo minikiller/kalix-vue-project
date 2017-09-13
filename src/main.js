@@ -28,7 +28,7 @@ Vue.use(ElementUI)
 // 注册全局组件
 GlobalComponent.forEach((item) => {
   console.log('[kalix]-[main.js] registry name is: ' + item.name, '; registry path is: ' + item.path)
-  Vue.component(item.name, require('' + item.path))
+  Vue.component(item.name, require('' + item.path).default)
 })
 
 // Vue.component('kalix-search', Search)
