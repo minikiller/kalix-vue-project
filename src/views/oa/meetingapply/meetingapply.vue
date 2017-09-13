@@ -12,10 +12,9 @@
     v-bind:customRender='customRender'
     bizSearch='OaMeetingApplySearch'
     v-bind:isFixedColumn="isFixedColumn"
-    v-bind:hasTableSelection="hasTableSelection"
     v-bind:btnList='btnList')
       template(slot="tableColumnSlot")
-        el-table-column(prop="title" label="流程名称" align="center" width="220")
+        el-table-column(prop="title" label="名称" align="center" width="220")
         el-table-column(prop="orgName" label="申请部门" align="center" width="220")
         el-table-column(prop="creationDate" label="申请时间" align="center" width="220")
         el-table-column(prop="meetingTopic" label="会议议题" align="center" width="220")
@@ -45,20 +44,21 @@
         btnList: WorkflowToolButtonList,
         targetURL: MeetingApplyURL,
         bizDialog: [
-          {id: 'view', dialog: 'MeetingApplyView'},
-          {id: 'edit', dialog: 'MeetingApplyAdd'},
-          {id: 'add', dialog: 'MeetingApplyAdd'}
+          {id: 'view', dialog: 'OaMeetingApplyView'},
+          {id: 'edit', dialog: 'OaMeetingApplyAdd'},
+          {id: 'add', dialog: 'OaMeetingApplyAdd'}
         ],
         formModel: {
-          identificationCard: '',
-          name: '',
-          sex: '',
-          mobile: '',
-          positionalTitles: 0,
-          resume: '',
-          introduction: '',
-          learning: '',
-          teaching: ''
+          title: '',
+          orgName: '',
+          creationDate: '',
+          meetingTopic: '',
+          meetingroomName: '',
+          beginTime: '',
+          endTime: '',
+          createBy: '',
+          auditResult: '',
+          currentNode: ''
         }
       }
     },
