@@ -75,5 +75,20 @@ const workflowBtnList = [
     isPermission: true  // 是否进行权限认证
   }
 ]
+import {ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
+import EventBus from 'common/eventbus'
 
-export {registerComp, workflowBtnList}
+const customTableTool = (row, btnId) => {
+  switch (btnId) {
+    case 'start': {
+      break
+    }
+    case 'progress': {
+      EventBus.$emit('processTask' + '-' + ON_INIT_DIALOG_DATA, row)
+      this.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+      break
+    }
+  }
+}
+
+export {registerComp, workflowBtnList, customTableTool}
