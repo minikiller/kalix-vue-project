@@ -31,8 +31,8 @@
         btnList: ToolButtonList,
         targetURL: CompetitionInfoURL,
         tableFields: [
-          {prop: 'cName', label: '展赛名称'},
-          {prop: 'cAddress', label: '展赛地址'},
+          {prop: 'name', label: '展赛名称'},
+          {prop: 'address', label: '展赛地址'},
           {prop: 'contactor', label: '联系人'},
           {prop: 'phone', label: '联系人电话'}
         ],
@@ -42,9 +42,9 @@
           {id: 'add', dialog: 'ResearchCompetitionInfoAdd'}
         ],
         formModel: {
-          cName: '',
-          cAddress: '',
-          cType: '',
+          name: '',
+          address: '',
+          type: '',
           collectionEndTime: '',
           collectionStartTime: '',
           compStartTime: '',
@@ -60,7 +60,7 @@
           technologyNeed: ''
         },
         formRules: {
-          cName: [
+          name: [
             {required: true, message: '请输入展赛名称', trigger: 'blur'}
           ]
         }

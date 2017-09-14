@@ -9,14 +9,14 @@
   v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="展赛名称" prop="cName" label-width="140px")
-          el-input(v-model="formModel.cName" v-bind:readonly="readonly")
+        el-form-item.s-flex_item(label="展赛名称" prop="name" label-width="140px")
+          el-input(v-model="formModel.name" v-bind:readonly="readonly")
         div.dd
-        el-form-item.s-flex_item(label="展赛地址" prop="cAddress" label-width="140px")
-          el-input(v-model="formModel.cAddress" v-bind:readonly="readonly" )
+        el-form-item.s-flex_item(label="展赛地址" prop="address" label-width="140px")
+          el-input(v-model="formModel.address" v-bind:readonly="readonly" )
       div.s-flex
-        el-form-item.s-flex_item(label="展赛类别" prop="cType" label-width="140px")
-          el-input(v-model="formModel.cType" v-bind:readonly="readonly" )
+        el-form-item.s-flex_item(label="展赛类别" prop="type" label-width="140px")
+          el-input(v-model="formModel.type" v-bind:readonly="readonly" )
         div.dd
         el-form-item.s-flex_item(label="联系人" prop="contactor" label-width="140px")
           el-input(v-model="formModel.contactor" v-bind:readonly="readonly")
@@ -68,7 +68,7 @@
     data() {
       return {
         rules: {
-          cName: [{required: true, message: '请输入 name', trigger: 'blur'}]
+          name: [{required: true, message: '请输入 name', trigger: 'blur'}]
         },
         targetURL: CompetitionInfoURL,
         readonly: true

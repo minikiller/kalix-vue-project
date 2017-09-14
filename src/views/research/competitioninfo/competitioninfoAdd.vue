@@ -10,14 +10,14 @@
   )
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="展赛名称" prop="cName" v-bind:rules="rules.cName" label-width="140px" )
-          el-input(v-model="formModel.cName" )
+        el-form-item.s-flex_item(label="展赛名称" prop="name" v-bind:rules="rules.name" label-width="140px" )
+          el-input(v-model="formModel.name" )
         div.dd
-        el-form-item.s-flex_item(label="展赛地点" prop="cAddress" label-width="140px")
-          el-input(v-model="formModel.cAddress" )
+        el-form-item.s-flex_item(label="展赛地点" prop="address" label-width="140px")
+          el-input(v-model="formModel.address" )
       div.s-flex
-        el-form-item.s-flex_item(label="展赛类别" prop="cType" label-width="140px")
-          kalix-dict-select(v-model="formModel.cType" style="width:100%" appName="research" dictType="展赛类型")
+        el-form-item.s-flex_item(label="展赛类别" prop="type" label-width="140px")
+          kalix-dict-select(v-model="formModel.type" style="width:100%" appName="research" dictType="展赛类型")
         div.dd
         el-form-item.s-flex_item(label="联系人" prop="contactor" label-width="140px")
           el-input(v-model="formModel.contactor")
@@ -72,7 +72,7 @@
     data() {
       return {
         rules: {
-          cName: [{required: true, message: '请输入 name', trigger: 'blur'}]
+          name: [{required: true, message: '请输入 name', trigger: 'blur'}]
         },
         targetURL: CompetitionInfoURL,
         collectionStartTime: '',
@@ -84,7 +84,7 @@
       }
     },
     created() {
-      console.log('this.formRules.cname:', this.formRules.cname)
+      console.log('this.formRules.name:', this.formRules.name)
     },
     components: {
       KalixDialog: Dialog,
