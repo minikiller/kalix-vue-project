@@ -55,3 +55,30 @@ body
 
 th
   font-weight bold
+
+/*
+表单表格样式
+*/
+borderStyle = 1px solid #000000
+.kalix-form-table
+  border 1px solid #000000
+  & > div
+    border-bottom borderStyle
+    &:last-child
+      border-bottom 0
+  .table-title
+    text-align center
+    font-size 18px
+    font-weight bold
+    padding 10px 0px
+  .el-form-item
+    margin-bottom 0
+    .el-form-item__label
+      border-right borderStyle
+      font-weight bold
+    .el-input__inner
+      border 0
+  .kalix-form-table-td
+    border-left borderStyle
+    &:first-child
+      border-left none
