@@ -16,6 +16,7 @@ TaskURL = "/camel/rest/workflow/tasks"
 MeetingApplyURL = "/camel/rest/meetingapplys"
 UserOrgsURL = "/camel/rest/users/[usersId]/orgs"
 MeetingRoomsURL  = "/camel/rest/meetingrooms"
+SealApplyURL  = "camel/rest/sealapplys"
 
 
 
@@ -41,6 +42,17 @@ MeetingRoomsURL  = "/camel/rest/meetingrooms"
 [[MeetingApplyComponent]]
   path = "oa/meetingapply/meetingApplySearch"
   name = "OaMeetingApplySearch"
+
+# 需要自动注册成全局的SealApply组件
+[[SealApplyComponent]]
+  path = "oa/sealapply/sealApplyView"
+  name = "OaSealApplyView"
+[[SealApplyComponent]]
+  path = "oa/sealapply/sealApplyAdd"
+  name = "OaSealApplyAdd"
+[[SealApplyComponent]]
+  path = "oa/sealapply/sealApplySearch"
+  name = "OaSealApplySearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]

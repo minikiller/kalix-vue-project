@@ -1,11 +1,11 @@
 <!--
-描述：展赛管理
-开发人：fj
-开发日期：2017年9月06日
+描述：办公自动化-流程历史-查詢组件
+开发人：sunlf
+开发日期：2017年8月17日
 -->
 
 <template lang="pug">
-  kalix-search(title="报名信息查询"
+  kalix-search(title="印章申请查询"
   v-bind:searchFields="searchFields" v-bind:form-rules="rules")
 </template>
 
@@ -16,10 +16,10 @@
     data() {
       return {
         searchFields: [
-          {label: '作品中文名称', prop: 'worksCnName'}
+          {label: '申请部门', prop: 'name'},
+          {label: '经办人', prop: 'name'}
         ],
         rules: {
-          worksCnName: [{required: true, message: '请输入作品中文名称', trigger: 'blur'}]
         }
       }
     },
