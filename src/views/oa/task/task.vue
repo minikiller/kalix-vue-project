@@ -13,9 +13,7 @@
     bizSearch='TaskSearch'
     v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
       template(slot="tableColumnSlot")
-        el-table-column(prop="businessNo" label="编号" width="280" align="center")
-          template(scope="scope")
-            el-tag {{ scope.row.businessNo }}
+        kalix-biz-no-column(name="businessNo")
         el-table-column(prop="title" label="业务名称" width="280" align="center")
         el-table-column(prop="name" label="任务名称" align="center")
         el-table-column(prop="description" label="描述" align="center")
@@ -26,6 +24,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import {TaskURL, WorkflowSuspendURL, WorkflowActivateURL} from '../config.toml'
   import {registerComp} from 'views/oa/comp'
+  import BizNoColumn from 'views/oa/comp/bizNoColumn'
   import Vue from 'vue'
   import Message from 'common/message'
   import BaseTableTool from '@/components/custom/baseTableTool'
@@ -41,8 +40,7 @@
     deactivated() {
       console.log(this.bizKey + '  is deactivated')
     },
-    filters: {
-    },
+    filters: {},
     data() {
       return {
         btnList: [{
@@ -72,7 +70,7 @@
     methods: {
       customTableTool(row, btnId) {
         switch (btnId) {
-          case 'suspend': {
+          case 'suspend': { // 待办功能，未实行
             this.$confirm('确定要执行该操作吗?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
@@ -98,7 +96,8 @@
     },
     components: {
       BaseTable,
-      KalixTableTool: BaseTableTool
+      KalixTableTool: BaseTableTool,
+      KalixBizNoColumn: BizNoColumn
     }
   }
 </script>

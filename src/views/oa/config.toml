@@ -16,6 +16,7 @@ TaskURL = "/camel/rest/workflow/tasks"
 MeetingApplyURL = "/camel/rest/meetingapplys"
 UserOrgsURL = "/camel/rest/users/[usersId]/orgs"
 MeetingRoomsURL  = "/camel/rest/meetingrooms"
+SealApplyURL  = "camel/rest/sealapplys"
 
 
 
@@ -41,6 +42,17 @@ MeetingRoomsURL  = "/camel/rest/meetingrooms"
 [[MeetingApplyComponent]]
   path = "oa/meetingapply/meetingApplySearch"
   name = "OaMeetingApplySearch"
+
+# 需要自动注册成全局的SealApply组件
+[[SealApplyComponent]]
+  path = "oa/sealapply/sealApplyView"
+  name = "OaSealApplyView"
+[[SealApplyComponent]]
+  path = "oa/sealapply/sealApplyAdd"
+  name = "OaSealApplyAdd"
+[[SealApplyComponent]]
+  path = "oa/sealapply/sealApplySearch"
+  name = "OaSealApplySearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
@@ -92,32 +104,5 @@ MeetingRoomsURL  = "/camel/rest/meetingrooms"
 [[ToolButtonList]]
   id = "delete"
   title = "删除"
-  isShow = true
-  isPermission = true
-
-# 工作流的默认按钮定义
-[[WorkflowToolButtonList]]
-  id = "view"
-  title = "查看"
-  isShow = true    # 是否显示
-  isPermission = true   # 是否进行权限认证
-[[WorkflowToolButtonList]]
-  id = "edit"
-  title = "编辑"
-  isShow = true
-  isPermission = true
-[[WorkflowToolButtonList]]
-  id = "delete"
-  title = "删除"
-  isShow = true
-  isPermission = true
-[[WorkflowToolButtonList]]
-  id = "attachment"
-  title = "附件"
-  isShow = true
-  isPermission = true
-[[WorkflowToolButtonList]]
-  id = "start"
-  title = "启动"
   isShow = true
   isPermission = true

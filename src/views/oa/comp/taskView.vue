@@ -1,5 +1,5 @@
 <!--
-描述：办公自动化-流程进度查看管理组件
+描述：办公自动化-流程进度查看管理组件，显示流程进度图片
 开发人：sunlf
 开发日期：2017年8月17日
 -->
@@ -18,6 +18,7 @@
   import Dialog from '@/components/custom/baseDialog.vue'
 
   const viewURL = baseURL + `/image?taskId=`
+  const viewProcessURL = baseURL + `/image?processInstanceId=`
   export default {
     data() {
       return {
@@ -39,7 +40,11 @@
     methods: {
       initData(row) {
         this.title = '流程进度查看-' + row.businessNo
-        this.imgUrl = viewURL + row.id
+        if (row.processInstanceId) { // 按流程实例id显示当前进度
+          this.imgUrl = viewProcessURL + row.processInstanceId
+        } else { // 按taskid显示当前进度
+          this.imgUrl = viewURL + row.id
+        }
       }
     }
   }

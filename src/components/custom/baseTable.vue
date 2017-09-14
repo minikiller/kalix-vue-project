@@ -372,7 +372,7 @@
             break
           }
 
-          case 'attachment':
+          case 'attachment': {
             console.log('attachment is clicked')
             let that = this
             this.whichBizDialog = 'AttachmentDialog'
@@ -380,6 +380,8 @@
               that.$refs.kalixDialog.openDialog(row, this.bizKey)
             }, 20)
             break
+          }
+
           default: // 默认转到调用props的方法
             this.customTableTool(row, btnId)
             break
