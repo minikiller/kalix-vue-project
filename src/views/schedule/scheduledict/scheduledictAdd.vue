@@ -1,5 +1,6 @@
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="scheduleDict" ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
+  kalix-dialog.user-add(bizKey="scheduleDict" ref="kalixBizDialog"
+    v-bind:form-model="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="类型" prop="type" v-bind:rules="rules.type")
         el-select(v-model="formModel.type")
