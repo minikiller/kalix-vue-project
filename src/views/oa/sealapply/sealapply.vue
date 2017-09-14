@@ -8,6 +8,7 @@
       bizSearch='OaSealApplySearch'
       v-bind:isFixedColumn="isFixedColumn"
       v-bind:customTableTool="customTableTool"
+      v-bind:dictDefine="dictDefine"
       v-bind:btnList='btnList')
         template(slot="tableColumnSlot")
           kalix-biz-no-column  // 业务编号
@@ -15,7 +16,7 @@
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
           kalix-date-column(prop="creationDate" label="申请时间")
           el-table-column(prop="usageCount" label="用印数" align="center" width="220")
-          el-table-column(prop="sealType" label="印章类别" align="center" width="220")
+          el-table-column(prop="sealTypeName" label="印章类别" align="center" width="220")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
           el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
           el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
@@ -27,7 +28,8 @@
   import BaseTable from '@/components/custom/baseTable'
   import {
     SealApplyURL,
-    SealApplyComponent
+    SealApplyComponent,
+    SealApplyStartURL
   } from '../config.toml'
   import {registerComponent} from '@/api/register'
   import {workflowBtnList, registerComp, customTableTool} from '@/views/oa/comp'
@@ -41,6 +43,12 @@
   export default {
     data() {
       return {
+        dictDefine: [{ // 定义数据字典的显示
+          cacheKey: 'OA-DICT-KEY',
+          type: '印章类型',
+          targetField: 'sealTypeName',
+          sourceField: 'sealType'
+        }],
         isFixedColumn: true,
         hasTableSelection: true,
         targetURL: SealApplyURL,
@@ -76,7 +84,7 @@
     },
     methods: {
       customTableTool(row, btnId) {
-        customTableTool(row, btnId)
+        customTableTool(row, btnId, SealApplyStartURL, this)
       }
     },
     components: {

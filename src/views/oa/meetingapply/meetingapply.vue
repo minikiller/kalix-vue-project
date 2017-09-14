@@ -36,16 +36,15 @@
     MeetingApplyURL,
     MeetingApplyComponent,
     MeetingRoomsURL,
-    UserOrgsURL
+    UserOrgsURL,
+    MeetingApplyStartURL
   } from '../config.toml'
   import {registerComponent} from '@/api/register'
   import ProcessStatusColumn from '@/views/oa/comp/processStatusColumn.vue'
-  import {workflowBtnList, registerComp} from '@/views/oa/comp'
+  import {workflowBtnList, registerComp, customTableTool} from '@/views/oa/comp'
   import TaskView from '@/views/oa/comp/taskView'
-  import {ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
   import DateColumn from 'views/oa/comp/dateColumn'
-  import EventBus from 'common/eventbus'
   import Cache from 'common/cache'
 
   // 注册全局组件
@@ -102,16 +101,7 @@
         }
       },
       customTableTool(row, btnId) {
-        switch (btnId) {
-          case 'start': {
-            break
-          }
-          case 'progress': {
-            EventBus.$emit('processTask' + '-' + ON_INIT_DIALOG_DATA, row)
-            this.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
-            break
-          }
-        }
+        customTableTool(row, btnId, MeetingApplyStartURL)
       }
     },
     components: {

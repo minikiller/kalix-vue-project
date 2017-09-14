@@ -1,5 +1,8 @@
 import {OaWorkflowComponent} from '../config.toml'
 import Vue from 'vue'
+import Message from 'common/message'
+import {ON_REFRESH_DATA, ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
+import EventBus from 'common/eventbus'
 
 const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
@@ -75,17 +78,22 @@ const workflowBtnList = [
     isPermission: true  // 是否进行权限认证
   }
 ]
-import {ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
-import EventBus from 'common/eventbus'
 
-const customTableTool = (row, btnId) => {
+const customTableTool = (row, btnId, requestUrl, that) => {
   switch (btnId) {
-    case 'start': {
+    case 'start': { // 流程启动
+      Vue.axios.request({
+        method: 'GET',
+        url: requestUrl + row.id
+      }).then((res) => {
+        Message.success(res.data.msg)
+        EventBus.$emit(ON_REFRESH_DATA)
+      })
       break
     }
-    case 'progress': {
+    case 'progress' : {
       EventBus.$emit('processTask' + '-' + ON_INIT_DIALOG_DATA, row)
-      this.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+      that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
       break
     }
   }
