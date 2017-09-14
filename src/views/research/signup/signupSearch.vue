@@ -5,7 +5,7 @@
 -->
 
 <template lang="pug">
-  kalix-search(title="展赛查询"
+  kalix-search(title="报名信息查询"
   v-bind:searchFields="searchFields" v-bind:form-rules="rules")
 </template>
 
@@ -16,10 +16,10 @@
     data() {
       return {
         searchFields: [
-          {label: '展赛名称', prop: 'cName'}
+          {label: '作品中文名称', prop: 'worksCnName'}
         ],
         rules: {
-          cName: [{required: true, message: '请输入名称', trigger: 'blur'}]
+          worksCnName: [{required: true, message: '请输入作品中文名称', trigger: 'blur'}]
         }
       }
     },

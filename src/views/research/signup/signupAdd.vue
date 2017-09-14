@@ -10,30 +10,41 @@
   )
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="展赛名称" prop="competitionId" v-bind:rules="rules.competitionId" label-width="140px" )
-          kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
-          v-on:userSelected="onUserSelected")
+        el-form-item.s-flex_item(label="展赛名称" prop="competitionId" label-width="140px" )
+          kalix-competition-select(style="width:100%" v-model="formModel.competitionId" v-bind:multiple="false"
+          v-on:competitionSelected="onCompetitionSelected")
       div.s-flex
         el-form-item.s-flex_item(label="姓名" prop="name" label-width="140px")
           el-input(v-model="formModel.name")
         div.dd
         el-form-item.s-flex_item(label="拼音" prop="phoneticize" label-width="140px")
           el-input(v-model="formModel.phoneticize")
-      div.s-flex
+        div.dd
         el-form-item.s-flex_item(label="笔名" prop="penName" label-width="140px")
           el-input(v-model="formModel.penName")
-        div.dd
-        el-form-item.s-flex_item(label="性别" prop="sex" label-width="140px")
-          el-input(v-model="formModel.sex")
-      div.s-flex
-        el-form-item.s-flex_item(label="作者简介" prop="authorIntroduction" label-width="140px")
-          el-input(v-model="formModel.authorIntroduction")
       div.s-flex
         el-form-item.s-flex_item(label="国籍" prop="nationality" label-width="140px")
           el-input(v-model="formModel.nationality")
         div.dd
         el-form-item.s-flex_item(label="年龄" prop="age" label-width="140px")
           el-input(v-model="formModel.age")
+        div.dd
+        el-form-item.s-flex_item(label="性别" prop="sex" label-width="140px")
+          el-radio-group(v-model="formModel.sex")
+            el-radio(label="男")
+            el-radio(label="女")
+      div.s-flex
+        el-form-item.s-flex_item(label="作者简介" prop="authorIntroduction" label-width="140px")
+          el-input(v-model="formModel.authorIntroduction")
+      div.s-flex
+        el-form-item.s-flex_item(label="省" prop="province" label-width="140px")
+          el-input(v-model="formModel.province")
+        div.dd
+        el-form-item.s-flex_item(label="城市" prop="city" label-width="140px")
+          el-input(v-model="formModel.city")
+        div.dd
+        el-form-item.s-flex_item(label="通讯地址" prop="postalAddress" label-width="140px")
+          el-input(v-model="formModel.postalAddress")
       div.s-flex
         el-form-item.s-flex_item(label="出生年月" prop="birthday" label-width="140px")
           el-input(v-model="formModel.birthday")
@@ -41,14 +52,9 @@
         el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="140px")
           el-input(v-model="formModel.identificationCard")
       div.s-flex
-        el-form-item.s-flex_item(label="省" prop="province" label-width="140px")
-          el-input(v-model="formModel.province")
-        div.dd
-        el-form-item.s-flex_item(label="城市" prop="city" label-width="140px")
-          el-input(v-model="formModel.city")
+
       div.s-flex
-        el-form-item.s-flex_item(label="通讯地址" prop="postalAddress" label-width="140px")
-          el-input(v-model="formModel.postalAddress")
+
         div.dd
         el-form-item.s-flex_item(label="邮政编码" prop="postalCode" label-width="140px")
           el-input(v-model="formModel.postalCode")
@@ -141,8 +147,10 @@
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {CompetitionInfoURL} from '../config.toml'
+  import {SignupURL} from '../config.toml'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import CompetitionSelect from '@/components/biz/competitionselect/competitionselect'
+  import EventBus from 'common/eventbus'
   export default {
     props: {
       formModel: {
@@ -157,20 +165,23 @@
     data() {
       return {
         rules: {
-          cName: [{required: true, message: '请输入 name', trigger: 'blur'}]
+          competitionId: [{required: true, message: '请选择展赛名称', trigger: 'blur'}]
         },
-        targetURL: CompetitionInfoURL
+        targetURL: SignupURL
       }
     },
     created() {
-      console.log('this.formRules.cname:', this.formRules.cname)
+      console.log('this.formRules.name:', this.formRules.name)
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect
+      KalixDictSelect: BaseDictSelect,
+      KalixCompetitionSelect: CompetitionSelect
     },
     methods: {
-
+      onCompetitionSelected(competition) {
+        EventBus.$emit('updateSignupModel', competition)
+      }
     }
   }
 </script>
