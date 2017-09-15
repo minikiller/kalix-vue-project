@@ -8,7 +8,7 @@
     keep-alive
       base-table(bizKey='meetapply' title='会议申请列表'
       v-bind:targetURL='targetURL'
-      v-bind:formModel='formModel'
+      v-bind:formModel.sync='formModel'
       v-bind:bizDialog='bizDialog'
       bizSearch='OaMeetingApplySearch'
       v-bind:isFixedColumn="isFixedColumn"
