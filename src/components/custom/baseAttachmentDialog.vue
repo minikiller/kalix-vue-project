@@ -1,3 +1,8 @@
+<!--
+  描述：附件对话框
+  开发人：桑杨
+  开发日期：2017年8月17日
+-->
 <template lang="pug">
   el-dialog(v-bind:visible="visible" v-bind:before-close="close" v-bind:close-on-click-modal="false")
     span(slot="title")
@@ -151,10 +156,11 @@
           }
         })
       },
+      // 查询文件
       _getFilesList() {
         this.files = []
         let _data = {
-//          jsonStr:'{"%mainid%":"40"}',
+          jsonStr: `{mainId:${this.row.id}}`,
           page: this.pager.currentPage,
           limit: this.pager.limit,
           start: this.pager.start
