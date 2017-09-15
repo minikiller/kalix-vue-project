@@ -23,5 +23,12 @@ export default {
   },
   info(_msg, _showClose = true) {
     this.message('info', _msg, _showClose)
+  },
+  processResult(res) { // 处理返回结果
+    if (res.data.success) {
+      this.success(res.data.msg)
+    } else {
+      this.error(res.data.msg)
+    }
   }
 }
