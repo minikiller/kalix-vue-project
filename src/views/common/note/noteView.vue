@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(bizKey="note"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL" v-bind:isView="readonly")
+  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="标题" prop="title" v-bind:rules="rules.title")
         el-input(v-model="formModel.title" v-bind:readonly="readonly")

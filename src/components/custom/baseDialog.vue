@@ -21,7 +21,7 @@
   import Message from 'common/message'
   import Vue from 'vue'
   import EventBus from 'common/eventbus'
-  import {ON_REFRESH_DATA, ON_INIT_DIALOG_DATA} from './event.toml'
+  import {ON_REFRESH_DATA} from './event.toml'
 
   export default {
 //    activated() {
@@ -66,6 +66,8 @@
       onCancelClick() {
         console.log('dialog cancel button clicked !')
         this.visible = false
+        this.$refs.dialogForm.resetFields()
+//        this.$emit('update:formModel', JSON.parse(this.tempFormModel))
         this._afterDialogClose()
       },
       onSubmitClick() {
@@ -104,7 +106,6 @@
         this.close()
       },
       close() {
-        this.$refs.dialogForm.resetFields()
         this.onCancelClick()
       },
       open(_title, isEdit = false) {
@@ -115,14 +116,15 @@
       initData(row) {
         console.log(`[kalix] init base dialog ${this.bizKey}`)
 //        this.formModel = {}
-        Object.assign(this.formModel, row)
+//        Object.assign(this.formModel, row)
       },
       _afterDialogClose() {
         EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose')
       }
     },
-    mounted() {
-      EventBus.$on(this.bizKey + '-' + ON_INIT_DIALOG_DATA, this.initData)
+    created() {
+      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+//      EventBus.$on(this.bizKey + '-' + ON_INIT_DIALOG_DATA, this.initData)
     },
     computed: {
       dialogTitle() {

@@ -70,8 +70,7 @@
   import {DictKeyValueObject} from 'common/keyValueObject'
   import {
     ON_SEARCH_BUTTON_CLICK,
-    ON_REFRESH_DATA,
-    ON_INIT_DIALOG_DATA
+    ON_REFRESH_DATA
   } from './event.toml'
 
   export default {
@@ -261,7 +260,7 @@
         this.whichBizDialog = dig[0].dialog
         console.log('[onAddClick]', dig[0].dialog)
         setTimeout(() => {
-          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
+//          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
           this.$emit('update:formModel', {})
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
           if (typeof (this.$refs.kalixDialog.init) === 'function') {
@@ -324,7 +323,8 @@
               })
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+              this.$emit('update:formModel', row)
+//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
             }, 20)
             break
@@ -339,7 +339,8 @@
             console.log('[kalix] edit dialog is: ' + dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+              this.$emit('update:formModel', row)
+//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 this.$refs.kalixDialog.init(this.dialogOptions)
