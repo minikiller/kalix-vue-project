@@ -15,6 +15,8 @@ TaskURL = "/camel/rest/workflow/tasks"
 # 工作流流程地址
 MeetingApplyURL = "/camel/rest/meetingapplys"
 MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
+CarApplyURL = "/camel/rest/carapplys"
+CarApplyStartURL = "/camel/rest/carapplys/workflow/startProcess?id="
 UserOrgsURL = "/camel/rest/users/[usersId]/orgs"
 MeetingRoomsURL  = "/camel/rest/meetingrooms"
 SealApplyURL  = "camel/rest/sealapplys"
@@ -55,6 +57,17 @@ SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
 [[SealApplyComponent]]
   path = "oa/sealapply/sealApplySearch"
   name = "OaSealApplySearch"
+
+# 需要自动注册成全局的SealApply组件
+[[CarApplyComponent]]
+  path = "oa/carapply/carApplyView"
+  name = "OaCarApplyView"
+[[CarApplyComponent]]
+  path = "oa/carapply/carApplyAdd"
+  name = "OaCarApplyAdd"
+[[CarApplyComponent]]
+  path = "oa/carapply/carApplySearch"
+  name = "OaCarApplySearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]

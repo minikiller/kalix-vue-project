@@ -6,23 +6,24 @@
 <template lang="pug">
   div
     keep-alive
-      base-table(bizKey='meetapply' title='会议申请列表'
+      base-table(bizKey='carapply' title='用车申请列表'
       v-bind:targetURL='targetURL'
       v-bind:formModel='formModel'
       v-bind:bizDialog='bizDialog'
-      bizSearch='OaMeetingApplySearch'
+      bizSearch='OaCarApplySearch'
       v-bind:isFixedColumn="isFixedColumn"
       v-bind:customTableTool="customTableTool"
+      v-bind:customRender="customRender"
       v-bind:btnList='btnList')
         template(slot="tableColumnSlot")
           kalix-biz-no-column
           el-table-column(prop="title" label="名称" align="center" width="220")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
           kalix-date-column(prop="creationDate" label="申请时间")
-          el-table-column(prop="meetingTopic" label="会议议题" align="center" width="220")
-          el-table-column(prop="meetingroomName" label="会议地点" align="center" width="220")
-          kalix-date-column(prop="beginTime" label="会议开始时间")
-          kalix-date-column(prop="endTime" label="会议结束时间")
+          el-table-column(prop="reason" label="用车事由" align="center" width="220")
+          el-table-column(prop="usageCount" label="乘车人数" align="center" width="220")
+          el-table-column(prop="address" label="用车起始地点" align="center" width="220")
+          el-table-column(prop="cityName" label="市内用车" align="center" width="220")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
           el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
           el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
@@ -33,11 +34,9 @@
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import {
-    MeetingApplyURL,
-    MeetingApplyComponent,
-    MeetingRoomsURL,
-    UserOrgsURL,
-    MeetingApplyStartURL
+    CarApplyURL,
+    CarApplyComponent,
+    CarApplyStartURL
   } from '../config.toml'
   import {registerComponent} from '@/api/register'
   import ProcessStatusColumn from '@/views/oa/comp/processStatusColumn.vue'
@@ -45,17 +44,15 @@
   import TaskView from '@/views/oa/comp/taskView'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
   import DateColumn from 'views/oa/comp/dateColumn'
-  import Cache from 'common/cache'
 
   // 注册全局组件
-  registerComponent(MeetingApplyComponent)
-  const REQUEST_DATA = {page: 1, start: 0, limit: 20}
+  registerComponent(CarApplyComponent)
   export default {
     data() {
       return {
         isFixedColumn: true,
         hasTableSelection: true,
-        targetURL: MeetingApplyURL,
+        targetURL: CarApplyURL,
         btnList: workflowBtnList,
         bizDialog: [
           {id: 'view', dialog: 'OaMeetingApplyView'},
@@ -87,21 +84,15 @@
       registerComp()
     },
     created() {
-      this._initDict(`${'UserOrgs'.toUpperCase()}-KEY`, UserOrgsURL.replace('[usersId]', Cache.get('id')))
-      this._initDict(`${'MeetingRooms'.toUpperCase()}-KEY`, MeetingRoomsURL)
     },
     methods: {
-      _initDict(DictKey, reqUrl) {
-        if (!Cache.get(DictKey)) {
-          this.$http
-            .get(reqUrl, {params: REQUEST_DATA})
-            .then(res => {
-              Cache.save(DictKey, JSON.stringify(res.data.data))
-            })
-        }
-      },
       customTableTool(row, btnId) {
-        customTableTool(row, btnId, MeetingApplyStartURL, this)
+        customTableTool(row, btnId, CarApplyStartURL, this)
+      },
+      customRender(_data) {
+        _data.forEach(function (e) {
+          e.cityName = e.city ? '是' : '否'
+        })
       }
     },
     components: {

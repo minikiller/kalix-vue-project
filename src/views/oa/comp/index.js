@@ -82,11 +82,17 @@ const workflowBtnList = [
 const customTableTool = (row, btnId, requestUrl, that) => {
   switch (btnId) {
     case 'start': { // 流程启动
-      Vue.axios.request({
-        method: 'GET',
-        url: requestUrl + row.id
+      that.$confirm('流程启动后业务数据将无法修改！确定要启动吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return Vue.axios.request({
+          method: 'GET',
+          url: requestUrl + row.id
+        })
       }).then((res) => {
-        Message.success(res.data.msg)
+        Message.processResult(res)
         EventBus.$emit(ON_REFRESH_DATA)
       })
       break

@@ -9,12 +9,13 @@
   v-bind:fixed="isFiex")
     template(scope="scope")
       template(v-for="btn in btnList")
-        template(v-if="btn.titleCompute")
-          el-button(v-if="(btn.isShow && !btn.cond) || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)"
-          type="text" size="small") {{btn.titleCompute(scope)}}
-        template(v-else)
-          el-button(v-if="btn.isShow && !btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)"
-          type="text" size="small") {{btn.title}}
+        template(v-if="btn.isShow")
+          template(v-if="btn.titleCompute")
+            el-button(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)"
+            type="text" size="small") {{btn.titleCompute(scope)}}
+          template(v-else)
+            el-button(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)"
+            type="text" size="small") {{btn.title}}
 </template>
 
 <script type="text/ecmascript-6">
