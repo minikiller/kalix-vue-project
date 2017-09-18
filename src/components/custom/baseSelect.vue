@@ -38,6 +38,10 @@
       onChange(value) {
         console.log('[value]', value)
         this.$emit('input', value)
+        let item = this.options.find(e => {
+          return e.id === value
+        })
+        this.$emit('change', item)
       }
     }
   }

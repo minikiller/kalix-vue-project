@@ -9,6 +9,7 @@
       base-table(bizKey='meetapply' title='会议申请列表'
       v-bind:targetURL='targetURL'
       v-bind:formModel.sync='formModel'
+      v-bind:formRules="formRules"
       v-bind:bizDialog='bizDialog'
       bizSearch='OaMeetingApplySearch'
       v-bind:isFixedColumn="isFixedColumn"
@@ -80,6 +81,14 @@
           currentNode: '',
           importantAttendeesName: '',
           otherAttendeesName: ''
+        },
+        formRules: {
+          meetingTopic: [
+            {required: true, message: '请输入议题', trigger: 'blur'}
+          ],
+          meetingAgenda: [
+            {required: true, message: '请输入议程', trigger: 'blur'}
+          ]
         }
       }
     },
