@@ -31,7 +31,6 @@
       }
     },
     mounted() {
-//      console.log('mounted', this.bizKey + '-' + ON_INIT_DIALOG_DATA)
       EventBus.$on(this.bizKey + '-' + ON_INIT_DIALOG_DATA, this.initData)
     },
     components: {
