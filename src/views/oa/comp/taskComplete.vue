@@ -8,8 +8,8 @@
     kalix-dialog(v-bind:title="title" v-bind:visible="visible" ref="kalixBizDialog" v-bind:isView="isView"
     v-bind:close-on-click-modal="false" v-bind:formModel="formModel" v-bind:before-close="onClose")
       div(slot="dialogFormSlot")
-        el-tabs
-          el-tab-pane(label="业务审批")
+        el-tabs(v-model="activeName")
+          el-tab-pane(label="业务审批" name="approveTab")
             el-form(ref="form" v-bind:model="form" label-width="80px")
               el-form-item(label="审批意见")
                 el-input(v-model="form.content" type="textarea")
@@ -20,6 +20,9 @@
             component(:is="whichBizForm" v-bind:form-model="bizForm")
           el-tab-pane(label="流程历史")
             el-table(:data="taskActivityData" stripe style="width:100%" border fit)
+              el-table-column(label="行号" width="70")
+                template(scope="scope")
+                  div(style="text-align: center") {{ scope.row.rowNumber }}
               el-table-column(prop="activityName" label="节点名称" align="center" width="200")
               el-table-column(prop="assignee" label="执行人" align="center")
               kalix-date-column(prop="startTime" label="开始时间")
@@ -27,6 +30,14 @@
               el-table-column(prop="durationInMillis" label="持续时长" align="center")
               el-table-column(prop="result" label="审批结果" align="center")
               el-table-column(prop="comment" label="审批意见" align="center")
+            el-pagination.kalix-table-pagination(v-if="pager.totalCount"
+            v-on:size-change="pagerSizeChange"
+            v-on:current-change="pagerCurrentChange"
+            v-bind:current-page="pager.currentPage"
+            v-bind:page-sizes="pager.pageSizes"
+            v-bind:page-size="1"
+            layout="total, sizes, prev, pager, next, jumper"
+            v-bind:total="pager.totalCount")
           el-tab-pane(label="附件数据")
 </template>
 
@@ -36,6 +47,7 @@
   import EventBus from 'common/eventbus'
   import {ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import {PageConfig} from 'config/global.toml'
   //  import Message from 'common/message'
   const baseFormUrl = '/camel/rest/'
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
@@ -48,11 +60,19 @@
         bizForm: {}, // 流程数据信息
         title: '',
         visible: false,
+        activeName: 'approveTab',
         isView: true,
         formModel: {},
         bizKey: 'taskComplete',
         whichBizForm: '', // 动态加载业务view
-        form: {}
+        form: {},
+        pager: {
+          totalCount: 0,
+          pageSizes: PageConfig.sizes,
+          currentPage: 1,
+          limit: PageConfig.limit,
+          start: 0
+        }
       }
     },
     mounted() {
@@ -62,7 +82,20 @@
       KalixDialog: Dialog,
       KalixDateColumn: DateColumn
     },
+    computed: {
+      rowNo() {
+        return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
+      }
+    },
     methods: {
+      pagerSizeChange(val) { //  改变每页记录数
+        this.pager.limit = val
+        this._getFilesList()
+      },
+      pagerCurrentChange(val) { //  翻页
+        this.pager.currentPage = val
+        this._getFilesList()
+      },
       onClose() {
         EventBus.$off(this.bizKey + '-' + ON_INIT_DIALOG_DATA)
       },
@@ -78,7 +111,11 @@
           params: {},
           data: {}
         }).then((res) => {
-          this.taskActivityData = res.data.data
+          this.taskActivityData = res.data.data.map((item, index) => {
+            item.rowNumber = index + this.rowNo
+            return item
+          })
+          this.pager.totalCount = res.data.totalCount
 //          Message.processResult(res)
         })
       },
