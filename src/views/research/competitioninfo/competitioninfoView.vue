@@ -4,7 +4,7 @@
 开发日期：2017年9月05日
 -->
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="competitioninfo"
+  kalix-dialog.user-add(bizKey="competitionInfo"
   ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
   v-bind:isView="readonly")
     div.el-form(slot="dialogFormSlot")
