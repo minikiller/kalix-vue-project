@@ -10,7 +10,7 @@
       el-form-item(label="姓名")
         el-input(v-model="formModel.name")
       el-form-item(label="所属机构")
-        org-tree.inline(v-model.sync="formModel.orgid" v-bind:isAll="true")
+        org-tree.inline(v-model.sync="formModel.orgid" v-bind:isAll="false")
       // el-form-item {{formModel.orgid}}
 </template>
 
@@ -27,7 +27,7 @@
         ],
         formModel: {
           name: '',
-          orgid: '42161'
+          orgid: ''
         },
         targetURL: WorkerURL
       }
