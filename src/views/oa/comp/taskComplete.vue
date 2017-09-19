@@ -20,7 +20,7 @@
             component(:is="whichBizForm" v-bind:form-model="bizForm")
           el-tab-pane(label="流程历史")
             kalix-paged-table(v-bind:targetURL="targetURL")
-              template(slot="tableColumnSlot")
+              template(slot="tableColumnSlot"  v-bind:jsonStr="jsonStr")
                 el-table-column(prop="activityName" label="节点名称" align="center" width="220")
                 el-table-column(prop="assignee" label="执行人" align="center"  width="90")
                 kalix-date-column(prop="startTime" label="开始时间")
@@ -47,6 +47,7 @@
       return {
         taskActivityData: [], // 流程历史
         targetURL: '',
+        jsonStr: {},
         bizData: {}, // 流程业务的动态返回配置信息
         bizForm: {}, // 流程数据信息
         title: '',
