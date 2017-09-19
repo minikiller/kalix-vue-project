@@ -61,7 +61,7 @@
         var queryStr = {'compStartTime:begin:gt': this.beginDate_begin, 'compEndTime:end:lt': this.endDate_end}
         var jsonParam =
           {
-            param: {jsonStr: JSON.stringify(queryStr)}
+            params: {jsonStr: JSON.stringify(queryStr)}
           }
         this.$http.get(StatisticsPieURL, jsonParam).then((response) => {
           let _data = response.data.data
