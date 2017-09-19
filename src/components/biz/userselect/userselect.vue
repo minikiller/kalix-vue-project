@@ -39,17 +39,44 @@
         type: Boolean,
         default: false
       },
-      params: {} // 附加搜索参数
+      params: {}, // 附加搜索参数
+      defaultOptions: {},
+      defaultIds: {},
+      defaultNames: {}
     },
     data() {
       return {
         userList: [],
         loading: false,
         currentValue: this.value,
-        selectUser: {}
+        selectUser: {},
+        userListDefault: []
       }
     },
     mounted() {
+      if (this.defaultIds && this.defaultNames) {
+        let _defaultIds = this.defaultIds.split(',')
+        let _defaultNames = this.defaultNames.split(',')
+        let meetingSummaryPersons = []
+        let len = _defaultIds.length
+        let _defaultIdsInt = _defaultIds.map(item => {
+          return item * 1
+        })
+        for (let i = 0; i < len; i++) {
+          meetingSummaryPersons.push({
+            id: _defaultIdsInt[i],
+            name: _defaultNames[i]
+          })
+        }
+        console.log('meetingSummaryPersons', meetingSummaryPersons)
+        this.userList = meetingSummaryPersons
+        this.userListDefault = meetingSummaryPersons
+        this.currentValue = _defaultIdsInt
+        let that = this
+        setTimeout(() => {
+          that.userList = []
+        }, 20)
+      }
     },
     methods: {
       onChange(value) {
@@ -58,12 +85,21 @@
             return (value.indexOf(item.id) > -1)
           })
           this.selectUser = users || []
+//          let usersDef = this.userListDefault.filter((item) => {
+//            return (value.indexOf(item.id) > -1)
+//          })
+//          console.log(`[kalix]-[userselect.vue] usersDef `, users.push(usersDef))
+//          this.selectUser = users.push(usersDef) || []
         } else {  // 单选
           let users = this.userList.filter((item) => {
             return item.id === value
           })
           this.selectUser = users[0] || {}
         }
+//        ss
+        console.log(`[kalix]-[userselect.vue] this.userList is `, this.userList)
+        console.log(`[kalix]-[userselect.vue] value is `, value)
+        console.log(`[kalix]-[userselect.vue] currentValue is `, this.currentValue)
         console.log(`[kalix]-[userselect.vue] current user is `, this.selectUser)
         this.$emit('userSelected', this.selectUser)  // 发送事件}
       },

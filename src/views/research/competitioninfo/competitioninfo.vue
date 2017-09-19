@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   keep-alive
-    base-table(bizKey="competitioninfo" title='展赛列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    base-table(bizKey="competitionInfo" title='展赛列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     v-bind:bizSearch="'ResearchCompetitionInfoSearch'" v-bind:btnList="btnList")
 </template>
