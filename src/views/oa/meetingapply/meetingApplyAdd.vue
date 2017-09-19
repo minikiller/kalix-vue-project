@@ -4,15 +4,17 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="meetapply" ref="kalixBizDialog"
-  v-bind:form-model="formModel" v-bind:targetURL="targetURL")
+  kalix-dialog.user-add(bizKey="meetapply"
+  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  )
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 吉林动画学院会议申请表
-      el-form-item(label="名称" v-bind:label-width="labelWidth" prop="title" v-bind:rules="rules.title")
-        el-input(v-model="title")
+      el-form-item(label="名称" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.title")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
-          kalix-select(v-model="formModel.orgId" placeholder="请选择申请部门" style="width:100%" appName="USERORGS")
+          kalix-select(v-model="formModel.orgId" placeholder="请选择申请部门" style="width:100%"
+          v-on:change="orgOnChange" appName="USERORGS")
         el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" v-bind:label-width="labelWidth")
           kalix-select(v-model="formModel.meetingroomId" placeholder="请选择会议地点" style="width:100%"
           appName="MEETINGROOMS")
@@ -32,15 +34,27 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="会议纪要人员" v-bind:label-width="labelWidth")
           kalix-user-select(v-bind:params="params" style="width:100%"
           v-on:userSelected="onMeetingSummaryPersonSelected"
-          v-model="meetingSummaryPerson" v-bind:multiple="multiple" placeholder="请输入会议纪要人员")
+          v-bind:defaultIds="formModel.meetingSummaryPerson"
+          v-bind:defaultNames="formModel.meetingSummaryPersonName"
+          v-bind:multiple="multiple"
+          v-model="meetingSummaryPerson"
+          placeholder="请输入会议纪要人员")
       el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
         kalix-user-select(v-bind:params="params" style="width:100%"
         v-on:userSelected="onImportantAttendeesSelected"
-        v-model="importantAttendees" v-bind:multiple="multiple" placeholder="请输入重要出席人")
+        v-bind:defaultIds="formModel.importantAttendees"
+        v-bind:defaultNames="formModel.importantAttendeesName"
+        v-model="importantAttendees"
+        v-bind:multiple="multiple"
+        placeholder="请输入重要出席人")
       el-form-item(label="其他出席人" v-bind:label-width="labelWidth")
         kalix-user-select(v-bind:params="params" style="width:100%"
         v-on:userSelected="onOtherAttendeesSelected"
-        v-model="otherAttendees" v-bind:multiple="multiple" placeholder="请输入其他出席人")
+        v-bind:defaultIds="formModel.otherAttendees"
+        v-bind:defaultNames="formModel.otherAttendeesName"
+        v-model="otherAttendees"
+        v-bind:multiple="multiple"
+        placeholder="请输入其他出席人")
 </template>
 
 <script type="text/ecmascript-6">
@@ -48,7 +62,9 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserSelect from '@/components/biz/userselect/userselect'
   import BaseSelect from '@/components/custom/baseSelect'
+  //  import _ from 'underscore'
   import {MeetingApplyURL} from '../config.toml'
+  //  import {isEmptyObject} from 'common/util'
 
   export default {
     props: {
@@ -73,20 +89,29 @@
         meetingRoom: '',
         meetingRoomOptions: [],
         meetingSummaryPerson: [],
+        meetingSummaryPersonObj: [],
         importantAttendees: [],
         otherAttendees: []
       }
     },
     created() {
       this.labelWidth = '110px'
-//      this.meetingRoomOptions = JSON.parse(Cache.get(`${'MeetingRooms'.toUpperCase()}-KEY`))
-//      this.orgNameOptions = JSON.parse(Cache.get(`${'UserOrgs'.toUpperCase()}-KEY`))
-      this.getSummaryPerson()
+      console.log('%c[meetingApplyAdd.vue created] this.formModel:', 'color:#3f3fff', this.formModel)
+      console.log('%c[meetingApplyAdd.vue created] this.formModel.title:', 'color:#3f3fff', this.formModel.title)
+      if (!this.formModel.title) {
+        this.formModel.title = this.title
+      } else {
+        let that = this
+        setTimeout(() => {
+          that.beginTime = that.formModel.beginTime
+          that.endTime = that.formModel.endTime
+        }, 20)
+      }
+//      console.log('%c[meetingApplyAdd.vue created] !this.formModel.endTime:', 'color:#f0be03', this.formModel.endTime)
     },
     mounted() {
-      this.beginTime = this.formModel.beginTime
-      this.endTime = this.formModel.endTime
-      this.title = this.formModel.title
+      console.log('%c[meetingApplyAdd.vue mounted] this.formModel:', 'color:#f04adb', this.formModel)
+      console.log('%c[meetingApplyAdd.vue mounted] this.formModel.title:', 'color:#f04adb', this.formModel.title)
     },
     components: {
       KalixDialog: Dialog,
@@ -119,30 +144,22 @@
         this.formModel.otherAttendees = users.ids
         this.formModel.otherAttendeesName = users.names
       },
-      orgOnChange(value) {
-        let item = this.orgNameOptions.find(e => {
-          return e.id === value
-        })
+      orgOnChange(item) {
         this.formModel.orgName = item.name
       },
       onBeginTimeChange(value) {
         this.formModel.beginTime = value
+        console.log('%c[meetingApplyAdd.vue] onBeginTimeChange:', 'color:#04fadb', value)
       },
       onEndTimeChange(value) {
         this.formModel.endTime = value
-      },
-      getSummaryPerson() {
-        console.log('[getSummaryPerson]')
-        let that = this
-        that.meetingSummaryPerson = []
-        console.log('[meetingApplyAdd] _meetingSummaryPerson', that.meetingSummaryPerson)
-        setTimeout(() => {
-          that.meetingSummaryPerson = that.formModel.meetingSummaryPerson.split(',')
-//          console.log('[meetingApplyAdd] _meetingSummaryPerson', that.meetingSummaryPerson)
-//          console.log('[meetingApplyAdd] meetingSummaryPerson', that.meetingSummaryPerson)
-        }, 20)
       }
     },
-    watch: {}
+    watch: {
+      tt(nv, ov) {
+        console.log('%c[meetingApplyAdd.vue watch] this.tt nv:', 'color:#f04adb', nv)
+        console.log('%c[meetingApplyAdd.vue watch] this.tt ov:', 'color:#f04adb', ov)
+      }
+    }
   }
 </script>

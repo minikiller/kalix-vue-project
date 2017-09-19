@@ -61,7 +61,7 @@
       return {
         name: 'kalixHeader',
         isPollMsg: false, // 是否进行消息轮询
-        userName: Cache.get('user_name'),
+        userName: '',
         menuList: [],
         themeOptions: [
           {value: 'theme-triton', label: '浅蓝'},
@@ -78,7 +78,15 @@
       }
     },
     watch: {'$route': 'initMenu'},
-    created() {
+    activated() {
+      this.userName = Cache.get('user_name')
+      console.log('header is activated')
+//      this.$nextTick(() => {
+//        console.log('user name cache is ' + this.userName)
+//      })
+    },
+    deactivated() {
+      console.log('header is deactivated')
     },
     mounted() {
       this.initMenu()

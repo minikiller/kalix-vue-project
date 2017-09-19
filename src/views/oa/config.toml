@@ -11,6 +11,8 @@ WorkflowHistoryURL = "/camel/rest/workflow/historys"
 MyInvolvedURL = "/camel/rest/workflow/myInvolvedHistory"
 MyHistoryURL = "/camel/rest/workflow/myHistory"
 TaskURL = "/camel/rest/workflow/tasks"
+TaskFormURL = "/camel/rest/workflow/form?taskId="
+TaskActivitiesURL = "/camel/rest/workflow/activities?historyProcessId="
 
 # 工作流流程地址
 MeetingApplyURL = "/camel/rest/meetingapplys"

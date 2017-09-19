@@ -5,31 +5,35 @@
 -->
 
 <template lang='pug'>
-  keep-alive
-    base-table(bizKey='processTask' title='待办流程列表'
-    v-bind:targetURL='targetURL'
-    v-bind:formModel.sync='formModel'
-    v-bind:bizDialog='bizDialog'
-    bizSearch='TaskSearch'
-    v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
-      template(slot="tableColumnSlot")
-        kalix-biz-no-column(name="businessNo")
-        el-table-column(prop="title" label="业务名称" width="280" align="center")
-        el-table-column(prop="name" label="任务名称" align="center")
-        el-table-column(prop="description" label="描述" align="center")
-        el-table-column(prop="createTime" label="创建时间" align="center")
+  div
+    keep-alive
+      base-table(bizKey='processTask' title='待办流程列表'
+      v-bind:targetURL='targetURL'
+      v-bind:formModel.sync='formModel'
+      v-bind:bizDialog='bizDialog'
+      bizSearch='TaskSearch'
+      v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
+        template(slot="tableColumnSlot")
+          kalix-biz-no-column(name="businessNo")
+          el-table-column(prop="title" label="业务名称" width="280" align="center")
+          el-table-column(prop="name" label="任务名称" align="center")
+          el-table-column(prop="description" label="描述" align="center")
+          el-table-column(prop="createTime" label="创建时间" align="center")
+    kalix-task-view(ref="kalixDialog")
+    kalix-task-complete(ref="kalixTaskDialog")
 </template>
 
 <script type='text/ecmascript-6'>
   import BaseTable from '@/components/custom/baseTable'
-  import {TaskURL, WorkflowSuspendURL, WorkflowActivateURL} from '../config.toml'
+  import {TaskURL} from '../config.toml'
   import {registerComp} from 'views/oa/comp'
   import BizNoColumn from 'views/oa/comp/bizNoColumn'
   import Vue from 'vue'
-  import Message from 'common/message'
   import BaseTableTool from '@/components/custom/baseTableTool'
   import EventBus from 'common/eventbus'
-  import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
+  import {ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
+  import TaskView from '@/views/oa/comp/taskView'
+  import TaskComplete from '@/views/oa/comp/taskComplete'
 
   Vue.component('TaskSearch', require('./taskSearch').default)
 
@@ -43,8 +47,9 @@
     filters: {},
     data() {
       return {
+        bizKey: 'taskComplete',
         btnList: [{
-          id: 'view',
+          id: 'viewTask',
           title: '查看',
           isShow: true
         }, {
@@ -70,25 +75,14 @@
     methods: {
       customTableTool(row, btnId) {
         switch (btnId) {
-          case 'suspend': { // 待办功能，未实行
-            this.$confirm('确定要执行该操作吗?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              return this.axios.request({
-                method: 'GET',
-                url: row.suspensionState === 1 ? WorkflowSuspendURL + row.key : WorkflowActivateURL + row.key,
-                params: {},
-                data: {
-                  id: row.id
-                }
-              })
-            }).then(response => {
-              EventBus.$emit(ON_REFRESH_DATA)
-              Message.success(response.data.msg)
-            }).catch(() => {
-            })
+          case 'viewTask': { // 待办功能，未实行
+            EventBus.$emit('processTask' + '-' + ON_INIT_DIALOG_DATA, row)
+            this.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+            break
+          }
+          case 'complete': {
+            EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+            this.$refs.kalixTaskDialog.$refs.kalixBizDialog.open('查看')
             break
           }
         }
@@ -96,6 +90,8 @@
     },
     components: {
       BaseTable,
+      KalixTaskView: TaskView,
+      KalixTaskComplete: TaskComplete,
       KalixTableTool: BaseTableTool,
       KalixBizNoColumn: BizNoColumn
     }
