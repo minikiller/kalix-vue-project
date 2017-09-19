@@ -41,39 +41,39 @@
       },
       params: {}, // 附加搜索参数
       defaultOptions: {},
-      defaultIds: {},
-      defaultNames: {}
+      defaultIds: {},     // 已选择的 id 逗号分隔字符串
+      defaultNames: {}    // 已选择的 name 逗号分隔字符串
     },
     data() {
       return {
         userList: [],
         loading: false,
         currentValue: this.value,
-        selectUser: {},
-        userListDefault: []
+        selectUser: {}
       }
     },
     mounted() {
       if (this.defaultIds && this.defaultNames) {
-        let _defaultIds = this.defaultIds.split(',')
-        let _defaultNames = this.defaultNames.split(',')
-        let meetingSummaryPersons = []
-        let len = _defaultIds.length
-        let _defaultIdsInt = _defaultIds.map(item => {
+        // 如果有传入 defaultIds 和 defaultNames
+        let _defaultIds = this.defaultIds.split(',') // 将 defaultIds 转换为 数组
+        let _defaultNames = this.defaultNames.split(',') // 将 defaultNames 转换为 数组
+        let _defaultIdsInt = _defaultIds.map(item => {  // 将 _defaultIds 字符串数组转化为 数字
           return item * 1
         })
-        for (let i = 0; i < len; i++) {
-          meetingSummaryPersons.push({
+        let defaultUsersObj = []  // 保存默认用户对象集合
+        for (let i = 0; i < _defaultIds.length; i++) { // 如果 _defaultIds 不为空，将用户对象插入 defaultUsersObj
+          defaultUsersObj.push({
             id: _defaultIdsInt[i],
             name: _defaultNames[i]
           })
         }
-        console.log('meetingSummaryPersons', meetingSummaryPersons)
-        this.userList = meetingSummaryPersons
-        this.userListDefault = meetingSummaryPersons
-        this.currentValue = _defaultIdsInt
+        console.log('meetingSummaryPersons', defaultUsersObj)
+        this.userList = defaultUsersObj // 绑定输入框默认值
+        this.userListDefault = defaultUsersObj // 备份输入框默认值
+        this.currentValue = _defaultIdsInt  // 用户ID集合 赋给 currentValue
+        this.flag = false   // 标记是否是打开文本框
         let that = this
-        setTimeout(() => {
+        setTimeout(() => {  // 清空下拉菜单 防止单击文本框后 自动弹出下拉列表
           that.userList = []
         }, 20)
       }
@@ -84,23 +84,27 @@
           let users = this.userList.filter((item) => {
             return (value.indexOf(item.id) > -1)
           })
-          this.selectUser = users || []
-//          let usersDef = this.userListDefault.filter((item) => {
-//            return (value.indexOf(item.id) > -1)
-//          })
-//          console.log(`[kalix]-[userselect.vue] usersDef `, users.push(usersDef))
-//          this.selectUser = users.push(usersDef) || []
+          let _selectUser = users || []
+          if (this.flag && this.userListDefault.length) { // 如果不是第一次打开并且默认用户不为空
+            let usersDef = this.userListDefault.filter((item) => { // 查找 value 是否存在输入框默认值
+              return (value.indexOf(item.id) > -1)
+            })
+            if (usersDef.length) {  // 如果默认用户，将新用户和默认用户和并
+              _selectUser = users.concat(usersDef)
+            }
+          }
+          this.selectUser = this.arrayUnique(_selectUser) // 去掉重复用户
         } else {  // 单选
           let users = this.userList.filter((item) => {
             return item.id === value
           })
           this.selectUser = users[0] || {}
         }
-//        ss
-        console.log(`[kalix]-[userselect.vue] this.userList is `, this.userList)
-        console.log(`[kalix]-[userselect.vue] value is `, value)
-        console.log(`[kalix]-[userselect.vue] currentValue is `, this.currentValue)
-        console.log(`[kalix]-[userselect.vue] current user is `, this.selectUser)
+        this.flag = true
+        console.log(`[kalix]-[userselect.vue] ${this.placeholder} this.userList is `, this.userList)
+        console.log(`[kalix]-[userselect.vue] ${this.placeholder} value is `, value)
+        console.log(`[kalix]-[userselect.vue] ${this.placeholder} currentValue is `, this.currentValue)
+        console.log(`[kalix]-[userselect.vue] ${this.placeholder} current user is `, this.selectUser)
         this.$emit('userSelected', this.selectUser)  // 发送事件}
       },
       remoteMethod(query) {
@@ -127,6 +131,26 @@
         } else {
           this.userList = []
         }
+      },
+      arrayUnique(arr) {
+        // 用户对象去重
+        let res = []
+        if (arr.length > 0) {
+          res = [arr[0]]
+          for (let i = 1; i < arr.length; i++) {
+            let repeat = false
+            for (let j = 0; j < res.length; j++) {
+              if (arr[i].id === res[j].id) {
+                repeat = true
+                break
+              }
+            }
+            if (!repeat) {
+              res.push(arr[i])
+            }
+          }
+        }
+        return res
       }
     },
     watch: {
@@ -135,6 +159,7 @@
       }
     }
   }
+
 </script>
 
 
