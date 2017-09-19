@@ -12,7 +12,7 @@ module.exports = {
       text: '展示不同类型作品数量'
     },
     tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
     },
     plotOptions: {
       pie: {
