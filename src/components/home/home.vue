@@ -20,6 +20,7 @@
   import Navigater from '@/components/navigater/navigater'
   import Welcome from '@/views/admin/welcome'
   import Cache from '@/common/cache.js'
+
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
   let content = {
@@ -46,10 +47,12 @@
       initTheme() {
         this.themeValue = Cache.get('theme')
         if (!this.themeValue) {
-          let url = 'camel/rest/system/preferences/admin'
+          let url = '/camel/rest/system/preferences/admin'
           this.$http.get(url).then(res => {
-            Cache.save('theme', this.themeValue)
-            this.themeValue = res.data.theme
+            if (res) {
+              this.themeValue = res.data.theme
+              Cache.save('theme', this.themeValue)
+            }
           })
         }
       },
