@@ -2,7 +2,7 @@
   keep-alive
     base-table(bizKey="workgroup" title='工作组列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
-    v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
+    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     bizSearch="AdminWorkGroupSearch"  v-bind:btnList="btnList")
 </template>
 

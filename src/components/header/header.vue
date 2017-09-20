@@ -71,7 +71,7 @@
           {value: 'theme-classic', label: '经典'},
           {value: 'theme-gray', label: '灰色'}
         ],
-        themeValue: this.styleTheme,
+        themeValue: '',
         headerMenuChk: this.menuChk,
         msgCount: 0,
         icon: ''
@@ -92,6 +92,9 @@
       this.initMenu()
     },
     methods: {
+      setTheme(theme) {
+        this.themeValue = theme
+      },
       initMenu() {
         let d = new Date()
         let cd = d.getTime()
@@ -131,7 +134,10 @@
         this.$router.push({path: `/common/receiver`})
       },
       decode(s) {
-        return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'))
+        if (s) {
+          return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'))
+        }
+        return 'null'
       },
       pollMsg() { // 消息通知轮询
         let that = this
