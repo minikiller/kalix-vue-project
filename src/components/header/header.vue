@@ -134,7 +134,10 @@
         this.$router.push({path: `/common/receiver`})
       },
       decode(s) {
-        return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'))
+        if (s) {
+          return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'))
+        }
+        return 'null'
       },
       pollMsg() { // 消息通知轮询
         let that = this
