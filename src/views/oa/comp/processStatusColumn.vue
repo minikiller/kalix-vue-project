@@ -10,24 +10,26 @@
 </template>
 
 <script type="text/ecmascript-6">
-    export default {
-      filters: {
-        statusFilter(status) {
-          const statusMap = {
-            1: 'success',
-            0: 'danger'
-          }
-          return statusMap[status]
-        },
-        dictFilter(value) {
-          const valueMap = {
-            1: '处理中',
-            0: '未申请'
-          }
-          return valueMap[value]
+  export default {
+    filters: {
+      statusFilter(status) {
+        const statusMap = {
+          0: 'danger',
+          1: 'warning',
+          2: 'success'
         }
+        return statusMap[status]
+      },
+      dictFilter(value) {
+        const valueMap = {
+          2: '已结束',
+          1: '处理中',
+          0: '未申请'
+        }
+        return valueMap[value]
       }
     }
+  }
 </script>
 
 <style scoped lang="stylus">
