@@ -41,66 +41,59 @@
       },
       params: {}, // 附加搜索参数
       defaultOptions: {},
-      defaultIds: {},
-      defaultNames: {}
+      defaultIds: {}     // 已选择的 id 逗号分隔字符串
     },
     data() {
       return {
         userList: [],
         loading: false,
         currentValue: this.value,
-        selectUser: {},
-        userListDefault: []
+        selectUser: {}
       }
     },
-    mounted() {
-      if (this.defaultIds && this.defaultNames) {
-        let _defaultIds = this.defaultIds.split(',')
-        let _defaultNames = this.defaultNames.split(',')
-        let meetingSummaryPersons = []
-        let len = _defaultIds.length
-        let _defaultIdsInt = _defaultIds.map(item => {
-          return item * 1
-        })
-        for (let i = 0; i < len; i++) {
-          meetingSummaryPersons.push({
-            id: _defaultIdsInt[i],
-            name: _defaultNames[i]
-          })
+    created() {
+      if (this.defaultIds) {
+        // 如果有传入 defaultIds 和 defaultNames
+        let _data = {
+          id: this.defaultIds,
+          page: 1,
+          start: 0,
+          limit: 200
         }
-        console.log('meetingSummaryPersons', meetingSummaryPersons)
-        this.userList = meetingSummaryPersons
-        this.userListDefault = meetingSummaryPersons
-        this.currentValue = _defaultIdsInt
-        let that = this
-        setTimeout(() => {
-          that.userList = []
-        }, 20)
+        this.axios.get(usersURL, {
+          params: _data
+        }).then(response => {
+          this.userList = response.data.data
+          this.users = response.data.data
+          let _defaultIds = this.defaultIds.split(',') // 将 defaultIds 转换为 数组
+          let _defaultIdsInt = _defaultIds.map(item => {  // 将 _defaultIds 字符串数组转化为 数字
+            return item * 1
+          })
+          this.currentValue = _defaultIdsInt  // 用户ID集合 赋给 currentValue
+          let that = this
+          setTimeout(() => {  // 清空 下拉列表
+            that.userList = []
+          }, 20)
+        })
       }
     },
     methods: {
       onChange(value) {
         if (this.multiple) {  // 多选
-          let users = this.userList.filter((item) => {
+          let users = this.users.filter((item) => {
             return (value.indexOf(item.id) > -1)
           })
           this.selectUser = users || []
-//          let usersDef = this.userListDefault.filter((item) => {
-//            return (value.indexOf(item.id) > -1)
-//          })
-//          console.log(`[kalix]-[userselect.vue] usersDef `, users.push(usersDef))
-//          this.selectUser = users.push(usersDef) || []
         } else {  // 单选
           let users = this.userList.filter((item) => {
             return item.id === value
           })
           this.selectUser = users[0] || {}
         }
-//        ss
-        console.log(`[kalix]-[userselect.vue] this.userList is `, this.userList)
-        console.log(`[kalix]-[userselect.vue] value is `, value)
-        console.log(`[kalix]-[userselect.vue] currentValue is `, this.currentValue)
-        console.log(`[kalix]-[userselect.vue] current user is `, this.selectUser)
+//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} this.userList is `, this.userList)
+//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} value is `, value)
+//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} currentValue is `, this.currentValue)
+//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} current user is `, this.selectUser)
         this.$emit('userSelected', this.selectUser)  // 发送事件}
       },
       remoteMethod(query) {
@@ -109,7 +102,6 @@
           this.loading = true
           setTimeout(() => {
             this.loading = false
-//            let val = strToUnicode(query)
             let _jsonStr = {'%name%': query}
             _jsonStr = Object.assign(_jsonStr, this.params)
             let _data = {
@@ -127,6 +119,26 @@
         } else {
           this.userList = []
         }
+      },
+      arrayUnique(arr) {
+        // 用户对象去重
+        let res = []
+        if (arr.length > 0) {
+          res = [arr[0]]
+          for (let i = 1; i < arr.length; i++) {
+            let repeat = false
+            for (let j = 0; j < res.length; j++) {
+              if (arr[i].id === res[j].id) {
+                repeat = true
+                break
+              }
+            }
+            if (!repeat) {
+              res.push(arr[i])
+            }
+          }
+        }
+        return res
       }
     },
     watch: {
@@ -135,6 +147,7 @@
       }
     }
   }
+
 </script>
 
 

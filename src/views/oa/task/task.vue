@@ -82,7 +82,7 @@
           }
           case 'complete': {
             EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
-            this.$refs.kalixTaskDialog.$refs.kalixBizDialog.open('查看')
+            this.$refs.kalixTaskDialog.open(row)
             break
           }
         }

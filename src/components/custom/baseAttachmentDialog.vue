@@ -76,7 +76,6 @@
       close() {
         this.visible = false
         this._afterDialogClose()
-        EventBus.$off('KalixDataRefresh')
       },
       openDialog(_row, _bizKey) {
         console.log('scheduledictAttachment', 'openDialog')
