@@ -65,12 +65,12 @@
           params: _data
         }).then(response => {
           this.userList = response.data.data
+          let _defaultIds = this.defaultIds.split(',') // 将 defaultIds 转换为 数组
+          let _defaultIdsInt = _defaultIds.map(item => {  // 将 _defaultIds 字符串数组转化为 数字
+            return item * 1
+          })
+          this.currentValue = _defaultIdsInt  // 用户ID集合 赋给 currentValue
         })
-        let _defaultIds = this.defaultIds.split(',') // 将 defaultIds 转换为 数组
-        let _defaultIdsInt = _defaultIds.map(item => {  // 将 _defaultIds 字符串数组转化为 数字
-          return item * 1
-        })
-        this.currentValue = _defaultIdsInt  // 用户ID集合 赋给 currentValue
       }
     },
     methods: {
