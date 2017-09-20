@@ -6,7 +6,7 @@
 <template lang="pug">
   div
     el-table(v-if="tableData && tableData.length > 0" v-bind:data="tableData" stripe style="width:100%"
-    v-bind:height="tableHeight" border fit)
+    v-bind:height="tableHeight" v-loading.body="loading" border fit)
       el-table-column(label="行号" width="70")
         template(scope="scope")
           div(style="text-align: center") {{ scope.row.rowNumber }}
@@ -36,6 +36,7 @@
     },
     methods: {
       getBizData() { // 获得流程历史
+        this.loading = true
         this.axios.request({
           method: 'GET',
           url: this.targetURL,
@@ -51,6 +52,7 @@
             return item
           })
           this.pager.totalCount = res.data.totalCount
+          this.loading = false
 //          Message.processResult(res)
         })
       },
@@ -66,6 +68,7 @@
     data() {
       return {
         tableHeight: MAX_TABLE_HEIGHT,
+        loading: true,
         tableData: [],
         pager: {
           totalCount: 0,

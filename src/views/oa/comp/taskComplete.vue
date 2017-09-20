@@ -7,17 +7,17 @@
   el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onClose"
   v-bind:close-on-click-modal="false")
     template
-      el-tabs(v-model="activeName" type="card")
-        el-tab-pane(label="业务审批" name="approveTab")
+      el-tabs(ref="bizTabs" v-model="activeName" type="card")
+        el-tab-pane(label="业务数据" name="bizDataTab")
+          el-form(v-bind:model="formModel")
+            component(v-bind:is="whichBizForm" v-bind:form-model="bizForm")
+        el-tab-pane(v-if="isApproveShow" label="业务审批" name="approveTab")
           el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
             el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
               el-input(v-model="formModel.content" type="textarea")
             el-form-item
               el-button(type="success" v-on:click="onAgree") 同意
               el-button(type="danger" v-on:click="onDisagree") 不同意
-        el-tab-pane(label="业务数据" name="bizDataTab")
-          el-form(v-bind:model="formModel")
-            component(v-bind:is="whichBizForm" v-bind:form-model="bizForm")
         el-tab-pane(label="流程历史" name="historyTab")
           kalix-paged-table(v-bind:targetURL="targetURL")
             template(slot="tableColumnSlot"  v-bind:jsonStr="jsonStr")
@@ -50,6 +50,12 @@
     created() {
       this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
+    props: {
+      isApproveShow: { // 是否显示审批tab
+        type: Boolean,
+        default: true
+      }
+    },
     data() {
       return {
         taskActivityData: [], // 流程历史
@@ -62,7 +68,7 @@
         bizData: {}, // 流程业务的动态返回配置信息
         bizForm: {}, // 流程数据信息
         title: '',
-        activeName: 'approveTab',
+        activeName: 'bizDataTab',
         isView: true,
         bizKey: 'taskComplete',
         whichBizForm: '', // 动态加载业务view
@@ -81,15 +87,21 @@
       visible(newValue) {    // 根据dialog的状态重置表单
         if (!newValue) {
           Object.assign(this.formModel, JSON.parse(this.tempFormModel))
-          this.activeName = 'approveTab'
-          this.$refs.dialogForm.resetFields()
+          this.activeName = 'bizDataTab'
+          if (this.isApproveShow) {
+            this.$refs.dialogForm.resetFields()
+          }
         }
       }
     },
     methods: {
       open(row) {
         this.visible = true
-        this.title = '流程审批-' + row.name
+        if (this.isApproveShow) {
+          this.title = '流程审批-' + row.name
+        } else {
+          this.title = '流程历史-' + row.name
+        }
         this.targetURL = TaskActivitiesURL + row.processInstanceId
         this.getBizData(row)
       },
@@ -125,9 +137,11 @@
       },
       getBizData(row) {
         this.taskId = row.id
+        let historyUrl = 'camel/rest/workflow/bizDataForm?processDefinitionId=' + row.processDefinitionId
+        console.log('history Url is ', historyUrl)
         this.axios.request({
           method: 'GET',
-          url: TaskFormURL + row.id,  // 流程业务的动态返回配置信息
+          url: this.isApproveShow ? TaskFormURL + row.id : historyUrl,  // 流程业务的动态返回配置信息,流程历史和审批请求的地址不同
           params: {}
         }).then((res) => {
           this.bizData = res.data
