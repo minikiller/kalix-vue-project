@@ -6,17 +6,18 @@
 <template lang="pug">
   el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onClose"
   v-bind:close-on-click-modal="false")
-    div
-      el-tabs(v-model="activeName")
+    template
+      el-tabs(v-model="activeName" type="card")
         el-tab-pane(label="业务审批" name="approveTab")
           el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
-            el-form-item(label="审批意见")
+            el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
               el-input(v-model="formModel.content" type="textarea")
             el-form-item
               el-button(type="success" v-on:click="onAgree") 同意
               el-button(type="danger" v-on:click="onDisagree") 不同意
         el-tab-pane(label="业务数据" name="bizDataTab")
-          component(:is="whichBizForm" v-bind:form-model="bizForm")
+          el-form(v-bind:model="formModel")
+            component(v-bind:is="whichBizForm" v-bind:form-model="bizForm")
         el-tab-pane(label="流程历史" name="historyTab")
           kalix-paged-table(v-bind:targetURL="targetURL")
             template(slot="tableColumnSlot"  v-bind:jsonStr="jsonStr")
@@ -46,12 +47,18 @@
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
   export default {
+    created() {
+      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+    },
     data() {
       return {
         taskActivityData: [], // 流程历史
         visible: false,
         targetURL: '',
         jsonStr: {},
+        rules: {
+          content: [{required: true, message: '请输入审批意见', trigger: 'blur'}]
+        },
         bizData: {}, // 流程业务的动态返回配置信息
         bizForm: {}, // 流程数据信息
         title: '',
@@ -71,9 +78,10 @@
       KalixPagedTable: PagedTable
     },
     watch: {
-      visible(n) {    // 根据dialog的状态重置表单
-        if (n) {
-          console.log('hello')
+      visible(newValue) {    // 根据dialog的状态重置表单
+        if (!newValue) {
+          Object.assign(this.formModel, JSON.parse(this.tempFormModel))
+          this.activeName = 'approveTab'
           this.$refs.dialogForm.resetFields()
         }
       }
@@ -86,19 +94,23 @@
         this.getBizData(row)
       },
       completeTask(value) { // 完成工作流
-        const TaskCompleteURL = `/camel/rest/${this.bizData.processDefinitionId}s/workflow/completeTask`
-        this.axios.request({
-          method: 'GET',
-          url: TaskCompleteURL,
-          params: {
-            accepted: value,
-            comment: this.form.content,
-            taskId: this.taskId
+        this.$refs.dialogForm.validate((valid) => {
+          if (valid) {
+            const TaskCompleteURL = `/camel/rest/${this.bizData.processDefinitionId}s/workflow/completeTask`
+            this.axios.request({
+              method: 'GET',
+              url: TaskCompleteURL,
+              params: {
+                accepted: value,
+                comment: this.form.content,
+                taskId: this.taskId
+              }
+            }).then((res) => {
+              Message.processResult(res)
+              this.onClose()
+              EventBus.$emit(ON_REFRESH_DATA)
+            })
           }
-        }).then((res) => {
-          Message.processResult(res)
-          this.onClose()
-          EventBus.$emit(ON_REFRESH_DATA)
         })
       },
       onAgree() {
