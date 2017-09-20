@@ -19,8 +19,8 @@
               el-button(type="success" v-on:click="onAgree") 同意
               el-button(type="danger" v-on:click="onDisagree") 不同意
         el-tab-pane(label="流程历史" name="historyTab")
-          kalix-paged-table(v-bind:targetURL="targetURL")
-            template(slot="tableColumnSlot"  v-bind:jsonStr="jsonStr")
+          kalix-paged-table(v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr")
+            template
               el-table-column(prop="activityName" label="节点名称" align="center" width="220")
               el-table-column(prop="assignee" label="执行人" align="center"  width="90")
               kalix-date-column(prop="startTime" label="开始时间")
@@ -29,6 +29,20 @@
               el-table-column(prop="result" label="审批结果" align="center"  width="220")
               el-table-column(prop="comment" label="审批意见" align="center"  width="220")
         el-tab-pane(label="附件数据"  name="attachmentTab")
+          kalix-paged-table(v-bind:targetURL="attachTargetURL" v-bind:jsonStr="attachJsonStr")
+            template
+              el-table-column(prop="attachmentName" label="名称")
+                template(scope="scope")
+                  div.attachment-name {{scope.row.attachmentName}}
+              el-table-column(label="大小(MB)" width="100")
+                template(scope="scope")
+                  span {{setFileSize(scope.row.attachmentSize)}}
+              el-table-column(prop="attachmentType" label="类型" width="116")
+              kalix-date-column(prop="creationDate" label="上传日期")
+              el-table-column(label="操作" width="120")
+                template(scope="scope")
+                  a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
+                    | 下载
     div.dialog-footer(slot="footer")
       template
         el-button(type="primary" v-on:click="onClose") 关 闭
@@ -36,12 +50,13 @@
 
 <script type="text/ecmascript-6">
   import {TaskActivitiesURL, TaskFormURL} from '../config.toml'
+  import {AttachmentURL} from 'config/global.toml'
   import Dialog from '@/components/custom/baseDialog'
-  import EventBus from 'common/eventbus'
-  import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
-  import DateColumn from 'views/oa/comp/dateColumn'
   import PagedTable from '@/components/custom/pagedTable'
+  import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
+  import EventBus from 'common/eventbus'
   import Message from 'common/message'
+  import DateColumn from 'views/oa/comp/dateColumn'
 
   const baseFormUrl = '/camel/rest/'
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
@@ -58,6 +73,8 @@
     },
     data() {
       return {
+        attachTargetURL: AttachmentURL,
+        attachJsonStr: '',
         taskActivityData: [], // 流程历史
         visible: false,
         targetURL: '',
@@ -103,6 +120,7 @@
           this.title = '流程历史-' + row.name
         }
         this.targetURL = TaskActivitiesURL + row.processInstanceId
+        this.attachJsonStr = `{mainId:${row.id}}`
         this.getBizData(row)
       },
       completeTask(value) { // 完成工作流

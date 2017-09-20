@@ -35,7 +35,7 @@
 <script type="text/ecmascript-6">
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
-  import {AttachmentURL, PageConfig} from 'config/global.toml'
+  import {AttachmentURL} from 'config/global.toml'
   import PagedTable from '@/components/custom/pagedTable'
   import DateColumn from 'views/oa/comp/dateColumn'
 
@@ -49,14 +49,7 @@
         title: '',
         visible: false,
         files: [],
-        tableHeight: MAX_TABLE_HEIGHT,
-        pager: {
-          totalCount: 0,
-          pageSizes: PageConfig.sizes,
-          currentPage: 1,
-          limit: PageConfig.limit,
-          start: 0
-        }
+        tableHeight: MAX_TABLE_HEIGHT
       }
     },
     methods: {
