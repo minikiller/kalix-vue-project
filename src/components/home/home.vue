@@ -6,8 +6,7 @@
 
 <template lang="pug">
   div.home(v-bind:class="themeValue")
-    kalix-header(:menuChk="isSmall"
-    v-bind:style-theme="themeValue"
+    kalix-header(:menuChk="isSmall" ref="kalixHeader"
     v-on:onSmall="setSmall" v-on:onChangeTheme="changeTheme")
     div.s-flex.container
       kalix-nav(:menuChk="isSmall")
@@ -45,15 +44,17 @@
     watch: {'$route': 'fetchData'},
     methods: {
       initTheme() {
-        this.themeValue = Cache.get('theme')
+        this.themeValue = Cache.get('styleTheme')
         if (!this.themeValue) {
           let url = '/camel/rest/system/preferences/admin'
           this.$http.get(url).then(res => {
             if (res) {
               this.themeValue = res.data.theme
-              Cache.save('theme', this.themeValue)
+              this.$refs.kalixHeader.setTheme(res.data.theme)
             }
           })
+        } else {
+          this.$refs.kalixHeader.setTheme(this.themeValue)
         }
       },
       setSmall(e) {

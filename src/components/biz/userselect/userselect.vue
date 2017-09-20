@@ -41,8 +41,7 @@
       },
       params: {}, // 附加搜索参数
       defaultOptions: {},
-      defaultIds: {},     // 已选择的 id 逗号分隔字符串
-      defaultNames: {}    // 已选择的 name 逗号分隔字符串
+      defaultIds: {}     // 已选择的 id 逗号分隔字符串
     },
     data() {
       return {
@@ -65,41 +64,36 @@
           params: _data
         }).then(response => {
           this.userList = response.data.data
+          this.users = response.data.data
           let _defaultIds = this.defaultIds.split(',') // 将 defaultIds 转换为 数组
           let _defaultIdsInt = _defaultIds.map(item => {  // 将 _defaultIds 字符串数组转化为 数字
             return item * 1
           })
           this.currentValue = _defaultIdsInt  // 用户ID集合 赋给 currentValue
+          let that = this
+          setTimeout(() => {  // 清空 下拉列表
+            that.userList = []
+          }, 20)
         })
       }
     },
     methods: {
       onChange(value) {
         if (this.multiple) {  // 多选
-          let users = this.userList.filter((item) => {
+          let users = this.users.filter((item) => {
             return (value.indexOf(item.id) > -1)
           })
           this.selectUser = users || []
-//          if (this.flag && this.userListDefault.length) { // 如果不是第一次打开并且默认用户不为空
-//            let usersDef = this.userListDefault.filter((item) => { // 查找 value 是否存在输入框默认值
-//              return (value.indexOf(item.id) > -1)
-//            })
-//            if (usersDef.length) {  // 如果默认用户，将新用户和默认用户和并
-//              _selectUser = users.concat(usersDef)
-//            }
-//          }
-//          this.selectUser = this.arrayUnique(_selectUser) // 去掉重复用户
         } else {  // 单选
           let users = this.userList.filter((item) => {
             return item.id === value
           })
           this.selectUser = users[0] || {}
         }
-        this.flag = true
-        console.log(`[kalix]-[userselect.vue] ${this.placeholder} this.userList is `, this.userList)
-        console.log(`[kalix]-[userselect.vue] ${this.placeholder} value is `, value)
-        console.log(`[kalix]-[userselect.vue] ${this.placeholder} currentValue is `, this.currentValue)
-        console.log(`[kalix]-[userselect.vue] ${this.placeholder} current user is `, this.selectUser)
+//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} this.userList is `, this.userList)
+//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} value is `, value)
+//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} currentValue is `, this.currentValue)
+//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} current user is `, this.selectUser)
         this.$emit('userSelected', this.selectUser)  // 发送事件}
       },
       remoteMethod(query) {

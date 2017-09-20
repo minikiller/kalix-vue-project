@@ -71,7 +71,7 @@
           {value: 'theme-classic', label: '经典'},
           {value: 'theme-gray', label: '灰色'}
         ],
-        themeValue: this.styleTheme,
+        themeValue: '',
         headerMenuChk: this.menuChk,
         msgCount: 0,
         icon: ''
@@ -92,6 +92,9 @@
       this.initMenu()
     },
     methods: {
+      setTheme(theme) {
+        this.themeValue = theme
+      },
       initMenu() {
         let d = new Date()
         let cd = d.getTime()
