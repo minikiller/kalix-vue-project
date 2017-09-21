@@ -57,7 +57,10 @@
           phone: '',
           preEvalEndTime: '',
           preEvalStartTime: '',
-          technologyNeed: ''
+          technologyNeed: '',
+          signupStyle: '',
+          detail: '',
+          remark: ''
         },
         formRules: {
           name: [

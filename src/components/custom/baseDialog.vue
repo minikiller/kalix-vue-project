@@ -108,10 +108,17 @@
       close() {
         this.onCancelClick()
       },
-      open(_title, isEdit = false) {
+      open(_title, isEdit = false, row) {
         this.privateTitle = _title
         this.visible = true
         this.isEdit = isEdit
+        console.log('open dialog', row)
+        if (row) {
+          Object.assign(this.formModel, row)
+        } else {
+          Object.assign(this.formModel, JSON.parse(this.tempFormModel))
+        }
+//        this.$emit('update:formModel', row)
       },
       initData(row) {
         console.log(`[kalix] init base dialog ${this.bizKey}`)

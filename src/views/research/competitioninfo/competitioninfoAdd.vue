@@ -51,7 +51,16 @@
         div.dd
         el-form-item.s-flex_item(label="作品技术要求" prop="technologyNeed" label-width="140px")
           el-input(type="textarea" v-model="formModel.technologyNeed")
- </template>
+      div.s-flex
+        el-form-item.s-flex_item(label="详细信息" prop="detail" label-width="140px")
+          el-input(type="textarea" v-model="formModel.detail")
+        div.dd
+        el-form-item.s-flex_item(label="备注" prop="remark" label-width="140px")
+          el-input(type="textarea" v-model="formModel.remark")
+      div.s-flex
+        el-form-item.s-flex_item(label="报名表样式" prop="signupStyle" label-width="140px")
+          kalix-upload(v-model="signupStyle")
+</template>
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
@@ -80,10 +89,13 @@
         preEvalStartTime: '',
         preEvalEndTime: '',
         lastEvalStartTime: '',
-        lastEvalEndTime: ''
+        lastEvalEndTime: '',
+        signupStyle: ''
       }
     },
     created() {
+      this.signupStyle = this.formModel.signupStyle
+      console.log('this.formRules.name:', this.formRules.name)
       this.collectionStartTime = this.formModel.collectionStartTime
       this.collectionEndTime = this.formModel.collectionEndTime
       this.preEvalStartTime = this.formModel.preEvalStartTime
@@ -95,10 +107,11 @@
       KalixDialog: Dialog,
       KalixDictSelect: BaseDictSelect
     },
-    methods: {
-
-    },
+    methods: {},
     watch: {
+      signupStyle(newValue) {
+        this.formModel.signupStyle = newValue
+      },
       collectionStartTime(newValue) {
         this.formModel.collectionStartTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
       },

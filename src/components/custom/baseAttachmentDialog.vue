@@ -18,7 +18,7 @@
           el-table-column(prop="attachmentName" label="名称")
             template(scope="scope")
               div.attachment-name {{scope.row.attachmentName}}
-          el-table-column(label="大小(MB)" width="100")
+          el-table-column(label="大小" width="100")
             template(scope="scope")
               span {{setFileSize(scope.row.attachmentSize)}}
           el-table-column(prop="attachmentType" label="类型" width="116")
@@ -38,6 +38,7 @@
   import {AttachmentURL} from 'config/global.toml'
   import PagedTable from '@/components/custom/pagedTable'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import prettyBytes from 'pretty-bytes'
 
   const MAX_TABLE_HEIGHT = 450
   export default {
@@ -54,7 +55,7 @@
     },
     methods: {
       setFileSize(size) {
-        return (size / (1024 * 1024)).toFixed(2)
+        return prettyBytes(size)
       },
       onSubmitClick() {
         console.log('dialog cancel button clicked !')
@@ -143,8 +144,7 @@
         EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose')
       }
     },
-    computed: {
-    },
+    computed: {},
     components: {
       KalixPagedTable: PagedTable,
       KalixDateColumn: DateColumn

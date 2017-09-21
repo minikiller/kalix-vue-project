@@ -339,9 +339,9 @@
             console.log('[kalix] edit dialog is: ' + dig[0].dialog)
             this.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              this.$emit('update:formModel', row)
+//              this.$emit('update:formModel', row)
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
-              this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true)
+              this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true, row)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 this.$refs.kalixDialog.init(this.dialogOptions)
               }

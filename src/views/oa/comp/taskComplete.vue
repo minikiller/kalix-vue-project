@@ -4,7 +4,7 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onClose"
+  el-dialog.dialog-form(ref="kalixTaskDialog" v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onClose"
   v-bind:close-on-click-modal="false")
     template
       el-tabs(ref="bizTabs" v-model="activeName" type="card")
@@ -20,7 +20,7 @@
               el-button(type="danger" v-on:click="onDisagree") 不同意
         el-tab-pane(label="流程历史" name="historyTab")
           kalix-paged-table(v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr")
-            template
+            template(slot="tableColumnSlot")
               el-table-column(prop="activityName" label="节点名称" align="center" width="220")
               el-table-column(prop="assignee" label="执行人" align="center"  width="90")
               kalix-date-column(prop="startTime" label="开始时间")
@@ -30,18 +30,18 @@
               el-table-column(prop="comment" label="审批意见" align="center"  width="220")
         el-tab-pane(label="附件数据"  name="attachmentTab")
           kalix-paged-table(v-bind:targetURL="attachTargetURL" v-bind:jsonStr="attachJsonStr")
-            template
+            template(slot="tableColumnSlot")
               el-table-column(prop="attachmentName" label="名称")
                 template(scope="scope")
                   div.attachment-name {{scope.row.attachmentName}}
-              el-table-column(label="大小(MB)" width="100")
+              el-table-column(label="大小" width="100")
                 template(scope="scope")
                   span {{setFileSize(scope.row.attachmentSize)}}
               el-table-column(prop="attachmentType" label="类型" width="116")
               kalix-date-column(prop="creationDate" label="上传日期")
               el-table-column(label="操作" width="120")
                 template(scope="scope")
-                  a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
+                  a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank" style="text-decoration:none;")
                     | 下载
     div.dialog-footer(slot="footer")
       template
@@ -57,9 +57,12 @@
   import EventBus from 'common/eventbus'
   import Message from 'common/message'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import { Loading } from 'element-ui'
+  import prettyBytes from 'pretty-bytes'
 
   const baseFormUrl = '/camel/rest/'
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
+  let loadingInstance
 
   export default {
     created() {
@@ -112,7 +115,14 @@
       }
     },
     methods: {
+      setFileSize(size) {
+        return prettyBytes(size)
+      },
       open(row) {
+        loadingInstance = Loading.service(
+          {
+            target: this.$refs.kalixTaskDialog.$el.querySelector('.el-dialog')
+          })
         this.visible = true
         if (this.isApproveShow) {
           this.title = '流程审批-' + row.name
@@ -120,7 +130,7 @@
           this.title = '流程历史-' + row.name
         }
         this.targetURL = TaskActivitiesURL + row.processInstanceId
-        this.attachJsonStr = `{mainId:${row.id}}`
+        this.attachJsonStr = `{mainId:${row.entityId}}`
         this.getBizData(row)
       },
       completeTask(value) { // 完成工作流
@@ -177,6 +187,7 @@
         }).then((res) => {
           this.bizForm = res.data
           this.whichBizForm = _import(`oa/${this.bizData.processDefinitionId}/${this.formClass}`)
+          loadingInstance.close()
         })
       }
     }

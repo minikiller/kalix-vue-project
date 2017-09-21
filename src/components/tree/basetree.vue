@@ -13,7 +13,7 @@
 
 <script type="text/ecmascript-6">
   import Vue from 'vue'
-  import {orgsURL} from 'config/global.toml'
+  import {orgURL} from 'config/global.toml'
 
   export default {
     watch: {
@@ -34,7 +34,7 @@
         }
       },
       fentch () {
-        Vue.axios.get(orgsURL).then((response) => {
+        Vue.axios.get(orgURL).then((response) => {
           this.data2 = response.data
           console.log('optionOrgTree is ', response.data)
         })

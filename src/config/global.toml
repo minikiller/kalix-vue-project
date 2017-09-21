@@ -21,8 +21,10 @@ ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 
 # 附件管理请求地址
 AttachmentURL="/camel/rest/attachments"
+# 附件上传地址
+uploadURL = "/camel/rest/upload"
 # 组织机构树请求地址
-orgsURL = "/camel/rest/orgs"
+orgURL = "/camel/rest/orgs"
 
 # 全局table分页的配置
 [PageConfig]
@@ -73,6 +75,10 @@ orgsURL = "/camel/rest/orgs"
 [[GlobalComponent]]
   path = "./components/custom/baseAttachmentDialog"
   name = "AttachmentDialog"
+# 附件上传
+[[GlobalComponent]]
+  path = "./components/custom/baseUpload"
+  name = "kalixUpload"
 # 注册全局组件-组织机构树控件
 [[GlobalComponent]]
   path = "./components/tree/basetree2"
