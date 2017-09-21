@@ -118,7 +118,7 @@
         } else {
           Object.assign(this.formModel, JSON.parse(this.tempFormModel))
         }
-        console.log('open dialog model', this.formModel)
+        console.log('open dialog model', this.tempFormModel)
         console.log('open dialog row', row)
 
 //        this.$emit('update:formModel', row)
@@ -134,6 +134,7 @@
     },
     created() {
       this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+      console.log('called created!!!')
 //      EventBus.$on(this.bizKey + '-' + ON_INIT_DIALOG_DATA, this.initData)
     },
     computed: {

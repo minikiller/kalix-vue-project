@@ -53,7 +53,7 @@
     },
     data() {
       return {
-        formModel: FormModel,
+        formModel: Object.assign({}, FormModel),
         dictTypesListURL: '',
         dictTargetURL: '',
         dictBizKey: '',

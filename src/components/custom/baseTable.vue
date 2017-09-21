@@ -259,7 +259,7 @@
 //        console.log(dig[0].dialog)3
         this.whichBizDialog = dig[0].dialog
         console.log('[onAddClick]', dig[0].dialog)
-        this.$emit('update:formModel', {})
+//        this.$emit('update:formModel', {})
         setTimeout(() => {
 //          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')

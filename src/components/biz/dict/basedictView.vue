@@ -26,7 +26,7 @@
   export default {
     data() {
       return {
-        formModel: FormModel,
+        formModel: Object.assign({}, FormModel),
         readonly: true
       }
     },

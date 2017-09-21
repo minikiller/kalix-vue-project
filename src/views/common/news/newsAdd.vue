@@ -14,13 +14,16 @@
       el-form-item(label="内容" prop="content" v-bind:rules="rules.content")
         el-input(v-model="formModel.content" type="area")
       el-form-item(label="发布日期")
-        el-date-picker(v-model="formModel.publishDate" type="date" v-on:change="onPublishDate")
+        kalix-date-picker(v-model="formModel.publishDate")
+        <!--el-date-picker(v-model="formModel.publishDate" type="date")-->
 </template>
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import {NewsURL} from '../config.toml'
   import {formatDate} from 'common/typeFormat'
+  import {FormModel} from './model.toml'
+  import DatePicker from '@/components/biz/date/datepicker.vue'
 
   export default {
 //    props: {
@@ -30,16 +33,10 @@
 //      }
 //    },
     mounted() {
-      console.log('this formmodel is ', this.formModel)
     },
     data() {
       return {
-        formModel: {
-          title: '',
-          content: '',
-          publishPeople: '',
-          publishDate: ''
-        },
+        formModel: Object.assign({}, FormModel),
         rules: {
           title: [{required: true, message: '请输入标题', trigger: 'blur'}],
           content: [{required: true, message: '请输入内容', trigger: 'blur'}]
@@ -47,10 +44,32 @@
         targetURL: NewsURL
       }
     },
+    watch: {
+//      formModel: {
+//        handler: function (val, oldVal) {
+//          if (val.publishDate) {
+//            this.formModel.publishDate = this.GMTToStr(val.publishDate)
+//            console.log('form model', this.formModel.publishDate)
+//          }
+//        },
+//        deep: true
+//      }
+    },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      KalixDatePicker: DatePicker
     },
     methods: {
+      GMTToStr(time) {
+        let date = new Date(time)
+        let Str = date.getFullYear() + '-' +
+          (date.getMonth() + 1) + '-' +
+          date.getDate() + ' ' +
+          date.getHours() + ':' +
+          date.getMinutes() + ':' +
+          date.getSeconds()
+        return Str
+      },
       onPublishDate(value) {
         if (value) {
           this.formModel.publishDate = formatDate(new Date(value), 'yyyy-MM-dd hh:mm:ss')
