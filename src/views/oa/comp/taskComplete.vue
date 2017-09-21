@@ -34,7 +34,7 @@
               el-table-column(prop="attachmentName" label="名称")
                 template(scope="scope")
                   div.attachment-name {{scope.row.attachmentName}}
-              el-table-column(label="大小(MB)" width="100")
+              el-table-column(label="大小" width="100")
                 template(scope="scope")
                   span {{setFileSize(scope.row.attachmentSize)}}
               el-table-column(prop="attachmentType" label="类型" width="116")
@@ -58,10 +58,12 @@
   import Message from 'common/message'
   import DateColumn from 'views/oa/comp/dateColumn'
   import { Loading } from 'element-ui'
+  import prettyBytes from 'pretty-bytes'
 
   const baseFormUrl = '/camel/rest/'
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
   let loadingInstance
+
   export default {
     created() {
       this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
@@ -114,7 +116,7 @@
     },
     methods: {
       setFileSize(size) {
-        return (size / (1024 * 1024)).toFixed(2)
+        return prettyBytes(size)
       },
       open(row) {
         loadingInstance = Loading.service(
