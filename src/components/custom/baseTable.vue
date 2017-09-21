@@ -325,7 +325,7 @@
             setTimeout(() => {
               this.$emit('update:formModel', row)
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
-              that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看', false, row)
             }, 20)
             break
           }

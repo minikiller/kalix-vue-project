@@ -22,14 +22,14 @@
   import Dialog from '@/components/custom/baseDialog.vue'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
+        formModel: {
+          title: '',
+          content: '',
+          publishPeople: '',
+          publishDate: ''
+        }
       }
     },
     components: {

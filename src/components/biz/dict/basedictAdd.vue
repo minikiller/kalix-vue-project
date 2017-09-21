@@ -7,10 +7,10 @@
 <template lang="pug">
   kalix-dialog.user-add(bizKey="dict" ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="dictTargetURL")
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="类型" prop="type")
+      el-form-item(label="类型" prop="type" v-bind:rules="rules.type")
         el-select(v-model="formModel.type" v-on:visible-change="visibleChange")
           el-option(v-for="item in items" v-bind:key="item.name" v-bind:label="item.name" v-bind:value="item.name")
-      el-form-item(label="标签名" prop="label")
+      el-form-item(label="标签名" prop="label" v-bind:rules="rules.label")
         input(type="hidden" v-model="formModel.id")
         el-input(v-model="formModel.label" placeholder="请输入标签名" auto-complete="off")
       el-form-item(label="备注")
@@ -21,16 +21,6 @@
   import Dialog from '@/components/custom/baseDialog.vue'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     methods: {
       init(options) {
         console.log(options)
@@ -62,6 +52,14 @@
     },
     data() {
       return {
+        formModel: {
+          type: '',
+          label: '',
+          value: '',
+          description: '',
+          createBy: '',
+          creationDate: ''
+        },
         dictTypesListURL: '',
         dictTargetURL: '',
         dictBizKey: '',

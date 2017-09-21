@@ -36,14 +36,6 @@
           {prop: 'createBy', label: '创建人'},
           {prop: 'creationDate', label: '创建日期'}
         ],
-        formModel: {
-          type: '',
-          label: '',
-          value: '',
-          description: '',
-          createBy: '',
-          creationDate: ''
-        },
         formRules: {
           type: [
             {required: true, message: '请输入类型', trigger: 'blur'}

@@ -94,13 +94,14 @@
               } else {
                 Message.error(response.data.msg)
               }
+              console.log('[kalix] dialog submit button clicked !')
+              this.visible = false
             })
           } else {
+            Message.error('请检查输入项！')
             return false
           }
         })
-        console.log('[kalix] dialog submit button clicked !')
-        this.visible = false
       },
       onBeforeClose() {
         this.close()

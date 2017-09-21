@@ -163,7 +163,7 @@
               url: TaskCompleteURL,
               params: {
                 accepted: value,
-                comment: this.form.content,
+                comment: this.formModel.content,
                 taskId: this.taskId
               }
             }).then((res) => {
