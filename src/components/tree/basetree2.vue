@@ -12,7 +12,7 @@
 
 <script type="text/ecmascript-6">
   import Vue from 'vue'
-  import {orgsURL} from 'config/global.toml'
+  import {orgURL} from 'config/global.toml'
 
   export default {
     mounted () {
@@ -23,8 +23,8 @@
       // 组件初始化
       fentch () {
         // 获取机构数据
-        let getOrgsURL = orgsURL + '?isAll=' + this.isAll
-        Vue.axios.get(getOrgsURL).then((response) => {
+        let getOrgURL = orgURL + '?isAll=' + this.isAll
+        Vue.axios.get(getOrgURL).then((response) => {
           let obj = response.data
           // 如果根节点id=-1,去掉根节点
           if (obj.id === -1) {
@@ -38,7 +38,7 @@
         })
 
         // 获取指定机构id的父节点路径
-        let orgParentPathURL = orgsURL + '/' + this.value + '/parentpath'
+        let orgParentPathURL = orgURL + '/' + this.value + '/parentpath'
         Vue.axios.get(orgParentPathURL).then((response) => {
           this.selectedOptions = JSON.parse('[' + response.data + ']')
         })
