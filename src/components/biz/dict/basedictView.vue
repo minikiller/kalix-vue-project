@@ -20,19 +20,13 @@
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
+  import {FormModel} from './model.toml'
 //  import {CommonDictURL} from '../config.toml'
 
   export default {
     data() {
       return {
-        formModel: {
-          type: '',
-          label: '',
-          value: '',
-          description: '',
-          createBy: '',
-          creationDate: ''
-        },
+        formModel: FormModel,
         readonly: true
       }
     },
