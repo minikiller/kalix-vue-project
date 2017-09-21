@@ -59,7 +59,7 @@
           el-input(type="textarea" v-model="formModel.remark")
       div.s-flex
         el-form-item.s-flex_item(label="报名表样式" prop="signupStyle" label-width="140px")
-          kalix-upload(v-model="signupStyle")
+          kalix-upload(v-model="signupStyle" v-bind:isImage="false")
 </template>
 
 <script type="text/ecmascript-6">
