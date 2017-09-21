@@ -29,22 +29,22 @@
           el-input(v-model="formModel.email")
       div.s-flex
         el-form-item.s-flex_item(label="征集开始时间" prop="collectionStartTime" label-width="140px")
-          el-date-picker(v-model="collectionStartTime" type="datetime" placeholder="选择开始时间" style="width:100%")
+          el-date-picker(v-model="collectionStartTime" type="date" placeholder="选择开始时间" style="width:100%")
         div.dd
         el-form-item.s-flex_item(label="征集结束时间" prop="collectionEndTime" label-width="140px")
-          el-date-picker(v-model="collectionEndTime" type="datetime" placeholder="选择结束时间"  style="width:100%")
+          el-date-picker(v-model="collectionEndTime" type="date" placeholder="选择结束时间"  style="width:100%")
       div.s-flex
         el-form-item.s-flex_item(label="初评开始时间" prop="preEvalStartTime" label-width="140px")
-          el-date-picker(v-model="preEvalStartTime" type="datetime" placeholder="选择开始时间" style="width:100%")
+          el-date-picker(v-model="preEvalStartTime" type="date" placeholder="选择开始时间" style="width:100%")
         div.dd
         el-form-item.s-flex_item(label="初评结束时间" prop="preEvalEndTime" label-width="140px")
-          el-date-picker(v-model="preEvalEndTime" type="datetime" placeholder="选择结束时间" style="width:100%")
+          el-date-picker(v-model="preEvalEndTime" type="date" placeholder="选择结束时间" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item(label="终评开始时间" prop="lastEvalStartTime" label-width="140px")
-          el-date-picker(v-model="lastEvalStartTime" type="datetime" placeholder="选择开始时间" style="width:100%" )
+          el-date-picker(v-model="lastEvalStartTime" type="date" placeholder="选择开始时间" style="width:100%" )
         div.dd
         el-form-item.s-flex_item(label="终评结束时间" prop="lastEvalEndTime" label-width="140px")
-          el-date-picker(v-model="lastEvalEndTime" type="datetime" placeholder="选择结束时间" style="width:100%" )
+          el-date-picker(v-model="lastEvalEndTime" type="date" placeholder="选择结束时间" style="width:100%" )
       div.s-flex
         el-form-item.s-flex_item(label="作品内容要求" prop="contentNeed" label-width="140px")
           el-input(type="textarea" v-model="formModel.contentNeed")
@@ -59,7 +59,7 @@
           el-input(type="textarea" v-model="formModel.remark")
       div.s-flex
         el-form-item.s-flex_item(label="报名表样式" prop="signupStyle" label-width="140px")
-          kalix-upload(v-model="signupStyle")
+          kalix-upload(v-model="signupStyle" v-bind:isImage="false")
 </template>
 
 <script type="text/ecmascript-6">
