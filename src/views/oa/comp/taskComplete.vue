@@ -4,7 +4,7 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  el-dialog.dialog-form(v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onClose"
+  el-dialog.dialog-form(ref="kalixTaskDialog" v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onClose"
   v-bind:close-on-click-modal="false")
     template
       el-tabs(ref="bizTabs" v-model="activeName" type="card")
@@ -57,10 +57,11 @@
   import EventBus from 'common/eventbus'
   import Message from 'common/message'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import { Loading } from 'element-ui'
 
   const baseFormUrl = '/camel/rest/'
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
-
+  let loadingInstance
   export default {
     created() {
       this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
@@ -116,6 +117,10 @@
         return (size / (1024 * 1024)).toFixed(2)
       },
       open(row) {
+        loadingInstance = Loading.service(
+          {
+            target: this.$refs.kalixTaskDialog.$el.querySelector('.el-dialog')
+          })
         this.visible = true
         if (this.isApproveShow) {
           this.title = '流程审批-' + row.name
@@ -180,6 +185,7 @@
         }).then((res) => {
           this.bizForm = res.data
           this.whichBizForm = _import(`oa/${this.bizData.processDefinitionId}/${this.formClass}`)
+          loadingInstance.close()
         })
       }
     }

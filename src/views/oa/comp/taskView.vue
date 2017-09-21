@@ -7,7 +7,7 @@
   div
     kalix-dialog(v-bind:title="title" v-bind:visible="visible" ref="kalixBizDialog"
     v-bind:close-on-click-modal="false" v-bind:formModel="formModel" v-bind:isView="isView")
-      div(slot="dialogFormSlot")
+      div.imgs(slot="dialogFormSlot")
         img(v-bind:src="imgUrl" style="width:100%")
 </template>
 
@@ -16,9 +16,12 @@
   import {baseURL} from 'config/global.toml'
   import EventBus from 'common/eventbus'
   import Dialog from '@/components/custom/baseDialog.vue'
+  import {Loading} from 'element-ui'
 
   const viewURL = baseURL + `/image?taskId=`
   const viewProcessURL = baseURL + `/image?processInstanceId=`
+  let loadingInstance
+
   export default {
     data() {
       return {
@@ -30,6 +33,8 @@
         formModel: {}
       }
     },
+    created() {
+    },
     mounted() {
       EventBus.$on(this.bizKey + '-' + ON_INIT_DIALOG_DATA, this.initData)
     },
@@ -38,12 +43,19 @@
     },
     methods: {
       initData(row) {
+        loadingInstance = Loading.service(
+          {
+            target: this.$el.querySelector('.el-dialog')
+          })
         this.title = '流程进度查看-' + row.businessNo
         if (row.processInstanceId) { // 按流程实例id显示当前进度
           this.imgUrl = viewProcessURL + row.processInstanceId
         } else { // 按taskid显示当前进度
           this.imgUrl = viewURL + row.id
         }
+        setTimeout(() => {
+          loadingInstance.close()
+        }, 400)
       }
     }
   }
