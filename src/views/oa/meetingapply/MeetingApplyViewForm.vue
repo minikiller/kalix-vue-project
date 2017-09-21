@@ -1,32 +1,31 @@
 <template lang="pug">
-  div
+  div.kalix-form-table
     div.table-title 吉林动画学院会议申请表
-    div.kalix-form-table(style="border-width:0;border-top-width:1px")
-      el-form-item(label="名称" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.title" readonly)
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.orgName" readonly)
-        el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.meetingroomId" readonly)
-      el-form-item(label="会议议题" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.meetingTopic" readonly)
-      el-form-item(label="会议议程" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.meetingAgenda" readonly)
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="开始时间" v-bind:label-width="labelWidth")
-          el-input(v-bind:value="getDatetime(formModel.beginTime)" readonly)
-        el-form-item.s-flex_item.kalix-form-table-td(label="结束时间" v-bind:label-width="labelWidth")
-          el-input(v-bind:value="getDatetime(formModel.endTime)" readonly)
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="会议类型" v-bind:label-width="labelWidth")
-          el-input(v-bind:value="getMeetingTypeName(formModel.meetingType)" readonly)
-        el-form-item.s-flex_item.kalix-form-table-td(label="会议纪要人员" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.meetingSummaryPersonName" readonly)
-      el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.importantAttendeesName" readonly)
-      el-form-item(label="其他出席人" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.otherAttendeesName" readonly)
+    el-form-item(label="名称" v-bind:label-width="labelWidth")
+      el-input(v-model="formModel.title" readonly)
+    div.s-flex
+      el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.orgName" readonly)
+      el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.meetingroomId" readonly)
+    el-form-item(label="会议议题" v-bind:label-width="labelWidth")
+      el-input(v-model="formModel.meetingTopic" readonly)
+    el-form-item(label="会议议程" v-bind:label-width="labelWidth")
+      el-input(v-model="formModel.meetingAgenda" readonly)
+    div.s-flex
+      el-form-item.s-flex_item.kalix-form-table-td(label="开始时间" v-bind:label-width="labelWidth")
+        el-input(v-bind:value="getDatetime(formModel.beginTime)" readonly)
+      el-form-item.s-flex_item.kalix-form-table-td(label="结束时间" v-bind:label-width="labelWidth")
+        el-input(v-bind:value="getDatetime(formModel.endTime)" readonly)
+    div.s-flex
+      el-form-item.s-flex_item.kalix-form-table-td(label="会议类型" v-bind:label-width="labelWidth")
+        el-input(v-bind:value="getMeetingTypeName(formModel.meetingType)" readonly)
+      el-form-item.s-flex_item.kalix-form-table-td(label="会议纪要人员" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.meetingSummaryPersonName" readonly)
+    el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
+      el-input(v-model="formModel.importantAttendeesName" readonly)
+    el-form-item(label="其他出席人" v-bind:label-width="labelWidth")
+      el-input(v-model="formModel.otherAttendeesName" readonly)
 </template>
 
 <script type="text/ecmascript-6">

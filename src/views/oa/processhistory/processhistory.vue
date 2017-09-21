@@ -5,26 +5,29 @@
 -->
 
 <template lang="pug">
-  keep-alive
-    base-table(:isShowToolBar="isShowToolBar" bizKey="myprocesshistory" title='我的流程列表'
-    v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel"
-    v-bind:bizDialog="bizDialog"
-    bizSearch="OaProcessHistorySearch"
-    v-bind:tableRowClassName="tableRowClassName"
-    v-bind:btnList="btnList")
-      template(slot="tableColumnSlot")
-        kalix-biz-no-column(name="name")
-        el-table-column(prop="title" label="业务名称" width="280" align="center")
-        el-table-column(prop="startUserId" label="启动用户" align="center")
-        kalix-date-column(prop="startTime" label="开始时间")
-        kalix-date-column(prop="endTime" label="结束时间")
-        el-table-column(prop="durationInMillis" label="持续时长" align="center")
-        el-table-column(prop="status" label="状态" align="center")
-          template(scope="scope")
-            el-tag(:type="scope.row.status | statusFilter") {{scope.row.status}}
-            <!--span(style="color:#f00" v-if="scope.row.status === '结束'") {{ scope.row.status }}-->
-            <!--span(v-else) {{ scope.row.status }}-->
+  div
+    keep-alive
+      base-table(:isShowToolBar="isShowToolBar" bizKey="myprocesshistory" title='我的流程列表'
+      v-bind:targetURL="targetURL"
+      v-bind:formModel.sync="formModel"
+      v-bind:bizDialog="bizDialog"
+      bizSearch="OaProcessHistorySearch"
+      v-bind:tableRowClassName="tableRowClassName"
+      v-bind:customTableTool='customTableTool'
+      v-bind:btnList="btnList")
+        template(slot="tableColumnSlot")
+          kalix-biz-no-column(name="name")
+          el-table-column(prop="title" label="业务名称" width="280" align="center")
+          el-table-column(prop="startUserId" label="启动用户" align="center")
+          kalix-date-column(prop="startTime" label="开始时间")
+          kalix-date-column(prop="endTime" label="结束时间")
+          el-table-column(prop="durationInMillis" label="持续时长" align="center")
+          el-table-column(prop="status" label="状态" align="center")
+            template(scope="scope")
+              el-tag(:type="scope.row.status | statusFilter") {{scope.row.status}}
+              <!--span(style="color:#f00" v-if="scope.row.status === '结束'") {{ scope.row.status }}-->
+              <!--span(v-else) {{ scope.row.status }}-->
+    kalix-task-complete(ref="kalixTaskDialog" v-bind:isApproveShow="isApproveShow")
 </template>
 
 <script type="text/ecmascript-6">
@@ -33,6 +36,7 @@
   import {registerComp} from 'views/oa/comp'
   import BizNoColumn from 'views/oa/comp/bizNoColumn'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import TaskComplete from '@/views/oa/comp/taskComplete'
 
   export default {
     activated() {
@@ -43,11 +47,12 @@
     },
     data() {
       return {
+        isApproveShow: false,
         isShowToolBar: false,  // 不显示工具栏
         btnList: WorkflowButtonList,
         targetURL: WorkflowHistoryURL,
         bizDialog: [
-          {id: 'view', dialog: 'OaProcessHistoryView'}
+          {id: 'viewHistory', dialog: ''}
         ],
         formModel: {}
       }
@@ -74,12 +79,21 @@
           return 'finish-row'
         }
         return ''
+      },
+      customTableTool(row, btnId) {
+        switch (btnId) {
+          case 'viewHistory': {
+            this.$refs.kalixTaskDialog.open(row)
+            break
+          }
+        }
       }
     },
     components: {
       BaseTable,
       KalixBizNoColumn: BizNoColumn,
-      KalixDateColumn: DateColumn
+      KalixDateColumn: DateColumn,
+      KalixTaskComplete: TaskComplete
 //      KalixUserAdd: UserAdd
     }
   }

@@ -1,6 +1,6 @@
 <!--
 描述：支持远程查询的用户select组件
-     显示用展赛，保存的是展赛id
+     显示用展赛名称，保存的是展赛id
 开发人：fj
 开发日期：2017年9月14日
 -->
@@ -64,8 +64,7 @@
           this.selectCompetition = competitionInfos[0] || {}
         }
         console.log(`[kalix]-[competitionselect.vue] current competition is `, this.selectCompetition)
-        this.$emit('' +
-          '', this.selectCompetition)  // 发送事件}
+        this.$emit('competitionSelected', this.selectCompetition)  // 发送事件}
       },
       remoteMethod(query) {
         if (query !== '') {

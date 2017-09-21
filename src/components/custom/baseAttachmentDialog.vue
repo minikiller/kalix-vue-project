@@ -13,57 +13,43 @@
       | 上 传
       input(type="file" v-on:change="selectedFile")
     div.file-list
-      el-table(v-bind:data="files" style="width: 100%"
-      v-bind:height="tableHeight")
-        el-table-column(label="行号" width="70")
-          template(scope="scope")
-            div(style="text-align: center") {{ scope.row.rowNumber }}
-        el-table-column(prop="attachmentName" label="名称")
-          template(scope="scope")
-            div.attachment-name {{scope.row.attachmentName}}
-        el-table-column(label="大小(MB)" width="100")
-          template(scope="scope")
-            span {{setFileSize(scope.row.attachmentSize)}}
-        el-table-column(prop="attachmentType" label="类型" width="116")
-        el-table-column(prop="creationDate" label="上传日期" width="180")
-        el-table-column(label="操作" width="120")
-          template(scope="scope")
-            el-button(size="mini" type="danger" v-on:click="deleteSelectFile(scope.$index, scope.row)")
-              | 删除
-            a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
-              | 下载
-    el-pagination.kalix-table-pagination(v-if="pager.totalCount"
-    v-on:size-change="pagerSizeChange"
-    v-on:current-change="pagerCurrentChange"
-    v-bind:current-page="pager.currentPage"
-    v-bind:page-sizes="pager.pageSizes"
-    v-bind:page-size="1"
-    layout="total, sizes, prev, pager, next, jumper"
-    v-bind:total="pager.totalCount")
+      kalix-paged-table(ref="pagedTable" v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr")
+        template(slot="tableColumnSlot")
+          el-table-column(prop="attachmentName" label="名称")
+            template(scope="scope")
+              div.attachment-name {{scope.row.attachmentName}}
+          el-table-column(label="大小(MB)" width="100")
+            template(scope="scope")
+              span {{setFileSize(scope.row.attachmentSize)}}
+          el-table-column(prop="attachmentType" label="类型" width="116")
+          kalix-date-column(prop="creationDate" label="上传日期")
+          el-table-column(label="操作" width="120")
+            template(scope="scope")
+              el-button(size="mini" type="danger" v-on:click="deleteSelectFile(scope.$index, scope.row)")
+                | 删除
+              a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
+                | 下载
     div.dialog-footer(slot="footer")
       el-button(type="primary" v-on:click="onCancelClick") 关 闭
 </template>
 <script type="text/ecmascript-6">
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
-  import {AttachmentURL, PageConfig} from 'config/global.toml'
+  import {AttachmentURL} from 'config/global.toml'
+  import PagedTable from '@/components/custom/pagedTable'
+  import DateColumn from 'views/oa/comp/dateColumn'
 
-  const MAX_TABLE_HTIGHT = 450
+  const MAX_TABLE_HEIGHT = 450
   export default {
     data() {
       return {
+        targetURL: AttachmentURL,
+        jsonStr: '',
         bizKey: '',
         title: '',
         visible: false,
         files: [],
-        tableHeight: MAX_TABLE_HTIGHT,
-        pager: {
-          totalCount: 0,
-          pageSizes: PageConfig.sizes,
-          currentPage: 1,
-          limit: PageConfig.limit,
-          start: 0
-        }
+        tableHeight: MAX_TABLE_HEIGHT
       }
     },
     methods: {
@@ -89,7 +75,10 @@
         this.visible = true
         this.row = _row
         this.bizKey = _bizKey
-        this._getFilesList()
+        this.jsonStr = `{mainId:${_row.id}}`
+      },
+      refreshData() {
+        this.$refs.pagedTable.getBizData()
       },
       selectedFile(e) {
         let that = this
@@ -107,7 +96,7 @@
               attachmentSize: res.data.attachmentSize,
               attachmentType: res.data.attachmentType
             }, () => {
-              this._getFilesList()
+              this.refreshData()
             })
           }
         })
@@ -132,19 +121,12 @@
               return i !== _index
             })
             Message.success(res.data.msg)
+            this.refreshData()
           } else {
             Message.error(res.data.msg)
           }
         }).catch(() => {
         })
-      },
-      pagerSizeChange(val) { //  改变每页记录数
-        this.pager.limit = val
-        this._getFilesList()
-      },
-      pagerCurrentChange(val) { //  翻页
-        this.pager.currentPage = val
-        this._getFilesList()
       },
       _fileUpload(item, callBack) {
         this.$http.post(AttachmentURL, item).then(res => {
@@ -157,31 +139,15 @@
         })
       },
       // 查询文件
-      _getFilesList() {
-        this.files = []
-        let _data = {
-          jsonStr: `{mainId:${this.row.id}}`,
-          page: this.pager.currentPage,
-          limit: this.pager.limit,
-          start: this.pager.start
-        }
-        this.$http.get(AttachmentURL, {params: _data})
-          .then(res => {
-            this.files = res.data.data.map((item, index) => {
-              item.rowNumber = index + this.rowNo
-              return item
-            })
-            this.pager.totalCount = res.data.totalCount
-          })
-      },
       _afterDialogClose() {
         EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose')
       }
     },
     computed: {
-      rowNo() {
-        return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
-      }
+    },
+    components: {
+      KalixPagedTable: PagedTable,
+      KalixDateColumn: DateColumn
     }
   }
 </script>

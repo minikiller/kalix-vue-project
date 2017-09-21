@@ -96,6 +96,12 @@
     created() {
       this.signupStyle = this.formModel.signupStyle
       console.log('this.formRules.name:', this.formRules.name)
+      this.collectionStartTime = this.formModel.collectionStartTime
+      this.collectionEndTime = this.formModel.collectionEndTime
+      this.preEvalStartTime = this.formModel.preEvalStartTime
+      this.preEvalEndTime = this.formModel.preEvalEndTime
+      this.lastEvalStartTime = this.formModel.lastEvalStartTime
+      this.lastEvalEndTime = this.formModel.lastEvalEndTime
     },
     components: {
       KalixDialog: Dialog,
