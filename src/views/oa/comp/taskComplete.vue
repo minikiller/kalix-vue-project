@@ -20,7 +20,7 @@
               el-button(type="danger" v-on:click="onDisagree") 不同意
         el-tab-pane(label="流程历史" name="historyTab")
           kalix-paged-table(v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr")
-            template
+            template(slot="tableColumnSlot")
               el-table-column(prop="activityName" label="节点名称" align="center" width="220")
               el-table-column(prop="assignee" label="执行人" align="center"  width="90")
               kalix-date-column(prop="startTime" label="开始时间")
@@ -30,7 +30,7 @@
               el-table-column(prop="comment" label="审批意见" align="center"  width="220")
         el-tab-pane(label="附件数据"  name="attachmentTab")
           kalix-paged-table(v-bind:targetURL="attachTargetURL" v-bind:jsonStr="attachJsonStr")
-            template
+            template(slot="tableColumnSlot")
               el-table-column(prop="attachmentName" label="名称")
                 template(scope="scope")
                   div.attachment-name {{scope.row.attachmentName}}
@@ -41,7 +41,7 @@
               kalix-date-column(prop="creationDate" label="上传日期")
               el-table-column(label="操作" width="120")
                 template(scope="scope")
-                  a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
+                  a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank" style="text-decoration:none;")
                     | 下载
     div.dialog-footer(slot="footer")
       template
@@ -112,6 +112,9 @@
       }
     },
     methods: {
+      setFileSize(size) {
+        return (size / (1024 * 1024)).toFixed(2)
+      },
       open(row) {
         this.visible = true
         if (this.isApproveShow) {
@@ -120,7 +123,7 @@
           this.title = '流程历史-' + row.name
         }
         this.targetURL = TaskActivitiesURL + row.processInstanceId
-        this.attachJsonStr = `{mainId:${row.id}}`
+        this.attachJsonStr = `{mainId:${row.entityId}}`
         this.getBizData(row)
       },
       completeTask(value) { // 完成工作流

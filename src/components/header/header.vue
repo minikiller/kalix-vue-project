@@ -23,7 +23,7 @@
         ul.aside
           li
             el-badge(:value="msgCount")
-              el-button(icon="message" @click="onMsgClick") 消息
+              el-button(icon="message" v-on:click="onMsgClick") 消息
           li
             el-dropdown(@command="handleCommand")
               div.s-flex.el-dropdown-link {{userName}}  &nbsp;

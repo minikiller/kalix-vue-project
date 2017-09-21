@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   div
-    el-table(v-bind:data="tableData" stripe style="width:100%"
+    el-table(v-if="tableData && tableData.length > 0" v-bind:data="tableData" stripe style="width:100%"
     v-bind:height="tableHeight" v-loading.body="loading" border fit)
       el-table-column(label="行号" width="70")
         template(scope="scope")
