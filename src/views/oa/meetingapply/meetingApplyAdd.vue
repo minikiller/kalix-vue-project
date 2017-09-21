@@ -24,9 +24,9 @@
         el-input(v-model="formModel.meetingAgenda")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="开始时间" v-bind:label-width="labelWidth")
-          el-date-picker(v-model="beginTime" v-on:change="onBeginTimeChange" type="datetime" placeholder="选择开始时间" style="width:100%")
+          kalix-date-picker(v-model="formModel.beginTime" type="datetime" placeholder="选择开始时间" format="yyyy-mm-dd" style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="结束时间" v-bind:label-width="labelWidth")
-          el-date-picker(v-model="endTime" v-on:change="onEndTimeChange" type="datetime" placeholder="选择结束时间" style="width:100%")
+          kalix-date-picker(v-model="formModel.endTime" type="datetime" placeholder="选择结束时间" format="yyyy-mm-dd" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="会议类型" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.meetingType" appName="oa" dictType="会议类型"
@@ -62,19 +62,38 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserSelect from '@/components/biz/userselect/userselect'
   import BaseSelect from '@/components/custom/baseSelect'
+  import BaseDatePicker from '@/components/custom/baseDatePicker'
   //  import _ from 'underscore'
   import {MeetingApplyURL} from '../config.toml'
   //  import {isEmptyObject} from 'common/util'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      }
-    },
+//    props: {
+//      formModel: {
+//        type: Object,
+//        required: true
+//      }
+//    },
     data() {
       return {
+        formModel: {
+          title: '吉林动画学院会议申请表',
+          orgId: '',
+          orgName: '',
+          creationDate: '',
+          meetingAgenda: '',
+          meetingTopic: '',
+          meetingType: null,
+          meetingroomId: '',
+          meetingroomName: '',
+          beginTime: '',
+          endTime: '',
+          createBy: '',
+          auditResult: '',
+          currentNode: '',
+          importantAttendeesName: '',
+          otherAttendeesName: ''
+        },
         params: {},
         title: '吉林动画学院会议申请表',
         rules: {
@@ -117,7 +136,8 @@
       KalixDialog: Dialog,
       KalixDictSelect: BaseDictSelect,
       KalixUserSelect: UserSelect,
-      KalixSelect: BaseSelect
+      KalixSelect: BaseSelect,
+      KalixDatePicker: BaseDatePicker
     },
     methods: {
       _getUsers(users) {

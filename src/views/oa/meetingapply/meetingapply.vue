@@ -64,24 +64,6 @@
           {id: 'add', dialog: 'OaMeetingApplyAdd'},
           {id: 'progress', dialog: 'OaTaskView'}
         ],
-        formModel: {
-          title: '吉林动画学院会议申请表',
-          orgId: '',
-          orgName: '',
-          creationDate: '',
-          meetingAgenda: '',
-          meetingTopic: '',
-          meetingType: null,
-          meetingroomId: '',
-          meetingroomName: '',
-          beginTime: '',
-          endTime: '',
-          createBy: '',
-          auditResult: '',
-          currentNode: '',
-          importantAttendeesName: '',
-          otherAttendeesName: ''
-        },
         formRules: {
           meetingTopic: [
             {required: true, message: '请输入议题', trigger: 'blur'}

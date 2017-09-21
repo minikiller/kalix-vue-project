@@ -21,8 +21,10 @@ ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 
 # 附件管理请求地址
 AttachmentURL="/camel/rest/attachments"
-# 附件上传地址
+# 附件couchdb上传地址
 uploadURL = "/camel/rest/upload"
+# 附件couchdb删除地址
+couchdbDelURL = "/camel/rest/couchdb"
 # 组织机构树请求地址
 orgURL = "/camel/rest/orgs"
 
