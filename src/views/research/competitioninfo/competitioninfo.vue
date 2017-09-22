@@ -18,12 +18,6 @@
   registerComponent(CompetitionInfoComponent)
 
   export default {
-    activated() {
-      console.log('c%' + this.bizKey + ' competitioninfo  is activated', 'color:#ff00fe')
-    },
-    deactivated() {
-      console.log(this.bizKey + '  is deactivated')
-    },
     data() {
       return {
         btnList: ToolButtonList,
@@ -41,17 +35,22 @@
         ]
       }
     },
-    created() {
-    },
-    methods: {},
     components: {
       BaseTable
     },
+    created() {
+    },
     mounted() {
-    }
+    },
+    activated() {
+      console.log('c%' + this.bizKey + ' competitioninfo  is activated', 'color:#ff00fe')
+    },
+    deactivated() {
+      console.log(this.bizKey + '  is deactivated')
+    },
+    methods: {}
   }
 </script>
 
 <style scoped lang="stylus">
-
 </style>

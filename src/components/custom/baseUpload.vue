@@ -34,8 +34,18 @@
 
   let fileCount = 0
   export default {
-    mounted () {
-      this.fentch()
+    props: {
+      value: {
+        type: String
+      },
+      isImage: {
+        type: Boolean,
+        default: true
+      },
+      readonly: {
+        type: Boolean,
+        default: false
+      }
     },
     data() {
       return {
@@ -45,6 +55,9 @@
         fileName: '',
         imageUrl: ''
       }
+    },
+    mounted () {
+      this.fentch()
     },
     methods: {
       // 组件初始化
@@ -129,19 +142,6 @@
           }
           this.$emit('input', '')
         }
-      }
-    },
-    props: {
-      value: {
-        type: String
-      },
-      isImage: {
-        type: Boolean,
-        default: true
-      },
-      readonly: {
-        type: Boolean,
-        default: false
       }
     }
   }
