@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(bizKey="meetapply"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
   )
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 吉林动画学院会议申请表
@@ -66,6 +66,7 @@
   //  import _ from 'underscore'
   import {MeetingApplyURL} from '../config.toml'
   //  import {isEmptyObject} from 'common/util'
+  import FormModel from './model'
 
   export default {
 //    props: {
@@ -76,24 +77,7 @@
 //    },
     data() {
       return {
-        formModel: {
-          title: '吉林动画学院会议申请表',
-          orgId: '',
-          orgName: '',
-          creationDate: '',
-          meetingAgenda: '',
-          meetingTopic: '',
-          meetingType: null,
-          meetingroomId: '',
-          meetingroomName: '',
-          beginTime: '',
-          endTime: '',
-          createBy: '',
-          auditResult: '',
-          currentNode: '',
-          importantAttendeesName: '',
-          otherAttendeesName: ''
-        },
+        formModel: Object.assign({}, FormModel),
         params: {},
         title: '吉林动画学院会议申请表',
         rules: {

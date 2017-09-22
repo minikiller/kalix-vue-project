@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="meetapply"
-  v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
   ref="kalixBizDialog"
   v-bind:isView="readonly"
   )
@@ -19,18 +19,13 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserSelect from '@/components/biz/userselect/userselect'
   import MeetingApplyViewForm from './MeetingApplyViewForm'
-
+  import FormModel from './model'
   //  import {usersURL} from 'views/admin/config.toml'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
+        formModel: Object.assign({}, FormModel),
         targetURL: '',
         readonly: true,
         meetingTypeName: ''
