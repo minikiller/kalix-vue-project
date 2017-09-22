@@ -6,15 +6,25 @@
 
 <template lang="pug">
   div.block
-    el-upload(v-bind:class="{'avatar-uploader':isImage,'upload-demo':!isImage}" v-bind:action="action" v-bind:headers="headers"
-    v-bind:multiple="false" v-bind:show-file-list="true" v-bind:file-list="fileList"
-    v-bind:on-change="handleChange" v-bind:before-upload="handleBeforeUpload"
-    v-bind:on-success="handleSuccess" v-bind:on-error="handleError"
-    v-bind:on-preview="handlePreview" v-bind:on-remove="handleRemove")
+    template(v-if="readonly")
       template(v-if="isImage")
         img.avatar(v-if="imageUrl" v-bind:src="imageUrl")
-        i.el-icon-plus.avatar-uploader-icon(v-else)
-      el-button(v-else size="small" type="primary") 点击上传
+        img.avatar(v-else src="./images/default_attachment.png")
+      template(v-else)
+        template(v-if="this.value")
+          a(v-bind:href="this.value") {{this.fileName}}
+        template(v-else) 空
+    template(v-else)
+      el-upload(v-bind:class="{'avatar-uploader':isImage,'upload-demo':!isImage}" v-bind:action="action" v-bind:headers="headers"
+      v-bind:multiple="false" v-bind:show-file-list="true" v-bind:file-list="fileList"
+      v-bind:on-change="handleChange" v-bind:before-upload="handleBeforeUpload"
+      v-bind:on-success="handleSuccess" v-bind:on-error="handleError"
+      v-bind:on-preview="handlePreview" v-bind:on-remove="handleRemove")
+        template(v-if="isImage")
+          img.avatar(v-if="imageUrl" v-bind:src="imageUrl")
+          i.el-icon-plus.avatar-uploader-icon(v-else)
+        template(v-else)
+          el-button(size="small" type="primary") 点击上传
 </template>
 
 <script type="text/ecmascript-6">
@@ -23,18 +33,31 @@
   import Vue from 'vue'
 
   let fileCount = 0
-  // let attachmentId = ''
   export default {
-    mounted () {
-      this.fentch()
+    props: {
+      value: {
+        type: String
+      },
+      isImage: {
+        type: Boolean,
+        default: true
+      },
+      readonly: {
+        type: Boolean,
+        default: false
+      }
     },
     data() {
       return {
         action: baseURL + uploadURL,
         headers: {'access_token': Cache.get('access_token'), 'jsessionid': Cache.get('user_token')},
         fileList: [],
+        fileName: '',
         imageUrl: ''
       }
+    },
+    mounted () {
+      this.fentch()
     },
     methods: {
       // 组件初始化
@@ -42,9 +65,8 @@
         if (this.value !== '') {
           let pathParts = this.value.split('/')
           // let fileName = pathParts[pathParts.length - 1]
-          let fileName = pathParts.pop()
-          // attachmentId = pathParts.pop()
-          let obj = {'name': fileName, 'url': this.value}
+          this.fileName = pathParts.pop()
+          let obj = {'name': this.fileName, 'url': this.value}
           this.fileList.push(obj)
 
           if (this.isImage) {
@@ -120,15 +142,6 @@
           }
           this.$emit('input', '')
         }
-      }
-    },
-    props: {
-      value: {
-        type: String
-      },
-      isImage: {
-        type: Boolean,
-        default: true
       }
     }
   }

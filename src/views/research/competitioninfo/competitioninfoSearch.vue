@@ -23,10 +23,10 @@
         }
       }
     },
-    created() {
-    },
     components: {
       KalixSearch: BaseSearch
+    },
+    created() {
     },
     methods: {}
   }
