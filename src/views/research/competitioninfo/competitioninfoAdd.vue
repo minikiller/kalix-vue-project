@@ -29,22 +29,27 @@
           el-input(v-model="formModel.email")
       div.s-flex
         el-form-item.s-flex_item(label="征集开始时间" prop="collectionStartTime" label-width="140px")
-          el-date-picker(v-model="collectionStartTime" type="date" placeholder="选择开始时间" style="width:100%")
+          kalix-date-picker(v-model="formModel.collectionStartTime")
         div.dd
         el-form-item.s-flex_item(label="征集结束时间" prop="collectionEndTime" label-width="140px")
-          el-date-picker(v-model="collectionEndTime" type="date" placeholder="选择结束时间"  style="width:100%")
+          // el-date-picker(v-model="collectionEndTime" type="date" placeholder="选择结束时间"  style="width:100%")
+          kalix-date-picker(v-model="formModel.collectionEndTime")
       div.s-flex
         el-form-item.s-flex_item(label="初评开始时间" prop="preEvalStartTime" label-width="140px")
-          el-date-picker(v-model="preEvalStartTime" type="date" placeholder="选择开始时间" style="width:100%")
+          // el-date-picker(v-model="preEvalStartTime" type="date" placeholder="选择开始时间" style="width:100%")
+          kalix-date-picker(v-model="formModel.preEvalStartTime")
         div.dd
         el-form-item.s-flex_item(label="初评结束时间" prop="preEvalEndTime" label-width="140px")
-          el-date-picker(v-model="preEvalEndTime" type="date" placeholder="选择结束时间" style="width:100%")
+          // el-date-picker(v-model="preEvalEndTime" type="date" placeholder="选择结束时间" style="width:100%")
+          kalix-date-picker(v-model="formModel.preEvalEndTime")
       div.s-flex
         el-form-item.s-flex_item(label="终评开始时间" prop="lastEvalStartTime" label-width="140px")
-          el-date-picker(v-model="lastEvalStartTime" type="date" placeholder="选择开始时间" style="width:100%" )
+          // el-date-picker(v-model="lastEvalStartTime" type="date" placeholder="选择开始时间" style="width:100%" )
+          kalix-date-picker(v-model="formModel.lastEvalStartTime")
         div.dd
         el-form-item.s-flex_item(label="终评结束时间" prop="lastEvalEndTime" label-width="140px")
-          el-date-picker(v-model="lastEvalEndTime" type="date" placeholder="选择结束时间" style="width:100%" )
+          // el-date-picker(v-model="lastEvalEndTime" type="date" placeholder="选择结束时间" style="width:100%" )
+          kalix-date-picker(v-model="formModel.lastEvalEndTime")
       div.s-flex
         el-form-item.s-flex_item(label="作品内容要求" prop="contentNeed" label-width="140px")
           el-input(type="textarea" v-model="formModel.contentNeed")
@@ -59,78 +64,36 @@
           el-input(type="textarea" v-model="formModel.remark")
       div.s-flex
         el-form-item.s-flex_item(label="报名表样式" prop="signupStyle" label-width="140px")
-          kalix-upload(v-model="signupStyle" v-bind:isImage="false")
+          kalix-upload(v-model="formModel.signupStyle" v-bind:isImage="false" v-bind:readonly="true")
 </template>
 
 <script type="text/ecmascript-6">
+  import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
   import {CompetitionInfoURL} from '../config.toml'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import {formatDate} from 'common/typeFormat'
+  import DatePicker from '@/components/biz/date/datepicker.vue'
+
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
+        formModel: Object.assign({}, FormModel),
         rules: {
-          name: [{required: true, message: '请输入 name', trigger: 'blur'}]
+          name: [{required: true, message: '请输入展赛名称', trigger: 'blur'}]
         },
-        targetURL: CompetitionInfoURL,
-        collectionStartTime: '',
-        collectionEndTime: '',
-        preEvalStartTime: '',
-        preEvalEndTime: '',
-        lastEvalStartTime: '',
-        lastEvalEndTime: '',
-        signupStyle: ''
+        targetURL: CompetitionInfoURL
       }
     },
     created() {
-      this.signupStyle = this.formModel.signupStyle
-      console.log('this.formRules.name:', this.formRules.name)
-      this.collectionStartTime = this.formModel.collectionStartTime
-      this.collectionEndTime = this.formModel.collectionEndTime
-      this.preEvalStartTime = this.formModel.preEvalStartTime
-      this.preEvalEndTime = this.formModel.preEvalEndTime
-      this.lastEvalStartTime = this.formModel.lastEvalStartTime
-      this.lastEvalEndTime = this.formModel.lastEvalEndTime
+
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect
+      KalixDictSelect: BaseDictSelect,
+      KalixDatePicker: DatePicker
     },
     methods: {},
-    watch: {
-      signupStyle(newValue) {
-        this.formModel.signupStyle = newValue
-      },
-      collectionStartTime(newValue) {
-        this.formModel.collectionStartTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
-      },
-      collectionEndTime(newValue) {
-        this.formModel.collectionEndTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
-      },
-      preEvalStartTime(newValue) {
-        this.formModel.preEvalStartTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
-      },
-      preEvalEndTime(newValue) {
-        this.formModel.preEvalEndTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
-      },
-      lastEvalStartTime(newValue) {
-        this.formModel.lastEvalStartTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
-      },
-      lastEvalEndTime(newValue) {
-        this.formModel.lastEvalEndTime = formatDate(newValue, 'yyyy-MM-dd hh:mm:ss')
-      }
-    }
+    watch: {}
   }
 </script>
 <style scoped lang="stylus">

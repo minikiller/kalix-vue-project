@@ -6,14 +6,12 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="competitionInfo" title='展赛列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    v-bind:bizSearch="'ResearchCompetitionInfoSearch'" v-bind:btnList="btnList")
+    v-bind:bizDialog="bizDialog" v-bind:bizSearch="'ResearchCompetitionInfoSearch'" v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import {CompetitionInfoURL, CompetitionInfoComponent, ToolButtonList} from '../config.toml'
-  import EventBus from 'common/eventbus'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
@@ -40,50 +38,16 @@
           {id: 'view', dialog: 'ResearchCompetitionInfoView'},
           {id: 'edit', dialog: 'ResearchCompetitionInfoAdd'},
           {id: 'add', dialog: 'ResearchCompetitionInfoAdd'}
-        ],
-        formModel: {
-          name: '',
-          address: '',
-          type: '',
-          collectionEndTime: '',
-          collectionStartTime: '',
-          compStartTime: '',
-          compEndTime: '',
-          contactor: '',
-          contentNeed: '',
-          email: '',
-          lastEvalStartTime: '',
-          lastEvalEndTime: '',
-          phone: '',
-          preEvalEndTime: '',
-          preEvalStartTime: '',
-          technologyNeed: '',
-          signupStyle: '',
-          detail: '',
-          remark: ''
-        },
-        formRules: {
-          name: [
-            {required: true, message: '请输入展赛名称', trigger: 'blur'}
-          ]
-        }
+        ]
       }
     },
     created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
-    methods: {
-      changeFormModel(model) {
-        console.log('changeFormModel', model)
-        this.formModel = model
-      }
-    },
+    methods: {},
     components: {
       BaseTable
-//      KalixUserAdd: UserAdd
     },
     mounted() {
-      EventBus.$on('updateCompetitionInfoModel', this.changeFormModel)
     }
   }
 </script>

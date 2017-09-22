@@ -49,6 +49,11 @@
         items: [],
         currentValue: this.value
       }
+    },
+    watch: {
+      value(nv, ov) {
+        this.currentValue = nv
+      }
     }
   }
 </script>
