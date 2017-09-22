@@ -92,18 +92,10 @@
   import UserSelect from '@/components/biz/userselect/userselect'
   import BaseSelect from '@/components/custom/baseSelect'
   import BaseDatePicker from '@/components/custom/baseDatePicker'
-  //  import _ from 'underscore'
   import {MeetingApplyURL} from '../config.toml'
-  //  import {isEmptyObject} from 'common/util'
   import FormModel from './model'
 
   export default {
-//    props: {
-//      formModel: {
-//        type: Object,
-//        required: true
-//      }
-//    },
     data() {
       return {
         formModel: Object.assign({}, FormModel),

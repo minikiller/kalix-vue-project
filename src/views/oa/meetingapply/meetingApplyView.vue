@@ -19,8 +19,7 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserSelect from '@/components/biz/userselect/userselect'
   import MeetingApplyViewForm from './MeetingApplyViewForm'
-
-  //  import {usersURL} from 'views/admin/config.toml'
+  import FormModel from './model'
 
   export default {
     data() {
