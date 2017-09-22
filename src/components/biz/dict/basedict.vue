@@ -7,8 +7,7 @@
 <template lang="pug">
   keep-alive
     base-table(v-bind:bizKey="bizKey" title='字典列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    bizSearch="basedictSearch" v-bind:btnList="btnList" v-bind:dialogOptions="dialogOptions")
+    v-bind:bizDialog="bizDialog" bizSearch="basedictSearch" v-bind:btnList="btnList" v-bind:dialogOptions="dialogOptions")
 </template>
 
 <script type="text/ecmascript-6">
@@ -35,20 +34,7 @@
           {prop: 'description', label: '备注'},
           {prop: 'createBy', label: '创建人'},
           {prop: 'creationDate', label: '创建日期'}
-        ],
-        formModel: {
-          type: '',
-          label: '',
-          value: '',
-          description: '',
-          createBy: '',
-          creationDate: ''
-        },
-        formRules: {
-          type: [
-            {required: true, message: '请输入类型', trigger: 'blur'}
-          ]
-        }
+        ]
       }
     },
     created() {

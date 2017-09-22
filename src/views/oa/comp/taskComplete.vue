@@ -6,19 +6,20 @@
 <template lang="pug">
   el-dialog.dialog-form(ref="kalixTaskDialog" v-bind:title="title" v-bind:visible="visible" v-bind:before-close="onClose"
   v-bind:close-on-click-modal="false")
-    template
-      el-tabs(ref="bizTabs" v-model="activeName" type="card")
-        el-tab-pane(label="业务数据" name="bizDataTab")
+    div(style="max-height:500px;overflow: auto;" ref="kalixCollapseWrapper")
+      el-collapse(ref="bizTabs" v-model="activeNames" type="card")
+        el-collapse-item(name="bizDataTab")
+          template(slot="title")
+            el-tag(type="success")
+              i.header-icon.el-icon-date
+              | &nbsp;业务数据
           el-form(v-bind:model="formModel")
             component(v-bind:is="whichBizForm" v-bind:form-model="bizForm")
-        el-tab-pane(v-if="isApproveShow" label="业务审批" name="approveTab")
-          el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
-            el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
-              el-input(v-model="formModel.content" type="textarea")
-            el-form-item
-              el-button(type="success" v-on:click="onAgree") 同意
-              el-button(type="danger" v-on:click="onDisagree") 不同意
-        el-tab-pane(label="流程历史" name="historyTab")
+        el-collapse-item(name="historyTab")
+          template(slot="title")
+            el-tag(type="danger")
+              i.header-icon.el-icon-menu
+              | &nbsp;流程历史
           kalix-paged-table(v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr")
             template(slot="tableColumnSlot")
               el-table-column(prop="activityName" label="节点名称" align="center" width="220")
@@ -28,7 +29,11 @@
               el-table-column(prop="durationInMillis" label="持续时长" align="center"  width="220")
               el-table-column(prop="result" label="审批结果" align="center"  width="220")
               el-table-column(prop="comment" label="审批意见" align="center"  width="220")
-        el-tab-pane(label="附件数据"  name="attachmentTab")
+        el-collapse-item(title="附件数据"  name="attachmentTab")
+          template(slot="title")
+            el-tag(type="primary")
+              i.header-icon.el-icon-document
+              | &nbsp;附件数据
           kalix-paged-table(v-bind:targetURL="attachTargetURL" v-bind:jsonStr="attachJsonStr")
             template(slot="tableColumnSlot")
               el-table-column(prop="attachmentName" label="名称")
@@ -43,6 +48,17 @@
                 template(scope="scope")
                   a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank" style="text-decoration:none;")
                     | 下载
+        el-collapse-item(v-if="isApproveShow" title="业务审批" name="approveTab")
+          template(slot="title")
+            el-tag(type="warning")
+              i.header-icon.el-icon-edit
+              | &nbsp;业务审批
+          el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
+            el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
+              el-input(v-model="formModel.content" type="textarea")
+            el-form-item
+              el-button(type="success" v-on:click="onAgree") 同意
+              el-button(type="danger" v-on:click="onDisagree") 不同意
     div.dialog-footer(slot="footer")
       template
         el-button(type="primary" v-on:click="onClose") 关 闭
@@ -57,7 +73,7 @@
   import EventBus from 'common/eventbus'
   import Message from 'common/message'
   import DateColumn from 'views/oa/comp/dateColumn'
-  import { Loading } from 'element-ui'
+  import {Loading} from 'element-ui'
   import prettyBytes from 'pretty-bytes'
 
   const baseFormUrl = '/camel/rest/'
@@ -88,7 +104,7 @@
         bizData: {}, // 流程业务的动态返回配置信息
         bizForm: {}, // 流程数据信息
         title: '',
-        activeName: 'bizDataTab',
+        activeNames: ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab'],
         isView: true,
         bizKey: 'taskComplete',
         whichBizForm: '', // 动态加载业务view
@@ -107,14 +123,18 @@
       visible(newValue) {    // 根据dialog的状态重置表单
         if (!newValue) {
           Object.assign(this.formModel, JSON.parse(this.tempFormModel))
-          this.activeName = 'bizDataTab'
           if (this.isApproveShow) {
             this.$refs.dialogForm.resetFields()
           }
+        } else {
+          this.activeNames = ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab']
         }
       }
     },
     methods: {
+      onTabClick(tab, event) {
+//        this.
+      },
       setFileSize(size) {
         return prettyBytes(size)
       },
@@ -131,6 +151,7 @@
         }
         this.targetURL = TaskActivitiesURL + row.processInstanceId
         this.attachJsonStr = `{mainId:${row.entityId}}`
+        console.log('targetUrl is ', this.targetURL, 'this.attachJsonStr', this.attachJsonStr)
         this.getBizData(row)
       },
       completeTask(value) { // 完成工作流
@@ -142,7 +163,7 @@
               url: TaskCompleteURL,
               params: {
                 accepted: value,
-                comment: this.form.content,
+                comment: this.formModel.content,
                 taskId: this.taskId
               }
             }).then((res) => {
@@ -161,6 +182,7 @@
       },
       onClose() {
         this.visible = false
+        this.$refs.kalixCollapseWrapper.scrollTop = 0
         console.log('close event')
       },
       getBizData(row) {

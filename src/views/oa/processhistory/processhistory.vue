@@ -66,16 +66,16 @@
     filters: {
       statusFilter(status) {
         const statusMap = {
-          结束: 'success',
+          已结束: 'success',
           进行中: 'gray',
-          停止: 'danger'
+          已停止: 'danger'
         }
         return statusMap[status]
       }
     },
     methods: {
       tableRowClassName(row, index) {
-        if (row.status === '结束') {
+        if (row.status === '已结束') {
           return 'finish-row'
         }
         return ''

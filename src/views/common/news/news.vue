@@ -7,7 +7,7 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="news" title='新闻列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:bizDialog="bizDialog"
+    v-bind:bizDialog="bizDialog"
     bizSearch="CommonNewsSearch" v-bind:btnList="btnList")
 </template>
 
@@ -34,13 +34,7 @@
           {id: 'view', dialog: 'CommonNewsView'},
           {id: 'edit', dialog: 'CommonNewsAdd'},
           {id: 'add', dialog: 'CommonNewsAdd'}
-        ],
-        formModel: {
-          title: '',
-          content: '',
-          publishPeople: '',
-          publishDate: ''
-        }
+        ]
       }
     },
     created() {

@@ -20,25 +20,13 @@
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
+  import {FormModel} from './model.toml'
 //  import {CommonDictURL} from '../config.toml'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
-        rules: {
-          type: [{required: true, message: '请输入类型', trigger: 'blur'}],
-          label: [{required: true, message: '请输入标签名', trigger: 'blur'}]
-        },
+        formModel: Object.assign({}, FormModel),
         readonly: true
       }
     },

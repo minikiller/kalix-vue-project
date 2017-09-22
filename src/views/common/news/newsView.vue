@@ -20,16 +20,12 @@
 
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
+  import {FormModel} from './model.toml'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
+        formModel: Object.assign({}, FormModel)
       }
     },
     components: {

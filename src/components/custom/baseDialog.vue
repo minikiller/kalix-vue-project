@@ -94,13 +94,14 @@
               } else {
                 Message.error(response.data.msg)
               }
+              console.log('[kalix] dialog submit button clicked !')
+              this.visible = false
             })
           } else {
+            Message.error('请检查输入项！')
             return false
           }
         })
-        console.log('[kalix] dialog submit button clicked !')
-        this.visible = false
       },
       onBeforeClose() {
         this.close()
@@ -112,12 +113,14 @@
         this.privateTitle = _title
         this.visible = true
         this.isEdit = isEdit
-        console.log('open dialog', row)
         if (row) {
           Object.assign(this.formModel, row)
         } else {
           Object.assign(this.formModel, JSON.parse(this.tempFormModel))
         }
+        console.log('open dialog model', this.tempFormModel)
+        console.log('open dialog row', row)
+
 //        this.$emit('update:formModel', row)
       },
       initData(row) {
@@ -131,6 +134,7 @@
     },
     created() {
       this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
+      console.log('called created!!!')
 //      EventBus.$on(this.bizKey + '-' + ON_INIT_DIALOG_DATA, this.initData)
     },
     computed: {
