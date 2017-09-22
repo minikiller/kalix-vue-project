@@ -14,7 +14,11 @@
       template(v-if="isImage")
         img.avatar(v-if="imageUrl" v-bind:src="imageUrl")
         i.el-icon-plus.avatar-uploader-icon(v-else)
-      el-button(v-else size="small" type="primary") 点击上传
+      template(v-else)
+        template(v-if="!readonly")
+          el-button(size="small" type="primary") 点击上传
+        template(v-else)
+          el-button(size="small" type="primary") 点击上传
 </template>
 
 <script type="text/ecmascript-6">
@@ -129,6 +133,10 @@
       isImage: {
         type: Boolean,
         default: true
+      },
+      readonly: {
+        type: Boolean,
+        default: false
       }
     }
   }
