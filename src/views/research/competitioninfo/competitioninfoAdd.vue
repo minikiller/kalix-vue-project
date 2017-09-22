@@ -68,11 +68,11 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
   import {CompetitionInfoURL} from '../config.toml'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import DatePicker from '@/components/biz/date/datepicker.vue'
-  import FormModel from './model'
 
   export default {
     data() {
