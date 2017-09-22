@@ -74,11 +74,44 @@ borderStyle = 1px solid #000000
   .el-form-item
     margin-bottom 0
     .el-form-item__label
-      border-right borderStyle
       font-weight bold
     .el-input__inner
       border 0
+    .kalix-form-table-td
+      position: relative;
+      margin-left: 1px;
+      padding-bottom 22px
+      &:after
+        position absolute
+        content ''
+        top 0
+        right 0
+        bottom 0
+        width 1px
+        background-color #000000
+    &:last-child
+      .kalix-form-table-td
+        &:after
+          visibility hidden
+
+
+  .el-form-item__label
+    position relative
+    height 100%
+    &:after
+      content ''
+      width 1px
+      height 100%
+      position absolute
+      top 0
+      right 0
+      background-color: #000000
+  .el-form-item__error
+    padding-left 10px
+    top 32px
+.kalix-form-table-view
   .kalix-form-table-td
-    border-left borderStyle
-    &:first-child
-      border-left none
+    border-right borderStyle
+    &:last-child
+      border-right none
+
