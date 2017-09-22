@@ -10,7 +10,7 @@
   ref="kalixBizDialog"
   v-bind:isView="readonly"
   )
-    div.el-form.kalix-form-table(slot="dialogFormSlot")
+    div.el-form.kalix-form-table-view(slot="dialogFormSlot")
       kalix-meeting-apply-view-form(v-bind:form-model="formModel")
 </template>
 
@@ -23,14 +23,26 @@
   //  import {usersURL} from 'views/admin/config.toml'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
+        formModel: {
+          title: '',
+          orgId: '',
+          orgName: '',
+          creationDate: '',
+          meetingAgenda: '',
+          meetingTopic: '',
+          meetingType: null,
+          meetingroomId: '',
+          meetingroomName: '',
+          beginTime: '',
+          endTime: '',
+          createBy: '',
+          auditResult: '',
+          currentNode: '',
+          importantAttendeesName: '',
+          otherAttendeesName: ''
+        },
         targetURL: '',
         readonly: true,
         meetingTypeName: ''
@@ -48,7 +60,6 @@
       KalixMeetingApplyViewForm: MeetingApplyViewForm,
       KalixUserSelect: UserSelect
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
