@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(bizKey="meetapply"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
   )
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 吉林动画学院会议申请表
@@ -92,30 +92,23 @@
   import UserSelect from '@/components/biz/userselect/userselect'
   import BaseSelect from '@/components/custom/baseSelect'
   import BaseDatePicker from '@/components/custom/baseDatePicker'
+  //  import _ from 'underscore'
   import {MeetingApplyURL} from '../config.toml'
+  //  import {isEmptyObject} from 'common/util'
+  import FormModel from './model'
 
   export default {
+//    props: {
+//      formModel: {
+//        type: Object,
+//        required: true
+//      }
+//    },
     data() {
       return {
+        formModel: Object.assign({}, FormModel),
         params: {},
-        formModel: {
-          title: '吉林动画学院会议申请表',
-          orgId: '',
-          orgName: '',
-          creationDate: '',
-          meetingAgenda: '',
-          meetingTopic: '',
-          meetingType: null,
-          meetingroomId: '',
-          meetingroomName: '',
-          beginTime: '',
-          endTime: '',
-          createBy: '',
-          auditResult: '',
-          currentNode: '',
-          importantAttendeesName: '',
-          otherAttendeesName: ''
-        },
+        title: '吉林动画学院会议申请表',
         rules: {
           title: [{required: true, message: '请输入名称', trigger: 'blur'}],
           beginTime: [{required: true, message: '请选择开始时间', trigger: 'change'}],

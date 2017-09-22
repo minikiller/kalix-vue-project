@@ -15,10 +15,31 @@
   import {orgURL} from 'config/global.toml'
 
   export default {
+    props: {
+      value: {
+        type: Number
+      },
+      isAll: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data () {
+      return {
+        data2: [],
+        defaultProps: {
+          label: 'name',
+          value: 'id',
+          children: 'children'
+        },
+        selectedOptions: []
+      }
+    },
     mounted () {
       this.fentch()
     },
-
+    watch: {},
+    computed: {},
     methods: {
       // 组件初始化
       fentch () {
@@ -63,29 +84,6 @@
           }
         }
       }
-    },
-
-    data () {
-      return {
-        data2: [],
-        defaultProps: {
-          label: 'name',
-          value: 'id',
-          children: 'children'
-        },
-        selectedOptions: []
-      }
-    },
-    props: {
-      value: {
-        type: Number
-      },
-      isAll: {
-        type: Boolean,
-        default: false
-      }
-    },
-    watch: {},
-    computed: {}
+    }
   }
 </script>

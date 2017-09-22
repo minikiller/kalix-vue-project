@@ -1,9 +1,9 @@
 <template lang="pug">
   div
     keep-alive
-      base-table(bizKey='sealApply' title='印章申请列表'
+      base-table(title='印章申请列表'
+      bizKey="sealApply"
       v-bind:targetURL='targetURL'
-      v-bind:formModel='formModel'
       v-bind:bizDialog='bizDialog'
       bizSearch='OaSealApplySearch'
       v-bind:isFixedColumn="isFixedColumn"
@@ -54,9 +54,9 @@
         targetURL: SealApplyURL,
         btnList: workflowBtnList,
         bizDialog: [
-          {id: 'view', dialog: 'Oa120ApplyView'},
-          {id: 'edit', dialog: 'Oa120ApplyAdd'},
-          {id: 'add', dialog: 'Oa120ApplyAdd'},
+          {id: 'view', dialog: 'OaSealApplyView'},
+          {id: 'edit', dialog: 'OaSealApplyAdd'},
+          {id: 'add', dialog: 'OaSealApplyAdd'},
           {id: 'progress', dialog: 'OaTaskView'}
         ],
         formModel: {
@@ -64,16 +64,18 @@
           orgId: '',
           orgName: '',
           creationDate: '',
-          meetingTopic: '',
-          meetingroomId: '',
-          meetingroomName: '',
-          beginTime: '',
-          endTime: '',
+          usageCount: '',
+          sealType: '',
+          sealTypeName: '',
           createBy: '',
           auditResult: '',
           currentNode: '',
-          importantAttendeesName: '',
-          otherAttendeesName: ''
+          departmentHead: '', // 部门负责人
+          tableFormField: '', // 分公司负责人
+          counsel: '', // 法律顾问
+          generalManager: '', // 总经理
+          sealAdministrator: '', // 印章专管员
+          remark: '' // 印章专管员
         }
       }
     },

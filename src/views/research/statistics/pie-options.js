@@ -9,10 +9,7 @@ module.exports = {
       }
     },
     title: {
-      text: '展示不同类型作品数量'
-    },
-    tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+      text: '展示不同类型作品所占百分比'
     },
     plotOptions: {
       pie: {

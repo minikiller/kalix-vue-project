@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="meetapply"
-  v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
   ref="kalixBizDialog"
   v-bind:isView="readonly"
   )
@@ -25,24 +25,7 @@
   export default {
     data() {
       return {
-        formModel: {
-          title: '',
-          orgId: '',
-          orgName: '',
-          creationDate: '',
-          meetingAgenda: '',
-          meetingTopic: '',
-          meetingType: null,
-          meetingroomId: '',
-          meetingroomName: '',
-          beginTime: '',
-          endTime: '',
-          createBy: '',
-          auditResult: '',
-          currentNode: '',
-          importantAttendeesName: '',
-          otherAttendeesName: ''
-        },
+        formModel: Object.assign({}, FormModel),
         targetURL: '',
         readonly: true,
         meetingTypeName: ''
