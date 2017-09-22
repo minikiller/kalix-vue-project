@@ -113,13 +113,18 @@
         this.privateTitle = _title
         this.visible = true
         this.isEdit = isEdit
+        let beforeFormModel = JSON.parse(JSON.stringify(this.formModel))
+        console.log(`open before formModel :`, beforeFormModel)
         if (row) {
-          Object.assign(this.formModel, row)
+          this.$emit('update:formModel', row)  // 设置sync才有效
+//          Object.assign(this.formModel, row)
         } else {
-          Object.assign(this.formModel, JSON.parse(this.tempFormModel))
+          this.$emit('update:formModel', JSON.parse(this.tempFormModel))
+//          Object.assign(this.formModel, JSON.parse(this.tempFormModel))
         }
-        console.log('open dialog model', this.tempFormModel)
-        console.log('open dialog row', row)
+        console.log('open temp FormModel', this.tempFormModel)
+        console.log('open formModel', this.formModel)
+        console.log('open row', row)
 
 //        this.$emit('update:formModel', row)
       },
