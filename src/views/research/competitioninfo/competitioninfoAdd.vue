@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="competitionInfo"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
   )
     div.el-form(slot="dialogFormSlot")
       div.s-flex
@@ -64,13 +64,13 @@
           el-input(type="textarea" v-model="formModel.remark")
       div.s-flex
         el-form-item.s-flex_item(label="报名表样式" prop="signupStyle" label-width="140px")
-          kalix-upload(v-model="formModel.signupStyle" v-bind:isImage="false" v-bind:readonly="true")
+          kalix-upload(v-model="formModel.signupStyle" v-bind:isImage="false")
 </template>
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
-  import Dialog from '@/components/custom/baseDialog.vue'
   import {CompetitionInfoURL} from '../config.toml'
+  import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import DatePicker from '@/components/biz/date/datepicker.vue'
 
@@ -84,16 +84,15 @@
         targetURL: CompetitionInfoURL
       }
     },
-    created() {
-
-    },
     components: {
       KalixDialog: Dialog,
       KalixDictSelect: BaseDictSelect,
       KalixDatePicker: DatePicker
     },
-    methods: {},
-    watch: {}
+    created() {
+    },
+    watch: {},
+    methods: {}
   }
 </script>
 <style scoped lang="stylus">
