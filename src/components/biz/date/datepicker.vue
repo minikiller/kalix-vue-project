@@ -4,13 +4,17 @@
 开发日期：2017年9月21日
 -->
 <template lang="pug">
-  el-date-picker(v-model='currentValue' type="date")
+  el-date-picker(v-model='currentValue' type="date" v-bind:readonly="readonly")
 </template>
 <script type="text/ecmascript-6">
   export default {
     props: {
       value: {
         required: true
+      },
+      readonly: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
