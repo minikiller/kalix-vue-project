@@ -80,7 +80,6 @@ borderStyle = 1px solid #000000
     .kalix-form-table-td
       position: relative;
       margin-left: 1px;
-      padding-bottom 22px
       &:after
         position absolute
         content ''
@@ -94,7 +93,6 @@ borderStyle = 1px solid #000000
         &:after
           visibility hidden
 
-
   .el-form-item__label
     position relative
     height 100%
@@ -107,8 +105,25 @@ borderStyle = 1px solid #000000
       right 0
       background-color: #000000
   .el-form-item__error
-    padding-left 10px
-    top 32px
+    padding 3px 6px
+    top 30px
+    border-radius 3px
+    margin-left 10px
+    z-index 9
+    background-color #fff
+    border 1px solid #FFCC66
+    color #FF0033
+    box-shadow 1px 1px 1px rgba(0, 0, 0, 0.26)
+    &:before
+      content ''
+      width 6px
+      height 6px
+      position absolute
+      background-color #ffffff
+      border-top 1px solid #FFCC66
+      border-left 1px solid #FFCC66
+      transform rotate(45deg)
+      top -5px
 .kalix-form-table-view
   .kalix-form-table-td
     border-right borderStyle
