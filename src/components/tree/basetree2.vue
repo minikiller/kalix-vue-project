@@ -6,7 +6,7 @@
 
 <template lang="pug">
   div.block
-    el-cascader(placeholder="试试搜索：吉林动画学院" v-bind:options="data2" v-bind:props="defaultProps" v-bind:disabled="readonly"
+    el-cascader(placeholder="试试搜索：吉林动画学院" v-bind:options="data2" v-bind:props="defaultProps" v-bind:disabled="disabled"
     filterable change-on-select :show-all-levels="false" v-model="selectedOptions" v-on:change="handleChange")
 </template>
 
@@ -21,7 +21,7 @@
         type: Boolean,
         default: false
       },
-      readonly: {
+      disabled: {
         type: Boolean,
         default: false
       }
