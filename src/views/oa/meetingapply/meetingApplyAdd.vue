@@ -5,56 +5,83 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(bizKey="meetapply"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
   )
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 吉林动画学院会议申请表
-      el-form-item(label="名称" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.title")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
-          kalix-select(v-model="formModel.orgId" placeholder="请选择申请部门" style="width:100%"
-          v-on:change="orgOnChange" appName="USERORGS")
-        el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" v-bind:label-width="labelWidth")
-          kalix-select(v-model="formModel.meetingroomId" placeholder="请选择会议地点" style="width:100%"
-          appName="MEETINGROOMS")
-      el-form-item(label="会议议题" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.meetingTopic")
-      el-form-item(label="会议议程" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.meetingAgenda")
+        el-form-item.s-flex_item(label="名称" v-bind:label-width="labelWidth"
+        v-bind:rules="rules.title"
+        prop="title")
+          div.kalix-form-table-td
+            el-input(v-model="formModel.title")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="开始时间" v-bind:label-width="labelWidth")
-          kalix-date-picker(v-model="formModel.beginTime" type="datetime" placeholder="选择开始时间" format="yyyy-mm-dd" style="width:100%")
-        el-form-item.s-flex_item.kalix-form-table-td(label="结束时间" v-bind:label-width="labelWidth")
-          kalix-date-picker(v-model="formModel.endTime" type="datetime" placeholder="选择结束时间" format="yyyy-mm-dd" style="width:100%")
+        el-form-item.s-flex_item(label="申请部门" v-bind:label-width="labelWidth"
+        v-bind:rules="rules.orgId"
+        prop="orgId")
+          div.kalix-form-table-td
+            kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
+        el-form-item.s-flex_item(label="会议地点" v-bind:label-width="labelWidth"
+        v-bind:rules="rules.meetingroomId"
+        prop="meetingroomId")
+          div.kalix-form-table-td
+            kalix-meeting-room-select(v-model="formModel.meetingroomId")
+      div.s-flex
+        el-form-item.s-flex_item(label="会议议题" v-bind:label-width="labelWidth"
+        v-bind:rules="rules.meetingTopic"
+        prop="meetingTopic")
+          div.kalix-form-table-td
+            el-input(v-model="formModel.meetingTopic")
+      div.s-flex
+        el-form-item.s-flex_item(label="会议议程" v-bind:label-width="labelWidth"
+        v-bind:rules="rules.meetingAgenda"
+        prop="meetingAgenda")
+          div.kalix-form-table-td
+            el-input(v-model="formModel.meetingAgenda")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(
+        label="开始时间"
+        v-bind:label-width="labelWidth"
+        v-bind:rules="rules.beginTime"
+        prop="beginTime")
+          div.kalix-form-table-td
+            kalix-date-picker(v-model="formModel.beginTime" type="datetime" placeholder="选择开始时间" format="yyyy-MM-dd HH:mm" style="width: 100%;")
+        el-form-item.s-flex_item.kalix-form-table-td(
+        label="结束时间"
+        v-bind:label-width="labelWidth"
+        v-bind:rules="rules.endTime"
+        prop="endTime")
+          div.kalix-form-table-td
+            kalix-date-picker(v-model="formModel.endTime" type="datetime" placeholder="选择结束时间" format="yyyy-MM-dd HH:mm" style="width: 100%;")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="会议类型" v-bind:label-width="labelWidth")
-          kalix-dict-select(v-model="formModel.meetingType" appName="oa" dictType="会议类型"
-          style="width:100%")
+          div.kalix-form-table-td
+            kalix-dict-select(v-model="formModel.meetingType" appName="oa" dictType="会议类型"
+            style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="会议纪要人员" v-bind:label-width="labelWidth")
+          div.kalix-form-table-td
+            kalix-user-select(v-bind:params="params" style="width:100%"
+            v-on:userSelected="onMeetingSummaryPersonSelected"
+            v-bind:defaultIds="formModel.meetingSummaryPerson"
+            v-bind:multiple="multiple"
+            v-model="meetingSummaryPerson"
+            placeholder="请输入会议纪要人员")
+      div
+        el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
           kalix-user-select(v-bind:params="params" style="width:100%"
-          v-on:userSelected="onMeetingSummaryPersonSelected"
-          v-bind:defaultIds="formModel.meetingSummaryPerson"
-          v-bind:defaultNames="formModel.meetingSummaryPersonName"
+          v-on:userSelected="onImportantAttendeesSelected"
+          v-bind:defaultIds="formModel.importantAttendees"
+          v-model="importantAttendees"
           v-bind:multiple="multiple"
-          v-model="meetingSummaryPerson"
-          placeholder="请输入会议纪要人员")
-      el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
-        kalix-user-select(v-bind:params="params" style="width:100%"
-        v-on:userSelected="onImportantAttendeesSelected"
-        v-bind:defaultIds="formModel.importantAttendees"
-        v-bind:defaultNames="formModel.importantAttendeesName"
-        v-model="importantAttendees"
-        v-bind:multiple="multiple"
-        placeholder="请输入重要出席人")
-      el-form-item(label="其他出席人" v-bind:label-width="labelWidth")
-        kalix-user-select(v-bind:params="params" style="width:100%"
-        v-on:userSelected="onOtherAttendeesSelected"
-        v-bind:defaultIds="formModel.otherAttendees"
-        v-bind:defaultNames="formModel.otherAttendeesName"
-        v-model="otherAttendees"
-        v-bind:multiple="multiple"
-        placeholder="请输入其他出席人")
+          placeholder="请输入重要出席人")
+      div
+        el-form-item(label="其他出席人" v-bind:label-width="labelWidth")
+          kalix-user-select(v-bind:params="params" style="width:100%"
+          v-on:userSelected="onOtherAttendeesSelected"
+          v-bind:defaultIds="formModel.otherAttendees"
+          v-model="otherAttendees"
+          v-bind:multiple="multiple"
+          placeholder="请输入其他出席人")
 </template>
 
 <script type="text/ecmascript-6">
@@ -63,81 +90,46 @@
   import UserSelect from '@/components/biz/userselect/userselect'
   import BaseSelect from '@/components/custom/baseSelect'
   import BaseDatePicker from '@/components/custom/baseDatePicker'
-  //  import _ from 'underscore'
   import {MeetingApplyURL} from '../config.toml'
-  //  import {isEmptyObject} from 'common/util'
+  import FormModel from './model'
+  import UserOrgSelect from '@/components/biz/select/UserOrgSelect'
+  import MeetingRoomSelect from '@/components/biz/select/MeetingRoomSelect'
 
   export default {
-//    props: {
-//      formModel: {
-//        type: Object,
-//        required: true
-//      }
-//    },
     data() {
       return {
-        formModel: {
-          title: '吉林动画学院会议申请表',
-          orgId: '',
-          orgName: '',
-          creationDate: '',
-          meetingAgenda: '',
-          meetingTopic: '',
-          meetingType: null,
-          meetingroomId: '',
-          meetingroomName: '',
-          beginTime: '',
-          endTime: '',
-          createBy: '',
-          auditResult: '',
-          currentNode: '',
-          importantAttendeesName: '',
-          otherAttendeesName: ''
-        },
+        formModel: Object.assign({}, FormModel),
         params: {},
         title: '吉林动画学院会议申请表',
         rules: {
-          title: [{required: true, message: '请输入名称', trigger: 'blur'}]
+          title: [{required: true, message: '请输入名称', trigger: 'blur'}],
+          beginTime: [{required: true, message: '请选择开始时间', trigger: 'change'}],
+          endTime: [{required: true, message: '请选择结束时间', trigger: 'change'}],
+          orgId: [{type: 'number', required: true, message: '请至少选择一个部门', trigger: 'change'}],
+          meetingroomId: [{type: 'number', required: true, message: '请选择一个会议地点', trigger: 'change'}],
+          meetingTopic: [{required: true, message: '请输入议题', trigger: 'blur'}],
+          meetingAgenda: [{required: true, message: '请输入议程', trigger: 'blur'}]
         },
         targetURL: MeetingApplyURL,
         multiple: true,
-        orgName: '',
-        orgNameOptions: [],
-        beginTime: '',
-        endTime: '',
-        meetingRoom: '',
-        meetingRoomOptions: [],
         meetingSummaryPerson: [],
-        meetingSummaryPersonObj: [],
         importantAttendees: [],
         otherAttendees: []
       }
     },
     created() {
       this.labelWidth = '110px'
-      console.log('%c[meetingApplyAdd.vue created] this.formModel:', 'color:#3f3fff', this.formModel)
-      console.log('%c[meetingApplyAdd.vue created] this.formModel.title:', 'color:#3f3fff', this.formModel.title)
-      if (!this.formModel.title) {
-        this.formModel.title = this.title
-      } else {
-        let that = this
-        setTimeout(() => {
-          that.beginTime = that.formModel.beginTime
-          that.endTime = that.formModel.endTime
-        }, 20)
-      }
-//      console.log('%c[meetingApplyAdd.vue created] !this.formModel.endTime:', 'color:#f0be03', this.formModel.endTime)
     },
     mounted() {
-      console.log('%c[meetingApplyAdd.vue mounted] this.formModel:', 'color:#f04adb', this.formModel)
-      console.log('%c[meetingApplyAdd.vue mounted] this.formModel.title:', 'color:#f04adb', this.formModel.title)
     },
     components: {
       KalixDialog: Dialog,
       KalixDictSelect: BaseDictSelect,
       KalixUserSelect: UserSelect,
       KalixSelect: BaseSelect,
-      KalixDatePicker: BaseDatePicker
+      KalixDatePicker: BaseDatePicker,
+      KalixOrgSelect: UserOrgSelect,
+      KalixMeetingRoomSelect: MeetingRoomSelect
     },
     methods: {
       _getUsers(users) {
@@ -164,21 +156,14 @@
         this.formModel.otherAttendees = users.ids
         this.formModel.otherAttendeesName = users.names
       },
-      orgOnChange(item) {
+      onOrgIdChange(item) {
         this.formModel.orgName = item.name
-      },
-      onBeginTimeChange(value) {
-        this.formModel.beginTime = value
-        console.log('%c[meetingApplyAdd.vue] onBeginTimeChange:', 'color:#04fadb', value)
-      },
-      onEndTimeChange(value) {
-        this.formModel.endTime = value
       }
     },
     watch: {
-      tt(nv, ov) {
-        console.log('%c[meetingApplyAdd.vue watch] this.tt nv:', 'color:#f04adb', nv)
-        console.log('%c[meetingApplyAdd.vue watch] this.tt ov:', 'color:#f04adb', ov)
+      formModel(nv, ov) {
+        console.log('%c[meetingApplyAdd.vue watch] formModel NewValue:', 'color:#f04adb', nv)
+        console.log('%c[meetingApplyAdd.vue watch] formModel OldValue:', 'color:#f04adb', ov)
       }
     }
   }

@@ -80,7 +80,8 @@
     methods: {
       onChange(value) {
         if (this.multiple) {  // 多选
-          let users = this.users.filter((item) => {
+          let uList = this.users || this.userList
+          let users = uList.filter((item) => {
             return (value.indexOf(item.id) > -1)
           })
           this.selectUser = users || []
@@ -90,10 +91,6 @@
           })
           this.selectUser = users[0] || {}
         }
-//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} this.userList is `, this.userList)
-//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} value is `, value)
-//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} currentValue is `, this.currentValue)
-//        console.log(`[kalix]-[userselect.vue] ${this.placeholder} current user is `, this.selectUser)
         this.$emit('userSelected', this.selectUser)  // 发送事件}
       },
       remoteMethod(query) {
