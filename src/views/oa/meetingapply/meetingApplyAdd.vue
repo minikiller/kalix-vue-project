@@ -63,8 +63,8 @@
             kalix-user-select(v-bind:params="params" style="width:100%"
             v-on:userSelected="onMeetingSummaryPersonSelected"
             v-bind:defaultIds="formModel.meetingSummaryPerson"
-            v-bind:multiple="multiple"
             v-model="meetingSummaryPerson"
+            v-bind:userNames.sync="myMeetingSummaryPersonName"
             placeholder="请输入会议纪要人员")
       div
         el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
@@ -73,6 +73,7 @@
           v-bind:defaultIds="formModel.importantAttendees"
           v-model="importantAttendees"
           v-bind:multiple="multiple"
+          v-bind:userNames.sync="myImportantAttendees"
           placeholder="请输入重要出席人")
       div
         el-form-item(label="其他出席人" v-bind:label-width="labelWidth")
@@ -88,7 +89,6 @@
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserSelect from '@/components/biz/userselect/userselect'
-  import BaseSelect from '@/components/custom/baseSelect'
   import BaseDatePicker from '@/components/custom/baseDatePicker'
   import {MeetingApplyURL} from '../config.toml'
   import FormModel from './model'
@@ -98,6 +98,8 @@
   export default {
     data() {
       return {
+        myMeetingSummaryPersonName: '',
+        myImportantAttendees: '',
         formModel: Object.assign({}, FormModel),
         params: {},
         title: '吉林动画学院会议申请表',
@@ -112,7 +114,7 @@
         },
         targetURL: MeetingApplyURL,
         multiple: true,
-        meetingSummaryPerson: [],
+        meetingSummaryPerson: null,
         importantAttendees: [],
         otherAttendees: []
       }
@@ -126,7 +128,6 @@
       KalixDialog: Dialog,
       KalixDictSelect: BaseDictSelect,
       KalixUserSelect: UserSelect,
-      KalixSelect: BaseSelect,
       KalixDatePicker: BaseDatePicker,
       KalixOrgSelect: UserOrgSelect,
       KalixMeetingRoomSelect: MeetingRoomSelect
@@ -142,9 +143,10 @@
         return {ids: ids.join(','), names: names.join(',')}
       },
       onMeetingSummaryPersonSelected(items) {
-        const users = this._getUsers(items)
-        this.formModel.meetingSummaryPerson = users.ids
-        this.formModel.meetingSummaryPersonName = users.names
+//        const users = this._getUsers(items)
+//        console.log('%c[meetingSummaryPerson]', 'background-color:#003366;color:#ffffff;padding:2px 6px', items)
+        this.formModel.meetingSummaryPerson = items.id
+        this.formModel.meetingSummaryPersonName = items.name
       },
       onImportantAttendeesSelected(items) {
         const users = this._getUsers(items)
@@ -158,12 +160,6 @@
       },
       onOrgIdChange(item) {
         this.formModel.orgName = item.name
-      }
-    },
-    watch: {
-      formModel(nv, ov) {
-        console.log('%c[meetingApplyAdd.vue watch] formModel NewValue:', 'color:#f04adb', nv)
-        console.log('%c[meetingApplyAdd.vue watch] formModel OldValue:', 'color:#f04adb', ov)
       }
     }
   }

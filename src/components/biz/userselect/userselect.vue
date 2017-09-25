@@ -12,7 +12,7 @@
     :multiple="multiple"
     :placeholder='placeholder'
     :remote-method='remoteMethod'
-    :loading='loading' v-on:change="onChange">
+    :loading='loading'>
     <el-option
       v-for='user in userList'
       :key='user.id'
@@ -41,7 +41,8 @@
       },
       params: {}, // 附加搜索参数
       defaultOptions: {},
-      defaultIds: {}     // 已选择的 id 逗号分隔字符串
+      defaultIds: '',     // 已选择的 id 逗号分隔字符串,
+      userNames: ''
     },
     data() {
       return {
@@ -53,7 +54,7 @@
     },
     created() {
       if (this.defaultIds) {
-        // 如果有传入 defaultIds 和 defaultNames
+        // 如果有传入 defaultIds
         let _data = {
           id: this.defaultIds,
           page: 1,
@@ -65,11 +66,15 @@
         }).then(response => {
           this.userList = response.data.data
           this.users = response.data.data
-          let _defaultIds = this.defaultIds.split(',') // 将 defaultIds 转换为 数组
-          let _defaultIdsInt = _defaultIds.map(item => {  // 将 _defaultIds 字符串数组转化为 数字
-            return item * 1
-          })
-          this.currentValue = _defaultIdsInt  // 用户ID集合 赋给 currentValue
+          if (this.multiple) {
+            let _defaultIds = this.defaultIds.toString().split(',') // 将 defaultIds 转换为 数组
+            let _defaultIdsInt = _defaultIds.map(item => {    // 将 _defaultIds 字符串数组转化为 数字
+              return item * 1
+            })
+            this.currentValue = _defaultIdsInt  // 用户ID集合 赋给 currentValue
+          } else {
+            this.currentValue = this.defaultIds * 1
+          }
           let that = this
           setTimeout(() => {  // 清空 下拉列表
             that.userList = []
@@ -79,22 +84,35 @@
     },
     methods: {
       onChange(value) {
+        let _selectUser = {}
         if (this.multiple) {  // 多选
           let uList = this.users || this.userList
           let users = uList.filter((item) => {
             return (value.indexOf(item.id) > -1)
           })
-          this.selectUser = users || []
+          _selectUser = users || []
         } else {  // 单选
           let users = this.userList.filter((item) => {
             return item.id === value
           })
-          this.selectUser = users[0] || {}
+          _selectUser = users[0] || {}
         }
-        this.$emit('userSelected', this.selectUser)  // 发送事件}
+        let users = null
+        if (Array.isArray(_selectUser)) {
+          users = []
+          _selectUser.forEach(e => {
+            users.push(e.name)
+          })
+          users = users.join(',')
+        } else {
+          users = _selectUser.name
+        }
+        this.selectUser = _selectUser
+        this.$emit('update:userNames', users)
+        this.$emit('userSelected', _selectUser)  // 发送事件
       },
       remoteMethod(query) {
-        if (query !== '') {
+        if (query && query !== '') {
 //          this.$emit('input', this.currentValue)  // 设置model的数值
           this.loading = true
           setTimeout(() => {
@@ -116,31 +134,12 @@
         } else {
           this.userList = []
         }
-      },
-      arrayUnique(arr) {
-        // 用户对象去重
-        let res = []
-        if (arr.length > 0) {
-          res = [arr[0]]
-          for (let i = 1; i < arr.length; i++) {
-            let repeat = false
-            for (let j = 0; j < res.length; j++) {
-              if (arr[i].id === res[j].id) {
-                repeat = true
-                break
-              }
-            }
-            if (!repeat) {
-              res.push(arr[i])
-            }
-          }
-        }
-        return res
       }
     },
     watch: {
       currentValue(newValue) {
         this.$emit('input', newValue)  // 设置model的数值
+        this.onChange(newValue)
       }
     }
   }
