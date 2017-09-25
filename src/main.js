@@ -12,7 +12,7 @@ import store from './store'
 // import Search from '@/components/table/search'
 // import Wrapper from '@/components/table/wrapper'
 // import KalixDialog from '@/components/table/dialog'
-import {GlobalComponent} from 'config/global.toml'
+import {GlobalComponent, GlobalFilter} from 'config/global.toml'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
@@ -27,8 +27,13 @@ Vue.use(ElementUI)
 
 // 注册全局组件
 GlobalComponent.forEach((item) => {
-  console.log('[kalix]-[main.js] registry name is: ' + item.name, '; registry path is: ' + item.path)
+  console.log('[kalix]-[main.js] registry component name is: ' + item.name, '; registry path is: ' + item.path)
   Vue.component(item.name, require('' + item.path).default)
+})
+// 注册全局过滤器
+GlobalFilter.forEach((item) => {
+  console.log('[kalix]-[main.js] registry filter name is: ' + item.name, '; registry path is: ' + item.path)
+  Vue.filter(item.name, require('' + item.path).default)
 })
 
 // Vue.component('kalix-search', Search)
