@@ -41,7 +41,6 @@
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import BaseDictInput from '@/components/custom/baseDictInput'
   //  import {usersURL} from 'views/admin/config.toml'
 
   export default {
@@ -59,8 +58,7 @@
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
-      KalixDictInput: BaseDictInput
+      KalixDictSelect: BaseDictSelect
     },
     methods: {}
   }
