@@ -6,7 +6,7 @@
 
 <template lang="pug">
   div.block
-    el-cascader(placeholder="试试搜索：吉林动画学院" v-bind:options="data2" v-bind:props="defaultProps"
+    el-cascader(placeholder="试试搜索：吉林动画学院" v-bind:options="data2" v-bind:props="defaultProps" v-bind:disabled="readonly"
     filterable change-on-select :show-all-levels="false" v-model="selectedOptions" v-on:change="handleChange")
 </template>
 
@@ -16,10 +16,12 @@
 
   export default {
     props: {
-      value: {
-        type: Number
-      },
+      value: null,
       isAll: {
+        type: Boolean,
+        default: false
+      },
+      readonly: {
         type: Boolean,
         default: false
       }
@@ -59,10 +61,12 @@
         })
 
         // 获取指定机构id的父节点路径
-        let orgParentPathURL = orgURL + '/' + this.value + '/parentpath'
-        Vue.axios.get(orgParentPathURL).then((response) => {
-          this.selectedOptions = JSON.parse('[' + response.data + ']')
-        })
+        if (this.value) {
+          let orgParentPathURL = orgURL + '/' + this.value + '/parentpath'
+          Vue.axios.get(orgParentPathURL).then((response) => {
+            this.selectedOptions = JSON.parse('[' + response.data + ']')
+          })
+        }
       },
       handleChange (value) {
         this.$emit('nodeChange', value)
