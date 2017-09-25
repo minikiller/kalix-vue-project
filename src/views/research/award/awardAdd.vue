@@ -3,10 +3,11 @@
 开发人：fj
 开发日期：2017年9月20日
 -->
-
 <template lang="pug">
   kalix-dialog.user-add(bizKey="award"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  ref="kalixBizDialog"
+  v-bind:formModel.sync="formModel"
+  v-bind:targetURL="targetURL"
   )
     div.el-form(slot="dialogFormSlot")
 
@@ -15,7 +16,8 @@
           kalix-competition-select(style="width:100%"  v-model="formModel.competitionId" v-bind:multiple="false"
           v-on:competitionSelected="onCompetitionSelected")
        el-form-item.s-flex_item(label="展赛类型" prop="competitionType" label-width="140px")
-          el-input(v-model="formModel.competitionType")
+          kalix-dict-select(v-model="formModel.competitionType" style="width:100%" appName="research"
+          v-bind:disabled="true" dictType="展赛类型")
       div.s-flex
         el-form-item.s-flex_item(label="报名ID" prop="signupId" label-width="140px")
           el-input(v-model="formModel.signupId")
@@ -26,29 +28,18 @@
           el-input(v-model="formModel.awardLevel")
         el-form-item.s-flex_item(label="备注" prop="remark" label-width="140px")
           el-input(v-model="formModel.remark")
-
-
  </template>
 
 <script type="text/ecmascript-6">
+  import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
   import {AwardURL} from '../config.toml'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import CompetitionSelect from '@/components/biz/competitionselect/competitionselect'
-  import EventBus from 'common/eventbus'
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
+        formModel: Object.assign({}, FormModel),
         rules: {
           competitionId: [{required: true, message: '请选择展赛名称', trigger: 'blur'}]
         },
@@ -56,7 +47,8 @@
       }
     },
     created() {
-      console.log('this.formRules.name:', this.formRules.name)
+      console.log('created FormModel', FormModel)
+      console.log('created this.formModel', this.formModel)
     },
     components: {
       KalixDialog: Dialog,
@@ -66,8 +58,7 @@
     methods: {
       onCompetitionSelected(competition) {
         console.log('++++++++----------:', competition.type)
-        this.competitionType = '123'
-        EventBus.$emit('updateAwardModel', competition)
+        this.formModel.competitionType = competition.type
       }
     }
   }
