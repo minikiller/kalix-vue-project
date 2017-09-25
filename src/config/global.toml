@@ -52,6 +52,10 @@ orgURL = "/camel/rest/orgs"
   isShow = true
   isPermission = true
 
+[[GlobalFilter]]
+  path = "./components/filters/dictFilter.js"
+  name = "getDictName"
+
 [[GlobalComponent]]
   path = "./views/demo/world"
   name = "contact-us"

@@ -27,7 +27,7 @@
         required: true
       },
       disabled: Boolean, // 是否禁止
-      value: Number
+      value: null
     },
     mounted() {
       this.visibleChange()
