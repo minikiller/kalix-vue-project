@@ -36,12 +36,16 @@
         }
       },
       onChange(value) {
-        console.log('[value]', value)
-        this.$emit('input', value)
         let item = this.options.find(e => {
           return e.id === value
         })
-        this.$emit('change', item)
+        this.$emit('selectChange', item)
+      }
+    },
+    watch: {
+      currentValue(newValue, oldValue) {
+        console.log('newValue:', newValue)
+        this.$emit('input', newValue)
       }
     }
   }

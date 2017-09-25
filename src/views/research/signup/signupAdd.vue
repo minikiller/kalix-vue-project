@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="signup"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
+  ref="kalixBizDialog" v-bind:form-model.sync="formModel" v-bind:targetURL="targetURL"
   )
     div.el-form.kalix-form-table(slot="dialogFormSlot")
 
@@ -19,8 +19,7 @@
           el-input(v-model="formModel.penName")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="展赛" prop="competitionId" label-width="140px" )
-          kalix-competition-select(style="width:100%"  v-model="formModel.competitionId" v-bind:multiple="false"
-          v-on:competitionSelected="onCompetitionSelected")
+          kalix-competition-select(style="width:100%"  v-model="formModel.competitionId" v-bind:multiple="false")
         el-form-item.s-flex_item.kalix-form-table-td(label="性别" prop="sex" label-width="140px")
           el-radio-group(v-model="formModel.sex")
             el-radio(label="男")
@@ -119,24 +118,16 @@
  </template>
 
 <script type="text/ecmascript-6">
+  import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
   import {SignupURL} from '../config.toml'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import CompetitionSelect from '@/components/biz/competitionselect/competitionselect'
-  import EventBus from 'common/eventbus'
+
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
+        formModel: Object.assign({}, FormModel),
         rules: {
           competitionId: [{required: true, message: '请选择展赛名称', trigger: 'blur'}]
         },
@@ -152,9 +143,10 @@
       KalixCompetitionSelect: CompetitionSelect
     },
     methods: {
-      onCompetitionSelected(competition) {
-        EventBus.$emit('updateSignupModel', competition)
-      }
+//      onCompetitionSelected(competition) {
+//        // EventBus.$emit('updateSignupModel', competition)
+//        this.formModel.penName = competition.name
+//      }
     }
   }
 </script>

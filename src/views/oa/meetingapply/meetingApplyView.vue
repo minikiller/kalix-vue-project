@@ -10,7 +10,7 @@
   ref="kalixBizDialog"
   v-bind:isView="readonly"
   )
-    div.el-form.kalix-form-table(slot="dialogFormSlot")
+    div.el-form.kalix-form-table-view(slot="dialogFormSlot")
       kalix-meeting-apply-view-form(v-bind:form-model="formModel")
 </template>
 
@@ -20,7 +20,6 @@
   import UserSelect from '@/components/biz/userselect/userselect'
   import MeetingApplyViewForm from './MeetingApplyViewForm'
   import FormModel from './model'
-  //  import {usersURL} from 'views/admin/config.toml'
 
   export default {
     data() {
@@ -43,7 +42,6 @@
       KalixMeetingApplyViewForm: MeetingApplyViewForm,
       KalixUserSelect: UserSelect
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
