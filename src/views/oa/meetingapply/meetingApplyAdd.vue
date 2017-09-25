@@ -20,14 +20,12 @@
         v-bind:rules="rules.orgId"
         prop="orgId")
           div.kalix-form-table-td
-            kalix-select(v-model="formModel.orgId" placeholder="请选择申请部门" style="width:100%"
-            v-on:selectChange="onOrgIdChange" appName="USERORGS")
+            kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
         el-form-item.s-flex_item(label="会议地点" v-bind:label-width="labelWidth"
         v-bind:rules="rules.meetingroomId"
         prop="meetingroomId")
           div.kalix-form-table-td
-            kalix-select(v-model="formModel.meetingroomId" placeholder="请选择会议地点" style="width:100%"
-            appName="MEETINGROOMS")
+            kalix-meeting-room-select(v-model="formModel.meetingroomId")
       div.s-flex
         el-form-item.s-flex_item(label="会议议题" v-bind:label-width="labelWidth"
         v-bind:rules="rules.meetingTopic"
@@ -94,6 +92,8 @@
   import BaseDatePicker from '@/components/custom/baseDatePicker'
   import {MeetingApplyURL} from '../config.toml'
   import FormModel from './model'
+  import UserOrgSelect from '@/components/biz/select/UserOrgSelect'
+  import MeetingRoomSelect from '@/components/biz/select/MeetingRoomSelect'
 
   export default {
     data() {
@@ -127,7 +127,9 @@
       KalixDictSelect: BaseDictSelect,
       KalixUserSelect: UserSelect,
       KalixSelect: BaseSelect,
-      KalixDatePicker: BaseDatePicker
+      KalixDatePicker: BaseDatePicker,
+      KalixOrgSelect: UserOrgSelect,
+      KalixMeetingRoomSelect: MeetingRoomSelect
     },
     methods: {
       _getUsers(users) {
