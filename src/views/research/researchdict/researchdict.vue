@@ -12,7 +12,6 @@
 
 <script type="text/ecmascript-6">
   import BaseDict from '@/components/biz/dict/basedict'
-  //  import Vue from 'vue'
   import {ResearchDictsURL, ResearchDictComponent, ResearchDictsTypesListURL} from '../config.toml'
 
   export default {
@@ -33,18 +32,12 @@
         ]
       }
     },
-    created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
-//      this.dictComponent.forEach((item) => {
-//        console.log(`[kalix]-[${this.bizKey}] registry name is:  ${item.name}, registry path is: ${item.path}`)
-//        Vue.component(item.name, require('' + item.path))
-//      })
-    },
-    methods: {},
     components: {
       KalixBaseDict: BaseDict
-//      KalixUserAdd: UserAdd
-    }
+    },
+    created() {
+    },
+    methods: {}
   }
 </script>
 
