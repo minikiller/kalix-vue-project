@@ -16,7 +16,7 @@
         el-input(v-model="formModel.usageCount" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="印章类别" v-bind:label-width="labelWidth")
-        kalix-dict-input(dictModel="formModel.sealType" appName="OA" dictType="印章类型")
+        el-input(v-bind:value="formModel.sealType|getDictName('OA','印章类型')")
       el-form-item.s-flex_item.kalix-form-table-td(label="申请日期" v-bind:label-width="labelWidth")
         el-input(v-bind:value="formModel.creationDate" readonly)
     el-form-item(label="备注" v-bind:label-width="labelWidth")
@@ -41,7 +41,6 @@
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import BaseDictInput from '@/components/custom/baseDictInput'
   //  import {usersURL} from 'views/admin/config.toml'
 
   export default {
@@ -59,10 +58,8 @@
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
-      KalixDictInput: BaseDictInput
+      KalixDictSelect: BaseDictSelect
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
