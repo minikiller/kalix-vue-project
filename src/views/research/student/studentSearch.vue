@@ -27,7 +27,9 @@
             ]
           },
           {label: '出生日期', prop: 'birthday', type: 'date', field: 'begin:gt'},
-          {label: '-', prop: 'birthday', type: 'date', field: 'end:lt'}
+          {label: '-', prop: 'birthday', type: 'date', field: 'end:lt'},
+          {label: '入学年份', prop: 'entranceYear', type: 'year', field: 'begin:gt'},
+          {label: '-', prop: 'entranceYear', type: 'year', field: 'end:lt'}
         ]
       }
     },

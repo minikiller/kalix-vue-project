@@ -20,6 +20,8 @@
             el-input-number(v-else-if="item.type==='number'" v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
             org-tree.inline(v-else-if="item.type==='orgTree'" v-model="form[item.prop]" v-bind:isAll="item.isAll")
             kalix-query-date-picker(v-else-if="item.type==='date'" v-model="form[item.prop]")
+            kalix-query-date-picker(v-else-if="item.type==='year'" v-model="form[item.prop]" type="year")
+            kalix-query-datetime-picker(v-else-if="item.type==='datetime'" v-model="form[item.prop]")
             el-input(v-else v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
@@ -35,7 +37,8 @@
   import {isEmptyObject} from 'common/util'
   import EventBus from 'common/eventbus'
   import {ON_SEARCH_BUTTON_CLICK} from './event.toml'
-  import QueryDatepicker from 'components/biz/query/queryDatepicker'
+  import QueryDatepicker from 'components/biz/date/datepicker'
+  import QueryDatetimepicker from 'components/biz/date/datetimepicker'
 
   export default {
     activated() {
@@ -162,7 +165,8 @@
       }
     },
     components: {
-      KalixQueryDatePicker: QueryDatepicker
+      KalixQueryDatePicker: QueryDatepicker,
+      KalixQueryDatetimePicker: QueryDatetimepicker
     },
     computed: {},
     watch: {}
