@@ -12,12 +12,16 @@
       i.iconfont.icon-query
       | {{title}}
     div.kalix-search-bd
-      el-form.search-container(ref="searchForm" v-bind:rules="formRules" v-bind:model="form" v-bind:inline="true")
+      el-form.search-container(ref="searchForm" v-bind:model="form" v-bind:inline="true")
         slot(name="searchFormSlot")
           el-form-item(v-for="item in searchFields" v-bind:label="item.label" v-bind:prop="item.prop" v-bind:key="item.prop")
             el-select(v-if="item.type==='select'" v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
               el-option(v-for="option in item.options" v-bind:key="option.value" v-bind:label="option.label" v-bind:value="option.value")
             el-input-number(v-else-if="item.type==='number'" v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
+            org-tree.inline(v-else-if="item.type==='orgTree'" v-model="form[item.prop]" v-bind:isAll="item.isAll")
+            kalix-query-date-picker(v-else-if="item.type==='date'" v-model="form[item.prop]")
+            kalix-query-date-picker(v-else-if="item.type==='year'" v-model="form[item.prop]" type="year")
+            kalix-query-datetime-picker(v-else-if="item.type==='datetime'" v-model="form[item.prop]")
             el-input(v-else v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
@@ -33,6 +37,8 @@
   import {isEmptyObject} from 'common/util'
   import EventBus from 'common/eventbus'
   import {ON_SEARCH_BUTTON_CLICK} from './event.toml'
+  import QueryDatepicker from 'components/biz/date/datepicker'
+  import QueryDatetimepicker from 'components/biz/date/datetimepicker'
 
   export default {
     activated() {
@@ -59,12 +65,12 @@
         type: String,
         default: ''
       },
-      formRules: {}, // 查询校验规则
       searchFields: { // 搜索查询的字段
         type: Array
       }
     },
     created() {
+      console.log(this.searchFields)
       this._currentForm()
     },
     mounted() {
@@ -94,36 +100,49 @@
               if (itemVal) {
                 let dataType = typeof itemVal
                 let field = item
+                let flag = true
                 let docItems = document.getElementsByClassName(`${this.bizKey}-${item}`)  //  根据 bizKey 和 v-model名 查找 dom 标签
                 if (docItems && docItems.length === 1) {
                   //  如果 docItems 存在并且只有一个，获取当前字段的数据类型并赋值给 dataType
                   let docItem = docItems[0]
                   dataType = docItem.getAttribute('data-type')
                   field = docItem.getAttribute('field')
+                  flag = false
 //                  console.log('dataType', field)
 //                  console.log('field', field)
                 }
 //                console.log(`%c${item}`, 'color:#ed05ff', itemVal)
-                if (field && itemVal.length) {
-                  let key = `"${field}"`   //  绑定 查询 key
-                  let val = `${itemVal}`  //  绑定 查询 value
-                  switch (dataType) {
-                    case 'string':
-                      //  如果 dataType 是 String 格式，key 和 val 增加双引号
-                      key = `"%${field}%"`
-                      val = `"${strToUnicode(itemVal)}"`
-                      break
-                    case 'datetime':
-                      //  如果 dataType 是 Datetime 格式，val 增加双引号
-                      val = `"${itemVal}"`
-                      break
+                if (flag) {
+                  if (field && itemVal.length) {
+                    let key = `"${field}"`   //  绑定 查询 key
+                    let val = `${itemVal}`   //  绑定 查询 value
+                    switch (dataType) {
+                      case 'string':
+                        //  如果 dataType 是 String 格式，key 和 val 增加双引号
+                        key = `"%${field}%"`
+                        val = `"${strToUnicode(itemVal)}"`
+                        break
+                      case 'datetime':
+                        //  如果 dataType 是 Datetime 格式，val 增加双引号
+                        val = `"${itemVal}"`
+                        if (flag) {
+                          key = `${item}:${this.searchFields[item].field}`
+                        }
+                        break
+                      case 'orgTree':
+                        val = `${itemVal}`
+                        break
+                    }
+                    requestDatas.push(`${key}: ${val}`)
                   }
-                  requestDatas.push(`${key}: ${val}`)
+                } else {
+                  // requestDatas.push(`${key}: ${val}`)
                 }
               }
             }
             if (requestDatas.length > 0) {
               this.isSearch = true
+              console.log('[Search]', `{${requestDatas.join(',')}}`)
               EventBus.$emit(ON_SEARCH_BUTTON_CLICK, {jsonStr: `{${requestDatas.join(',')}}`})
             }
           } else {
@@ -145,14 +164,17 @@
         return regNumber.test(_data)
       }
     },
-    components: {},
+    components: {
+      KalixQueryDatePicker: QueryDatepicker,
+      KalixQueryDatetimePicker: QueryDatetimepicker
+    },
     computed: {},
     watch: {}
   }
 
 </script>
 
-<style  lang='stylus' type='text/stylus'>
+<style lang='stylus' type='text/stylus'>
   @import "~@/assets/stylus/color.styl"
   .kalix-search
     margin 5px
