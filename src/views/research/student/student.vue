@@ -6,26 +6,18 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="student" title='学生列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    v-bind:bizSearch="'ResearchStudentSearch'" v-bind:btnList="btnList")
+    v-bind:bizDialog="bizDialog" v-bind:bizSearch="'ResearchStudentSearch'" v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import {StudentURL, StudentComponent, ToolButtonList} from '../config.toml'
-  import EventBus from 'common/eventbus'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
   registerComponent(StudentComponent)
 
   export default {
-    activated() {
-      console.log('c%' + this.bizKey + ' student  is activated', 'color:#ff00fe')
-    },
-    deactivated() {
-      console.log(this.bizKey + '  is deactivated')
-    },
     data() {
       return {
         btnList: ToolButtonList,
@@ -34,61 +26,31 @@
           {prop: 'studentNo', label: '学号'},
           {prop: 'name', label: '姓名'},
           {prop: 'sex', label: '性别'},
-          {prop: 'sclass', label: '班级'},
-          {prop: 'major', label: '专业'},
-          {prop: 'college', label: '院部'},
-          {prop: 'entranceYear', label: '入学年份'}
+          {prop: 'classId', label: '班级'},
+          {prop: 'province', label: '生源省份'},
+          {prop: 'entranceYear', label: '入学年份'},
+          {prop: 'homePhone', label: '家庭联系电话'},
+          {prop: 'address', label: '联系地址'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'ResearchStudentView'},
           {id: 'edit', dialog: 'ResearchStudentAdd'},
           {id: 'add', dialog: 'ResearchStudentAdd'}
-        ],
-        formModel: {
-          identificationCard: '',
-          name: '',
-          sex: '',
-          sclass: '',
-          major: '',
-          college: '',
-          entranceYear: '',
-          studentNo: '',
-          instructor: '',
-          nation: '',
-          placeOfOrigin: '',
-          politicalStatus: '',
-          address: '',
-          postalcode: '',
-          province: '',
-          trainingLevel: '',
-          phone: '',
-          period: ''
-        },
-        formRules: {
-          name: [
-            {required: true, message: '请输入姓名', trigger: 'blur'}
-          ],
-          identificationCard: [
-            {required: true, message: '请输入身份证号', trigger: 'blur'}
-          ]
-        }
-      }
-    },
-    created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
-    },
-    methods: {
-      changeFormModel(model) {
-        console.log('changeFormModel', model)
-        this.formModel = model
+        ]
       }
     },
     components: {
       BaseTable
-//      KalixUserAdd: UserAdd
     },
-    mounted() {
-      EventBus.$on('updateStudentModel', this.changeFormModel)
+    created() {
+    },
+    activated() {
+      console.log('c%' + this.bizKey + ' student  is activated', 'color:#ff00fe')
+    },
+    deactivated() {
+      console.log(this.bizKey + '  is deactivated')
+    },
+    methods: {
     }
   }
 </script>

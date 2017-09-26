@@ -61,27 +61,25 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="会议纪要人员" v-bind:label-width="labelWidth")
           div.kalix-form-table-td
             kalix-user-select(v-bind:params="params" style="width:100%"
-            v-on:userSelected="onMeetingSummaryPersonSelected"
-            v-bind:defaultIds="formModel.meetingSummaryPerson"
             v-model="meetingSummaryPerson"
-            v-bind:userNames.sync="myMeetingSummaryPersonName"
+            v-bind:userIds.sync="formModel.meetingSummaryPerson"
+            v-bind:userNames.sync="formModel.meetingSummaryPersonName"
             placeholder="请输入会议纪要人员")
       div
         el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
           kalix-user-select(v-bind:params="params" style="width:100%"
-          v-on:userSelected="onImportantAttendeesSelected"
-          v-bind:defaultIds="formModel.importantAttendees"
           v-model="importantAttendees"
           v-bind:multiple="multiple"
-          v-bind:userNames.sync="myImportantAttendees"
+          v-bind:userIds.sync="formModel.importantAttendees"
+          v-bind:userNames.sync="formModel.importantAttendeesName"
           placeholder="请输入重要出席人")
       div
         el-form-item(label="其他出席人" v-bind:label-width="labelWidth")
           kalix-user-select(v-bind:params="params" style="width:100%"
-          v-on:userSelected="onOtherAttendeesSelected"
-          v-bind:defaultIds="formModel.otherAttendees"
           v-model="otherAttendees"
           v-bind:multiple="multiple"
+          v-bind:userIds.sync="formModel.otherAttendees"
+          v-bind:userNames.sync="formModel.otherAttendeesName"
           placeholder="请输入其他出席人")
 </template>
 
@@ -98,8 +96,8 @@
   export default {
     data() {
       return {
-        myMeetingSummaryPersonName: '',
         myImportantAttendees: '',
+        myImportantAttendeesIds: '',
         formModel: Object.assign({}, FormModel),
         params: {},
         title: '吉林动画学院会议申请表',
@@ -133,31 +131,6 @@
       KalixMeetingRoomSelect: MeetingRoomSelect
     },
     methods: {
-      _getUsers(users) {
-        let ids = []
-        let names = []
-        users.forEach(item => {
-          ids.push(item.id)
-          names.push(item.name)
-        })
-        return {ids: ids.join(','), names: names.join(',')}
-      },
-      onMeetingSummaryPersonSelected(items) {
-//        const users = this._getUsers(items)
-//        console.log('%c[meetingSummaryPerson]', 'background-color:#003366;color:#ffffff;padding:2px 6px', items)
-        this.formModel.meetingSummaryPerson = items.id
-        this.formModel.meetingSummaryPersonName = items.name
-      },
-      onImportantAttendeesSelected(items) {
-        const users = this._getUsers(items)
-        this.formModel.importantAttendees = users.ids
-        this.formModel.importantAttendeesName = users.names
-      },
-      onOtherAttendeesSelected(items) {
-        const users = this._getUsers(items)
-        this.formModel.otherAttendees = users.ids
-        this.formModel.otherAttendeesName = users.names
-      },
       onOrgIdChange(item) {
         this.formModel.orgName = item.name
       }
