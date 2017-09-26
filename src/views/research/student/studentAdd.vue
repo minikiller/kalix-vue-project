@@ -21,7 +21,7 @@
       div.s-flex
         el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="120px")
           el-input(v-model="formModel.identificationCard")
-        el-form-item.s-flex_item(label="性别" prop="sex" v-bind:rules="rules.sex" label-width="120px")
+        el-form-item.s-flex_item(label="性别" prop="sex" label-width="120px")
           el-radio-group(v-model="formModel.sex")
             el-radio(label="男")
             el-radio(label="女")
@@ -59,8 +59,8 @@
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
-  import Dialog from '@/components/custom/baseDialog.vue'
   import {StudentURL} from '../config.toml'
+  import Dialog from '@/components/custom/baseDialog.vue'
   import UserSelect from '@/components/biz/userselect/userselect'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import DatePicker from '@/components/biz/date/datepicker.vue'
@@ -78,8 +78,8 @@
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
       KalixUserSelect: UserSelect,
+      KalixDictSelect: BaseDictSelect,
       KalixDatePicker: DatePicker
     },
     created() {

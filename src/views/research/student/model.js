@@ -4,7 +4,7 @@
 const FormModel = {
   name: '',
   studentNo: '',
-  classId: '',
+  classId: null,
   instructor: '',
   identificationCard: '',
   sex: '',
