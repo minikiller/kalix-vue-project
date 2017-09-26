@@ -5,83 +5,73 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="teacher"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-  )
+  kalix-dialog.user-add(bizKey="teacher" ref="kalixBizDialog" v-bind:form-model.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
-        kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
-        v-on:userSelected="onUserSelected")
-      el-form-item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard")
-        el-input(v-model="formModel.identificationCard")
-      el-form-item(label="性别" prop="sex" v-bind:rules="rules.sex")
-        el-radio-group(v-model="formModel.sex")
-          el-radio(label="男")
-          el-radio(label="女")
-      el-form-item(label="手机" prop="mobile" v-bind:rules="rules.mobile")
-        el-input(v-model="formModel.mobile")
-      el-form-item(label="职称" prop="positionalTitles")
-        el-input(v-model="formModel.positionalTitles")
-      el-form-item(label="职称" prop="positionalTitles")
-        kalix-dict-select(v-model="formModel.positionalTitles" appName="research" dictType="职称")
-      el-form-item(label="个人简历")
-        el-input(type="textarea" v-model="formModel.resume")
-      el-form-item(label="个人说明")
-        el-input(type="textarea" v-model="formModel.introduction")
-      el-form-item(label="学术研究")
-        el-input(type="textarea" v-model="formModel.learning")
-      el-form-item(label="教学情况")
-        el-input(type="textarea" v-model="formModel.teaching")
-      el-form-item(label="教学情况" )
-        el-input(type="textarea" v-model="formModel.teaching")
+      div.s-flex
+        el-form-item.s-flex_item(label="教师姓名" prop="name" v-bind:rules="rules.name" label-width="120px" )
+          kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
+          v-on:userSelected="onUserSelected")
+        el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="120px")
+          el-input(v-model="formModel.identificationCard")
+      div.s-flex
+        el-form-item.s-flex_item(label="性别" prop="sex" label-width="120px")
+          el-radio-group(v-model="formModel.sex")
+            el-radio(label="男")
+            el-radio(label="女")
+        el-form-item.s-flex_item(label="手机" prop="mobile" label-width="120px")
+          el-input(v-model="formModel.mobile")
+      div.s-flex
+        el-form-item.s-flex_item(label="单位部门" prop="orgId" label-width="120px")
+          org-tree.inline(v-model="formModel.orgId" v-bind:isAll="true")
+        el-form-item.s-flex_item(label="职称" prop="positionalTitles" label-width="120px")
+          kalix-dict-select(v-model="formModel.positionalTitles" appName="research" dictType="职称")
+      div.s-flex
+        el-form-item.s-flex_item(label="个人简历" prop="resume" label-width="120px")
+          el-input(type="textarea" v-model="formModel.resume")
+        el-form-item.s-flex_item(label="个人说明" prop="introduction" label-width="120px")
+          el-input(type="textarea" v-model="formModel.introduction")
+      div.s-flex
+        el-form-item.s-flex_item(label="学术研究" prop="learning" label-width="120px")
+          el-input(type="textarea" v-model="formModel.learning")
+        el-form-item.s-flex_item(label="教学情况" prop="teaching" label-width="120px")
+          el-input(type="textarea" v-model="formModel.teaching")
+      div.s-flex
+        el-form-item.s-flex_item(label="擅长课程" prop="coursesSkills" label-width="120px")
+          el-input(type="textarea" v-model="formModel.coursesSkills")
+        el-form-item.s-flex_item(label="预备知识" prop="preliminary" label-width="120px")
+          el-input(type="textarea" v-model="formModel.preliminary")
 </template>
 
 <script type="text/ecmascript-6">
-  import Dialog from '@/components/custom/baseDialog.vue'
-  import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import UserSelect from '@/components/biz/userselect/userselect'
+  import FormModel from './model'
   import {TeacherURL} from '../config.toml'
-  import EventBus from 'common/eventbus'
+  import Dialog from '@/components/custom/baseDialog.vue'
+  import UserSelect from '@/components/biz/userselect/userselect'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
+
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
-        params: {userType: 1},
+        formModel: Object.assign({}, FormModel),
         rules: {
-          name: [{required: true, message: '请输入 name', trigger: 'blur'}],
-          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          email: [
-            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
-            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
-          ],
-          phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
-          mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
-          available: [{required: true, message: '请输入 available', trigger: 'blur'}]
+          name: [{required: true, message: '请输入教师姓名', trigger: 'blur'}]
         },
-        targetURL: TeacherURL
+        targetURL: TeacherURL,
+        params: {userType: 0}
       }
-    },
-    created() {
-      console.log('this.formRules.name:', this.formRules.name)
-      console.log('[teacherAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
-      KalixUserSelect: UserSelect
+      KalixUserSelect: UserSelect,
+      KalixDictSelect: BaseDictSelect
+    },
+    created() {
+      console.log('[teacherAdd.vue created] this.formModel:', this.formModel)
     },
     methods: {
       onUserSelected(user) {
-        EventBus.$emit('updateTeacherModel', user)
+        this.formModel.sex = user.sex
+        this.formModel.mobile = (user.mobile == null ? user.phone : user.mobile)
       }
     }
   }
