@@ -130,8 +130,7 @@
         rules: {
           competitionId: [{required: true, message: '请选择展赛名称', trigger: 'blur'}]
         },
-        targetURL: SignupURL,
-        activeNames: ['1']
+        targetURL: SignupURL
 
       }
     },
