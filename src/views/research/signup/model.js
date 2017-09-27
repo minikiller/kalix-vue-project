@@ -2,18 +2,18 @@
  * Created by Administrator on 2017/9/22.
  */
 const FormModel = {
+  competitionId: null,
   name: '',
   phoneticize: '',
-  penName: '',
-  authorIntroduction: '',
   sex: '',
-  nationality: '',
-  age: '',
   birthday: '',
+  nationality: '',
+  identificationCard: '',
   province: '',
   city: '',
+  penName: '',
+  authorIntroduction: '',
   postalAddress: '',
-  identificationCard: '',
   postalCode: '',
   mobilePhone: '',
   fixedPhone: '',
@@ -39,7 +39,6 @@ const FormModel = {
   finishingDate: '',
   lengthOfWork: '',
   copyrightOwner: '',
-  authorSignature: '',
   unit: '',
   unitContacter: '',
   creator: ''

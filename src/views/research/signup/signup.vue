@@ -36,14 +36,8 @@
         ]
       }
     },
-    created() {
-    },
-    methods: {
-    },
     components: {
       BaseTable
-    },
-    mounted() {
     }
   }
 </script>
