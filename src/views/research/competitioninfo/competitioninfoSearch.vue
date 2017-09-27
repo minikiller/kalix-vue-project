@@ -5,8 +5,7 @@
 -->
 
 <template lang="pug">
-  kalix-search(title="展赛查询"
-  v-bind:searchFields="searchFields" v-bind:form-rules="rules")
+  kalix-search(title="展赛查询" v-bind:searchFields="searchFields")
 </template>
 
 <script type="text/ecmascript-6">
@@ -16,19 +15,14 @@
     data() {
       return {
         searchFields: [
-          {label: '展赛名称', prop: 'name'}
-        ],
-        rules: {
-          name: [{required: true, message: '请输入名称', trigger: 'blur'}]
-        }
+          {label: '展赛名称', prop: 'name'},
+          {label: '展赛类别', prop: 'type', type: 'dict', appName: 'research', dictType: '展赛类别'}
+        ]
       }
     },
     components: {
       KalixSearch: BaseSearch
-    },
-    created() {
-    },
-    methods: {}
+    }
   }
 </script>
 

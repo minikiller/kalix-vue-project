@@ -35,10 +35,7 @@
     },
     components: {
       KalixSearch: BaseSearch
-    },
-    created() {
-    },
-    methods: {}
+    }
   }
 </script>
 

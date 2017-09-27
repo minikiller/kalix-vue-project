@@ -5,99 +5,88 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="worker"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-  )
+  kalix-dialog.user-add(bizKey="worker" ref="kalixBizDialog" v-bind:form-model.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="姓名" prop="name" v-bind:rules="rules.name" label-width="120px")
+        el-form-item.s-flex_item(label="科研人员姓名" prop="name" v-bind:rules="rules.name" label-width="120px")
           kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
           v-on:userSelected="onUserSelected")
-        el-form-item.s-flex_item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard" label-width="120px")
+        el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="120px")
           el-input(v-model="formModel.identificationCard")
       div.s-flex
-        el-form-item.s-flex_item(label="性别" prop="sex" v-bind:rules="rules.sex" label-width="120px")
-         el-radio-group(v-model="formModel.sex")
-          el-radio(label="男")
-          el-radio(label="女")
-        el-form-item.s-flex_item(label="籍贯" prop="placeOfOrigin" label-width="120px")
-         el-input(v-model="formModel.placeOfOrigin")
+        el-form-item.s-flex_item(label="性别" prop="sex" label-width="120px")
+          el-radio-group(v-model="formModel.sex")
+            el-radio(label="男")
+            el-radio(label="女")
+        el-form-item.s-flex_item(label="出生日期" prop="birthday" label-width="120px")
+          kalix-date-picker(v-model="formModel.birthday")
       div.s-flex
         el-form-item.s-flex_item(label="民族" prop="nation" label-width="120px")
-         el-input(v-model="formModel.nation")
-        el-form-item.s-flex_item(label="电子邮件" prop="email" label-width="120px")
-         el-input(v-model="formModel.email")
+          el-input(v-model="formModel.nation")
+        el-form-item.s-flex_item(label="籍贯" prop="placeOfOrigin" label-width="120px")
+          el-input(v-model="formModel.placeOfOrigin")
       div.s-flex
-        el-form-item.s-flex_item(label="年龄" prop="age" label-width="120px")
-         el-input(v-model="formModel.age")
         el-form-item.s-flex_item(label="联系电话" prop="phone" label-width="120px")
-         el-input(v-model="formModel.phone")
+          el-input(v-model="formModel.phone")
+        el-form-item.s-flex_item(label="电子邮件" prop="email" label-width="120px")
+          el-input(v-model="formModel.email")
+      el-form-item.s-flex_item(label="单位部门" prop="orgId" label-width="120px")
+        org-tree.inline(v-model="formModel.orgId" v-bind:isAll="true")
       div.s-flex
         el-form-item.s-flex_item(label="最初职称" prop="firstTitle" label-width="120px")
-         el-input(v-model="formModel.firstTitle")
+          kalix-dict-select(v-model="formModel.firstTitle" appName="research" dictType="职称")
         el-form-item.s-flex_item(label="最初评定时间" prop="firstEvaluateDate" label-width="120px")
-         el-input(v-model="formModel.firstEvaluateDate")
+          kalix-date-picker(v-model="formModel.firstEvaluateDate")
       div.s-flex
         el-form-item.s-flex_item(label="最后职称" prop="lastTitle" label-width="120px")
-         el-input(v-model="formModel.lastTitle")
+          kalix-dict-select(v-model="formModel.lastTitle" appName="research" dictType="职称")
         el-form-item.s-flex_item(label="最后评定时间" prop="lastEvaluateDate" label-width="120px")
-         el-input(v-model="formModel.lastEvaluateDate")
+          kalix-date-picker(v-model="formModel.lastEvaluateDate")
       div.s-flex
         el-form-item.s-flex_item(label="最后学历" prop="education" label-width="120px")
-         el-input(v-model="formModel.education")
+          el-input(v-model="formModel.education")
         el-form-item.s-flex_item(label="最后学位" prop="degree" label-width="120px")
-         el-input(v-model="formModel.degree")
+          el-input(v-model="formModel.degree")
       div.s-flex
         el-form-item.s-flex_item(label="毕业院校" prop="school" label-width="120px")
-         el-input(v-model="formModel.school")
+          el-input(v-model="formModel.school")
         el-form-item.s-flex_item(label="研究方向" prop="direction" label-width="120px")
-         el-input(v-model="formModel.direction")
-      div.s-flex
-        el-form-item.s-flex_item(label="个人简历" prop="resume" label-width="120px")
-         el-input(type="textarea" v-model="formModel.resume")
-        el-form-item.s-flex_item(label="个人说明" prop="introduction" label-width="120px")
-         el-input(type="textarea" v-model="formModel.introduction")
+          el-input(v-model="formModel.direction")
 </template>
 
 <script type="text/ecmascript-6">
-  import Dialog from '@/components/custom/baseDialog.vue'
+  import FormModel from './model'
   import {WorkerURL} from '../config.toml'
+  import Dialog from '@/components/custom/baseDialog.vue'
   import UserSelect from '@/components/biz/userselect/userselect'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import EventBus from 'common/eventbus'
+  import DatePicker from '@/components/biz/date/datepicker.vue'
+
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
-        params: {userType: 2},
+        formModel: Object.assign({}, FormModel),
         rules: {
-          name: [{required: true, message: '请输入 name', trigger: 'blur'}],
-          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}]
+          name: [{required: true, message: '请输入科研人员姓名', trigger: 'blur'}]
         },
-        targetURL: WorkerURL
+        targetURL: WorkerURL,
+        params: {userType: 2}
       }
-    },
-    created() {
-      console.log('this.formRules.name:', this.formRules.name)
-      console.log('[workerAdd.vue created] this.formModel:', this.formModel)
     },
     components: {
       KalixDialog: Dialog,
+      KalixUserSelect: UserSelect,
       KalixDictSelect: BaseDictSelect,
-      KalixUserSelect: UserSelect
+      KalixDatePicker: DatePicker
+    },
+    created() {
+      console.log('[workerAdd.vue created] this.formModel:', this.formModel)
     },
     methods: {
       onUserSelected(user) {
-        EventBus.$emit('updateWorkerModel', user)
+        this.formModel.sex = user.sex
+        this.formModel.phone = (user.mobile == null ? user.phone : user.mobile)
+        this.formModel.email = user.email
       }
     }
   }

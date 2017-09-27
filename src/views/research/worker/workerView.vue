@@ -4,96 +4,69 @@
 开发日期：2017年8月22日
 -->
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="worker"
-  ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-  v-bind:isView="readonly")
-   div.el-form(slot="dialogFormSlot")
-    div.s-flex
-      el-form-item.s-flex_item(label="姓名" prop="name" v-bind:rules="rules.name" label-width="200px")
-        el-input(v-model="formModel.name" v-bind:readonly="readonly")
-      el-form-item.s-flex_item(label="身份证号" prop="identificationCard" v-bind:rules="rules.identificationCard" label-width="200px")
-        el-input(v-model="formModel.identificationCard" v-bind:readonly="readonly")
-    div.s-flex
-      el-form-item.s-flex_item(label="性别" prop="sex" v-bind:rules="rules.sex" label-width="200px")
-        el-radio-group(v-model="formModel.sex" v-bind:disabled="readonly")
-          el-radio(label="男")
-          el-radio(label="女")
-      el-form-item.s-flex_item(label="籍贯" prop="placeOfOrigin" label-width="200px")
-        el-input(v-model="formModel.placeOfOrigin" v-bind:readonly="readonly")
-    div.s-flex
-      el-form-item.s-flex_item(label="民族" prop="nation" label-width="200px")
-        el-input(v-model="formModel.nation" v-bind:readonly="readonly")
-      el-form-item.s-flex_item(label="电子邮件" prop="email" label-width="200px")
-        el-input(v-model="formModel.email" v-bind:readonly="readonly")
-    div.s-flex
-      el-form-item.s-flex_item(label="年龄" prop="age" label-width="200px")
-        el-input(v-model="formModel.age" v-bind:readonly="readonly")
-      el-form-item.s-flex_item(label="联系电话" prop="phone" label-width="200px")
-        el-input(v-model="formModel.phone" v-bind:readonly="readonly")
-    div.s-flex
-      el-form-item.s-flex_item(label="最初职称" prop="firstTitle" label-width="200px")
-        el-input(v-model="formModel.firstTitle" v-bind:readonly="readonly")
-      el-form-item.s-flex_item(label="最初职称评定时间" prop="firstEvaluateDate" label-width="200px")
-        el-input(v-model="formModel.firstEvaluateDate" v-bind:readonly="readonly")
-    div.s-flex
-      el-form-item.s-flex_item(label="最后职称" prop="lastTitle" label-width="200px")
-        el-input(v-model="formModel.lastTitle" v-bind:readonly="readonly")
-      el-form-item.s-flex_item(label="最后职称评定时间" prop="lastEvaluateDate" label-width="200px")
-        el-input(v-model="formModel.lastEvaluateDate" v-bind:readonly="readonly")
-    div.s-flex
-      el-form-item.s-flex_item(label="最后学历" prop="education" label-width="200px")
-        el-input(v-model="formModel.education" v-bind:readonly="readonly")
-      el-form-item.s-flex_item(label="最后学位" prop="degree" label-width="200px")
-        el-input(v-model="formModel.degree" v-bind:readonly="readonly")
-    div.s-flex
-      el-form-item.s-flex_item(label="毕业院校" prop="school" label-width="200px")
-        el-input(v-model="formModel.school" v-bind:readonly="readonly")
-      el-form-item.s-flex_item(label="研究方向" prop="direction" label-width="200px")
-        el-input(v-model="formModel.direction" v-bind:readonly="readonly")
-    div.s-flex
-      el-form-item.s-flex_item(label="个人简历" prop="resume" label-width="200px")
-        el-input(type="textarea" v-model="formModel.resume" v-bind:readonly="readonly")
-      el-form-item.s-flex_item(label="个人说明" prop="introduction" label-width="200px")
-        el-input(type="textarea" v-model="formModel.introduction" v-bind:readonly="readonly")
+  kalix-dialog.user-add(bizKey="worker" ref="kalixBizDialog" v-bind:form-model.sync="formModel" isView)
+    div.el-form(slot="dialogFormSlot")
+      div.s-flex
+        el-form-item.s-flex_item(label="科研人员姓名" prop="name" label-width="200px")
+          el-input(v-model="formModel.name" readonly)
+        el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="120px")
+          el-input(v-model="formModel.identificationCard" readonly)
+      div.s-flex
+        el-form-item.s-flex_item(label="性别" prop="sex" label-width="120px")
+          el-radio-group(v-model="formModel.sex" disabled)
+            el-radio(label="男")
+            el-radio(label="女")
+        el-form-item.s-flex_item(label="出生日期" prop="birthday" label-width="120px")
+          kalix-date-picker(v-model="formModel.birthday" readonly)
+      div.s-flex
+        el-form-item.s-flex_item(label="民族" prop="nation" label-width="120px")
+          el-input(v-model="formModel.nation" readonly)
+        el-form-item.s-flex_item(label="籍贯" prop="placeOfOrigin" label-width="120px")
+          el-input(v-model="formModel.placeOfOrigin" readonly)
+      div.s-flex
+        el-form-item.s-flex_item(label="联系电话" prop="phone" label-width="120px")
+          el-input(v-model="formModel.phone" readonly)
+        el-form-item.s-flex_item(label="电子邮件" prop="email" label-width="120px")
+          el-input(v-model="formModel.email" readonly)
+      el-form-item.s-flex_item(label="单位部门" prop="orgId" label-width="120px")
+        org-tree.inline(v-model="formModel.orgId" v-bind:isAll="true" disabled)
+      div.s-flex
+        el-form-item.s-flex_item(label="最初职称" prop="firstTitle" label-width="120px")
+          kalix-dict-select(v-model="formModel.firstTitle" appName="research" dictType="职称" disabled)
+        el-form-item.s-flex_item(label="最初评定时间" prop="firstEvaluateDate" label-width="120px")
+          kalix-date-picker(v-model="formModel.firstEvaluateDate" readonly)
+      div.s-flex
+        el-form-item.s-flex_item(label="最后职称" prop="lastTitle" label-width="120px")
+          kalix-dict-select(v-model="formModel.lastTitle" appName="research" dictType="职称" disabled)
+        el-form-item.s-flex_item(label="最后评定时间" prop="lastEvaluateDate" label-width="120px")
+          kalix-date-picker(v-model="formModel.lastEvaluateDate" readonly)
+      div.s-flex
+        el-form-item.s-flex_item(label="最后学历" prop="education" label-width="120px")
+          el-input(v-model="formModel.education" readonly)
+        el-form-item.s-flex_item(label="最后学位" prop="degree" label-width="120px")
+          el-input(v-model="formModel.degree" readonly)
+      div.s-flex
+        el-form-item.s-flex_item(label="毕业院校" prop="school" label-width="120px")
+          el-input(v-model="formModel.school" readonly)
+        el-form-item.s-flex_item(label="研究方向" prop="direction" label-width="120px")
+          el-input(v-model="formModel.direction" readonly)
 </template>
 <script type="text/ecmascript-6">
+  import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {WorkerURL} from '../config.toml'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import DatePicker from '@/components/biz/date/datepicker.vue'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
-        rules: {
-          name: [{required: true, message: '请输入 name', trigger: 'blur'}],
-          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          email: [
-            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
-            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
-          ],
-          phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
-          mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
-          available: [{required: true, message: '请输入 available', trigger: 'blur'}]
-        },
-        targetURL: WorkerURL,
-        readonly: true
+        formModel: Object.assign({}, FormModel)
       }
     },
-    created() {
-    },
     components: {
-      KalixDialog: Dialog
-    },
-    methods: {
+      KalixDialog: Dialog,
+      KalixDictSelect: BaseDictSelect,
+      KalixDatePicker: DatePicker
     }
   }
 </script>

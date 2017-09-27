@@ -6,82 +6,53 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="worker" title='科研人员列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    v-bind:bizSearch="'ResearchWorkerSearch'" v-bind:btnList="btnList")
+    v-bind:bizDialog="bizDialog" v-bind:bizSearch="'ResearchWorkerSearch'" v-bind:btnList="btnList"
+    v-bind:dictDefine="dictDefine")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {WorkerURL, WorkerComponent, ToolButtonList} from '../config.toml'
-  import EventBus from 'common/eventbus'
+  import {WorkerURL, WorkerComponent, ToolButtonList, ResearchCacheKey} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
   registerComponent(WorkerComponent)
 
   export default {
-    activated() {
-      console.log(this.bizKey + '  is activated')
-    },
-    deactivated() {
-      console.log(this.bizKey + '  is deactivated')
-    },
     data() {
       return {
+        dictDefine: [{ // 定义数据字典的显示
+          cacheKey: ResearchCacheKey,
+          type: '职称',
+          targetField: 'lastTitleDict',
+          sourceField: 'lastTitle'
+        }],
         btnList: ToolButtonList,
         targetURL: WorkerURL,
         tableFields: [
           {prop: 'name', label: '姓名'},
-          {prop: 'email', label: '电子邮件'},
-          {prop: 'phone', label: '联系电话'},
           {prop: 'identificationCard', label: '身份证号'},
-          {prop: 'age', label: '年龄'},
           {prop: 'sex', label: '性别'},
-          {prop: 'lastTitle', label: '职称'},
-          {prop: 'education', label: '学历'},
-          {prop: 'school;', label: '毕业院校'}
+          {prop: 'orgId', label: '单位部门'},
+          {prop: 'lastTitleDict', label: '职称'},
+          {prop: 'phone', label: '联系电话'},
+          {prop: 'email', label: '电子邮件'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'ResearchWorkerView'},
           {id: 'edit', dialog: 'ResearchWorkerAdd'},
           {id: 'add', dialog: 'ResearchWorkerAdd'}
-        ],
-        formModel: {
-          name: '',
-          email: '',
-          phone: '',
-          identificationCard: '',
-          age: '',
-          sex: '',
-          lastTitle: '',
-          education: '',
-          school: ''
-        },
-        formRules: {
-          name: [
-            {required: true, message: '请输入姓名', trigger: 'blur'}
-          ],
-          identificationCard: [
-            {required: true, message: '请输入身份证号', trigger: 'blur'}
-          ]
-        }
-      }
-    },
-    created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
-    },
-    methods: {
-      changeFormModel(model) {
-        console.log('changeFormModel', model)
-        this.formModel = model
+        ]
       }
     },
     components: {
       BaseTable
-//      KalixUserAdd: UserAdd
     },
-    mounted() {
-      EventBus.$on('updateWorkerModel', this.changeFormModel)
+    activated() {
+      console.log(this.bizKey + '  is activated')
+    },
+    deactivated() {
+      console.log(this.bizKey + '  is deactivated')
     }
   }
 </script>

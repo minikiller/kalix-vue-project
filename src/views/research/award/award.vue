@@ -5,7 +5,10 @@
 -->
 <template lang="pug">
   keep-alive
-    base-table(bizKey="award" title='获奖信息列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    base-table(bizKey="award" title='获奖信息列表'
+    v-bind:tableFields="tableFields"
+    v-bind:customRender="customRender"
+    v-bind:targetURL="targetURL"
     v-bind:bizDialog="bizDialog" v-bind:bizSearch="'ResearchAwardSearch'" v-bind:btnList="btnList")
 </template>
 
@@ -13,6 +16,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import {AwardURL, AwardComponent, ToolButtonList} from '../config.toml'
   import {registerComponent} from '@/api/register'
+  import Cache from 'common/cache'
 
   // 注册全局组件
   registerComponent(AwardComponent)
@@ -23,7 +27,7 @@
         btnList: ToolButtonList,
         targetURL: AwardURL,
         tableFields: [
-          {prop: 'competitionType', label: '展赛类型'},
+          {prop: 'competitionName', label: '展赛类型'},
           {prop: 'awardname', label: '获奖人'},
           {prop: 'awardLevel', label: '获奖级别'}
         ],
@@ -37,6 +41,17 @@
     created() {
     },
     methods: {
+      customRender(_data) {
+        _data.forEach(function (e) {
+          let data = JSON.parse(Cache.get('RESEARCH-DICT-KEY'))
+          let item = data.filter(item => {
+            return item.type === '展赛类型' && item.value === e.competitionType * 1
+          })
+          if (item.length > 0) {
+            e.competitionName = item[0].label
+          }
+        })
+      }
     },
     components: {
       BaseTable
