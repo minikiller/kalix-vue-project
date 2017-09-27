@@ -6,8 +6,10 @@
 
 <template lang="pug">
   div.block
-    el-cascader(placeholder="试试搜索：吉林动画学院" v-bind:options="data2" v-bind:props="defaultProps" v-bind:disabled="disabled"
-    filterable change-on-select :show-all-levels="false" v-model="selectedOptions" v-on:change="handleChange")
+    el-cascader(placeholder="试试搜索：吉林动画学院"
+    v-bind:options="data2" v-bind:props="defaultProps" v-bind:disabled="disabled"
+    filterable change-on-select :show-all-levels="false"
+    v-model="selectedOptions" v-on:change="handleChange")
 </template>
 
 <script type="text/ecmascript-6">
@@ -26,7 +28,7 @@
         default: false
       }
     },
-    data () {
+    data() {
       return {
         data2: [],
         defaultProps: {
@@ -37,14 +39,21 @@
         selectedOptions: []
       }
     },
-    mounted () {
+    mounted() {
       this.fentch()
     },
-    watch: {},
+    watch: {
+      value(newValue) {
+        if (!newValue) {
+          console.log('[OrgTree newValue]', newValue)
+          this.selectedOptions = []
+        }
+      }
+    },
     computed: {},
     methods: {
       // 组件初始化
-      fentch () {
+      fentch() {
         // 获取机构数据
         let getOrgURL = orgURL + '?isAll=' + this.isAll
         Vue.axios.get(getOrgURL).then((response) => {
@@ -68,14 +77,14 @@
           })
         }
       },
-      handleChange (value) {
+      handleChange(value) {
         this.$emit('nodeChange', value)
         let orgId = value.slice()
         orgId = orgId.pop() * 1
         console.log(orgId)
         this.$emit('input', orgId)
       },
-      dealWithOrgsArray (orgarray) {
+      dealWithOrgsArray(orgarray) {
         if (orgarray && orgarray.length > 0) {
           for (let i = 0; i < orgarray.length; i++) {
             if (orgarray[i].children) {

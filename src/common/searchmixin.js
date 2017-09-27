@@ -1,7 +1,9 @@
 export const SearchDataMixin = {
   data() {
     return {
-      formModel: {}
+      formModel: {},
+      beginDate_begin: '',
+      beginDate_end: ''
     }
   },
   methods: {

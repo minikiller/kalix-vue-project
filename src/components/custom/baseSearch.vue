@@ -22,7 +22,7 @@
             kalix-query-date-picker(v-else-if="item.type==='date'" v-model="form[item.prop]")
             kalix-query-date-picker(v-else-if="item.type==='year'" v-model="form[item.prop]" type="year")
             kalix-query-datetime-picker(v-else-if="item.type==='datetime'" v-model="form[item.prop]")
-            el-input(v-else v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
+            el-input(v-else v-model="form[item.prop]")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
             i.iconfont.icon-query
@@ -50,7 +50,8 @@
     data() {
       return {
         form: {},
-        isSearch: false
+        isSearch: false,
+        queryStrs: {}
       }
     },
     props: {
@@ -67,15 +68,19 @@
       },
       searchFields: { // 搜索查询的字段
         type: Array
-      }
+      },
+      formRules: null
     },
     created() {
-      console.log(this.searchFields)
       this._currentForm()
     },
     mounted() {
     },
     methods: {
+      bindFormDataType(e) {
+        this.formDataType[e.prop] = e.dataType || e.type || 'string'
+        this.formDataField[e.prop] = e.field || null
+      },
       bindCls(label) {
         if (label) {
           return label.length > 0 ? `${this.bizKey}-${label}` : ''
@@ -83,36 +88,36 @@
         return ''
       },
       _currentForm() {
-        if (!isEmptyObject(this.searchForm)) {
+        this.isSearchFrom = false
+        this.formDataType = {}
+        this.formDataField = {}
+        if (!isEmptyObject(this.searchForm)) {  // 是否传入 searchForm
           this.form = this.searchForm
+          this.isSearchFrom = true
+        } else {
+          this.searchFields.forEach(item => {
+            this.bindFormDataType(item)
+            this.$set(this.form, item.prop, null)
+          })
         }
       },
       // 提交查询
       onSubmitClick() {
-        this._currentForm()
         this.$refs.searchForm.validate((valid) => {
-//
           if (valid) {
 //            todo: 增加查询组成json串
             let requestDatas = []
             for (let item in this.form) {
               const itemVal = this.form[item]
-              if (itemVal) {
+              if (this.isSearchFrom) {  // 如果有 SearchFrom 传入
                 let dataType = typeof itemVal
                 let field = item
-                let flag = true
                 let docItems = document.getElementsByClassName(`${this.bizKey}-${item}`)  //  根据 bizKey 和 v-model名 查找 dom 标签
                 if (docItems && docItems.length === 1) {
                   //  如果 docItems 存在并且只有一个，获取当前字段的数据类型并赋值给 dataType
                   let docItem = docItems[0]
                   dataType = docItem.getAttribute('data-type')
                   field = docItem.getAttribute('field')
-                  flag = false
-//                  console.log('dataType', field)
-//                  console.log('field', field)
-                }
-//                console.log(`%c${item}`, 'color:#ed05ff', itemVal)
-                if (flag) {
                   if (field && itemVal.length) {
                     let key = `"${field}"`   //  绑定 查询 key
                     let val = `${itemVal}`   //  绑定 查询 value
@@ -120,14 +125,17 @@
                       case 'string':
                         //  如果 dataType 是 String 格式，key 和 val 增加双引号
                         key = `"%${field}%"`
-                        val = `"${strToUnicode(itemVal)}"`
+
+                        if (this.isChinese(itemVal)) {
+                          val = `"${strToUnicode(itemVal)}"`
+                        } else {
+                          val = `"${itemVal}"`
+                        }
                         break
                       case 'datetime':
                         //  如果 dataType 是 Datetime 格式，val 增加双引号
+                        key = `"${field}"`
                         val = `"${itemVal}"`
-                        if (flag) {
-                          key = `${item}:${this.searchFields[item].field}`
-                        }
                         break
                       case 'orgTree':
                         val = `${itemVal}`
@@ -135,8 +143,28 @@
                     }
                     requestDatas.push(`${key}: ${val}`)
                   }
-                } else {
-                  // requestDatas.push(`${key}: ${val}`)
+                }
+              } else {
+                if (itemVal) {
+                  let field = item
+                  let key = `"${field}"`   //  绑定 查询 key
+                  let val = `"${itemVal}"`   //  绑定 查询 value
+                  if (this.formDataField[item]) {
+                    key = `"${this.formDataField[item]}"`
+                  } else if (this.formDataType[item] === 'string') {
+                    key = `"%${field}%"`
+                  }
+                  switch (this.formDataType[item]) {
+                    case 'string':
+                      if (this.isChinese(itemVal)) {
+                        val = `"${strToUnicode(itemVal)}"`
+                      }
+                      break
+                    case 'number':
+                      val = `${itemVal}`
+                      break
+                  }
+                  requestDatas.push(`${key}: ${val}`)
                 }
               }
             }
@@ -162,6 +190,13 @@
       isNumberData(_data) {
         const regNumber = /^[0-9]+.?[0-9]*$/
         return regNumber.test(_data)
+      },
+      isChinese(str) {
+        let strExp = new RegExp(/^[\u4E00-\u9FA5]+$/)
+        if (strExp.test(str)) {
+          return true
+        }
+        return false
       }
     },
     components: {

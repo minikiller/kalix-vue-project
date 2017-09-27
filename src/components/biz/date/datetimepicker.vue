@@ -7,38 +7,9 @@
   el-date-picker(v-model='currentValue' type="datetime" v-bind:readonly="readonly")
 </template>
 <script type="text/ecmascript-6">
+  import {DatepickerMixin} from './datepickerMixin'
   export default {
-    props: {
-      value: {
-        required: true
-      },
-      readonly: {
-        type: Boolean,
-        default: false
-      }
-    },
-    data() {
-      return {
-        currentValue: this.value
-      }
-    },
-    watch: {
-      currentValue(newValue) {
-        this.$emit('input', this.GMTToStr(newValue))  // 设置model的数值
-      }
-    },
-    methods: {
-      GMTToStr(time) {
-        let date = new Date(time)
-        let Str = date.getFullYear() + '-' +
-          (date.getMonth() + 1) + '-' +
-          date.getDate() + ' ' +
-          date.getHours() + ':' +
-          date.getMinutes() + ':' +
-          date.getSeconds()
-        return Str
-      }
-    }
+    mixins: [DatepickerMixin]
   }
 </script>
 

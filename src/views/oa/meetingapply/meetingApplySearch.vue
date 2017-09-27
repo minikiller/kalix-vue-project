@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-search(title="会议申请查询"
-  v-bind:searchFields="searchFields" v-bind:form-rules="rules")
+  v-bind:searchFields="searchFields")
 </template>
 
 <script type="text/ecmascript-6">
@@ -16,11 +16,10 @@
     data() {
       return {
         searchFields: [
-          {label: '申请部门', prop: 'name'},
-          {label: '经办人', prop: 'name'}
+          {label: '申请部门', prop: 'orgName'},
+          {label: '经办人', prop: 'createBy'}
         ],
-        rules: {
-        }
+        rules: {}
       }
     },
     created() {

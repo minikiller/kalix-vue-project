@@ -16,7 +16,7 @@
       return {
         searchFields: [
           {label: '姓名', prop: 'name'},
-          {label: '所属班级', prop: 'classId', type: 'orgTree', isAll: true},
+          {label: '所属班级', prop: 'classId', type: 'orgTree', dataType: 'number', isAll: true},
           {
             label: '性别',
             prop: 'sex',
@@ -26,10 +26,10 @@
               {value: '女', label: '女'}
             ]
           },
-          {label: '出生日期', prop: 'birthday', type: 'date', field: 'begin:gt'},
-          {label: '-', prop: 'birthday', type: 'date', field: 'end:lt'},
-          {label: '入学年份', prop: 'entranceYear', type: 'year', field: 'begin:gt'},
-          {label: '-', prop: 'entranceYear', type: 'year', field: 'end:lt'}
+          {label: '出生日期', prop: 'birthdayBegin', type: 'date', field: 'birthday:begin:gt'},
+          {label: '-', prop: 'birthdayEnd', type: 'date', field: 'birthday:end:lt'},
+          {label: '入学年份', prop: 'entranceYearBegin', type: 'year', field: 'entranceYear:begin:gt'},
+          {label: '-', prop: 'entranceYearEnd', type: 'year', field: 'entranceYear:end:lt'}
         ]
       }
     },

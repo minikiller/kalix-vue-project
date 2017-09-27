@@ -34,7 +34,9 @@
         bizKey: 'receiver',
         formModel: {
           receiverNames: '',
-          title: ''
+          title: '',
+          beginDate_begin: '',
+          beginDate_end: ''
         },
         rules: {
           receiverNames: [],
