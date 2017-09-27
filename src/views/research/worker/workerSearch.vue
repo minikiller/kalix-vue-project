@@ -5,50 +5,35 @@
 -->
 
 <template lang="pug">
-  kalix-search(title="科研人员查询" v-bind:searchForm="formModel" v-bind:targetURL="targetURL")
-    div(slot="searchFormSlot")
-      el-form-item(label="姓名")
-        el-input(v-model="formModel.name")
-      el-form-item(label="所属机构")
-        org-tree.inline(v-model="formModel.orgid" v-bind:isAll="true")
-      // el-form-item {{formModel.orgid}}
+  kalix-search(title="科研人员查询" v-bind:searchFields="searchFields")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseSearch from '@/components/custom/baseSearch.vue'
-  import {WorkerURL} from '../config.toml'
 
   export default {
     data() {
       return {
         searchFields: [
+          {label: '单位部门', prop: 'orgId', type: 'orgTree', isAll: true},
           {label: '姓名', prop: 'name'},
-          {label: '机构', prop: 'orgid'}
-        ],
-        formModel: {
-          name: '',
-          orgid: ''
-        },
-        targetURL: WorkerURL
+          {
+            label: '性别',
+            prop: 'sex',
+            type: 'select',
+            options: [
+              {value: '男', label: '男'},
+              {value: '女', label: '女'}
+            ]
+          }
+        ]
       }
-    },
-    created() {
     },
     components: {
       KalixSearch: BaseSearch
-    },
-    methods: {},
-    watch: {
-      formModel(nVal) {
-        console.log('formModel', nVal)
-      }
     }
   }
 </script>
 
 <style scoped lang="stylus" type="text/stylus">
-  .inline
-    display inline-block
-    margin-right 8px
-    position relative
 </style>

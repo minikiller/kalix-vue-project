@@ -15,8 +15,8 @@
     data() {
       return {
         searchFields: [
-          {label: '姓名', prop: 'name'},
           {label: '所属班级', prop: 'classId', type: 'orgTree', isAll: true},
+          {label: '姓名', prop: 'name'},
           {
             label: '性别',
             prop: 'sex',
