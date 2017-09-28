@@ -13,58 +13,49 @@
         el-form-item.s-flex_item(label="名称" v-bind:label-width="labelWidth"
         v-bind:rules="rules.title"
         prop="title")
-          div.kalix-form-table-td
-            el-input(v-model="formModel.title")
+          el-input(v-model="formModel.title")
       div.s-flex
-        el-form-item.s-flex_item(label="申请部门" v-bind:label-width="labelWidth"
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth"
         v-bind:rules="rules.orgId"
         prop="orgId")
-          div.kalix-form-table-td
-            kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
+          kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
         el-form-item.s-flex_item(label="会议地点" v-bind:label-width="labelWidth"
         v-bind:rules="rules.meetingroomId"
         prop="meetingroomId")
-          div.kalix-form-table-td
-            kalix-meeting-room-select(v-model="formModel.meetingroomId")
+          kalix-meeting-room-select(v-model="formModel.meetingroomId")
       div.s-flex
         el-form-item.s-flex_item(label="会议议题" v-bind:label-width="labelWidth"
         v-bind:rules="rules.meetingTopic"
         prop="meetingTopic")
-          div.kalix-form-table-td
-            el-input(v-model="formModel.meetingTopic")
+          el-input(v-model="formModel.meetingTopic")
       div.s-flex
         el-form-item.s-flex_item(label="会议议程" v-bind:label-width="labelWidth"
         v-bind:rules="rules.meetingAgenda"
         prop="meetingAgenda")
-          div.kalix-form-table-td
-            el-input(v-model="formModel.meetingAgenda")
+          el-input(v-model="formModel.meetingAgenda")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(
         label="开始时间"
         v-bind:label-width="labelWidth"
         v-bind:rules="rules.beginTime"
         prop="beginTime")
-          div.kalix-form-table-td
-            kalix-date-picker(v-model="formModel.beginTime" type="datetime" placeholder="选择开始时间" format="yyyy-MM-dd HH:mm" style="width: 100%;")
+          kalix-date-picker(v-model="formModel.beginTime" type="datetime" placeholder="选择开始时间" format="yyyy-MM-dd HH:mm" style="width: 100%;")
         el-form-item.s-flex_item.kalix-form-table-td(
         label="结束时间"
         v-bind:label-width="labelWidth"
         v-bind:rules="rules.endTime"
         prop="endTime")
-          div.kalix-form-table-td
-            kalix-date-picker(v-model="formModel.endTime" type="datetime" placeholder="选择结束时间" format="yyyy-MM-dd HH:mm" style="width: 100%;")
+          kalix-date-picker(v-model="formModel.endTime" type="datetime" placeholder="选择结束时间" format="yyyy-MM-dd HH:mm" style="width: 100%;")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="会议类型" v-bind:label-width="labelWidth")
-          div.kalix-form-table-td
-            kalix-dict-select(v-model="formModel.meetingType" appName="oa" dictType="会议类型"
-            style="width:100%")
+          kalix-dict-select(v-model="formModel.meetingType" appName="oa" dictType="会议类型"
+          style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="会议纪要人员" v-bind:label-width="labelWidth")
-          div.kalix-form-table-td
-            kalix-user-select(v-bind:params="params" style="width:100%"
-            v-model="meetingSummaryPerson"
-            v-bind:userIds.sync="formModel.meetingSummaryPerson"
-            v-bind:userNames.sync="formModel.meetingSummaryPersonName"
-            placeholder="请输入会议纪要人员")
+          kalix-user-select(v-bind:params="params" style="width:100%"
+          v-model="meetingSummaryPerson"
+          v-bind:userIds.sync="formModel.meetingSummaryPerson"
+          v-bind:userNames.sync="formModel.meetingSummaryPersonName"
+          placeholder="请输入会议纪要人员")
       div
         el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
           kalix-user-select(v-bind:params="params" style="width:100%"
