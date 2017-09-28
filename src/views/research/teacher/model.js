@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/9/22.
  */
 const FormModel = {
+  userId: null,
   name: '',
   identificationCard: '',
   sex: '',
@@ -13,6 +14,7 @@ const FormModel = {
   teaching: '',
   coursesSkills: '',
   preliminary: '',
-  orgId: null
+  orgId: null,
+  orgName: ''
 }
 export default FormModel
