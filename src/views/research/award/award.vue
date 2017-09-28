@@ -9,12 +9,15 @@
     v-bind:tableFields="tableFields"
     v-bind:customRender="customRender"
     v-bind:targetURL="targetURL"
-    v-bind:bizDialog="bizDialog" v-bind:bizSearch="'ResearchAwardSearch'" v-bind:btnList="btnList")
+    v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
+    v-bind:bizDialog="bizDialog"
+    v-bind:bizSearch="'ResearchAwardSearch'"
+    v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {AwardURL, AwardComponent, ToolButtonList} from '../config.toml'
+  import {AwardURL, awardBtnPermissionPrefix, AwardComponent, ToolButtonList} from '../config.toml'
   import {registerComponent} from '@/api/register'
   import Cache from 'common/cache'
 
@@ -26,6 +29,7 @@
       return {
         btnList: ToolButtonList,
         targetURL: AwardURL,
+        buttonPermissionPrefix: awardBtnPermissionPrefix,
         tableFields: [
           {prop: 'competitionName', label: '展赛类型'},
           {prop: 'awardname', label: '获奖人'},
