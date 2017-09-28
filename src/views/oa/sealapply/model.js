@@ -4,7 +4,7 @@ const FormModel = {
   orgName: '',
   creationDate: '',
   usageCount: '',
-  sealType: '公司公章',
+  sealType: null,
   sealTypeName: '',
   createBy: '',
   auditResult: '',
