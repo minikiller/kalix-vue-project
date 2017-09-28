@@ -12,58 +12,58 @@
           el-input(v-model="formModel.name" )
         div.dd
         el-form-item.s-flex_item(label="展赛类别" prop="type" label-width="120px")
-          kalix-dict-select(v-model="formModel.type" appName="research" dictType="展赛类别")
+          kalix-dict-select(v-model="formModel.type" appName="research" dictType="展赛类别" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item(label="展赛地址" prop="address" label-width="120px")
-          el-input(v-model="formModel.address" )
+          el-input(v-model="formModel.address" style="width:100%")
         div.dd
-        el-form-item.s-flex_item(label="联系人" prop="contactor" label-width="120px")
-          el-input(v-model="formModel.contactor")
+        el-form-item.s-flex_item(label="联系人员" prop="contactor" label-width="120px")
+          el-input(v-model="formModel.contactor" style="width:100%")
       div.s-flex
-        el-form-item.s-flex_item(label="联系人电话" prop="phone" label-width="120px")
-          el-input(v-model="formModel.phone")
+        el-form-item.s-flex_item(label="联系电话" prop="phone" label-width="120px")
+          el-input(v-model="formModel.phone" style="width:100%")
         div.dd
-        el-form-item.s-flex_item(label="联系人邮箱" prop="email" label-width="120px")
-          el-input(v-model="formModel.email")
+        el-form-item.s-flex_item(label="联系邮箱" prop="email" label-width="120px")
+          el-input(v-model="formModel.email" style="width:100%")
       div.s-flex
-        el-form-item.s-flex_item(label="作品征集开始时间" prop="collectionStartTime" label-width="120px")
-          kalix-date-picker(v-model="formModel.collectionStartTime")
+        el-form-item.s-flex_item(label="征集开始时间" prop="collectionStartTime" label-width="120px")
+          kalix-date-picker(v-model="formModel.collectionStartTime" style="width:100%")
         div.dd
-        el-form-item.s-flex_item(label="作品征集结束时间" prop="collectionEndTime" label-width="120px")
-          kalix-date-picker(v-model="formModel.collectionEndTime")
+        el-form-item.s-flex_item(label="征集结束时间" prop="collectionEndTime" label-width="120px")
+          kalix-date-picker(v-model="formModel.collectionEndTime" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item(label="初评开始时间" prop="preEvalStartTime" label-width="120px")
-          kalix-date-picker(v-model="formModel.preEvalStartTime")
+          kalix-date-picker(v-model="formModel.preEvalStartTime" style="width:100%")
         div.dd
         el-form-item.s-flex_item(label="初评结束时间" prop="preEvalEndTime" label-width="120px")
-          kalix-date-picker(v-model="formModel.preEvalEndTime")
+          kalix-date-picker(v-model="formModel.preEvalEndTime" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item(label="终评开始时间" prop="lastEvalStartTime" label-width="120px")
-          kalix-date-picker(v-model="formModel.lastEvalStartTime")
+          kalix-date-picker(v-model="formModel.lastEvalStartTime" style="width:100%")
         div.dd
         el-form-item.s-flex_item(label="终评结束时间" prop="lastEvalEndTime" label-width="120px")
-          kalix-date-picker(v-model="formModel.lastEvalEndTime")
+          kalix-date-picker(v-model="formModel.lastEvalEndTime" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item(label="展览开始时间" prop="compStartTime" label-width="120px")
-          kalix-date-picker(v-model="formModel.compStartTime")
+          kalix-date-picker(v-model="formModel.compStartTime" style="width:100%")
         div.dd
         el-form-item.s-flex_item(label="展览结束时间" prop="compEndTime" label-width="120px")
-          kalix-date-picker(v-model="formModel.compEndTime")
+          kalix-date-picker(v-model="formModel.compEndTime" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item(label="作品内容要求" prop="contentNeed" label-width="120px")
-          el-input(type="textarea" v-model="formModel.contentNeed")
+          el-input(type="textarea" v-model="formModel.contentNeed" style="width:100%")
         div.dd
         el-form-item.s-flex_item(label="作品技术要求" prop="technologyNeed" label-width="120px")
-          el-input(type="textarea" v-model="formModel.technologyNeed")
+          el-input(type="textarea" v-model="formModel.technologyNeed" style="width:100%")
       div.s-flex
-        el-form-item.s-flex_item(label="详细信息" prop="detail" label-width="120px")
-          el-input(type="textarea" v-model="formModel.detail")
+        el-form-item.s-flex_item(label="展赛详细信息" prop="detail" label-width="120px")
+          el-input(type="textarea" v-model="formModel.detail" style="width:100%")
         div.dd
-        el-form-item.s-flex_item(label="备注" prop="remark" label-width="120px")
-          el-input(type="textarea" v-model="formModel.remark")
+        el-form-item.s-flex_item(label="展赛备注说明" prop="remark" label-width="120px")
+          el-input(type="textarea" v-model="formModel.remark" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item(label="报名表样式" prop="signupStyle" label-width="120px")
-          kalix-upload(v-model="formModel.signupStyle" v-bind:isImage="false")
+          kalix-upload(v-model="formModel.signupStyle" v-bind:isImage="false" style="width:100%")
 </template>
 
 <script type="text/ecmascript-6">
