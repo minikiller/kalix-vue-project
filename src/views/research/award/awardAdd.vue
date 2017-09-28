@@ -15,9 +15,8 @@
        el-form-item.s-flex_item(label="展赛" prop="competitionId" label-width="140px")
           kalix-competition-select(style="width:100%"  v-model="formModel.competitionId" v-bind:multiple="false"
           v-on:competitionSelected="onCompetitionSelected")
-       el-form-item.s-flex_item(label="展赛类型" prop="competitionType" label-width="140px")
-          kalix-dict-select(v-model="formModel.competitionType" style="width:100%" appName="research"
-          v-bind:disabled="true" dictType="展赛类型")
+       el-form-item.s-flex_item(label="展赛类别" prop="competitionType" label-width="140px")
+         el-input(v-bind:value="formModel.competitionType|getDictName('research','展赛类别')" readonly)
       div.s-flex
         el-form-item.s-flex_item(label="报名ID" prop="signupId" label-width="140px")
           el-input(v-model="formModel.signupId")

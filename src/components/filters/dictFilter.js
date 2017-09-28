@@ -8,7 +8,7 @@
 import Cache from 'common/cache'
 
 const getDictName = function (value, appName = 'OA', dictType) {
-  const dict = JSON.parse(Cache.get(appName + '-DICT-KEY'))
+  const dict = JSON.parse(Cache.get(appName.toUpperCase() + '-DICT-KEY'))
   let item = dict.find(e => {
     return e.type === dictType && e.value === value
   })

@@ -31,7 +31,7 @@
         targetURL: AwardURL,
         buttonPermissionPrefix: awardBtnPermissionPrefix,
         tableFields: [
-          {prop: 'competitionName', label: '展赛类型'},
+          {prop: 'competitionName', label: '展赛类别'},
           {prop: 'awardname', label: '获奖人'},
           {prop: 'awardLevel', label: '获奖级别'}
         ],
@@ -49,7 +49,7 @@
         _data.forEach(function (e) {
           let data = JSON.parse(Cache.get('RESEARCH-DICT-KEY'))
           let item = data.filter(item => {
-            return item.type === '展赛类型' && item.value === e.competitionType * 1
+            return item.type === '展赛类别' && item.value === e.competitionType * 1
           })
           if (item.length > 0) {
             e.competitionName = item[0].label
