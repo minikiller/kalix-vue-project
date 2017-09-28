@@ -7,6 +7,9 @@ StudentURL = "/camel/rest/students"
 WorkerURL = "/camel/rest/workers"
 CompetitionInfoURL = "/camel/rest/competitionInfos"
 SignupURL = "/camel/rest/signups"
+signupBtnPermissionPrefix = "research:researchCompetitionModule:competitionSigninMenu:"
+competitBtnPermissionPrefix = "research:researchCompetitionModule:competitionInfoMenu:"
+awardBtnPermissionPrefix = "research:researchCompetitionModule:competitionAwardMenu:"
 AwardURL = "/camel/rest/awards"
 StatisticsPieURL = "/camel/rest/competitioninfos/statistics"
 
@@ -92,5 +95,10 @@ ResearchCacheKey = "RESEARCH-DICT-KEY"
 [[ToolButtonList]]
   id = "delete"
   title = "删除"
+  isShow = true
+  isPermission = true
+[[ToolButtonList]]
+  id = "attachment"
+  title = "附件"
   isShow = true
   isPermission = true
