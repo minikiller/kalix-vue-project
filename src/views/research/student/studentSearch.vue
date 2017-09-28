@@ -26,8 +26,6 @@
               {value: '女', label: '女'}
             ]
           },
-          {label: '出生日期', prop: 'birthdayBegin', type: 'date', field: 'birthday:begin:gt'},
-          {label: '-', prop: 'birthdayEnd', type: 'date', field: 'birthday:end:lt'},
           {label: '入学年份', prop: 'entranceYearBegin', type: 'year', field: 'entranceYear:begin:gt'},
           {label: '-', prop: 'entranceYearEnd', type: 'year', field: 'entranceYear:end:lt'}
         ]
