@@ -77,21 +77,11 @@ borderStyle = 1px solid #000000
       font-weight bold
     .el-input__inner
       border 0
-    .kalix-form-table-td
-      position: relative;
-      margin-left: 1px;
-      &:after
-        position absolute
-        content ''
-        top 0
-        right 0
-        bottom 0
-        width 1px
-        background-color #000000
+  .kalix-form-table-td
+    position relative
+    border-right borderStyle
     &:last-child
-      .kalix-form-table-td
-        &:after
-          visibility hidden
+      border-right none
 
   .el-form-item__label
     position relative
