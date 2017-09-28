@@ -26,7 +26,7 @@
           {prop: 'studentNo', label: '学号'},
           {prop: 'name', label: '姓名'},
           {prop: 'sex', label: '性别'},
-          {prop: 'classId', label: '班级'},
+          {prop: 'className', label: '班级'},
           {prop: 'province', label: '生源省份'},
           {prop: 'entranceYear', label: '入学年份'},
           {prop: 'homePhone', label: '家庭联系电话'},

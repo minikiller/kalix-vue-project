@@ -8,9 +8,9 @@
   kalix-dialog.user-add(bizKey="teacher" ref="kalixBizDialog" v-bind:form-model.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="教师姓名" prop="name" v-bind:rules="rules.name" label-width="120px" )
-          kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
-          v-on:userSelected="onUserSelected")
+        el-form-item.s-flex_item(label="教师姓名" prop="userId" v-bind:rules="rules.userId" label-width="120px" )
+          kalix-user-select(v-bind:params="params" style="width:100%" v-model="user" v-bind:multiple="false"
+          v-bind:userIds.sync="formModel.userId" v-on:userSelected="onUserSelected")
         el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="120px")
           el-input(v-model="formModel.identificationCard")
       div.s-flex
@@ -52,9 +52,10 @@
   export default {
     data() {
       return {
+        user: null,
         formModel: Object.assign({}, FormModel),
         rules: {
-          name: [{required: true, message: '请输入教师姓名', trigger: 'blur'}]
+          userId: [{type: 'number', required: true, message: '请输入教师姓名', trigger: 'change'}]
         },
         targetURL: TeacherURL,
         params: {userType: 0}
