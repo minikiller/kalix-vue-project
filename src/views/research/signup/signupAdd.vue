@@ -13,6 +13,7 @@
             el-form-item.s-flex_item.kalix-form-table-td(label="参加展赛" prop="competitionId"
             v-bind:rules="rules.competitionId" label-width="120px" )
               kalix-competition-select(style="width:100%" v-model="formModel.competitionId" v-bind:multiple="false")
+              | formModel.competitionId:{{formModel.competitionId}}
             el-form-item.s-flex_item.kalix-form-table-td(label="姓名" prop="name" label-width="120px")
               el-input(v-model="formModel.name")
             el-form-item.s-flex_item.kalix-form-table-td(label="拼音" prop="phoneticize" label-width="120px")
@@ -124,7 +125,7 @@
       return {
         formModel: Object.assign({}, FormModel),
         rules: {
-          competitionId: [{required: true, message: '请选择参加展赛名称', trigger: 'blur'}]
+          competitionId: [{type: 'number', required: true, message: '请选择参加展赛名称', trigger: 'change'}]
         },
         targetURL: SignupURL
       }

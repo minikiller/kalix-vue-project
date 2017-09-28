@@ -9,8 +9,12 @@
     div.el-form(slot="dialogFormSlot")
       div.s-flex
         el-form-item.s-flex_item(label="教师姓名" prop="name" v-bind:rules="rules.name" label-width="120px" )
-          kalix-user-select(v-bind:params="params" style="width:100%" v-model="formModel.name" v-bind:multiple="false"
-          v-on:userSelected="onUserSelected")
+          kalix-user-select(v-bind:params="params" style="width:100%"
+          v-model="formModel.name"
+          v-bind:multiple="false"
+          v-on:userSelected="onUserSelected"
+          v-bind:userIds.sync="formModel.userid"
+          v-bind:userNames.sync="formModel.name")
         el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="120px")
           el-input(v-model="formModel.identificationCard")
       div.s-flex
