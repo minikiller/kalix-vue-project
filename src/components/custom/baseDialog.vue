@@ -85,15 +85,15 @@
                 this.visible = false
                 // 关闭对话框
 //                this.close()
-                // 刷新列表
-                EventBus.$emit(ON_REFRESH_DATA)
-                this._afterDialogClose()
                 // 清空form
 //                this.$parent.resetDialogForm()
 //                this.$emit('resetDialogForm')
               } else {
                 Message.error(response.data.msg)
               }
+              // 刷新列表
+              EventBus.$emit(ON_REFRESH_DATA)
+              this._afterDialogClose()
               console.log('[kalix] dialog submit button clicked !')
               this.visible = false
             })
