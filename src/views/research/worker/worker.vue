@@ -33,7 +33,7 @@
           {prop: 'name', label: '姓名'},
           {prop: 'identificationCard', label: '身份证号'},
           {prop: 'sex', label: '性别'},
-          {prop: 'orgId', label: '单位部门'},
+          {prop: 'orgName', label: '单位部门'},
           {prop: 'lastTitleDict', label: '职称'},
           {prop: 'phone', label: '联系电话'},
           {prop: 'email', label: '电子邮件'}
