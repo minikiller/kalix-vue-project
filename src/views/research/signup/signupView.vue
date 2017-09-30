@@ -8,6 +8,7 @@
     div.el-form.kalix-form-table(slot="dialogFormSlot")
      el-collapse(v-model="activeNames")
       el-collapse-item(title="个人信息" name="1")
+       div.kalix-form-table
         div.s-flex
           el-form-item.s-flex_item(label="展赛名称" prop="competitionName" label-width="120px")
             el-input(v-model="formModel.competitionName" readonly)
@@ -17,11 +18,11 @@
             el-input(v-model="formModel.phoneticize" readonly)
         div.s-flex
           el-form-item.s-flex_item.kalix-form-table-td(label="性别" prop="sex" label-width="120px")
-            el-radio-group(v-model="formModel.sex" disabled)
+            el-radio-group(v-model="formModel.sex" disabled  style="margin-left:10px;")
               el-radio(label="男")
               el-radio(label="女")
           el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" label-width="120px")
-            kalix-date-picker(v-model="formModel.birthday" readonly)
+            kalix-date-picker(v-model="formModel.birthday" style="width:100%" readonly)
           el-form-item.s-flex_item.kalix-form-table-td(label="国籍" prop="nationality" label-width="120px")
             el-input(v-model="formModel.nationality" readonly)
         div.s-flex
@@ -32,12 +33,15 @@
           el-form-item.s-flex_item.kalix-form-table-td(label="城市" prop="city" label-width="120px")
             el-input(v-model="formModel.city" readonly)
         div.s-flex
-          el-form-item.s-flex_item.kalix-form-table-td(label="笔名" prop="penName" label-width="120px")
+         div.s-flex_item
+          el-form-item.s-flex_item.kalix-form-table-td(label="笔名" prop="penName" label-width="120px" style="border-right:1px solid #000")
             el-input(v-model="formModel.penName" readonly)
-          el-form-item.s-flex_item.kalix-form-table-td(label="作者简介" prop="authorIntroduction" label-width="120px")
-            el-input(type="textarea" v-model="formModel.authorIntroduction" readonly)
+         div.s-flex_item(style="flex:2")
           el-form-item.s-flex_item.kalix-form-table-td(label="通讯地址" prop="postalAddress" label-width="120px")
             el-input(v-model="formModel.postalAddress" readonly)
+        div.s-flex
+          el-form-item.s-flex_item.kalix-form-table-td(label="作者简介" prop="authorIntroduction" label-width="120px")
+            el-input(type="textarea" v-model="formModel.authorIntroduction" readonly)
         div.s-flex
           el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalCode" label-width="120px")
             el-input(v-model="formModel.postalCode" readonly)
@@ -53,8 +57,10 @@
           el-form-item.s-flex_item.kalix-form-table-td(label="传真" prop="fax" label-width="120px")
             el-input(v-model="formModel.fax" readonly)
         div.s-flex
-          el-form-item.s-flex_item(label="微博" prop="microBlog" label-width="120px")
+         div.s-flex_item
+          el-form-item.s-flex_item(label="微博" prop="microBlog" label-width="120px" style="border-right:1px solid #000")
             el-input(v-model="formModel.microBlog" readonly)
+         div.s-flex_item(style="flex:2")
           el-form-item.s-flex_item(label="其他联系方式" prop="otherContactWay" label-width="120px")
             el-input(v-model="formModel.otherContactWay" readonly)
         div.s-flex
@@ -66,11 +72,15 @@
             el-input(v-model="formModel.url" readonly)
         div.s-flex
       el-collapse-item(title="作品信息" name="2")
+       div.kalix-form-table
         div.s-flex
           el-form-item.s-flex_item.kalix-form-table-td(label="作品中文名" prop="worksCnName" label-width="120px")
             el-input(v-model="formModel.worksCnName" readonly)
           el-form-item.s-flex_item.kalix-form-table-td(label="作品英文名" prop="worksEnName" label-width="120px")
             el-input(v-model="formModel.worksEnName" readonly)
+          el-form-item.s-flex_item.kalix-form-table-td(label="主创人员" prop="creator" label-width="120px")
+            el-input(v-model="formModel.creator" readonly)
+        div.s-flex
           el-form-item.s-flex_item.kalix-form-table-td(label="作品介绍" prop="worksIntroduction" label-width="120px")
             el-input(type="textarea" v-model="formModel.worksIntroduction" readonly)
         div.s-flex
@@ -84,7 +94,7 @@
           el-form-item.s-flex_item.kalix-form-table-td(label="指导教师" prop="tutor" label-width="120px")
             el-input(v-model="formModel.tutor" readonly)
           el-form-item.s-flex_item.kalix-form-table-td(label="制作完成时间" prop="finishingDate" label-width="120px")
-            kalix-date-picker(v-model="formModel.finishingDate" readonly)
+            kalix-date-picker(v-model="formModel.finishingDate" style="width:100%" readonly)
           el-form-item.s-flex_item.kalix-form-table-td(label="作品时长" prop="lengthOfWork" label-width="120px")
             el-input(v-model="formModel.lengthOfWork" readonly)
         div.s-flex
@@ -94,10 +104,8 @@
             el-input(v-model="formModel.unit" readonly)
           el-form-item.s-flex_item.kalix-form-table-td(label="出品单位联系人" prop="unitContacter" label-width="120px")
             el-input(v-model="formModel.unitContacter" readonly)
-        div.s-flex
-          el-form-item.s-flex_item.kalix-form-table-td(label="主创人员" prop="creator" label-width="120px")
-            el-input(v-model="formModel.creator" readonly)
       el-collapse-item(title="团队信息" name="3")
+       div.kalix-form-table
         div.s-flex
           el-form-item.s-flex_item.kalix-form-table-td(label="团队中文名" prop="teamCnName" label-width="100px")
             el-input(v-model="formModel.teamCnName" readonly)
