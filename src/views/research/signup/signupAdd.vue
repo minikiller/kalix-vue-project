@@ -7,13 +7,13 @@
 <template lang="pug">
   kalix-dialog.user-add(bizKey="signup" ref="kalixBizDialog" v-bind:form-model.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
-      el-collapse(v-model="activeNames" v-on:change="handleChange")
+      el-collapse(v-model="activeNames")
         el-collapse-item(title="个人信息" name="1")
           div.s-flex
             el-form-item.s-flex_item.kalix-form-table-td(label="参加展赛" prop="competitionId"
             v-bind:rules="rules.competitionId" label-width="120px" )
-              kalix-competition-select(style="width:100%" v-model="formModel.competitionId" v-bind:multiple="false")
-              | formModel.competitionId:{{formModel.competitionId}}
+              kalix-competition-select(style="width:100%" v-model="competitionInfo" v-bind:multiple="false"
+              v-bind:objectsUrl="objectsUrl" v-bind:objectIds.sync="formModel.competitionId")
             el-form-item.s-flex_item.kalix-form-table-td(label="姓名" prop="name" label-width="120px")
               el-input(v-model="formModel.name")
             el-form-item.s-flex_item.kalix-form-table-td(label="拼音" prop="phoneticize" label-width="120px")
@@ -115,19 +115,22 @@
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
-  import {SignupURL} from '../config.toml'
+  import {SignupURL, CompetitionInfoURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import CompetitionSelect from '@/components/biz/competitionselect/competitionselect'
+  import CompetitionSelect from '@/components/custom/baseObjectSelect'
   import DatePicker from '@/components/biz/date/datepicker.vue'
 
   export default {
     data() {
       return {
+        competitionInfo: null,
         formModel: Object.assign({}, FormModel),
         rules: {
           competitionId: [{type: 'number', required: true, message: '请选择参加展赛名称', trigger: 'change'}]
         },
-        targetURL: SignupURL
+        targetURL: SignupURL,
+        objectsUrl: CompetitionInfoURL,
+        activeNames: ['1']
       }
     },
     components: {

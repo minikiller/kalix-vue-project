@@ -3,6 +3,7 @@
  */
 const FormModel = {
   competitionId: null,
+  competitionName: '',
   name: '',
   phoneticize: '',
   sex: '',
