@@ -34,7 +34,7 @@
           {prop: 'name', label: '姓名'},
           {prop: 'identificationCard', label: '身份证号'},
           {prop: 'sex', label: '性别'},
-          {prop: 'orgId', label: '单位部门'},
+          {prop: 'orgName', label: '单位部门'},
           {prop: 'positionalTitlesDict', label: '职称'},
           {prop: 'mobile', label: '手机'}
         ],

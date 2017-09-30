@@ -7,7 +7,7 @@
   kalix-dialog.user-add(bizKey="worker" ref="kalixBizDialog" v-bind:form-model.sync="formModel" isView)
     div.el-form(slot="dialogFormSlot")
       div.s-flex
-        el-form-item.s-flex_item(label="科研人员姓名" prop="name" label-width="200px")
+        el-form-item.s-flex_item(label="科研人员姓名" prop="name" label-width="120px")
           el-input(v-model="formModel.name" readonly)
         el-form-item.s-flex_item(label="身份证号" prop="identificationCard" label-width="120px")
           el-input(v-model="formModel.identificationCard" readonly)

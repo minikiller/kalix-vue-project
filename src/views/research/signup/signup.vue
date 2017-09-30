@@ -23,6 +23,7 @@
         btnList: ToolButtonList,
         targetURL: SignupURL,
         tableFields: [
+          {prop: 'competitionName', label: '参加展赛名称'},
           {prop: 'worksCnName', label: '作品中文名称'},
           {prop: 'teamCnName', label: '团队中文名称'},
           {prop: 'name', label: '作者名称'},

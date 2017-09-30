@@ -35,8 +35,6 @@
   import {
     MeetingApplyURL,
     MeetingApplyComponent,
-    MeetingRoomsURL,
-    UserOrgsURL,
     MeetingApplyStartURL
   } from '../config.toml'
   import {registerComponent} from '@/api/register'
@@ -45,11 +43,9 @@
   import TaskView from '@/views/oa/comp/taskView'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
   import DateColumn from 'views/oa/comp/dateColumn'
-  import Cache from 'common/cache'
 
   // 注册全局组件
   registerComponent(MeetingApplyComponent)
-  const REQUEST_DATA = {page: 1, start: 0, limit: 20}
   export default {
     data() {
       return {
@@ -77,19 +73,10 @@
       registerComp()
     },
     created() {
-      this._initDict(`${'UserOrgs'.toUpperCase()}-KEY`, UserOrgsURL.replace('[usersId]', Cache.get('id')))
-      this._initDict(`${'MeetingRooms'.toUpperCase()}-KEY`, MeetingRoomsURL)
+//      this._initDict(`${'UserOrgs'.toUpperCase()}-KEY`, UserOrgsURL.replace('[usersId]', Cache.get('id')))
+//      this._initDict(`${'MeetingRooms'.toUpperCase()}-KEY`, MeetingRoomsURL)
     },
     methods: {
-      _initDict(DictKey, reqUrl) {
-        if (!Cache.get(DictKey)) {
-          this.$http
-            .get(reqUrl, {params: REQUEST_DATA})
-            .then(res => {
-              Cache.save(DictKey, JSON.stringify(res.data.data))
-            })
-        }
-      },
       customTableTool(row, btnId) {
         customTableTool(row, btnId, MeetingApplyStartURL, this)
       }
