@@ -105,6 +105,7 @@
       onSubmitClick() {
         this.$refs.searchForm.validate((valid) => {
           if (valid) {
+            console.log('onSubmitClick')
 //            todo: 增加查询组成json串
             let requestDatas = []
             for (let item in this.form) {
@@ -125,7 +126,6 @@
                       case 'string':
                         //  如果 dataType 是 String 格式，key 和 val 增加双引号
                         key = `"%${field}%"`
-
                         if (this.isChinese(itemVal)) {
                           val = `"${strToUnicode(itemVal)}"`
                         } else {
@@ -168,11 +168,13 @@
                 }
               }
             }
+            let searchObj = {}
             if (requestDatas.length > 0) {
-              this.isSearch = true
-              console.log('[Search]', `{${requestDatas.join(',')}}`)
-              EventBus.$emit(ON_SEARCH_BUTTON_CLICK, {jsonStr: `{${requestDatas.join(',')}}`})
+              searchObj.jsonStr = `{${requestDatas.join(',')}}`
+//              console.log('[Search]', `{${requestDatas.join(',')}}`)
             }
+            this.isSearch = true
+            EventBus.$emit(ON_SEARCH_BUTTON_CLICK, searchObj)
           } else {
             console.log('ERR')
           }
