@@ -111,8 +111,7 @@
         }
         this.$emit('update:objectNames', _objects)
         this.$emit('update:objectIds', _objectIds)
-        this.$emit('userSelected', _selectObject)  // 发送事件
-        this.$emit('competitionSelected', _selectObject)
+        this.$emit('objectSelected', _selectObject)  // 发送事件
       },
       remoteMethod(query) {
         if (query && query !== '') {

@@ -7,20 +7,15 @@
   kalix-dialog.user-add(bizKey="award"
   ref="kalixBizDialog"
   v-bind:formModel.sync="formModel"
-  v-bind:targetURL="targetURL"
-  )
+  v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
-
       div.s-flex
-       // el-form-item.s-flex_item(label="展赛" prop="competitionId" label-width="140px")
-          kalix-competition-select(style="width:100%"  v-model="formModel.competitionId" v-bind:multiple="false"
-          v-on:competitionSelected="onCompetitionSelected")
-       el-form-item.s-flex_item(label="展赛" prop="competitionId"
+        el-form-item.s-flex_item(label="展赛" prop="competitionId"
         v-bind:rules="rules.competitionId" label-width="120px" )
-         kalix-competition-select(style="width:100%" v-model="competitionInfo" v-bind:multiple="false"
-          v-bind:objectsUrl="objectsUrl" v-bind:objectIds.sync="formModel.competitionId" v-on:competitionSelected="onCompetitionSelected")
-       el-form-item.s-flex_item(label="展赛类别" prop="competitionType" label-width="140px")
-         el-input(v-bind:value="formModel.competitionType|getDictName('research','展赛类别')" readonly)
+          kalix-competition-select(style="width:100%" v-model="competitionInfo" v-bind:multiple="false"
+          v-bind:objectsUrl="objectsUrl" v-bind:objectIds.sync="formModel.competitionId" v-on:objectSelected="onCompetitionSelected")
+        el-form-item.s-flex_item(label="展赛类别" prop="competitionType" label-width="140px")
+          el-input(v-bind:value="formModel.competitionType|getDictName('research','展赛类别')" readonly)
       div.s-flex
         el-form-item.s-flex_item(label="报名ID" prop="signupId" label-width="140px")
           el-input(v-model="formModel.signupId")
@@ -31,7 +26,7 @@
           el-input(v-model="formModel.awardLevel")
         el-form-item.s-flex_item(label="备注" prop="remark" label-width="140px")
           el-input(v-model="formModel.remark")
- </template>
+</template>
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
@@ -72,6 +67,7 @@
   @import "~@/assets/stylus/color.styl"
   .dd
     width 50px
+
   .line
     height 1px
     background-color br_color3
