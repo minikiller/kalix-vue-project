@@ -9,7 +9,7 @@ module.exports = {
       }
     },
     title: {
-      text: '展示不同类型作品数量'
+      text: ''
     },
     xAxis: {
       type: 'category'

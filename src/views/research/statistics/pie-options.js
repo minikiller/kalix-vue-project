@@ -9,7 +9,7 @@ module.exports = {
       }
     },
     title: {
-      text: '展示不同类型作品所占百分比'
+      text: ''
     },
     plotOptions: {
       pie: {

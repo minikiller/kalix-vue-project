@@ -4,37 +4,36 @@
 开发日期：2017年9月13日
 -->
 <template lang="pug">
-  div.kalix-search
-    div.kalix-search-hd
-      i.iconfont.icon-query
-      | 统计信息
-    div.kalix-search-bd
-      el-form.search-container(ref="searchForm" v-bind:inline="true")
-        slot(name="searchFormSlot")
-          el-form-item(label="开始时间")
-            el-date-picker(v-model="beginDate_begin" v-on:change="beginChange" placeholder="选择日期" type="date")
-          el-form-item(label="结束时间")
-            el-date-picker(v-model="endDate_end" v-on:change="endChange" placeholder="选择日期" type="date")
-        el-form-item
-          el-button( type="primary" v-on:click="onQuery")
-            i.iconfont.icon-query
-            | 统计
-          el-button(type="success" v-on:click="onResetClick")
-            i.iconfont.icon-reset
-            | 重置
-    div.kalix-search-hd
-      i.iconfont.icon-query
-      | 饼状图
-    vue-highcharts(v-show="isPie" v-bind:options="optionsPie" ref="chartsPie" v-bind:Highcharts="Highcharts")
-    vue-highcharts(v-show="isColumn" v-bind:options="optionsColumn" ref="chartsColumn" v-bind:Highcharts="Highcharts")
-    el-form.search-container(v-bind:inline="true")
-      el-form-item
-        el-button( type="primary" v-on:click="onPie")
-          i.iconfont.icon-query
-          | 饼状图
-        el-button(type="success" v-on:click="onColumn")
-          i.iconfont.icon-reset
-          | 柱状图
+  div.kalix-article
+    div.kalix-search
+      div.kalix-search-hd
+        i.iconfont.icon-query
+        | 查询
+      div.kalix-search-bd
+        el-form.search-container(ref="searchForm" v-bind:inline="true")
+          slot(name="searchFormSlot")
+            el-form-item(label="开始时间")
+              el-date-picker(v-model="beginDate_begin" v-on:change="beginChange" placeholder="选择日期" type="date")
+            el-form-item(label="结束时间")
+              el-date-picker(v-model="endDate_end" v-on:change="endChange" placeholder="选择日期" type="date")
+          el-form-item
+            el-button( type="primary" v-on:click="onQuery")
+              i.iconfont.icon-query
+              | 统计
+            el-button(type="success" v-on:click="onResetClick")
+              i.iconfont.icon-reset
+              | 重置
+            el-select(v-model="view" v-on:change="selectOnChange" style="margin-left:8px;")
+              el-option(value="1" label="饼状图")
+              el-option(value="2" label="柱状图")
+    div.kalix-wrapper(style="top:120px")
+      div.kalix-wrapper-hd
+        i.iconfont.icon-query
+        | {{showTitle}}
+      div.kalix-wrapper-bd
+        div.kalix-table-container
+          vue-highcharts(v-show="isPie" v-bind:options="optionsPie" ref="chartsPie" v-bind:Highcharts="Highcharts")
+          vue-highcharts(v-show="isColumn" v-bind:options="optionsColumn" ref="chartsColumn" v-bind:Highcharts="Highcharts")
 </template>
 <script>
   import VueHighcharts from 'vue2-highcharts'
@@ -64,11 +63,20 @@
           colorByPoint: true,
           data: []
         },
+        view: '1',
         isPie: true,
-        isColumn: false
+        isColumn: false,
+        showTitle: '展示不同类型作品所占百分比'
       }
     },
     methods: {
+      selectOnChange(val) {
+        if (val === '1') {
+          this.onPie()
+        } else if (val === '2') {
+          this.onColumn()
+        }
+      },
       beginChange(val) {
         this.beginDate_begin = val
       },
@@ -83,6 +91,7 @@
           }
         this.$http.get(StatisticsPieURL, jsonParam).then((response) => {
           let _data = response.data.data
+          console.log(response)
           let _dataPie = []
           let _dataColumn = []
 
@@ -117,10 +126,12 @@
         })
       },
       onPie() {
+        this.showTitle = '展示不同类型作品所占百分比'
         this.isPie = true
         this.isColumn = false
       },
       onColumn() {
+        this.showTitle = '展示不同类型作品数量'
         this.isPie = false
         this.isColumn = true
       },
@@ -135,6 +146,7 @@
 
 <style lang='stylus' type='text/stylus'>
   @import "~@/assets/stylus/color.styl"
+  @import "~@/assets/stylus/baseTable"
   .kalix-search
     margin 5px
     border 1px solid border-color_1
@@ -156,9 +168,3 @@
       .iconfont
         font-size 14px
 </style>
-
-<!-- {"chart":{"type":"pie","options3d":{"enabled":true,"alpha":45,"beta":0}},"title":{"text":"展示不同类型作品数量"},"tooltip":{"pointFormat":"{series.name}: <b>{point.percentage:.2f}%</b>"},"plotOptions":{"pie":{"allowPointSelect":true,"cursor":"pointer","depth":35,"dataLabels":{"enabled":true,"format":"{point.name}"}}},"series":[]}-->
-<!-- {"chart":{"type":"pie","options3d":{"enabled":true,"alpha":45,"beta":0}},"title":{"text":"展示不同类型作品数量"},"tooltip":{"pointFormat":"<b>{point.name}</b>"}                          ,"plotOptions":{"pie":{"allowPointSelect":true,"cursor":"pointer","depth":35,"dataLabels":{"enabled":true,"format":"{point.name}"}}},"series":[]}-->
-<!-- {"chart":{"type":"column","options3d":{"enabled":false,"alpha":0,"beta":0}},"title":{"text":"展示不同类型作品数量"},"xAxis":{"type":"category"},"yAxis":{"allowDecimals":false,"title":{"text":"数量"}},"legend":{"enabled":false},"plotOptions":{"series":{"borderWidth":0,"dataLabels":{"enabled":true,"format":"{point.y}"}}},"tooltip":{"pointFormat":"<b>{point.name}</b>"},"series":[],"pointInterval":1}-->
-<!-- {"data":[{"name":"漫画类","y":0.375},{"name":"动画电影","y":0.25},{"name":"动画系列连续片","y":0.25},{"name":"动画类","y":0.125}],"_colorIndex":0}-->
-<!-- {"data":[{"name":"漫画类","y":0.375},{"name":"动画电影","y":0.25},{"name":"动画系列连续片","y":0.25},{"name":"动画类","y":0.125}],"_colorIndex":0}-->
