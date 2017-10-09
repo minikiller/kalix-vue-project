@@ -112,6 +112,7 @@
         this.$emit('update:objectNames', _objects)
         this.$emit('update:objectIds', _objectIds)
         this.$emit('userSelected', _selectObject)  // 发送事件
+        this.$emit('competitionSelected', _selectObject)
       },
       remoteMethod(query) {
         if (query && query !== '') {
