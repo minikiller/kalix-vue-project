@@ -12,9 +12,13 @@
     div.el-form(slot="dialogFormSlot")
 
       div.s-flex
-       el-form-item.s-flex_item(label="展赛" prop="competitionId" label-width="140px")
+       // el-form-item.s-flex_item(label="展赛" prop="competitionId" label-width="140px")
           kalix-competition-select(style="width:100%"  v-model="formModel.competitionId" v-bind:multiple="false"
           v-on:competitionSelected="onCompetitionSelected")
+       el-form-item.s-flex_item(label="展赛" prop="competitionId"
+        v-bind:rules="rules.competitionId" label-width="120px" )
+         kalix-competition-select(style="width:100%" v-model="competitionInfo" v-bind:multiple="false"
+          v-bind:objectsUrl="objectsUrl" v-bind:objectIds.sync="formModel.competitionId" v-on:competitionSelected="onCompetitionSelected")
        el-form-item.s-flex_item(label="展赛类别" prop="competitionType" label-width="140px")
          el-input(v-bind:value="formModel.competitionType|getDictName('research','展赛类别')" readonly)
       div.s-flex
@@ -32,17 +36,19 @@
 <script type="text/ecmascript-6">
   import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {AwardURL} from '../config.toml'
+  import {AwardURL, CompetitionInfoURL} from '../config.toml'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import CompetitionSelect from '@/components/biz/competitionselect/competitionselect'
+  import CompetitionSelect from '@/components/custom/baseObjectSelect'
   export default {
     data() {
       return {
+        competitionInfo: null,
         formModel: Object.assign({}, FormModel),
         rules: {
           competitionId: [{required: true, message: '请选择展赛名称', trigger: 'blur'}]
         },
-        targetURL: AwardURL
+        targetURL: AwardURL,
+        objectsUrl: CompetitionInfoURL
       }
     },
     created() {
