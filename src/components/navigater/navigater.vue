@@ -69,7 +69,8 @@
         let d = new Date()
         let cd = d.getTime()
         let treeListData = {}
-        this.currApp = this.$route.params.app || 'admin'
+        let toolListData = JSON.parse(Cache.get('toolListData'))
+        this.currApp = this.$route.params.app || toolListData[0].id
         this.currFun = this.$route.params.fun || ''
         if (Cache.get('treeListData')) {
           treeListData = JSON.parse(Cache.get('treeListData'))

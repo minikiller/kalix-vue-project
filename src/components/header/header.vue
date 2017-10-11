@@ -99,7 +99,6 @@
         let d = new Date()
         let cd = d.getTime()
         let toolListData = {}
-
         if (Cache.get('toolListData')) {
           toolListData = JSON.parse(Cache.get('toolListData'))
         }
