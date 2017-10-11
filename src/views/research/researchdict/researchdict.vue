@@ -37,7 +37,9 @@
     },
     created() {
     },
-    methods: {}
+    methods: {
+
+    }
   }
 </script>
 
