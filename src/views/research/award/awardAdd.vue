@@ -17,10 +17,11 @@
         el-form-item.s-flex_item(label="展赛类别" prop="competitionType" label-width="140px")
           el-input(v-bind:value="formModel.competitionType|getDictName('research','展赛类别')" readonly)
       div.s-flex
-        el-form-item.s-flex_item(label="获奖人" prop="awardname" label-width="140px")
+        el-form-item.s-flex_item(label="获奖人" prop="signupId" label-width="140px")
           kalix-competition-select(style="width:100%" v-model="signup" v-bind:multiple="false"
           v-bind:params="selectParams"
-          v-bind:objectsUrl="signupUrl" v-bind:objectIds.sync="formModel.signupId")
+          v-bind:objectsUrl="signupUrl" v-bind:objectIds.sync="formModel.signupId" v-bind:objectNames.sync="formModel.awardName")
+
         el-form-item.s-flex_item(label="获奖级别" prop="awardLevel" label-width="140px")
           el-input(v-model="formModel.awardLevel")
       div.s-flex
@@ -41,7 +42,7 @@
         signup: null,
         formModel: Object.assign({}, FormModel),
         rules: {
-          competitionId: [{required: true, message: '请选择展赛名称', trigger: 'blur'}]
+          competitionId: [{type: 'number', required: true, message: '请选择参加展赛名称', trigger: 'change'}]
         },
         targetURL: AwardURL,
         objectsUrl: CompetitionInfoURL,

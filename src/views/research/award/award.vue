@@ -32,7 +32,7 @@
         buttonPermissionPrefix: awardBtnPermissionPrefix,
         tableFields: [
           {prop: 'competitionName', label: '展赛类别'},
-          {prop: 'awardname', label: '获奖人'},
+          {prop: 'awardName', label: '获奖人'},
           {prop: 'awardLevel', label: '获奖级别'}
         ],
         bizDialog: [
