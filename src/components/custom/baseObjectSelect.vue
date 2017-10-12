@@ -16,9 +16,9 @@
     v-on:change="onChange">
     <el-option
       v-for='object in objectList'
-      :key='object.id'
-      :label='object.name'
-      :value='object.id'>
+      :key='object[id]'
+      :label='object[label]'
+      :value='object[id]'>
     </el-option>
   </el-select>
 </template>
@@ -42,7 +42,13 @@
       defaultIds: '',     // 已选择的 id 逗号分隔字符串,
       objectsUrl: '',
       objectNames: '',
-      objectIds: ''
+      objectIds: '',
+      label: {
+        default: 'name'
+      },
+      id: {
+        default: 'id'
+      }
     },
     data() {
       return {
@@ -90,24 +96,24 @@
         if (this.multiple) {  // 多选
           let oList = this.objects || this.objectList
           let objects = oList.filter((item) => {
-            return (value.indexOf(item.id) > -1)
+            return (value.indexOf(item[this.id]) > -1)
           })
           _selectObject = objects || []
           _objects = []
           _objectIds = []
           _selectObject.forEach(e => {
-            _objects.push(e.name)
-            _objectIds.push(e.id)
+            _objects.push(e[this.label])
+            _objectIds.push(e[this.id])
           })
           _objects = _objects.join(',')
           _objectIds = _objectIds.join(',')
         } else {  // 单选
           let objects = this.objectList.filter((item) => {
-            return item.id === value
+            return item[this.id] === value
           })
           _selectObject = objects[0] || {}
-          _objects = _selectObject.name
-          _objectIds = _selectObject.id
+          _objects = _selectObject[this.label]
+          _objectIds = _selectObject[this.id]
         }
         this.$emit('update:objectNames', _objects)
         this.$emit('update:objectIds', _objectIds)
@@ -119,7 +125,8 @@
           this.loading = true
           setTimeout(() => {
             this.loading = false
-            let _jsonStr = {'%name%': query}
+            let _jsonStr = {}
+            _jsonStr['%' + this.label + '%'] = query
             _jsonStr = Object.assign(_jsonStr, this.params)
             let _data = {
               jsonStr: JSON.stringify(_jsonStr),
@@ -146,5 +153,3 @@
   }
 
 </script>
-
-
