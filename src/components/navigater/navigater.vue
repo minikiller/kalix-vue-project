@@ -39,6 +39,7 @@
   import Vue from 'vue'
   import Cache from 'common/cache'
   import {cacheTime, systemApplicationsBaseURL} from 'config/global.toml'
+  import EventBus from 'common/eventbus'
 
   export default {
     props: {
@@ -54,21 +55,38 @@
         activeName: '1',
         obj: {'name': 'aa'},
         treeData: [],
-        clickedNode: null
+        clickedNode: null,
+        flag: false
       }
+    },
+    activated() {
+      console.log('navgater is activated')
+      EventBus.$on('toolListDataComplete', this.setFlag)
     },
     mounted() {
       this.fetchData()
     },
     watch: {'$route': 'fetchData'},
     methods: {
+      setFlag() {
+        this.flag = true
+        this.setTree()
+      },
       fetchData() {
+        console.log('this.flag', this.flag)
         if (this.$route.name === 'login') {
           return
         }
+        if (this.flag) {
+          this.setTree()
+          console.log('fetchData 2')
+        }
+      },
+      setTree() {
         let d = new Date()
         let cd = d.getTime()
         let treeListData = {}
+        console.log('fetchData 1')
         let toolListData = JSON.parse(Cache.get('toolListData'))
         this.currApp = this.$route.params.app || toolListData[0].id
         this.currFun = this.$route.params.fun || ''

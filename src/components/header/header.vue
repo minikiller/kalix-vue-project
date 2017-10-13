@@ -46,6 +46,7 @@
   import {applicationURL, logoutURL, msgCountURL, msgURL} from 'config/global.toml'
   import {isEmptyObject} from 'common/util'
   import Cookie from 'js-cookie'
+  import EventBus from 'common/eventbus'
 
   export default {
     props: {
@@ -101,6 +102,7 @@
         let toolListData = {}
         if (Cache.get('toolListData')) {
           toolListData = JSON.parse(Cache.get('toolListData'))
+          EventBus.$emit('toolListDataComplete')
         }
         if (!isEmptyObject(toolListData)) {
           this.menuList = toolListData
@@ -118,6 +120,7 @@
               this.menuList = response.data
               toolListData.data = this.menuList
               Cache.save('toolListData', JSON.stringify(toolListData.data))
+              EventBus.$emit('toolListDataComplete')
             }
           })
         }
