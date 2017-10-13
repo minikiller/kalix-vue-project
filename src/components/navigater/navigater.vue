@@ -55,40 +55,32 @@
         activeName: '1',
         obj: {'name': 'aa'},
         treeData: [],
-        clickedNode: null,
-        flag: false
+        clickedNode: null
       }
     },
     activated() {
-      console.log('navgater is activated')
-      EventBus.$on('toolListDataComplete', this.setFlag)
+      EventBus.$on('toolListDataComplete', this.fetchData)
     },
     mounted() {
       this.fetchData()
     },
     watch: {'$route': 'fetchData'},
     methods: {
-      setFlag() {
-        this.flag = true
-        this.setTree()
-      },
-      fetchData() {
-        console.log('this.flag', this.flag)
+      fetchData(appId) {
         if (this.$route.name === 'login') {
           return
         }
-        if (this.flag) {
-          this.setTree()
-          console.log('fetchData 2')
+        if (!appId) {
+          let toolListData = JSON.parse(Cache.get('toolListData'))
+          if (!toolListData) {
+            return
+          }
+          appId = toolListData[0].id
         }
-      },
-      setTree() {
         let d = new Date()
         let cd = d.getTime()
         let treeListData = {}
-        console.log('fetchData 1')
-        let toolListData = JSON.parse(Cache.get('toolListData'))
-        this.currApp = this.$route.params.app || toolListData[0].id
+        this.currApp = this.$route.params.app || appId
         this.currFun = this.$route.params.fun || ''
         if (Cache.get('treeListData')) {
           treeListData = JSON.parse(Cache.get('treeListData'))

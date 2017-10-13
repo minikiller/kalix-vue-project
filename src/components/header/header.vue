@@ -82,9 +82,6 @@
     activated() {
       this.userName = Cache.get('user_name')
       console.log('header is activated')
-//      this.$nextTick(() => {
-//        console.log('user name cache is ' + this.userName)
-//      })
     },
     deactivated() {
       console.log('header is deactivated')
@@ -102,7 +99,7 @@
         let toolListData = {}
         if (Cache.get('toolListData')) {
           toolListData = JSON.parse(Cache.get('toolListData'))
-          EventBus.$emit('toolListDataComplete')
+          EventBus.$emit('toolListDataComplete', toolListData[0].id)
         }
         if (!isEmptyObject(toolListData)) {
           this.menuList = toolListData
@@ -120,7 +117,7 @@
               this.menuList = response.data
               toolListData.data = this.menuList
               Cache.save('toolListData', JSON.stringify(toolListData.data))
-              EventBus.$emit('toolListDataComplete')
+              EventBus.$emit('toolListDataComplete', toolListData.data[0].id)
             }
           })
         }
