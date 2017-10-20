@@ -59,12 +59,14 @@
                 Cache.save('access_token', data.access_token)
                 Cache.save('user_token', data.user.token)
                 Cache.save('user_name', data.user.name)
+                Cache.save('loginname', that.loginForm.name)
                 console.log('access token is: ', data.access_token)
                 this.setSaveLogin({
                   access_token: data.access_token,
                   user_name: data.user.name,
                   user_token: data.user.token,
-                  user_id: data.user.id
+                  user_id: data.user.id,
+                  user_login_name: that.loginForm.name
                 })
                 Router.push({path: '/'})
               } else {
