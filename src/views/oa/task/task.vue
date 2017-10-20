@@ -12,6 +12,8 @@
       v-bind:formModel.sync='formModel'
       v-bind:bizDialog='bizDialog'
       bizSearch='TaskSearch'
+      v-bind:toolbarBtnList="toolbarBtnList"
+      v-bind:isShowToolBar="isShowToolBar"
       v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
         template(slot="tableColumnSlot")
           kalix-biz-no-column(name="businessNo")
@@ -47,6 +49,12 @@
     filters: {},
     data() {
       return {
+        isShowToolBar: false,  // 不显示工具栏
+        toolbarBtnList: [{id: 'add', isShow: false},
+          {id: 'customBtn1', icon: 'icon-edit', title: '自定义按钮 1', isShow: true},
+          {id: 'customBtn2', icon: 'icon-edit', title: '自定义按钮 2', isShow: true},
+          {id: 'customBtn3', icon: 'icon-edit', title: '自定义按钮 3', isShow: true},
+          {id: 'customBtn4', icon: 'icon-edit', title: '自定义按钮 4', isShow: true}],
         bizKey: 'taskComplete',
         btnList: [{
           id: 'viewTask',

@@ -13,8 +13,10 @@
             el-tag(type="success")
               i.header-icon.el-icon-date
               | &nbsp;业务数据
-          el-form(v-bind:model="formModel")
-            component(v-bind:is="whichBizForm" v-bind:form-model="bizForm")
+          el-form(v-bind:model="formModel" ref="bizDataForm")
+            component(v-bind:is="whichBizForm" v-bind:form-model="bizForm" ref="bizData")
+            div(v-if="formClass.indexOf('Modify')>0" style="text-align:right;margin-top:12px;")
+              el-button(type="success" v-on:click="onSubmit") 提交
         el-collapse-item(name="historyTab")
           template(slot="title")
             el-tag(type="danger")
@@ -57,8 +59,11 @@
             el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
               el-input(v-model="formModel.content" type="textarea")
             el-form-item
-              el-button(type="success" v-on:click="onAgree") 同意
-              el-button(type="danger" v-on:click="onDisagree") 不同意
+              template(v-if="formClass.indexOf('Modify')>0")
+                el-button(type="success" v-on:click="onReApply") 重新申请
+              template(v-else)
+                el-button(type="success" v-on:click="onAgree") 同意
+                el-button(type="danger" v-on:click="onDisagree") 不同意
     div.dialog-footer(slot="footer")
       template
         el-button(type="primary" v-on:click="onClose") 关 闭
@@ -75,6 +80,7 @@
   import DateColumn from 'views/oa/comp/dateColumn'
   import {Loading} from 'element-ui'
   import prettyBytes from 'pretty-bytes'
+  import Vue from 'vue'
 
   const baseFormUrl = '/camel/rest/'
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
@@ -98,6 +104,7 @@
         visible: false,
         targetURL: '',
         jsonStr: {},
+        formClass: '',
         rules: {
           content: [{required: true, message: '请输入审批意见', trigger: 'blur'}]
         },
@@ -174,11 +181,35 @@
           }
         })
       },
+      onSubmit() { // 修改业务数据
+        this.$refs.bizDataForm.validate((valid) => {
+          console.log('valid', valid)
+          if (valid) {
+            Vue.axios.request({
+              method: 'PUT',
+              url: this.$refs.bizData.targetURL + '/' + this.$refs.bizData.formModel.id,
+              data: this.$refs.bizData.formModel
+            }).then(response => {
+              if (response.data.success) {
+                Message.success(response.data.msg)
+              } else {
+                Message.error(response.data.msg)
+              }
+            })
+          } else {
+            Message.error('请检查输入项！')
+            return false
+          }
+        })
+      },
       onAgree() {
         this.completeTask('同意')
       },
       onDisagree() {
         this.completeTask('不同意')
+      },
+      onReApply() {
+        this.completeTask('')
       },
       onClose() {
         this.visible = false

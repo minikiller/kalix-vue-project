@@ -13,21 +13,6 @@
         kalix-dict-select(v-model="formModel.sealType" appName="oa" dictType="印章类型")
       el-form-item(label="备注" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.remark")
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="部门负责人" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.departmentHead" readonly)
-        el-form-item.s-flex_item.kalix-form-table-td(label="分公司负责人" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.tableFormField" readonly)
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="法律顾问" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.counsel"  readonly)
-        el-form-item.s-flex_item.kalix-form-table-td(label="总经理" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.generalManager" readonly)
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="印章专管员" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.sealAdministrator" readonly)
-        el-form-item.s-flex_item.kalix-form-table-td(label="经办人" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.createBy" readonly)
 </template>
 
 <script type="text/ecmascript-6">
