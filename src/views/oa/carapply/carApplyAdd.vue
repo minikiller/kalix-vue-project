@@ -1,149 +1,76 @@
 <!--
-描述：人员管理-会议申请-新增组件
-开发人：sunlf
-开发日期：2017年8月17日
+描述：办公自动化-公务用车申请-新增组件
+开发人：hqj
+开发日期：2017年10月19日
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="meetapply" ref="kalixBizDialog"
-  v-bind:form-model="formModel" v-bind:targetURL="targetURL")
+  kalix-dialog.user-add(bizKey="carapply" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
-      div.table-title 吉林动画学院用车申请表
+      div.table-title 吉林动画学院公务用车申请表
       el-form-item(label="名称" v-bind:label-width="labelWidth" prop="title" v-bind:rules="rules.title")
         el-input(v-model="formModel.title")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
-          el-select(v-model="formModel.orgId" placeholder="请选择申请部门" style="width:100%"
-          v-on:change="orgOnChange")
-            el-option(v-for="item in orgNameOptions" v-bind:key="item.id" v-bind:label="item.name" v-bind:value="item.id")
-        el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" v-bind:label-width="labelWidth")
-          el-select(v-model="formModel.meetingroomId" placeholder="请选择会议地点" style="width:100%")
-            el-option(v-for="item in meetingRoomOptions" v-bind:key="item.id"
-            v-bind:label="item.name"
-            v-bind:value="item.id")
-      el-form-item(label="会议议题" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.meetingTopic")
-      el-form-item(label="会议议程" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.meetingAgenda")
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" prop="orgId" v-bind:rules="rules.orgId" v-bind:label-width="labelWidth")
+          kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
+      el-form-item(label="用车事由" prop="reason" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.reason")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="开始时间" v-bind:label-width="labelWidth")
-          el-date-picker(v-model="formModel.beginTime" v-on:change="onBeginTimeChange" type="datetime" placeholder="选择开始时间" style="width:100%")
-        el-form-item.s-flex_item.kalix-form-table-td(label="结束时间" v-bind:label-width="labelWidth")
-          el-date-picker(v-model="formModel.endTime" v-on:change="onEndTimeChange" type="datetime" placeholder="选择结束时间" style="width:100%")
+        div.s-flex_item
+          div.s-flex
+            el-form-item.kalix-form-table-td(label="乘车人数" prop="usageCount" v-bind:label-width="labelWidth")
+              el-input-number(v-model="formModel.usageCount" v-bind:min="1" v-bind:max="10" style="width:100%")
+            el-form-item.s-flex_item.kalix-form-table-td(label="用车时段" v-bind:label-width="labelWidth")
+        div.s-flex_item(style="margin-left:-1px")
+          div.s-flex
+            div.s-flex_item
+              kalix-date-time-picker(v-model="formModel.beginDate" placeholder="选择开始时间" style="margin-left:1px;width:100%")
+            div(style="line-height:32px") 至
+            div.s-flex_item
+              kalix-date-time-picker(v-model="formModel.endDate" placeholder="选择结束时间" style="width:100%")
+      el-form-item(label="用车起始地点" prop="address" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.address")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="会议类型" v-bind:label-width="labelWidth")
-          kalix-dict-select(v-model="formModel.meetingType" appName="oa" dictType="会议类型"
-          style="width:100%")
-        el-form-item.s-flex_item.kalix-form-table-td(label="会议纪要人员" v-bind:label-width="labelWidth")
-          kalix-user-select(v-bind:params="params" style="width:100%"
-          v-on:userSelected="onMeetingSummaryPersonSelected"
-          v-model="meetingSummaryPerson" v-bind:multiple="multiple" placeholder="请输入会议纪要人员")
-      el-form-item(label="重要出席人" v-bind:label-width="labelWidth")
-        kalix-user-select(v-bind:params="params" style="width:100%"
-        v-on:userSelected="onImportantAttendeesSelected"
-        v-model="importantAttendees" v-bind:multiple="multiple" placeholder="请输入重要出席人")
-      el-form-item(label="其他出席人" v-bind:label-width="labelWidth")
-        kalix-user-select(v-bind:params="params" style="width:100%"
-        v-on:userSelected="onOtherAttendeesSelected"
-        v-model="otherAttendees" v-bind:multiple="multiple" placeholder="请输入其他出席人")
+        el-form-item.s-flex_item.kalix-form-table-td(label="用车情况" prop="city" v-bind:label-width="labelWidth")
+          div(style="text-align:center")
+            el-checkbox(v-model="formModel.city") 是否市内用车
+        el-form-item.s-flex_item.kalix-form-table-td(label="联系电话" prop="operatorPhone" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.operatorPhone")
 </template>
 
 <script type="text/ecmascript-6">
-  import Dialog from '@/components/custom/baseDialog.vue'
-  import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import UserSelect from '@/components/biz/userselect/userselect'
+  import FormModel from './model'
+  import {CarApplyURL} from '../config.toml'
   import Cache from 'common/cache'
-  import {MeetingApplyURL} from '../config.toml'
+  import Dialog from '@/components/custom/baseDialog.vue'
+  import UserOrgSelect from '@/components/biz/select/UserOrgSelect'
+  import DateTimePicker from '@/components/biz/date/datetimepicker.vue'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
-        params: {},
+        formModel: Object.assign({}, FormModel),
         rules: {
-          title: [{required: true, message: '请输入名称', trigger: 'blur'}]
+          title: [{required: true, message: '请输入名称', trigger: 'blur'}],
+          orgId: [{type: 'number', required: true, message: '请选择申请部门', trigger: 'change'}]
         },
-        targetURL: MeetingApplyURL,
-        multiple: true,
-        orgName: '',
-        orgNameOptions: [],
-        beginTime: '',
-        endTime: '',
-        meetingRoom: '',
-        meetingRoomOptions: [],
-        meetingSummaryPerson: [],
-        importantAttendees: [],
-        otherAttendees: []
+        targetURL: CarApplyURL,
+        labelWidth: '110px',
+        orgNameOptions: []
       }
-    },
-    created() {
-      this.labelWidth = '110px'
-      this.meetingRoomOptions = JSON.parse(Cache.get(`${'MeetingRooms'.toUpperCase()}-KEY`))
-      this.orgNameOptions = JSON.parse(Cache.get(`${'UserOrgs'.toUpperCase()}-KEY`))
-      this.getSummaryPerson()
-    },
-    mounted() {
-//      this.beginTime = this.formModel.beginTime
-//      this.endTime = this.formModel.endTime
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
-      KalixUserSelect: UserSelect
+      KalixOrgSelect: UserOrgSelect,
+      KalixDateTimePicker: DateTimePicker
+    },
+    created() {
+      this.orgNameOptions = JSON.parse(Cache.get(`${'UserOrgs'.toUpperCase()}-KEY`))
     },
     methods: {
-      _getUsers(users) {
-        let ids = []
-        let names = []
-        users.forEach(item => {
-          ids.push(item.id)
-          names.push(item.name)
-        })
-        return {ids: ids.join(','), names: names.join(',')}
-      },
-      onMeetingSummaryPersonSelected(items) {
-        const users = this._getUsers(items)
-        this.formModel.meetingSummaryPerson = users.ids
-        this.formModel.meetingSummaryPersonName = users.names
-      },
-      onImportantAttendeesSelected(items) {
-        const users = this._getUsers(items)
-        this.formModel.importantAttendees = users.ids
-        this.formModel.importantAttendeesName = users.names
-      },
-      onOtherAttendeesSelected(items) {
-        const users = this._getUsers(items)
-        this.formModel.otherAttendees = users.ids
-        this.formModel.otherAttendeesName = users.names
-      },
-      orgOnChange(value) {
-        let item = this.orgNameOptions.find(e => {
-          return e.id === value
-        })
+      onOrgIdChange(item) {
         this.formModel.orgName = item.name
-      },
-      onBeginTimeChange(value) {
-        console.log('[formatDate] beginTime', value)
-        this.formModel.beginTime = value
-      },
-      onEndTimeChange(value) {
-        console.log('[formatDate] endTime', value)
-        this.formModel.endTime = value
-      },
-      getSummaryPerson() {
-        let that = this
-        setTimeout(() => {
-          that.meetingSummaryPerson = that.formModel.meetingSummaryPerson.split(',')
-//          console.log('[meetingApplyAdd] _meetingSummaryPerson', that.meetingSummaryPerson)
-//          console.log('[meetingApplyAdd] meetingSummaryPerson', that.meetingSummaryPerson)
-        }, 20)
       }
-    },
-    watch: {}
+    }
   }
 </script>
