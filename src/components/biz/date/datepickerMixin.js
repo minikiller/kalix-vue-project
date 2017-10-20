@@ -6,6 +6,9 @@ export const DatepickerMixin = {
     type: {
       default: 'date'
     },
+    placeholder: {
+      default: ''
+    },
     readonly: {
       type: Boolean,
       default: false
