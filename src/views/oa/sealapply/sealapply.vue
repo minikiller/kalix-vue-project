@@ -14,7 +14,8 @@
           kalix-biz-no-column  // 业务编号
           el-table-column(prop="title" label="业务名称" align="center" width="220")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
-          kalix-date-column(prop="creationDate" label="申请时间")
+          kalix-date-column(prop="creationDate" label="创建时间")
+          kalix-date-column(prop="applyDate" label="申请时间")
           el-table-column(prop="usageCount" label="用印数" align="center" width="220")
           el-table-column(prop="sealTypeName" label="印章类别" align="center" width="220")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")

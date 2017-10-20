@@ -18,7 +18,7 @@
       el-form-item.s-flex_item.kalix-form-table-td(label="印章类别" v-bind:label-width="labelWidth")
         el-input(v-bind:value="formModel.sealType|getDictName('OA','印章类型')")
       el-form-item.s-flex_item.kalix-form-table-td(label="申请日期" v-bind:label-width="labelWidth")
-        el-input(v-bind:value="formModel.creationDate" readonly)
+        el-input(v-bind:value="formModel.applyDate" readonly)
     el-form-item(label="备注" v-bind:label-width="labelWidth")
       el-input(v-model="formModel.remark")
     div.s-flex
