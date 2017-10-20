@@ -72,7 +72,7 @@
           {value: 'theme-classic', label: '经典'},
           {value: 'theme-gray', label: '灰色'}
         ],
-        themeValue: '',
+        themeValue: 'theme-triton',
         headerMenuChk: this.menuChk,
         msgCount: 0,
         icon: ''
@@ -91,7 +91,9 @@
     },
     methods: {
       setTheme(theme) {
-        this.themeValue = theme
+        if (theme) {
+          this.themeValue = theme
+        }
       },
       initMenu() {
         let d = new Date()
@@ -115,9 +117,9 @@
           }).then(response => {
             if (response && response.data) {
               this.menuList = response.data
-              toolListData.data = this.menuList
-              Cache.save('toolListData', JSON.stringify(toolListData.data))
-              EventBus.$emit('toolListDataComplete', toolListData.data[0].id)
+              toolListData = this.menuList
+              Cache.save('toolListData', JSON.stringify(toolListData))
+              EventBus.$emit('toolListDataComplete', toolListData[0].id)
             }
           })
         }
