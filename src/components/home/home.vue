@@ -19,7 +19,6 @@
   import Navigater from '@/components/navigater/navigater'
   import Welcome from '@/views/admin/welcome'
   import Cache from '@/common/cache.js'
-//  import myConsole from '@/common/MyConsole.js'
 
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
@@ -33,7 +32,7 @@
         name: 'kalixHome',
         isSmall: false,
         which_to_show: 'Welcome',
-        themeValue: 'theme-triton'
+        themeValue: null
       }
     },
     mounted() {
@@ -43,7 +42,6 @@
     methods: {
       initTheme() {
         this.themeValue = Cache.get('styleTheme')
-//        myConsole.log('styleTheme', this.themeValue, '#003366')
         if (!this.themeValue) {
           let url = `/camel/rest/system/preferences/${Cache.get('loginname')}`
           this.$http.get(url).then(res => {
@@ -57,8 +55,8 @@
             }
           })
         } else {
-          Cache.save('styleTheme', 'theme-triton')
-          this.$refs.kalixHeader.setTheme('theme-triton')
+          Cache.save('styleTheme', this.themeValue)
+          this.$refs.kalixHeader.setTheme(this.themeValue)
         }
       },
       setSmall(e) {
