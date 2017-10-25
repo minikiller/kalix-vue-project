@@ -1,66 +1,72 @@
 <!--
-描述：人员管理-会议申请-查看组件
-开发人：sunlf
-开发日期：2017年8月17日
+描述：办公自动化-公务用车申请-查看组件
+开发人：hqj
+开发日期：2017年10月19日
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="meetapply"
-  v-bind:form-model="formModel" v-bind:targetURL="targetURL"
-  ref="kalixBizDialog"
-  v-bind:isView="readonly"
-  )
-
+  kalix-dialog.user-add(bizKey="carapply" ref="kalixBizDialog" v-bind:formModel.sync="formModel" isView)
+    div.el-form.kalix-form-table(slot="dialogFormSlot")
+      div.table-title 吉林动画学院公务用车申请表
+      el-form-item(label="名称" v-bind:label-width="labelWidth" prop="title")
+        el-input(v-model="formModel.title" readonly)
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" prop="orgName" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.orgName" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请时间" prop="applyDate" v-bind:label-width="labelWidth")
+          kalix-date-time-picker(v-model="formModel.applyDate" style="width:100%" readonly)
+      el-form-item(label="用车事由" prop="reason" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.reason" readonly)
+      div.s-flex
+        div.s-flex_item
+          div.s-flex
+            el-form-item.kalix-form-table-td(label="乘车人数" prop="usageCount" v-bind:label-width="labelWidth")
+              el-input(v-model="formModel.usageCount" readonly)
+            el-form-item.s-flex_item.kalix-form-table-td(label="用车时段" v-bind:label-width="labelWidth")
+        div.s-flex_item(style="margin-left:-1px")
+          div.s-flex
+            div.s-flex_item
+              kalix-date-time-picker(v-model="formModel.beginDate" placeholder="选择开始时间" style="margin-left:1px;width:100%" readonly)
+            div(style="line-height:32px") 至
+            div.s-flex_item
+              kalix-date-time-picker(v-model="formModel.endDate" placeholder="选择结束时间" style="width:100%" readonly)
+      el-form-item(label="用车起始地点" prop="address" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.address" readonly)
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="用车情况" prop="city" v-bind:label-width="labelWidth")
+          div(style="text-align:center")
+            el-checkbox(v-model="formModel.city" disabled) 是否市内用车
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请人" prop="createBy" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.createBy" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="联系电话" prop="operatorPhone" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.operatorPhone" readonly)
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="部门负责人" prop="depUser" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.depUser" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="副校级领导" prop="managerUser" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.managerUser" readonly)
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="校务部" prop="schoolUser" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.schoolUser" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="主管领导(市外)" prop="schoolManagerUser" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.schoolManagerUser" readonly)
 </template>
 
 <script type="text/ecmascript-6">
+  import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import UserSelect from '@/components/biz/userselect/userselect'
-  import Cache from 'common/cache'
-  import {formatDate} from 'common/typeFormat'
-  //  import {usersURL} from 'views/admin/config.toml'
+  import DateTimePicker from '@/components/biz/date/datetimepicker.vue'
 
   export default {
-    props: {
-      formModel: {
-        type: Object,
-        required: true
-      }
-    },
     data() {
       return {
-        targetURL: '',
-        readonly: true,
-        meetingTypeName: ''
+        formModel: Object.assign({}, FormModel),
+        labelWidth: '110px'
       }
-    },
-    created() {
-      this.labelWidth = '110px'
-      console.log('[meetingApplyView.vue created] this.formModel:', this.formModel)
-      console.log('[meetingApplyView.vue created] this.formModel.meetingType', this.formModel.meetingType)
-      this.getMeetingTypeName()
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
-      KalixUserSelect: UserSelect
-    },
-    methods: {
-      getMeetingTypeName(meetingType) {
-        const dict = JSON.parse(Cache.get('OA-DICT-KEY'))
-        let item = dict.find(e => {
-          return e.type === '会议类型' && e.value === meetingType
-        })
-        if (item) {
-          return item.label
-        }
-        return ''
-      },
-      getDatetime(val) {
-        let date = new Date(val)
-        return formatDate(date, 'yyyy年MM月dd日 hh时mm分')
-      }
+      KalixDateTimePicker: DateTimePicker
     }
   }
 </script>
