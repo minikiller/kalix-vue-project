@@ -15,7 +15,7 @@
   export default {
     data() {
       return {
-        name: 'admin'
+        name: null
       }
     },
     mounted() {
@@ -29,26 +29,27 @@
         }
         this.name = this.$route.params.app || this.name
         this.getDict()
-
 //        console.log(this.$route.params.name);
       },
       getDict() {
-        const DictURL = `/camel/rest/${this.name}/dicts`
-        const DictKey = `${this.name.toUpperCase()}-DICT-KEY`
-        if (!Cache.get(DictKey)) {
-          const data = {
-            page: 1,
-            start: 0,
-            limit: 200
-          }
-          this.axios.get(DictURL, {
-            params: data
-          }).then(response => {
-            if (response.data) {
-              Cache.save(DictKey, JSON.stringify(response.data.data))
-              console.log(`dict cached under key ${DictKey}`, response.data)
+        if (this.name) {
+          const DictURL = `/camel/rest/${this.name}/dicts`
+          const DictKey = `${this.name.toUpperCase()}-DICT-KEY`
+          if (!Cache.get(DictKey)) {
+            const data = {
+              page: 1,
+              start: 0,
+              limit: 200
             }
-          })
+            this.axios.get(DictURL, {
+              params: data
+            }).then(response => {
+              if (response.data) {
+                Cache.save(DictKey, JSON.stringify(response.data.data))
+                console.log(`dict cached under key ${DictKey}`, response.data)
+              }
+            })
+          }
         }
       }
     },

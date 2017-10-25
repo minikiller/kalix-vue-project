@@ -19,6 +19,7 @@
   import Navigater from '@/components/navigater/navigater'
   import Welcome from '@/views/admin/welcome'
   import Cache from '@/common/cache.js'
+//  import myConsole from '@/common/MyConsole.js'
 
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
@@ -42,6 +43,7 @@
     methods: {
       initTheme() {
         this.themeValue = Cache.get('styleTheme')
+//        myConsole.log('styleTheme', this.themeValue, '#003366')
         if (!this.themeValue) {
           let url = `/camel/rest/system/preferences/${Cache.get('loginname')}`
           this.$http.get(url).then(res => {
