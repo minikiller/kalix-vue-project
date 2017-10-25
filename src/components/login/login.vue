@@ -19,7 +19,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Router from 'router'
+  //  import Router from 'router'
   import {mapMutations} from 'vuex'
   import Message from 'common/message'
   import Cache from 'common/cache'
@@ -43,6 +43,9 @@
           ]
         }
       }
+    },
+    activated() {
+      this.loginForm = {name: '', pass: ''}
     },
     methods: {
       ...mapMutations({setSaveLogin: 'saveLogin'}),
@@ -68,7 +71,8 @@
                   user_id: data.user.id,
                   user_login_name: that.loginForm.name
                 })
-                Router.push({path: '/'})
+//                Router.push({path: '/'})
+                this.$router.push({path: '/'})
               } else {
                 Message.error(data.message)
               }

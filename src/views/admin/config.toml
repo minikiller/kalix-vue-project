@@ -6,9 +6,11 @@ AdminDictsTypesListURL = "/camel/rest/admin/dicts/types/list"
 usersURL = "/camel/rest/users"
 appsURL = "/camel/rest/system/applications"
 workgroupURL = "/camel/rest/workgroups"
+dataauthURL = "/camel/rest/dataauths"
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
-
+dataAuthBtnPermissionPrefix = "admin:permissionModule:dataAuthMenu:"
+AdminCacheKey = "ADMIN-DICT-KEY"
 # table 的默认按钮定义
 [[ToolButtonList]]
   id = "view"
@@ -45,3 +47,13 @@ workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
 [[UserComponent]]
  path = "admin/user/userSearch"
  name = "AdminUserSearch"
+
+[[DataAuthComponent]]
+ path = "admin/dataauth/dataauthView"
+ name = "AdminDataAuthView"
+[[DataAuthComponent]]
+ path = "admin/dataauth/dataauthAdd"
+ name = "AdminDataAuthAdd"
+[[DataAuthComponent]]
+ path = "admin/dataauth/dataauthSearch"
+ name = "AdminDataAuthSearch"

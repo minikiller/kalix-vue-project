@@ -1,15 +1,34 @@
 <template lang="pug">
   el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-on:change="onChange")
     el-option(v-for="item in options"
-    v-bind:key="item.id"
-    v-bind:label="item.name"
-    v-bind:value="item.id")
+    v-bind:key="item[id]"
+    v-bind:label="item[label]"
+    v-bind:value="item[id]")
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
 
   export default {
-    props: ['requestUrl', 'placeholder', 'value', 'appName'],
+    props: {
+      requestUrl: {
+        type: String, default: ''
+      },
+      placeholder: {
+        type: String, default: ''
+      },
+      value: {
+        type: Object
+      },
+      appName: {
+        type: String, default: ''
+      },
+      label: {
+        default: 'name'
+      },
+      id: {
+        default: 'id'
+      }
+    },
     data() {
       return {
         currentValue: this.value,
@@ -22,13 +41,17 @@
     methods: {
       initOptions() {
         const DictKey = `${this.appName.toUpperCase()}-KEY`
-        if (!Cache.get(DictKey)) {
+        if (Cache.get(DictKey) !== undefined) {
+//          console.log('this.requestUrl 111:')
           this.$http
             .get(this.requestUrl, {
               params: {page: 1, start: 0, limit: 20}
             })
             .then(res => {
-              this.options = res.data.data
+              this.options = res.data
+              if (res.data.data) {
+                this.options = res.data.data
+              }
               Cache.save(DictKey, JSON.stringify(this.options))
             })
         } else {
