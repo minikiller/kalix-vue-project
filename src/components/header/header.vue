@@ -6,46 +6,51 @@
 
 <template lang="pug">
   div#ToolBar
-    div.s-flex.bd
-      div.logo(:class="{'small':menuChk}")
-        img(src="./logo_oa_horizontal.png")
-      div.s-flex_item.s-flex.mn
-        ul.s-flex_item.menu
-          li
-            label.s-check__label.link-btn(for="menuChk")
-              input.s-check(type="checkbox" id="menuChk"
-              v-on:change="menuChkChange" v-model="headerMenuChk")
-              i(v-bind:class="{'el-icon-d-arrow-left':!menuChk,'el-icon-d-arrow-right':menuChk}")
-          li(v-for="item in menuList")
-            router-link.link-btn(tag="div" v-bind:to="{path:'/'+item.id}")
-              i(:class="bindClass(item.iconCls)")
-              | {{item.text}}
-        ul.aside
-          li
-            el-badge(:value="msgCount")
-              el-button(icon="message" v-on:click="onMsgClick") 消息
-          li
-            el-dropdown(@command="handleCommand")
-              div.s-flex.el-dropdown-link {{userName}}  &nbsp;
-                div.avatar
-                  img(v-bind:src="icon" v-show="icon.length > 0")
-                i.el-icon-caret-bottom.el-icon--right
-              el-dropdown-menu(slot="dropdown")
-                el-dropdown-item(command="changeInfo") 个人信息修改
-                el-dropdown-item(command="changePwd") 修改密码
-                el-dropdown-item(command="logout") 登出
-          li
-            el-select(v-model="themeValue" v-on:change="onChangeTheme" placeholder="请选择" v-bind:style="{width:'100px'}")
-              el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
+    div.toolbar-wrapper
+      div.s-flex.bd
+        div.logo(:class="{'small':menuChk}")
+          img(src="./logo_oa_horizontal.png")
+        div.s-flex_item.s-flex.mn
+          ul.s-flex_item.menu
+            li
+              label.s-check__label.link-btn(for="menuChk")
+                input.s-check(type="checkbox" id="menuChk"
+                v-on:change="menuChkChange" v-model="headerMenuChk")
+                i(v-bind:class="{'el-icon-d-arrow-left':!menuChk,'el-icon-d-arrow-right':menuChk}")
+            li(v-for="item in menuList")
+              router-link.link-btn(tag="div" v-bind:to="{path:'/'+item.id}")
+                i(:class="bindClass(item.iconCls)")
+                | {{item.text}}
+          ul.aside
+            li
+              el-badge(:value="msgCount")
+                el-button(icon="message" v-on:click="onMsgClick") 消息
+            li
+              el-dropdown(@command="handleCommand")
+                div.s-flex.el-dropdown-link {{userName}}  &nbsp;
+                  div.avatar(v-bind:style="styleObject")
+                    <!--img(v-bind:src="icon" v-show="icon.length > 0" width=32 height=32)-->
+                  i.el-icon-caret-bottom.el-icon--right
+                el-dropdown-menu(slot="dropdown")
+                  el-dropdown-item(command="changeInfo") 个人信息修改
+                  el-dropdown-item(command="changePwd") 修改密码
+                  el-dropdown-item(command="logout") 登出
+            li
+              el-select(v-model="themeValue" v-on:change="onChangeTheme" placeholder="请选择" v-bind:style="{width:'100px'}")
+                el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
+    user-editpwd(ref="userEditpwd")
+    user-edit(ref="userEdit")
 </template>
 
 <script type="text/ecmascript-6">
   import Vue from 'vue'
   import router from 'router'
   import Cache from 'common/cache'
-  import {applicationURL, logoutURL, msgCountURL, msgURL} from 'config/global.toml'
+  import {applicationURL, logoutURL, msgCountURL, msgURL, userURL} from 'config/global.toml'
   import {isEmptyObject} from 'common/util'
   import Cookie from 'js-cookie'
+  import UserEditpwd from 'views/admin/user/userEditpwd.vue'
+  import UserEdit from 'views/admin/user/userEdit.vue'
   import EventBus from 'common/eventbus'
 
   export default {
@@ -72,7 +77,7 @@
           {value: 'theme-classic', label: '经典'},
           {value: 'theme-gray', label: '灰色'}
         ],
-        themeValue: 'theme-triton',
+        themeValue: '',
         headerMenuChk: this.menuChk,
         msgCount: 0,
         icon: ''
@@ -82,6 +87,9 @@
     activated() {
       this.userName = Cache.get('user_name')
       console.log('header is activated')
+//      this.$nextTick(() => {
+//        console.log('user name cache is ' + this.userName)
+//      })
     },
     deactivated() {
       console.log('header is deactivated')
@@ -132,6 +140,8 @@
         this.icon = this.decode(Cookie.get('currentUserIcon')) // 如果为null，则取默认的图标
         if (this.icon === 'null') {
           this.icon = ''
+        } else {
+
         }
       },
       onMsgClick() {
@@ -153,10 +163,23 @@
       handleCommand(command) {
         switch (command) {
           case 'changeInfo' :
-            this.$message('click on item ' + 'aaa')
+//            let formData = new FormData()
+//            formData.append('jsonStr', encodeURIComponent(JSON.stringify(Cache.get('id'))))
+//            formData.append('jsonStr', '{"id":"' + JSON.stringify(Cache.get('id')) + '"}')
+            let _data = {
+              jsonStr: '{"id":' + JSON.stringify(Cache.get('id')) + '}'
+            }
+            this.$http.request(userURL, {
+              params: _data
+            }).then(res => {
+              if (res.data.data.length) {
+                this.$refs.userEdit.open(res.data.data[0])
+              }
+            })
             break
           case 'changePwd' :
-            this.$message('click on item ' + 'bbb')
+//            this.$message('click on item ' + 'bbb')
+            this.$refs.userEditpwd.open('')
             break
           case 'logout' :
             Vue.axios.get(logoutURL, {}).then(response => {
@@ -198,11 +221,19 @@
         this.$emit('onChangeTheme', this.themeValue)
       }
     },
-    components: {},
+    components: {
+      UserEditpwd,
+      UserEdit
+    },
     computed: {
       classObject(e) {
         return {
           'iconfont': true
+        }
+      },
+      styleObject() {
+        return {
+          backgroundImage: `url('${this.icon}')`
         }
       }
     }
@@ -213,5 +244,6 @@
   @import "./header.styl"
   .avatar
     background url('./default_user.png') 50% 50% no-repeat
-    background-size contain
+    background-size cover
+    overflow height
 </style>
