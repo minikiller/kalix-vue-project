@@ -27,7 +27,7 @@ uploadURL = "/camel/rest/upload"
 couchdbDelURL = "/camel/rest/couchdb"
 # 组织机构树请求地址
 orgURL = "/camel/rest/orgs"
-
+userURL = "/camel/rest/users"
 # 全局table分页的配置
 [PageConfig]
   sizes = [10, 20, 30, 40]
