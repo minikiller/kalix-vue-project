@@ -1,43 +1,44 @@
 <!--
 描述：系统头部组件
-开发人：桑杨
-开发日期：2017年7月14日
+开发人：冯伟斌
+开发日期：2017年10月24日
 -->
 
 <template lang="pug">
-  div#ToolBar
-    div.toolbar-wrapper
-      div.s-flex.bd
-        div.logo(:class="{'small':menuChk}")
-          img(src="./logo_oa_horizontal.png")
-        div.s-flex_item.s-flex.mn
-          ul.s-flex_item.menu
-            li
-              label.s-check__label.link-btn(for="menuChk")
-                input.s-check(type="checkbox" id="menuChk"
-                v-on:change="menuChkChange" v-model="headerMenuChk")
-                i(v-bind:class="{'el-icon-d-arrow-left':!menuChk,'el-icon-d-arrow-right':menuChk}")
-            li(v-for="item in menuList")
-              router-link.link-btn(tag="div" v-bind:to="{path:'/'+item.id}")
-                i(:class="bindClass(item.iconCls)")
-                | {{item.text}}
-          ul.aside
-            li
-              el-badge(:value="msgCount")
-                el-button(icon="message" v-on:click="onMsgClick") 消息
-            li
-              el-dropdown(@command="handleCommand")
-                div.s-flex.el-dropdown-link {{userName}}  &nbsp;
-                  div.avatar(v-bind:style="styleObject")
-                    <!--img(v-bind:src="icon" v-show="icon.length > 0" width=32 height=32)-->
-                  i.el-icon-caret-bottom.el-icon--right
-                el-dropdown-menu(slot="dropdown")
-                  el-dropdown-item(command="changeInfo") 个人信息修改
-                  el-dropdown-item(command="changePwd") 修改密码
-                  el-dropdown-item(command="logout") 登出
-            li
-              el-select(v-model="themeValue" v-on:change="onChangeTheme" placeholder="请选择" v-bind:style="{width:'100px'}")
-                el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
+  div
+    div#ToolBar
+      div.toolbar-wrapper
+        div.s-flex.bd
+          div.logo(:class="{'small':menuChk}")
+            img(src="./logo_oa_horizontal.png")
+          div.s-flex_item.s-flex.mn
+            ul.s-flex_item.menu
+              li
+                label.s-check__label.link-btn(for="menuChk")
+                  input.s-check(type="checkbox" id="menuChk"
+                  v-on:change="menuChkChange" v-model="headerMenuChk")
+                  i(v-bind:class="{'el-icon-d-arrow-left':!menuChk,'el-icon-d-arrow-right':menuChk}")
+              li(v-for="item in menuList")
+                router-link.link-btn(tag="div" v-bind:to="{path:'/'+item.id}")
+                  i(:class="bindClass(item.iconCls)")
+                  | {{item.text}}
+            ul.aside
+              li
+                el-badge(:value="msgCount")
+                  el-button(icon="message" v-on:click="onMsgClick") 消息
+              li
+                el-dropdown(@command="handleCommand")
+                  div.s-flex.el-dropdown-link {{userName}}  &nbsp;
+                    div.avatar(v-bind:style="styleObject")
+                      <!--img(v-bind:src="icon" v-show="icon.length > 0" width=32 height=32)-->
+                    i.el-icon-caret-bottom.el-icon--right
+                  el-dropdown-menu(slot="dropdown")
+                    el-dropdown-item(command="changeInfo") 个人信息修改
+                    el-dropdown-item(command="changePwd") 修改密码
+                    el-dropdown-item(command="logout") 登出
+              li
+                el-select(v-model="themeValue" v-on:change="onChangeTheme" placeholder="请选择" v-bind:style="{width:'100px'}")
+                  el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
     user-editpwd(ref="userEditpwd")
     user-edit(ref="userEdit")
 </template>
@@ -172,6 +173,7 @@
             this.$http.request(userURL, {
               params: _data
             }).then(res => {
+              console.log(res)
               if (res.data.data.length) {
                 this.$refs.userEdit.open(res.data.data[0])
               }
@@ -232,9 +234,14 @@
         }
       },
       styleObject() {
-        return {
-          backgroundImage: `url('${this.icon}')`
+        console.log('this.formModel1', this.icon)
+        let style = {}
+        if (this.icon) {
+          style = {
+            backgroundImage: `url('${this.icon}')`
+          }
         }
+        return style
       }
     }
   }
