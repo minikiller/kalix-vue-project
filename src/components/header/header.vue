@@ -46,9 +46,12 @@
   import Vue from 'vue'
   import router from 'router'
   import Cache from 'common/cache'
-  import {applicationURL, logoutURL, msgCountURL, msgURL} from 'config/global.toml'
+  import {applicationURL, logoutURL, msgCountURL, msgURL, userURL} from 'config/global.toml'
   import {isEmptyObject} from 'common/util'
   import Cookie from 'js-cookie'
+  import UserEditpwd from 'views/admin/user/userEditpwd.vue'
+  import UserEdit from 'views/admin/user/userEdit.vue'
+  import EventBus from 'common/eventbus'
 
   export default {
     props: {
@@ -96,7 +99,9 @@
     },
     methods: {
       setTheme(theme) {
-        this.themeValue = theme
+        if (theme) {
+          this.themeValue = theme
+        }
       },
       initMenu() {
         let d = new Date()
@@ -104,6 +109,7 @@
         let toolListData = {}
         if (Cache.get('toolListData')) {
           toolListData = JSON.parse(Cache.get('toolListData'))
+          EventBus.$emit('toolListDataComplete', toolListData[0].id)
         }
         if (!isEmptyObject(toolListData)) {
           this.menuList = toolListData
@@ -119,8 +125,12 @@
           }).then(response => {
             if (response && response.data) {
               this.menuList = response.data
-              toolListData.data = this.menuList
-              Cache.save('toolListData', JSON.stringify(toolListData.data))
+              toolListData = this.menuList
+              Cache.save('toolListData', JSON.stringify(toolListData))
+              EventBus.$emit('toolListDataComplete', toolListData[0].id)
+              this.$router.push({
+                path: `/${toolListData[0].id}/`
+              })
             }
           })
         }
@@ -130,6 +140,8 @@
         this.icon = this.decode(Cookie.get('currentUserIcon')) // 如果为null，则取默认的图标
         if (this.icon === 'null') {
           this.icon = ''
+        } else {
+
         }
       },
       onMsgClick() {
@@ -151,10 +163,23 @@
       handleCommand(command) {
         switch (command) {
           case 'changeInfo' :
-            this.$message('click on item ' + 'aaa')
+//            let formData = new FormData()
+//            formData.append('jsonStr', encodeURIComponent(JSON.stringify(Cache.get('id'))))
+//            formData.append('jsonStr', '{"id":"' + JSON.stringify(Cache.get('id')) + '"}')
+            let _data = {
+              jsonStr: '{"id":' + JSON.stringify(Cache.get('id')) + '}'
+            }
+            this.$http.request(userURL, {
+              params: _data
+            }).then(res => {
+              if (res.data.data.length) {
+                this.$refs.userEdit.open(res.data.data[0])
+              }
+            })
             break
           case 'changePwd' :
-            this.$message('click on item ' + 'bbb')
+//            this.$message('click on item ' + 'bbb')
+            this.$refs.userEditpwd.open('')
             break
           case 'logout' :
             Vue.axios.get(logoutURL, {}).then(response => {
@@ -196,11 +221,19 @@
         this.$emit('onChangeTheme', this.themeValue)
       }
     },
-    components: {},
+    components: {
+      UserEditpwd,
+      UserEdit
+    },
     computed: {
       classObject(e) {
         return {
           'iconfont': true
+        }
+      },
+      styleObject() {
+        return {
+          backgroundImage: `url('${this.icon}')`
         }
       }
     }
@@ -211,5 +244,6 @@
   @import "./header.styl"
   .avatar
     background url('./default_user.png') 50% 50% no-repeat
-    background-size contain
+    background-size cover
+    overflow height
 </style>
