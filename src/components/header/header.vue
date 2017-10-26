@@ -120,6 +120,9 @@
               toolListData = this.menuList
               Cache.save('toolListData', JSON.stringify(toolListData))
               EventBus.$emit('toolListDataComplete', toolListData[0].id)
+              this.$router.push({
+                path: `/${toolListData[0].id}/`
+              })
             }
           })
         }

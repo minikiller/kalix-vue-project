@@ -32,7 +32,7 @@
         name: 'kalixHome',
         isSmall: false,
         which_to_show: 'Welcome',
-        themeValue: 'theme-triton'
+        themeValue: null
       }
     },
     mounted() {
@@ -55,8 +55,8 @@
             }
           })
         } else {
-          Cache.save('styleTheme', 'theme-triton')
-          this.$refs.kalixHeader.setTheme('theme-triton')
+          Cache.save('styleTheme', this.themeValue)
+          this.$refs.kalixHeader.setTheme(this.themeValue)
         }
       },
       setSmall(e) {
