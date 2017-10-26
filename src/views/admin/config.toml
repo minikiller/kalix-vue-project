@@ -27,6 +27,11 @@ AdminCacheKey = "ADMIN-DICT-KEY"
   title = "删除"
   isShow = true
   isPermission = true
+[[ToolButtonList]]
+  id = "addUser"
+  title = "添加用户"
+  isShow = true
+  isPermission = true
 
 [[WorkGroupComponent]]
  path = "admin/workgroup/workgroupView"
@@ -57,3 +62,6 @@ AdminCacheKey = "ADMIN-DICT-KEY"
 [[DataAuthComponent]]
  path = "admin/dataauth/dataauthSearch"
  name = "AdminDataAuthSearch"
+[[DataAuthComponent]]
+ path = "admin/dataauth/dataauthAddUser"
+ name = "AdminDataAuthAddUser"
