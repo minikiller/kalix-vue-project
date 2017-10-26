@@ -385,7 +385,7 @@
           }
 
           default: // 默认转到调用props的方法
-            this.customTableTool(row, btnId)
+            this.customTableTool(row, btnId, this)
             break
         }
       },
