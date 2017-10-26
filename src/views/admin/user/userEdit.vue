@@ -46,7 +46,6 @@
     methods: {
       open(obj) {
         this.formModel = obj
-        console.log('this.formModel', this.formModel)
         this.$refs.kalixBizDialog.open('', true)
       }
     }
