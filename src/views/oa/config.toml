@@ -60,7 +60,7 @@ SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
   path = "oa/sealapply/sealApplySearch"
   name = "OaSealApplySearch"
 
-# 需要自动注册成全局的SealApply组件
+# 需要自动注册成全局的CarApply组件
 [[CarApplyComponent]]
   path = "oa/carapply/carApplyView"
   name = "OaCarApplyView"

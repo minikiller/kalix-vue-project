@@ -37,10 +37,6 @@
         hasTableSelection: true,
         toolbarBtnList: [
           {id: 'deleteChecked', isShow: true},
-          {id: 'customBtn1', icon: 'icon-edit', title: '自定义按钮 1', isShow: true},
-          {id: 'customBtn2', icon: 'icon-edit', title: '自定义按钮 2', isShow: true},
-          {id: 'customBtn3', icon: 'icon-edit', title: '自定义按钮 3', isShow: true},
-          {id: 'customBtn4', icon: 'icon-edit', title: '自定义按钮 4', isShow: true},
           {id: 'add', isShow: false}
         ],
         dictDefine: [{ // 定义数据字典的显示

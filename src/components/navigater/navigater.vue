@@ -39,6 +39,7 @@
   import Vue from 'vue'
   import Cache from 'common/cache'
   import {cacheTime, systemApplicationsBaseURL} from 'config/global.toml'
+  import EventBus from 'common/eventbus'
 
   export default {
     props: {
@@ -57,20 +58,29 @@
         clickedNode: null
       }
     },
+    activated() {
+      EventBus.$on('toolListDataComplete', this.fetchData)
+    },
     mounted() {
       this.fetchData()
     },
     watch: {'$route': 'fetchData'},
     methods: {
-      fetchData() {
+      fetchData(appId) {
         if (this.$route.name === 'login') {
           return
+        }
+        if (!appId) {
+          let toolListData = JSON.parse(Cache.get('toolListData'))
+          if (!toolListData) {
+            return
+          }
+          appId = toolListData[0].id
         }
         let d = new Date()
         let cd = d.getTime()
         let treeListData = {}
-        let toolListData = JSON.parse(Cache.get('toolListData'))
-        this.currApp = this.$route.params.app || toolListData[0].id
+        this.currApp = this.$route.params.app || appId
         this.currFun = this.$route.params.fun || ''
         if (Cache.get('treeListData')) {
           treeListData = JSON.parse(Cache.get('treeListData'))

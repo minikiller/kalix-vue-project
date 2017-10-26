@@ -19,7 +19,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Router from 'router'
+  //  import Router from 'router'
   import {mapMutations} from 'vuex'
   import Message from 'common/message'
   import Cache from 'common/cache'
@@ -44,6 +44,9 @@
         }
       }
     },
+    activated() {
+      this.loginForm = {name: '', pass: ''}
+    },
     methods: {
       ...mapMutations({setSaveLogin: 'saveLogin'}),
       onSubmit(formName) {
@@ -59,14 +62,17 @@
                 Cache.save('access_token', data.access_token)
                 Cache.save('user_token', data.user.token)
                 Cache.save('user_name', data.user.name)
+                Cache.save('loginname', that.loginForm.name)
                 console.log('access token is: ', data.access_token)
                 this.setSaveLogin({
                   access_token: data.access_token,
                   user_name: data.user.name,
                   user_token: data.user.token,
-                  user_id: data.user.id
+                  user_id: data.user.id,
+                  user_login_name: that.loginForm.name
                 })
-                Router.push({path: '/'})
+//                Router.push({path: '/'})
+                this.$router.push({path: '/'})
               } else {
                 Message.error(data.message)
               }

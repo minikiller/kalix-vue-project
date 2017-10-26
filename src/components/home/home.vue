@@ -32,11 +32,8 @@
         name: 'kalixHome',
         isSmall: false,
         which_to_show: 'Welcome',
-        themeValue: 'theme-triton'
+        themeValue: null
       }
-    },
-    created() {
-      this.themeValue = Cache.get('styleTheme')
     },
     mounted() {
       this.fetchData()
@@ -46,14 +43,19 @@
       initTheme() {
         this.themeValue = Cache.get('styleTheme')
         if (!this.themeValue) {
-          let url = '/camel/rest/system/preferences/admin'
+          let url = `/camel/rest/system/preferences/${Cache.get('loginname')}`
           this.$http.get(url).then(res => {
-            if (res) {
+            if (res && res.data && res.data.theme) {
               this.themeValue = res.data.theme
-              this.$refs.kalixHeader.setTheme(res.data.theme)
+              Cache.save('styleTheme', this.themeValue)
+              this.$refs.kalixHeader.setTheme(this.themeValue)
+            } else {
+              Cache.save('styleTheme', 'theme-triton')
+              this.$refs.kalixHeader.setTheme('theme-triton')
             }
           })
         } else {
+          Cache.save('styleTheme', this.themeValue)
           this.$refs.kalixHeader.setTheme(this.themeValue)
         }
       },
@@ -72,6 +74,18 @@
       },
       changeTheme(value) {
         this.themeValue = value
+        this.$http.request({
+          method: 'PUT',
+          url: `/camel/rest/system/preferences/${Cache.get('loginname')}`,
+          params: {
+            key: 'theme',
+            value: value
+          }
+        }).then(res => {
+//          if (res.data.success) {
+//            // 修改成功
+//          }
+        })
         Cache.save('styleTheme', value)
       }
     },
