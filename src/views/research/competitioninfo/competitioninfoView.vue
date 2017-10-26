@@ -11,7 +11,7 @@
           el-input(v-model="formModel.name" readonly style="width:100%")
         div.dd
         el-form-item.s-flex_item(label="展赛类别" prop="type" label-width="120px")
-          kalix-dict-select(v-model="formModel.type" appName="research" dictType="展赛类别" disabled style="width:100%")
+          el-input(v-bind:value="formModel.type|getDictName('research','展赛类别')" readonly)
       div.s-flex
         el-form-item.s-flex_item(label="展赛地址" prop="address" label-width="120px")
           el-input(v-model="formModel.address" readonly style="width:100%")
@@ -67,7 +67,6 @@
 <script type="text/ecmascript-6">
   import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import BaseDictSelect from '@/components/custom/baseDictSelect'
   import DatePicker from '@/components/biz/date/datepicker.vue'
 
   export default {
@@ -78,7 +77,6 @@
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
       KalixDatePicker: DatePicker
     }
   }
