@@ -1,12 +1,12 @@
 <!--
-描述：办公自动化-用工招聘申请
+描述：办公自动化-用人申请
 开发人：hqj
 开发日期：2017年10月23日
 -->
 <template lang="pug">
   div
     keep-alive
-      base-table(bizKey='recruitApply' title='用工招聘申请列表' v-bind:targetURL='targetURL'
+      base-table(bizKey='recruitApply' title='用人申请列表' v-bind:targetURL='targetURL'
       v-bind:bizDialog='bizDialog' bizSearch='OaRecruitApplySearch' v-bind:btnList='btnList'
       v-bind:isFixedColumn="isFixedColumn" v-bind:customTableTool="customTableTool"
       v-bind:dictDefine="dictDefine")

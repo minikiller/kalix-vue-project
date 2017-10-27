@@ -1,5 +1,5 @@
 const FormModel = {
-  title: '吉林动画学院公务用车申请表',
+  title: '吉林动画学院用车申请表',
   orgId: null,
   orgName: '',
   processInstanceId: '',

@@ -1,5 +1,5 @@
 const FormModel = {
-  title: '吉林动画学院用工招聘申请表',
+  title: '吉林动画学院用人申请表',
   orgId: null,
   orgName: '',
   processInstanceId: '',
