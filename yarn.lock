@@ -1970,7 +1970,7 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.24:
   version "1.3.24"
   resolved "http://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.24.tgz#9b7b88bb05ceb9fa016a177833cc2dde388f21b6"
 
-element-ui@next:
+element-ui@^2.0.0-rc.1:
   version "2.0.0-rc.1"
   resolved "http://registry.npm.taobao.org/element-ui/download/element-ui-2.0.0-rc.1.tgz#a89822fa77f81189de2c5733b701fc4c03500883"
   dependencies:

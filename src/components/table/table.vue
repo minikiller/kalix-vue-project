@@ -6,7 +6,7 @@
     v-bind:height="height" ref="kalixTable")
       slot(v-if="dataList && dataList.length > 0" name="tableColumn")
       el-table-column(label="操作" width="150")
-        template(scope="scope")
+        template(slot-scope="scope")
           el-button(v-if="btnView" v-on:click="tableView(scope.row)" type="text" size="small") 查看
           el-button(v-if="btnEdit" v-on:click="tableEdit(scope.row)" type="text" size="small") 编辑
           el-button(v-if="btnDelete" v-on:click="tableDelete(scope.row)" type="text" size="small") 删除

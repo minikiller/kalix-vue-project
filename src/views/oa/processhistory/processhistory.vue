@@ -23,7 +23,7 @@
           kalix-date-column(prop="endTime" label="结束时间")
           el-table-column(prop="durationInMillis" label="持续时长" align="center")
           el-table-column(prop="status" label="状态" align="center")
-            template(scope="scope")
+            template(slot-scope="scope")
               el-tag(:type="scope.row.status | statusFilter") {{scope.row.status}}
               <!--span(style="color:#f00" v-if="scope.row.status === '结束'") {{ scope.row.status }}-->
               <!--span(v-else) {{ scope.row.status }}-->

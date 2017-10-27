@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   el-table-column(prop="name" label="编号" width="280" align="center")
-    template(scope="scope")
+    template(slot-scope="scope")
       el-tag(v-if="scope.row[name]") {{ scope.row[name] }}
 </template>
 

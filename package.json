@@ -16,7 +16,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "date-fns": "^1.28.5",
-    "element-ui": "next",
+    "element-ui": "^2.0.0-rc.1",
     "highcharts": "^5.0.14",
     "js-cookie": "^2.1.4",
     "mockjs": "^1.0.1-beta3",
