@@ -39,15 +39,15 @@
           kalix-paged-table(v-bind:targetURL="attachTargetURL" v-bind:jsonStr="attachJsonStr")
             template(slot="tableColumnSlot")
               el-table-column(prop="attachmentName" label="名称")
-                template(scope="scope")
+                template(slot-scope="scope")
                   div.attachment-name {{scope.row.attachmentName}}
               el-table-column(label="大小" width="100")
-                template(scope="scope")
+                template(slot-scope="scope")
                   span {{setFileSize(scope.row.attachmentSize)}}
               el-table-column(prop="attachmentType" label="类型" width="116")
               kalix-date-column(prop="creationDate" label="上传日期")
               el-table-column(label="操作" width="120")
-                template(scope="scope")
+                template(slot-scope="scope")
                   a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank" style="text-decoration:none;")
                     | 下载
         el-collapse-item(v-if="isApproveShow" title="业务审批" name="approveTab")

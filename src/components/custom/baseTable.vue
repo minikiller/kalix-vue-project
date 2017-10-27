@@ -27,12 +27,12 @@
               el-table-column(v-if="hasTableSelection" type="selection" width="55" align="center")
               el-table-column(label="行号" width="70" align="center"
               v-bind:fixed="isFixedColumn")
-                template(scope="scope")
+                template(slot-scope="scope")
                   div(style="text-align: center") {{ scope.row.rowNumber }}
               slot(name="tableColumnSlot")
                 el-table-column(v-for="field in tableFields" align="center"
                 v-bind:key="field.prop" v-bind:prop="field.prop" v-bind:label="field.label" v-bind:width="field.width")
-                  template(scope="scope")
+                  template(slot-scope="scope")
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
               //  table的工具按钮
             slot(name="tableToolSlot")

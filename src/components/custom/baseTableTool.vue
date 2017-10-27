@@ -7,7 +7,7 @@
 <template lang="pug">
   el-table-column(label="操作" v-bind:width="columnWidth" align="center"
   v-bind:fixed="isFiex")
-    template(scope="scope")
+    template(slot-scope="scope")
       template(v-for="btn in btnList")
         template(v-if="btn.isShow")
           template(v-if="btn.titleCompute")

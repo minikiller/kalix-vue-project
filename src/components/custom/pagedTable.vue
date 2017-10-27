@@ -8,7 +8,7 @@
     el-table(v-bind:data="tableData" stripe style="width:100%"
     v-bind:height="tableHeight" border fit)
       el-table-column(label="行号" width="70")
-        template(scope="scope")
+        template(slot-scope="scope")
           div(style="text-align: center") {{ scope.row.rowNumber }}
       slot(name="tableColumnSlot")
     el-pagination.kalix-table-pagination(v-if="this.pager.totalCount"
