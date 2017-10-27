@@ -1,5 +1,5 @@
 <!--
-描述：办公自动化-用工招聘申请-查看组件
+描述：办公自动化-用人申请-查看组件
 开发人：hqj
 开发日期：2017年10月23日
 -->
@@ -7,7 +7,7 @@
 <template lang="pug">
   div.el-form.kalix-form-table(slot="dialogFormSlot")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
-      div.table-title 吉林动画学院用工招聘申请表
+      div.table-title 吉林动画学院用人申请表
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="名称" v-bind:label-width="labelWidth" prop="title")
           el-input(v-model="formModel.title" readonly)
