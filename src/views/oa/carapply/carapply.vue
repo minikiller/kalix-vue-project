@@ -6,7 +6,7 @@
 <template lang="pug">
   div
     keep-alive
-      base-table(bizKey='carapply' title='用车申请列表' v-bind:targetURL='targetURL'
+      base-table(bizKey='carApply' title='用车申请列表' v-bind:targetURL='targetURL'
       v-bind:bizDialog='bizDialog' bizSearch='OaCarApplySearch' v-bind:btnList='btnList'
       v-bind:isFixedColumn="isFixedColumn" v-bind:customTableTool="customTableTool" v-bind:customRender="customRender")
         template(slot="tableColumnSlot")
