@@ -15,15 +15,16 @@ TaskFormURL = "/camel/rest/workflow/form?taskId="
 TaskActivitiesURL = "/camel/rest/workflow/activities?historyProcessId="
 
 # 工作流流程地址
+UserOrgsURL = "/camel/rest/users/[usersId]/orgs"
 MeetingApplyURL = "/camel/rest/meetingapplys"
 MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
 CarApplyURL = "/camel/rest/carapplys"
 CarApplyStartURL = "/camel/rest/carapplys/workflow/startProcess?id="
-UserOrgsURL = "/camel/rest/users/[usersId]/orgs"
+RecruitApplyURL = "/camel/rest/recruitapplys"
+RecruitApplyStartURL = "/camel/rest/recruitapplys/workflow/startProcess?id="
 MeetingRoomsURL  = "/camel/rest/meetingrooms"
 SealApplyURL  = "camel/rest/sealapplys"
 SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
-
 
 
 
@@ -70,6 +71,17 @@ SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
 [[CarApplyComponent]]
   path = "oa/carapply/carApplySearch"
   name = "OaCarApplySearch"
+
+# 需要自动注册成全局的RecruitApply组件
+[[RecruitApplyComponent]]
+  path = "oa/recruitapply/recruitApplyView"
+  name = "OaRecruitApplyView"
+[[RecruitApplyComponent]]
+  path = "oa/recruitapply/recruitApplyAdd"
+  name = "OaRecruitApplyAdd"
+[[RecruitApplyComponent]]
+  path = "oa/recruitapply/recruitApplySearch"
+  name = "OaRecruitApplySearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
