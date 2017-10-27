@@ -1,6 +1,6 @@
 <template lang="pug">
   div.user-add
-    kalix-dialog(ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL")
+    kalix-dialog(ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL" title='个人信息修改')
       div(slot="dialogFormSlot")
         el-form-item(label="头像" prop="icon" v-bind:rules="rules.icon")
           kalix-upload(v-model="formModel.icon" v-bind:isImage="true" style="width:100%" )
