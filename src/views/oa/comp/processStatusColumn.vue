@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   el-table-column(prop="status" label="工作流状态" align="center" width="120")
-    template(scope="scope")
+    template(slot-scope="scope")
       el-tag(:type="scope.row.status | statusFilter") {{scope.row.status | dictFilter }}
 </template>
 

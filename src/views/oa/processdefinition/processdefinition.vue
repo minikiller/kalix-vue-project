@@ -16,13 +16,13 @@
       template(slot="tableColumnSlot")
         el-table-column(prop="id" label="流程定义编号" width="280" align="center")
         el-table-column(prop="name" label="流程定义名称" width="280" align="center")
-          template(scope="scope")
+          template(slot-scope="scope")
             el-tag {{ scope.row.name }}
         el-table-column(prop="key" label="关键字" align="center")
         el-table-column(prop="description" label="描述" align="center")
         el-table-column(prop="version" label="版本" align="center")
         el-table-column(prop="status" label="状态" align="center")
-          template(scope="scope")
+          template(slot-scope="scope")
             el-tag(:type="scope.row.suspensionStateTransfer | statusFilter") {{scope.row.suspensionStateTransfer }}
 </template>
 

@@ -1,74 +1,53 @@
 <template lang="pug">
   div.user-add
-    kalix-dialog(ref="kalixBizDialog" v-bind:form-model="formModel")
+    kalix-dialog(ref="kalixBizDialog" v-bind:form-model="formModel" v-bind:targetURL="targetURL" title='个人信息修改')
       div(slot="dialogFormSlot")
-        el-form-item(label="类型" prop="name" v-bind:rules="formRules.name")
+        el-form-item(label="头像" prop="icon" v-bind:rules="rules.icon")
+          kalix-upload(v-model="formModel.icon" v-bind:isImage="true" style="width:100%" )
+        el-form-item(label="工号" prop="code" v-bind:rules="rules.code")
+          el-input(v-model="formModel.code")
+        el-form-item(label="登录名" prop="loginName" v-bind:rules="rules.loginName" )
+          el-input(v-model="formModel.loginName" v-bind:readonly="true")
+        el-form-item(label="姓名" prop="name" v-bind:rules="rules.name")
           el-input(v-model="formModel.name")
-        el-form-item(label="密码" prop="password" v-bind:rules="rules.password")
-          el-input(v-model="formModel.password"  type="password")
-        el-form-item(label="确认密码" prop="confirmPassword" v-bind:rules="rules.confirmPassword")
-          el-input(v-model="formModel.confirmPassword"  type="password")
+        el-form-item(label="邮箱" prop="email" v-bind:rules="rules.email")
+          el-input(v-model="formModel.email")
+        el-form-item(label="电话号" prop="phone" v-bind:rules="rules.phone")
+          el-input(v-model="formModel.phone")
+        el-form-item(label="手机号" prop="mobile" v-bind:rules="rules.mobile")
+          el-input(v-model="formModel.mobile")
 </template>
 
 <script type="text/ecmascript-6">
   import Dialog from '../../../components/custom/baseDialog.vue'
-
+  import {userURL} from 'config/global.toml'
   export default {
     props: {
-      formModel: {
-        type: Object,
-        required: true
-      },
-      formRules: {
-        type: Object,
-        required: true
-      }
     },
     data() {
-      var validatePassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'))
-        } else {
-          if (this.formModel.confirmPassword !== '') {
-//            this.$refs.kalixDialog.validateField('checkPass')
-            console.log(this.$refs.kalixDialog.$refs.form)
-          }
-          callback()
-        }
-      }
-      var validateConfirmPassword = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.formModel.password) {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
-      }
       return {
+        targetURL: userURL,
+        formModel: {
+          loginName: '',
+          icon: ''
+        },
         rules: {
-          name: [{required: true, message: '请输入 name', trigger: 'blur'}],
-          sex: [{required: true, message: '请输入 sex', trigger: 'blur'}],
-          password: [
-            {validator: validatePassword, trigger: 'blur'}
-          ],
-          confirmPassword: [
-            {validator: validateConfirmPassword, trigger: 'blur'}
-          ],
-          email: [{required: true, message: '请输入 email', trigger: 'blur'}],
-          position: [{required: true, message: '请输入 position', trigger: 'blur'}],
-          phone: [{required: true, message: '请输入 phone', trigger: 'blur'}],
-          mobile: [{required: true, message: '请输入 mobile', trigger: 'blur'}],
-          available: [{required: true, message: '请输入 available', trigger: 'blur'}]
+          name: [{required: true, message: '请输入姓名', trigger: 'blur'}],
+          email: [{required: true, message: '请输入邮箱', trigger: 'blur'}],
+          mobile: [{required: true, message: '请输入手机号', trigger: 'blur'}]
         }
       }
     },
     created() {
-      console.log('this.formRules.name:', this.formRules.name)
     },
     components: {
       KalixDialog: Dialog
     },
-    methods: {}
+    methods: {
+      open(obj) {
+        this.formModel = obj
+        this.$refs.kalixBizDialog.open('', true)
+      }
+    }
   }
 </script>

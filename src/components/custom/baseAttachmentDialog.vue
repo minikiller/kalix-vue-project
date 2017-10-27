@@ -16,15 +16,15 @@
       kalix-paged-table(ref="pagedTable" v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr")
         template(slot="tableColumnSlot")
           el-table-column(prop="attachmentName" label="名称")
-            template(scope="scope")
-              div.attachment-name {{scope.row.attachmentName}}
+            template(slot-scope="scope")
+              div.attachment-name {{slot-scope.row.attachmentName}}
           el-table-column(label="大小" width="100")
-            template(scope="scope")
+            template(slot-scope="scope")
               span {{setFileSize(scope.row.attachmentSize)}}
           el-table-column(prop="attachmentType" label="类型" width="116")
           kalix-date-column(prop="creationDate" label="上传日期")
           el-table-column(label="操作" width="120")
-            template(scope="scope")
+            template(slot-scope="scope")
               el-button(size="mini" type="danger" v-on:click="deleteSelectFile(scope.$index, scope.row)")
                 | 删除
               a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
