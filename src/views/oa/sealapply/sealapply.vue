@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     keep-alive
-      base-table(title='印章申请列表'
+      base-table(title='用章申请列表'
       bizKey="sealApply"
       v-bind:targetURL='targetURL'
       v-bind:bizDialog='bizDialog'
@@ -61,7 +61,7 @@
           {id: 'progress', dialog: 'OaTaskView'}
         ],
         formModel: {
-          title: '吉林动画学院印章申请表',
+          title: '吉林动画学院用章申请表',
           orgId: '',
           orgName: '',
           creationDate: '',

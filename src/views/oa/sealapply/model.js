@@ -1,5 +1,5 @@
 const FormModel = {
-  title: '吉林动画学院印章使用申请单',
+  title: '吉林动画学院用章申请表',
   orgId: null,
   orgName: '',
   creationDate: '',
