@@ -26,6 +26,10 @@ MeetingRoomsURL  = "/camel/rest/meetingrooms"
 SealApplyURL  = "camel/rest/sealapplys"
 SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
 
+TempApplyURL  = "camel/rest/tempapplys"
+TempApplyStartURL  = "/camel/rest/tempapplys/workflow/startProcess?id="
+
+
 
 
 # 需要自动注册成全局的Category组件
@@ -60,6 +64,17 @@ SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
 [[SealApplyComponent]]
   path = "oa/sealapply/sealApplySearch"
   name = "OaSealApplySearch"
+
+# 需要自动注册成全局的TempApply组件
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplyView"
+  name = "OaTempApplyView"
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplyAdd"
+  name = "OaTempApplyAdd"
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplySearch"
+  name = "OaTempApplySearch"
 
 # 需要自动注册成全局的CarApply组件
 [[CarApplyComponent]]
