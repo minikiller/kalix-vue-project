@@ -68,7 +68,7 @@
     },
     methods: {
       customTableTool(row, btnId) {
-        customTableTool(row, btnId, CarApplyStartURL, this)
+        customTableTool(row, btnId, TemporaryApplyStartURL, this)
       },
       customRender(_data) {
         _data.forEach(function (e) {
