@@ -17,7 +17,7 @@
         template(slot="tableColumnSlot")
           el-table-column(prop="attachmentName" label="名称")
             template(slot-scope="scope")
-              div.attachment-name {{slot-scope.row.attachmentName}}
+              div.attachment-name {{scope.row.attachmentName}}
           el-table-column(label="大小" width="100")
             template(slot-scope="scope")
               span {{setFileSize(scope.row.attachmentSize)}}
