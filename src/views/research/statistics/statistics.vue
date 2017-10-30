@@ -84,7 +84,7 @@
         this.beginDate_end = val
       },
       onQuery() {
-        let queryStr = {'compStartTime:begin:gt': this.beginDate_begin, 'compEndTime:end:lt': this.endDate_end}
+        let queryStr = {'compStartTime:begin:gt': this.beginDate_begin, 'compEndTime:end:lt': this.endDate_end, 'statisticsType': 0}
         let jsonParam =
           {
             params: {jsonStr: JSON.stringify(queryStr)}
@@ -96,8 +96,8 @@
           let _dataColumn = []
 
           _data.forEach(item => {
-            _dataPie.push({name: item.type, y: item.percentage})
-            _dataColumn.push({name: item.type, y: item.cnt})
+            _dataPie.push({name: item.label, y: item.percentage})
+            _dataColumn.push({name: item.label, y: item.cnt})
           })
 
           this.pieData.data = _dataPie
