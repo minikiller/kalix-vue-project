@@ -16,16 +16,35 @@ TaskActivitiesURL = "/camel/rest/workflow/activities?historyProcessId="
 
 # 工作流流程地址
 UserOrgsURL = "/camel/rest/users/[usersId]/orgs"
-MeetingApplyURL = "/camel/rest/meetingapplys"
-MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
-CarApplyURL = "/camel/rest/carapplys"
-CarApplyStartURL = "/camel/rest/carapplys/workflow/startProcess?id="
-RecruitApplyURL = "/camel/rest/recruitapplys"
-RecruitApplyStartURL = "/camel/rest/recruitapplys/workflow/startProcess?id="
-MeetingRoomsURL  = "/camel/rest/meetingrooms"
+# 采购申请
+PurchaseApplyURL = ""
+PurchaseApplyStartURL = ""
+# 用章申请
 SealApplyURL  = "camel/rest/sealapplys"
 SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
-
+# 报销申请
+ReimbursementApplyURL = "camel/rest/reimbursementapplys"
+ReimbursementApplyStartURL = "camel/rest/reimbursementapplys/workflow/startProcess?id="
+# 用人申请
+RecruitApplyURL = "/camel/rest/recruitapplys"
+RecruitApplyStartURL = "/camel/rest/recruitapplys/workflow/startProcess?id="
+# 入职申请
+EmployApplyURL = ""
+EmployApplyStartURL = ""
+# 用车申请
+CarApplyURL = "/camel/rest/carapplys"
+CarApplyStartURL = "/camel/rest/carapplys/workflow/startProcess?id="
+# 出差申请
+EvectionApplyURL = ""
+EvectionApplyStartURL = ""
+# 会议申请
+MeetingApplyURL = "/camel/rest/meetingapplys"
+MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
+# 会议室申请
+#MeetingRoomsURL  = "/camel/rest/meetingrooms"
+# 临时申请
+TemporaryApplyURL = ""
+TemporaryApplyStartURL = ""
 
 
 # 需要自动注册成全局的Category组件
@@ -39,18 +58,18 @@ SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
   path = "oa/category/categorySearch"
   name = "OaCategorySearch"
 
-# 需要自动注册成全局的MeetingApply组件
-[[MeetingApplyComponent]]
-  path = "oa/meetingapply/meetingApplyView"
-  name = "OaMeetingApplyView"
-[[MeetingApplyComponent]]
-  path = "oa/meetingapply/meetingApplyAdd"
-  name = "OaMeetingApplyAdd"
-[[MeetingApplyComponent]]
-  path = "oa/meetingapply/meetingApplySearch"
-  name = "OaMeetingApplySearch"
+# 需要自动注册成全局的PurchaseApply(采购申请)组件
+[[PurchaseApplyComponent]]
+  path = "oa/purchaseapply/purchaseApplyView"
+  name = "OaPurchaseApplyView"
+[[PurchaseApplyComponent]]
+  path = "oa/purchaseapply/purchaseApplyAdd"
+  name = "OaPurchaseApplyAdd"
+[[PurchaseApplyComponent]]
+  path = "oa/purchaseapply/purchaseApplySearch"
+  name = "OaPurchaseApplySearch"
 
-# 需要自动注册成全局的SealApply组件
+# 需要自动注册成全局的SealApply(用章申请)组件
 [[SealApplyComponent]]
   path = "oa/sealapply/sealApplyView"
   name = "OaSealApplyView"
@@ -61,7 +80,40 @@ SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
   path = "oa/sealapply/sealApplySearch"
   name = "OaSealApplySearch"
 
-# 需要自动注册成全局的CarApply组件
+# 需要自动注册成全局的ReimbursementApply(报销申请)组件
+[[ReimbursementApplyComponent]]
+  path = "oa/reimbursementapply/reimbursementApplyView"
+  name = "OaReimbursementApplyView"
+[[ReimbursementApplyComponent]]
+  path = "oa/reimbursementapply/reimbursementApplyAdd"
+  name = "OaReimbursementApplyAdd"
+[[ReimbursementApplyComponent]]
+  path = "oa/reimbursementapply/reimbursementApplySearch"
+  name = "OaReimbursementApplySearch"
+
+# 需要自动注册成全局的ReimbursementApply(用人申请)组件
+[[RecruitApplyComponent]]
+  path = "oa/recruitapply/recruitApplyView"
+  name = "OaRecruitApplyView"
+[[RecruitApplyComponent]]
+  path = "oa/recruitapply/recruitApplyAdd"
+  name = "OaRecruitApplyAdd"
+[[RecruitApplyComponent]]
+  path = "oa/recruitapply/recruitApplySearch"
+  name = "OaRecruitApplySearch"
+
+# 需要自动注册成全局的EmployApply(入职申请)组件
+[[EmployApplyComponent]]
+  path = "oa/employapply/employApplyView"
+  name = "OaEmployApplyView"
+[[RecruitApplyComponent]]
+  path = "oa/employapply/employApplyAdd"
+  name = "OaEmployApplyAdd"
+[[RecruitApplyComponent]]
+  path = "oa/employapply/employApplySearch"
+  name = "OaEmployApplySearch"
+
+# 需要自动注册成全局的CarApply(用车申请)组件
 [[CarApplyComponent]]
   path = "oa/carapply/carApplyView"
   name = "OaCarApplyView"
@@ -72,16 +124,38 @@ SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
   path = "oa/carapply/carApplySearch"
   name = "OaCarApplySearch"
 
-# 需要自动注册成全局的RecruitApply组件
-[[RecruitApplyComponent]]
-  path = "oa/recruitapply/recruitApplyView"
-  name = "OaRecruitApplyView"
-[[RecruitApplyComponent]]
-  path = "oa/recruitapply/recruitApplyAdd"
-  name = "OaRecruitApplyAdd"
-[[RecruitApplyComponent]]
-  path = "oa/recruitapply/recruitApplySearch"
-  name = "OaRecruitApplySearch"
+# 需要自动注册成全局的EvectionApply(出差申请)组件
+[[EvectionApplyComponent]]
+  path = "oa/evectionapply/evectionApplyView"
+  name = "OaEvectionApplyView"
+[[EvectionApplyComponent]]
+  path = "oa/evectionapply/evectionApplyAdd"
+  name = "OaEvectionApplyAdd"
+[[EvectionApplyComponent]]
+  path = "oa/evectionapply/evectionApplySearch"
+  name = "OaEvectionApplySearch"
+
+# 需要自动注册成全局的MeetingApply(会议申请)组件
+[[MeetingApplyComponent]]
+  path = "oa/meetingapply/meetingApplyView"
+  name = "OaMeetingApplyView"
+[[MeetingApplyComponent]]
+  path = "oa/meetingapply/meetingApplyAdd"
+  name = "OaMeetingApplyAdd"
+[[MeetingApplyComponent]]
+  path = "oa/meetingapply/meetingApplySearch"
+  name = "OaMeetingApplySearch"
+
+# 需要自动注册成全局的TemporaryApply(临时申请)组件
+[[TemporaryApplyComponent]]
+  path = "oa/temporaryapply/temporaryApplyView"
+  name = "OaTemporaryApplyView"
+[[TemporaryApplyComponent]]
+  path = "oa/temporaryapply/temporaryApplyAdd"
+  name = "OaTemporaryApplyAdd"
+[[TemporaryApplyComponent]]
+  path = "oa/temporaryapply/temporaryApplySearch"
+  name = "OaTemporaryApplySearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
