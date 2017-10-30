@@ -23,8 +23,8 @@ PurchaseApplyStartURL = ""
 SealApplyURL  = "camel/rest/sealapplys"
 SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
 # 报销申请
-ReimbursementApplyURL = ""
-ReimbursementApplyStartURL = ""
+ReimbursementApplyURL = "camel/rest/reimbursementapplys"
+ReimbursementApplyStartURL = "camel/rest/reimbursementapplys/workflow/startProcess?id="
 # 用人申请
 RecruitApplyURL = "/camel/rest/recruitapplys"
 RecruitApplyStartURL = "/camel/rest/recruitapplys/workflow/startProcess?id="
