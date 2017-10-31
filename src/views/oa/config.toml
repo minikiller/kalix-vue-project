@@ -46,6 +46,8 @@ MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
 TemporaryApplyURL = ""
 TemporaryApplyStartURL = ""
 
+# 应聘人员管理
+CandidateURL = "/camel/rest/candidates"
 
 # 需要自动注册成全局的Category组件
 [[OaCategoryComponent]]
@@ -156,6 +158,17 @@ TemporaryApplyStartURL = ""
 [[TemporaryApplyComponent]]
   path = "oa/temporaryapply/temporaryApplySearch"
   name = "OaTemporaryApplySearch"
+
+# 需要自动注册成全局的Candidate(应聘人员管理)组件
+[[CandidateComponent]]
+  path = "oa/candidate/candidateView"
+  name = "OaCandidateView"
+[[CandidateComponent]]
+  path = "oa/candidate/candidateAdd"
+  name = "OaCandidateAdd"
+[[CandidateComponent]]
+  path = "oa/candidate/candidateSearch"
+  name = "OaCandidateSearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
