@@ -235,3 +235,8 @@ CandidateURL = "/camel/rest/candidates"
   title = "删除"
   isShow = true
   isPermission = true
+[[ToolButtonList]]
+  id = "attachment"
+  title = "附件"
+  isShow = true
+  isPermission = true
