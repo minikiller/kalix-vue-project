@@ -12,6 +12,8 @@
       el-form-item(label="应用名称" prop="appId"  label-width="140px")
         kalix-select(placeholder="请选择应用" style="width:100%" appName="applications"
         v-bind:requestUrl="requestUrl" label="text" v-model="formModel.appId")
+      el-form-item(label="菜单名称" prop="menuId" label-width="140px")
+        el-input(v-model="formModel.menuId" type="text" readonly)
       el-form-item(label="备注" prop="remark" label-width="140px")
         el-input(v-model="formModel.remark" type="textarea")
 </template>
