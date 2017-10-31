@@ -7,6 +7,7 @@
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
+  import Message from 'common/message'
 
   export default {
     props: {
@@ -15,6 +16,9 @@
       },
       placeholder: {
         type: String, default: ''
+      },
+      warnMsg: {
+        type: String, default: '数据获得失败!'
       },
       value: null,
       appName: {
@@ -47,6 +51,9 @@
             })
             .then(res => {
               this.options = res.data
+              if (res.data.totalCount === 0) {
+                Message.warning(this.warnMsg)
+              }
               if (res.data.data) {
                 this.options = res.data.data
               }
