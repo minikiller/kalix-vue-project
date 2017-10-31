@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-on:change="onChange")
+  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-on:input="change($event)")
     el-option(v-for="item in options"
     v-bind:key="item[id]"
     v-bind:label="item[label]"
@@ -16,7 +16,7 @@
       placeholder: {
         type: String, default: ''
       },
-      value: [String, Number],
+      value: null,
       appName: {
         type: String, default: ''
       },
@@ -33,7 +33,7 @@
         options: []
       }
     },
-    created() {
+    mounted() {
       this.initOptions()
     },
     methods: {
@@ -56,17 +56,20 @@
           this.options = JSON.parse(Cache.get(DictKey))
         }
       },
-      onChange(value) {
+      change(value) {
+        this.$emit('input', value)
         let item = this.options.find(e => {
           return e.id === value
         })
         this.$emit('selectChange', item)
+        console.log('newValue:', item)
       }
     },
     watch: {
-      currentValue(newValue, oldValue) {
+      value(newValue, oldValue) {
         console.log('newValue:', newValue)
-        this.$emit('input', newValue)
+        this.currentValue = newValue
+//        this.$emit('input', newValue)
       }
     }
   }
