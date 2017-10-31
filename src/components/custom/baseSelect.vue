@@ -16,9 +16,7 @@
       placeholder: {
         type: String, default: ''
       },
-      value: {
-        type: Object
-      },
+      value: [String, Number],
       appName: {
         type: String, default: ''
       },
