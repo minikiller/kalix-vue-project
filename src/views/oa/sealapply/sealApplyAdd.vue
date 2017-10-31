@@ -2,7 +2,7 @@
   kalix-dialog.user-add(ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 吉林动画学院用章申请表
-      el-form-item(label="名称" v-bind:label-width="labelWidth")
+      el-form-item(label="名称" v-bind:label-width="labelWidth" prop="title" v-bind:rules="rules.title")
         el-input(v-model="formModel.title")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
