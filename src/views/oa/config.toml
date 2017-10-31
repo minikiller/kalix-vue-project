@@ -45,9 +45,12 @@ MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
 # 临时申请
 TemporaryApplyURL = ""
 TemporaryApplyStartURL = ""
+TempApplyURL  = "camel/rest/tempapplys"
+TempApplyStartURL  = "/camel/rest/tempapplys/workflow/startProcess?id="
 
 # 应聘人员管理
 CandidateURL = "/camel/rest/candidates"
+
 
 # 需要自动注册成全局的Category组件
 [[OaCategoryComponent]]
@@ -92,6 +95,17 @@ CandidateURL = "/camel/rest/candidates"
 [[ReimbursementApplyComponent]]
   path = "oa/reimbursementapply/reimbursementApplySearch"
   name = "OaReimbursementApplySearch"
+
+# 需要自动注册成全局的CarApply组件
+[[CarApplyComponent]]
+  path = "oa/carapply/carApplyView"
+  name = "OaCarApplyView"
+[[CarApplyComponent]]
+  path = "oa/carapply/carApplyAdd"
+  name = "OaCarApplyAdd"
+[[CarApplyComponent]]
+  path = "oa/carapply/carApplySearch"
+  name = "OaCarApplySearch"
 
 # 需要自动注册成全局的ReimbursementApply(用人申请)组件
 [[RecruitApplyComponent]]
@@ -158,6 +172,17 @@ CandidateURL = "/camel/rest/candidates"
 [[TemporaryApplyComponent]]
   path = "oa/temporaryapply/temporaryApplySearch"
   name = "OaTemporaryApplySearch"
+
+# 需要自动注册成全局的TempApply(临时申请)组件
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplyView"
+  name = "OaTempApplyView"
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplyAdd"
+  name = "OaTempApplyAdd"
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplySearch"
+  name = "OaTempApplySearch"
 
 # 需要自动注册成全局的Candidate(应聘人员管理)组件
 [[CandidateComponent]]
