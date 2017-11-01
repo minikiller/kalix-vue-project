@@ -100,6 +100,9 @@
       pagerCurrentChange(val) { //  翻页
         this.pager.currentPage = val
         this._getFilesList()
+      },
+      clearData() {
+        this.tableData = []
       }
     },
     data() {
