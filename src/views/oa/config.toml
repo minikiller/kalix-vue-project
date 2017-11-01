@@ -42,14 +42,17 @@ MeetingApplyURL = "/camel/rest/meetingapplys"
 MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
 # 会议室申请
 #MeetingRoomsURL  = "/camel/rest/meetingrooms"
-# 临时申请
-TemporaryApplyURL = ""
-TemporaryApplyStartURL = ""
 
+# 临时申请
 TempApplyURL  = "camel/rest/tempapplys"
 TempApplyStartURL  = "/camel/rest/tempapplys/workflow/startProcess?id="
 
-
+# 应聘人员管理
+CandidateURL = "/camel/rest/candidates"
+# 面试管理
+InterviewURL = "/camel/rest/interviews"
+# 试讲管理
+LectureURL = "/camel/rest/lectures"
 
 
 # 需要自动注册成全局的Category组件
@@ -95,16 +98,6 @@ TempApplyStartURL  = "/camel/rest/tempapplys/workflow/startProcess?id="
 [[ReimbursementApplyComponent]]
   path = "oa/reimbursementapply/reimbursementApplySearch"
   name = "OaReimbursementApplySearch"
-# 需要自动注册成全局的TempApply组件
-[[TempApplyComponent]]
-  path = "oa/tempapply/tempApplyView"
-  name = "OaTempApplyView"
-[[TempApplyComponent]]
-  path = "oa/tempapply/tempApplyAdd"
-  name = "OaTempApplyAdd"
-[[TempApplyComponent]]
-  path = "oa/tempapply/tempApplySearch"
-  name = "OaTempApplySearch"
 
 # 需要自动注册成全局的CarApply组件
 [[CarApplyComponent]]
@@ -172,16 +165,49 @@ TempApplyStartURL  = "/camel/rest/tempapplys/workflow/startProcess?id="
   path = "oa/meetingapply/meetingApplySearch"
   name = "OaMeetingApplySearch"
 
-# 需要自动注册成全局的TemporaryApply(临时申请)组件
-[[TemporaryApplyComponent]]
-  path = "oa/temporaryapply/temporaryApplyView"
-  name = "OaTemporaryApplyView"
-[[TemporaryApplyComponent]]
-  path = "oa/temporaryapply/temporaryApplyAdd"
-  name = "OaTemporaryApplyAdd"
-[[TemporaryApplyComponent]]
-  path = "oa/temporaryapply/temporaryApplySearch"
-  name = "OaTemporaryApplySearch"
+# 需要自动注册成全局的TempApply(临时申请)组件
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplyView"
+  name = "OaTempApplyView"
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplyAdd"
+  name = "OaTempApplyAdd"
+[[TempApplyComponent]]
+  path = "oa/tempapply/tempApplySearch"
+  name = "OaTempApplySearch"
+
+# 需要自动注册成全局的Candidate(应聘人员管理)组件
+[[CandidateComponent]]
+  path = "oa/candidate/candidateView"
+  name = "OaCandidateView"
+[[CandidateComponent]]
+  path = "oa/candidate/candidateAdd"
+  name = "OaCandidateAdd"
+[[CandidateComponent]]
+  path = "oa/candidate/candidateSearch"
+  name = "OaCandidateSearch"
+
+# 需要自动注册成全局的Interview(面试管理)组件
+[[InterviewComponent]]
+  path = "oa/interview/interviewView"
+  name = "OaInterviewView"
+[[InterviewComponent]]
+  path = "oa/interview/interviewAdd"
+  name = "OaInterviewAdd"
+[[InterviewComponent]]
+  path = "oa/interview/interviewSearch"
+  name = "OaInterviewSearch"
+
+# 需要自动注册成全局的Lecture(试讲管理)组件
+[[LectureComponent]]
+  path = "oa/lecture/lectureView"
+  name = "OaLectureView"
+[[LectureComponent]]
+  path = "oa/lecture/lectureAdd"
+  name = "OaLectureAdd"
+[[LectureComponent]]
+  path = "oa/lecture/lectureSearch"
+  name = "OaLectureSearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
@@ -233,5 +259,10 @@ TempApplyStartURL  = "/camel/rest/tempapplys/workflow/startProcess?id="
 [[ToolButtonList]]
   id = "delete"
   title = "删除"
+  isShow = true
+  isPermission = true
+[[ToolButtonList]]
+  id = "attachment"
+  title = "附件"
   isShow = true
   isPermission = true

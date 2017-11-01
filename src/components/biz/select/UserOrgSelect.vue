@@ -1,6 +1,6 @@
 <template lang="pug">
   kalix-select(v-model="currentValue" placeholder="请选择申请部门" style="width:100%"
-  appName="USERORGS" v-on:selectChange="onChange" v-bind:requestUrl="requestUrl")
+  appName="USERORGS" v-on:selectChange="onChange" v-bind:requestUrl="requestUrl" warnMsg="当前登录用户无法找到组织机构！")
 </template>
 <script type="text/ecmascript-6">
   import {SelectMixin} from './SelectMixin'

@@ -9,6 +9,7 @@ export const SelectMixin = {
   },
   methods: {
     onChange(item) {
+      this.$emit('input', item.id)
       this.$emit('selectChange', item)
     }
   },
@@ -16,8 +17,8 @@ export const SelectMixin = {
     KalixSelect: BaseSelect
   },
   watch: {
-    currentValue(newValue, oldValue) {
-      this.$emit('input', newValue)
+    value(newValue, oldValue) {
+      this.currentValue = newValue
     }
   }
 }
