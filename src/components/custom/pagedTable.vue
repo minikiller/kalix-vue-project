@@ -5,8 +5,12 @@
 -->
 <template lang="pug">
   div.kalix-paged-table
-    el-table(v-bind:data="tableData" stripe style="width:100%"
-    v-bind:height="tableHeight" border fit)
+    el-table(v-bind:data="tableData" style="width:100%"
+    v-bind:height="tableHeight" border fit
+    v-on:row-click="rowClick"
+    v-on:row-dblclick="rowDblClick"
+    v-bind:stripe="stripe"
+    v-bind:highlight-current-row="highlightCurrentRow")
       el-table-column(label="行号" width="70")
         template(slot-scope="scope")
           div(style="text-align: center") {{ scope.row.rowNumber }}
@@ -30,6 +34,12 @@
       jsonStr: '',
       tableHeight: {
         default: MAX_TABLE_HEIGHT
+      },
+      stripe: {
+        default: true
+      },
+      highlightCurrentRow: {
+        default: false
       }
     },
     created() {
@@ -54,6 +64,12 @@
       }
     },
     methods: {
+      rowClick(row, event, column) {
+        this.$emit('rowClick', row, event, column)
+      },
+      rowDblClick(row, event) {
+        this.$emit('rowDblClick', row, event)
+      },
       getBizData() { // 获得流程历史
         if (this.targetURL !== '') {
           this.axios.request({
