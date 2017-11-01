@@ -7,7 +7,7 @@
   div.kalix-select-dutys
     el-input(v-bind:placeholder="placeholder" v-model="currentValue" readonly)
       el-button(slot="append" icon="el-icon-search" v-on:click="onClick")
-    el-dialog(title="选择职务" v-bind:visible.sync="dialogVisible" v-bind:before-close="handleClose")
+    el-dialog(title="选择职务" v-bind:visible.sync="dialogVisible" v-on:before-close="handleClose" v-bind:modal="false")
       div.kalix-article
         el-row.duty-row(:gutter="0")
           el-col.duty-col(:span="8")
@@ -31,7 +31,7 @@
                 | {{tableTitle}}
               div.kalix-wrapper-bd
                 div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-                  kalix-paged-table(ref="pagedTable" v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr"
+                  kalix-paged-table(ref="kalixPagedTable" v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr"
                   v-bind:tableHeight="tableHeight"
                   v-on:rowClick="selectRow"
                   v-bind:stripe="false"
@@ -40,7 +40,7 @@
                       el-table-column(prop="name" label="职务名称" v-on:click="selectItem(item)" )
                       el-table-column(prop="comment" label="职务描述" v-on:click="selectItem(item)")
       span.dialog-footer(slot="footer")
-        el-button(v-on:click="dialogVisible = false") 取 消
+        el-button(v-on:click="handleClose") 取 消
         el-button(type="primary" v-on:click="onConfirm") 确 定
 </template>
 <script type="text/ecmascript-6">
@@ -50,14 +50,22 @@
   import Message from 'common/message'
 
   export default {
+    activated() {
+      console.log('base dialog orgDuty is activated')
+    },
+    deactivated() {
+      console.log('base dialog orgDuty is deactivated')
+    },
     props: {
       placeholder: {
         default: '请选择职务'
-      }
+      },
+      value: null
     },
     data() {
       return {
-        currentValue: '',
+
+        currentValue: this.value,
         input: '',
         dialogVisible: false,
         treeTitle: '组织机构树',
@@ -75,8 +83,7 @@
           label: 'name'
         },
         jsonStr: {},
-        tableHeight: 0, //  列表组件高度
-        value: ''
+        tableHeight: 0 //  列表组件高度
       }
     },
     mounted() {
@@ -88,6 +95,7 @@
         this.getData()
       },
       handleClose() {
+        this.$refs.kalixPagedTable.clearData()
         this.dialogVisible = false
       },
 
@@ -100,7 +108,6 @@
         this.orgName = data.name
       },
       getData() {
-        console.log('getData')
         let url = '/camel/rest/orgs?node=root'
         this.axios.request({
           method: 'GET',
@@ -139,7 +146,8 @@
         this.orgName = ''
         this.dutyName = ''
         this.targetURL = ''
-        this.$emit('input', `${this.orgName}::${this.dutyName}`)
+        this.$refs.kalixPagedTable.clearData()
+        this.$emit('input', this.currentValue)
       }
     },
     watch: {
@@ -148,6 +156,9 @@
       },
       orgId(val) {
         this.targetURL = `/camel/rest/orgs/${this.orgId}/dutys`
+      },
+      value(nv) {
+        this.currentValue = this.value
       }
     },
     components: {

@@ -83,6 +83,7 @@
               if (response.data.success) {
                 Message.success(response.data.msg)
                 this.visible = false
+                this.$refs.dialogForm.resetFields()
                 // 关闭对话框
 //                this.close()
                 // 清空form
