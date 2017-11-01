@@ -41,20 +41,12 @@
     methods: {
       customTableTool(row, btnId, table) {
         if (btnId === 'addUser') {
-          // row
-          table.whichBizDialog = ''
-          let dig =
-            table.bizDialog.filter((item) => {
-              return item.id === 'addUser'
-            })
-          console.log('[kalix] edit dialog is: ' + dig[0].dialog)
-          table.whichBizDialog = dig[0].dialog
+//          this.$refs.myDialog.open()
+          table.whichBizDialog = 'AdminDataAuthAddUser'
           setTimeout(() => {
-            table.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', true, row)
-            if (typeof (table.$refs.kalixDialog.init) === 'function') {
-              table.$refs.kalixDialog.init(table.dialogOptions)
-            }
-          }, 20)
+            table.$refs.kalixDialog.open('添加用户', row)
+          }, 200)
+//          table.$refs.myDialog.openDialog('', {})
         }
       }
     },
