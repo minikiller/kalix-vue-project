@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-on:change="onChange")
+  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-on:input="change($event)")
     el-option(v-for="item in options"
     v-bind:key="item[id]"
     v-bind:label="item[label]"
@@ -7,6 +7,7 @@
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
+  import Message from 'common/message'
 
   export default {
     props: {
@@ -16,7 +17,10 @@
       placeholder: {
         type: String, default: ''
       },
-      value: [String, Number],
+      warnMsg: {
+        type: String, default: '数据获得失败!'
+      },
+      value: null,
       appName: {
         type: String, default: ''
       },
@@ -33,7 +37,7 @@
         options: []
       }
     },
-    created() {
+    mounted() {
       this.initOptions()
     },
     methods: {
@@ -47,6 +51,9 @@
             })
             .then(res => {
               this.options = res.data
+              if (res.data.totalCount === 0) {
+                Message.warning(this.warnMsg)
+              }
               if (res.data.data) {
                 this.options = res.data.data
               }
@@ -56,17 +63,20 @@
           this.options = JSON.parse(Cache.get(DictKey))
         }
       },
-      onChange(value) {
+      change(value) {
+        this.$emit('input', value)
         let item = this.options.find(e => {
           return e.id === value
         })
         this.$emit('selectChange', item)
+        console.log('newValue:', item)
       }
     },
     watch: {
-      currentValue(newValue, oldValue) {
+      value(newValue, oldValue) {
         console.log('newValue:', newValue)
-        this.$emit('input', newValue)
+        this.currentValue = newValue
+//        this.$emit('input', newValue)
       }
     }
   }
