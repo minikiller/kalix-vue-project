@@ -8,7 +8,7 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
           kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
         el-form-item.s-flex_item.kalix-form-table-td(label="审批领导职务" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.targetDuty")
+          kalix-org-dutys-select(v-model="formModel.targetDuty")
       el-form-item(label="申请事由" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.content"  type="textarea")
 </template>
@@ -18,6 +18,7 @@
   import UserOrgSelect from '@/components/biz/select/UserOrgSelect'
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import OrgDutysSelect from '@/components/biz/select/OrgDutySelect'
   import FormModel from './model'
 
   export default {
@@ -41,6 +42,7 @@
     components: {
       KalixOrgSelect: UserOrgSelect,
       KalixDictSelect: BaseDictSelect,
+      KalixOrgDutysSelect: OrgDutysSelect,
       KalixDialog: Dialog
     }
   }
