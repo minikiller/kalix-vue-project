@@ -25,7 +25,7 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {CandidateURL, CandidateComponent, ToolButtonList} from '../config.toml'
+  import {CandidateURL, CandidateComponent, AttachmentButtonList} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
@@ -46,7 +46,7 @@
           sourceField: 'sex'
         }],
         isFixedColumn: true,
-        btnList: ToolButtonList,
+        btnList: AttachmentButtonList,
         targetURL: CandidateURL,
         bizDialog: [
           {id: 'view', dialog: 'OaCandidateView'},
