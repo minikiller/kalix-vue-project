@@ -223,7 +223,7 @@
             this.onRefreshClick()
             break
           default:
-            this.customToolBar(btnId)
+            this.customToolBar(btnId, this)
             break
         }
       },
