@@ -31,7 +31,7 @@
         formModel: Object.assign({}, FormModel),
         requestUrl: appsURL,
         rules: {
-          type: [{type: 'number', required: true, message: '请选取数据权限', trigger: 'change'}],
+          type: [{type: 'number', required: true, message: '请选择数据权限', trigger: 'change'}],
           appId: [{type: 'string', required: true, message: '请选择应用名称', trigger: 'change'}]
         },
         targetURL: dataauthURL

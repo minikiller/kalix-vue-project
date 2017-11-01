@@ -54,6 +54,19 @@ InterviewURL = "/camel/rest/interviews"
 # 试讲管理
 LectureURL = "/camel/rest/lectures"
 
+# 会议室
+MeetingroomURL  = "camel/rest/meetingrooms"
+
+# 需要自动注册成全局的Meetingroom组件
+[[OaMeetingroomComponent]]
+  path = "oa/meetingroom/meetingroomView"
+  name = "OaMeetingroomView"
+[[OaMeetingroomComponent]]
+  path = "oa/meetingroom/meetingroomAdd"
+  name = "OaMeetingroomAdd"
+[[OaMeetingroomComponent]]
+  path = "oa/meetingroom/meetingroomSearch"
+  name = "OaMeetingroomSearch"
 
 # 需要自动注册成全局的Category组件
 [[OaCategoryComponent]]

@@ -1,8 +1,13 @@
+<!--
+描述：职务组件的二次封装
+开发人：sunlf
+开发日期：2017年8月17日
+-->
 <template lang="pug">
   div.kalix-select-dutys
     el-input(v-bind:placeholder="placeholder" v-model="currentValue" readonly)
       el-button(slot="append" icon="el-icon-search" v-on:click="onClick")
-    el-dialog(title="提示" v-bind:visible.sync="dialogVisible" v-bind:before-close="handleClose")
+    el-dialog(title="选择职务" v-bind:visible.sync="dialogVisible" v-bind:before-close="handleClose")
       div.kalix-article
         el-row.duty-row(:gutter="0")
           el-col.duty-col(:span="8")
@@ -30,8 +35,8 @@
                   v-bind:tableHeight="tableHeight"
                   v-on:rowClick="selectRow"
                   v-bind:stripe="false"
-                  v-bind:highlightCurrentRow="true")
-                    template(slot="tableColumnSlot" scope="item")
+                  highlight-current-row)
+                    template(slot="tableColumnSlot" slot-scope="item")
                       el-table-column(prop="name" label="职务名称" v-on:click="selectItem(item)" )
                       el-table-column(prop="comment" label="职务描述" v-on:click="selectItem(item)")
       span.dialog-footer(slot="footer")
@@ -122,11 +127,11 @@
       },
       onConfirm() {
         if (this.orgName === '') {
-          Message.error('请选择一个部门')
+          Message.warning('请选择一个部门')
           return
         }
         if (this.dutyName === '') {
-          Message.error('请选择一个职务')
+          Message.warning('请选择一个职务')
           return
         }
         this.currentValue = `${this.orgName}::${this.dutyName}`
@@ -134,7 +139,7 @@
         this.orgName = ''
         this.dutyName = ''
         this.targetURL = ''
-        this.$emit('input', `${this.orgId}::${this.dutyId}`)
+        this.$emit('input', `${this.orgName}::${this.dutyName}`)
       }
     },
     watch: {

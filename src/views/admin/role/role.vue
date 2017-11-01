@@ -1,12 +1,9 @@
 <template lang="pug">
   div.test
-    kalix-select-dutys(v-model="value")
     div {{value}}
 </template>
 
 <script>
-  import BaseSelectDutys from '@/components/custom/baseSelectDutys'
-
   export default {
     data() {
       return {
@@ -17,7 +14,6 @@
     },
     methods: {},
     components: {
-      KalixSelectDutys: BaseSelectDutys
     }
 
   }
