@@ -49,6 +49,10 @@ TempApplyStartURL  = "/camel/rest/tempapplys/workflow/startProcess?id="
 
 # 应聘人员管理
 CandidateURL = "/camel/rest/candidates"
+# 面试管理
+InterviewURL = "/camel/rest/interviews"
+# 试讲管理
+LectureURL = "/camel/rest/lectures"
 
 # 会议室
 MeetingroomURL  = "camel/rest/meetingrooms"
@@ -196,6 +200,28 @@ MeetingroomURL  = "camel/rest/meetingrooms"
   path = "oa/candidate/candidateSearch"
   name = "OaCandidateSearch"
 
+# 需要自动注册成全局的Interview(面试管理)组件
+[[InterviewComponent]]
+  path = "oa/interview/interviewView"
+  name = "OaInterviewView"
+[[InterviewComponent]]
+  path = "oa/interview/interviewAdd"
+  name = "OaInterviewAdd"
+[[InterviewComponent]]
+  path = "oa/interview/interviewSearch"
+  name = "OaInterviewSearch"
+
+# 需要自动注册成全局的Lecture(试讲管理)组件
+[[LectureComponent]]
+  path = "oa/lecture/lectureView"
+  name = "OaLectureView"
+[[LectureComponent]]
+  path = "oa/lecture/lectureAdd"
+  name = "OaLectureAdd"
+[[LectureComponent]]
+  path = "oa/lecture/lectureSearch"
+  name = "OaLectureSearch"
+
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
   path = "oa/comp/processHistorySearch"
@@ -248,7 +274,24 @@ MeetingroomURL  = "camel/rest/meetingrooms"
   title = "删除"
   isShow = true
   isPermission = true
-[[ToolButtonList]]
+
+# table 的附件按钮定义
+[[AttachmentButtonList]]
+  id = "view"
+  title = "查看"
+  isShow = true    # 是否显示
+  isPermission = true   # 是否进行权限认证
+[[AttachmentButtonList]]
+  id = "edit"
+  title = "编辑"
+  isShow = true
+  isPermission = true
+[[AttachmentButtonList]]
+  id = "delete"
+  title = "删除"
+  isShow = true
+  isPermission = true
+[[AttachmentButtonList]]
   id = "attachment"
   title = "附件"
   isShow = true
