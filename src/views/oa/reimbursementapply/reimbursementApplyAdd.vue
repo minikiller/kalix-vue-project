@@ -14,6 +14,7 @@
       div.s-flex
         el-form-item.kalix-form-table-td(label="申请部门" prop="orgId" v-bind:rules="rules.orgId" v-bind:label-width="labelWidth")
           kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
+          el-input(v-model="formModel.orgId" v-show="false")
         el-form-item.kalix-form-table-td(label="报销日期" prop="reimbursementDate" v-bind:label-width="labelWidth")
           kalix-date-picker(v-model="formModel.reimbursementDate" placeholder="报销日期" style="margin-left:0px;width:100%")
         el-form-item.kalix-form-table-td(label="编号" prop="businessNo" v-bind:label-width="labelWidth")
