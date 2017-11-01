@@ -10,7 +10,7 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="审批领导职务" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.targetDuty")
       el-form-item(label="申请事由" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.content"  type="area")
+        el-input(v-model="formModel.content"  type="textarea")
 </template>
 
 <script type="text/ecmascript-6">
