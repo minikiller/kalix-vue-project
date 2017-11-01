@@ -2,14 +2,14 @@
   kalix-dialog.user-add(ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 吉林动画学院用章申请表
-      el-form-item(label="名称" v-bind:label-width="labelWidth")
+      el-form-item(label="名称" v-bind:label-width="labelWidth" prop="title" v-bind:rules="rules.title")
         el-input(v-model="formModel.title")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth" prop="orgId" v-bind:rules="rules.orgId")
           kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
         el-form-item.s-flex_item.kalix-form-table-td(label="用印数" v-bind:label-width="labelWidth")
           el-input-number(v-model="formModel.usageCount" v-bind:min="1" v-bind:max="10" style="width:100%")
-      el-form-item(label="印章类别" v-bind:label-width="labelWidth")
+      el-form-item(label="印章类别" v-bind:label-width="labelWidth"  prop="sealType" v-bind:rules="rules.sealType")
         kalix-dict-select(v-model="formModel.sealType" appName="oa" dictType="印章类型")
       el-form-item(label="备注" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.remark")
@@ -31,7 +31,9 @@
         targetURL: SealApplyURL,
         formModel: Object.assign({}, FormModel),
         rules: {
-          title: [{required: true, message: '请输入名称', trigger: 'blur'}]
+          title: [{required: true, message: '请输入名称', trigger: 'blur'}],
+          orgId: [{type: 'number', required: true, message: '请选择申请部门', trigger: 'change'}],
+          sealType: [{type: 'number', required: true, message: '请选择印章类型', trigger: 'change'}]
         }
       }
     },

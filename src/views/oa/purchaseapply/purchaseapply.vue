@@ -1,14 +1,14 @@
 <!--
-描述：办公自动化-临时申请
+描述：办公自动化-采购申请
 开发人：hqj
-开发日期：2017年10月30日
+开发日期：2017年10月31日
 -->
 <template lang="pug">
   div
     keep-alive
-      base-table(bizKey='carApply' title='临时申请列表' v-bind:targetURL='targetURL'
-      v-bind:bizDialog='bizDialog' bizSearch='OaTemporaryApplySearch' v-bind:btnList='btnList'
-      v-bind:isFixedColumn="isFixedColumn" v-bind:customTableTool="customTableTool" v-bind:customRender="customRender")
+      base-table(bizKey='purchaseApply' title='采购申请列表' v-bind:targetURL='targetURL'
+      v-bind:bizDialog='bizDialog' bizSearch='OaPurchaseApplySearch' v-bind:btnList='btnList'
+      v-bind:isFixedColumn="isFixedColumn" v-bind:customTableTool="customTableTool")
         template(slot="tableColumnSlot")
           kalix-biz-no-column // 业务编号
           el-table-column(prop="title" label="名称" align="center" width="220")
@@ -28,7 +28,7 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {TemporaryApplyURL, TemporaryApplyComponent, TemporaryApplyStartURL} from '../config.toml'
+  import {PurchaseApplyURL, PurchaseApplyComponent, PurchaseApplyStartURL} from '../config.toml'
   import {registerComponent} from '@/api/register'
   import {workflowBtnList, registerComp, customTableTool} from '@/views/oa/comp'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
@@ -37,7 +37,7 @@
   import TaskView from '@/views/oa/comp/taskView'
 
   // 注册全局组件
-  registerComponent(TemporaryApplyComponent)
+  registerComponent(PurchaseApplyComponent)
 
   export default {
     data() {
@@ -45,11 +45,11 @@
         isFixedColumn: true,
         hasTableSelection: true,
         btnList: workflowBtnList,
-        targetURL: TemporaryApplyURL,
+        targetURL: PurchaseApplyURL,
         bizDialog: [
-          {id: 'view', dialog: 'OaTemporaryApplyView'},
-          {id: 'edit', dialog: 'OaTemporaryApplyAdd'},
-          {id: 'add', dialog: 'OaTemporaryApplyAdd'},
+          {id: 'view', dialog: 'OaPurchaseApplyView'},
+          {id: 'edit', dialog: 'OaPurchaseApplyAdd'},
+          {id: 'add', dialog: 'OaPurchaseApplyAdd'},
           {id: 'progress', dialog: 'OaTaskView'}
         ]
       }
@@ -68,12 +68,7 @@
     },
     methods: {
       customTableTool(row, btnId) {
-        customTableTool(row, btnId, TemporaryApplyStartURL, this)
-      },
-      customRender(_data) {
-        _data.forEach(function (e) {
-          e.cityName = e.city ? '是' : '否'
-        })
+        customTableTool(row, btnId, PurchaseApplyStartURL, this)
       }
     }
   }

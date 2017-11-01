@@ -22,6 +22,7 @@
             kalix-query-date-picker(v-else-if="item.type==='date'" v-model="form[item.prop]")
             kalix-query-date-picker(v-else-if="item.type==='year'" v-model="form[item.prop]" type="year")
             kalix-query-datetime-picker(v-else-if="item.type==='datetime'" v-model="form[item.prop]")
+            kalix-dict-select(v-else-if="item.type==='dict'" v-bind:appName="item.appName" v-bind:dictType="item.dictType" v-model="form[item.prop]")
             el-input(v-else v-model="form[item.prop]")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
@@ -39,6 +40,7 @@
   import {ON_SEARCH_BUTTON_CLICK} from './event.toml'
   import QueryDatepicker from 'components/biz/date/datepicker'
   import QueryDatetimepicker from 'components/biz/date/datetimepicker'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
 
   export default {
     activated() {
@@ -203,7 +205,8 @@
     },
     components: {
       KalixQueryDatePicker: QueryDatepicker,
-      KalixQueryDatetimePicker: QueryDatetimepicker
+      KalixQueryDatetimePicker: QueryDatetimepicker,
+      KalixDictSelect: BaseDictSelect
     },
     computed: {},
     watch: {}

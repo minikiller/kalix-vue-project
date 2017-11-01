@@ -75,7 +75,8 @@ const workflowBtnList = [
     id: 'attachment',
     title: '附件',
     isShow: true,   // 是否显示
-    isPermission: true  // 是否进行权限认证
+    isPermission: true,  // 是否进行权限认证
+    cond: unstartCond
   }
 ]
 

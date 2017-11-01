@@ -9,7 +9,7 @@
       // el-form-item(label="菜单名称" prop="menuid" label-width="140px")
         kalix-app-menu-select(style="width:100%" v-model="menu" v-bind:multiple="false"
         v-bind:objectsUrl="menusUrl" label="text" v-bind:objectIds.sync="formModel.menuId")
-      el-form-item(label="应用名称" prop="appId"  label-width="140px")
+      el-form-item(label="应用名称" prop="appId" v-bind:rules="rules.appId" label-width="140px")
         kalix-select(placeholder="请选择应用" style="width:100%" appName="applications"
         v-bind:requestUrl="requestUrl" label="text" v-model="formModel.appId")
       el-form-item(label="菜单名称" prop="menuId" label-width="140px")
@@ -31,7 +31,8 @@
         formModel: Object.assign({}, FormModel),
         requestUrl: appsURL,
         rules: {
-          type: [{type: 'number', required: true, message: '请选取数据权限', trigger: 'change'}]
+          type: [{type: 'number', required: true, message: '请选择数据权限', trigger: 'change'}],
+          appId: [{type: 'string', required: true, message: '请选择应用名称', trigger: 'change'}]
         },
         targetURL: dataauthURL
       }
