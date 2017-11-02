@@ -9,7 +9,7 @@
     v-bind:height="tableHeight" border fit
     v-on:row-click="rowClick"
     v-on:row-dblclick="rowDblClick"
-    v-bind:stripe="stripe"
+    v-bind:stripe="stripe"  v-loading.body="loading"
     v-bind:highlight-current-row="highlightCurrentRow")
       el-table-column(label="行号" width="70")
         template(slot-scope="scope")
@@ -70,8 +70,9 @@
       rowDblClick(row, event) {
         this.$emit('rowDblClick', row, event)
       },
-      getBizData() { // 获得流程历史
+      getBizData() { // 获得data
         if (this.targetURL !== '') {
+          this.loading = true
           this.axios.request({
             method: 'GET',
             url: this.targetURL,
@@ -82,13 +83,16 @@
               start: this.pager.start
             }
           }).then((res) => {
-            console.log('%c[pagedTable] res', 'color:#ff5500', res)
-            console.log('%c[pagedTable] res', 'color:#ff0055', this.targetURL)
-            this.tableData = res.data.data.map((item, index) => {
-              item.rowNumber = index + this.rowNo
-              return item
-            })
-            this.pager.totalCount = res.data.totalCount
+            setTimeout(() => {
+              this.loading = false
+              console.log('%c[pagedTable] res', 'color:#ff5500', res)
+              console.log('%c[pagedTable] res', 'color:#ff0055', this.targetURL)
+              this.tableData = res.data.data.map((item, index) => {
+                item.rowNumber = index + this.rowNo
+                return item
+              })
+              this.pager.totalCount = res.data.totalCount
+            }, 500)
 //          Message.processResult(res)
           })
         }
@@ -100,10 +104,15 @@
       pagerCurrentChange(val) { //  翻页
         this.pager.currentPage = val
         this._getFilesList()
+      },
+      clearData() {
+        this.tableData = []
+        this.loading = false
       }
     },
     data() {
       return {
+        loading: false,
         tableData: [],
         pager: {
           totalCount: 0,
