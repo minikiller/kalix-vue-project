@@ -16,7 +16,7 @@
                 i.tit_icon.iconfont.icon-organization
                 | {{treeTitle}}
               div.kalix-search-bd
-                el-input(placeholder="输入关键字进行过滤" v-model="filterText")
+                el-input.kalix-search-input(placeholder="输入关键字进行过滤" v-model="filterText")
                 div.kalix-tree-wrapper
                   el-tree.filter-tree(v-bind:data="data2"
                   v-bind:props="defaultProps" accordion
@@ -199,6 +199,11 @@
         bottom: 0;
         width: 100%;
         box-sizing: border-box;
+        .kalix-search-input
+          border: 1px solid #b4bccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          overflow: hidden;
         .search-container
           display flex
         .kalix-tree-wrapper

@@ -47,6 +47,10 @@ MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
 TempApplyURL  = "camel/rest/tempapplys"
 TempApplyStartURL  = "/camel/rest/tempapplys/workflow/startProcess?id="
 
+# 会议室申请
+MeetingroomApplyURL  = "camel/rest/meetingroomapplys"
+MeetingroomApplyStartURL  = "/camel/rest/meetingroomapplys/workflow/startProcess?id="
+
 # 应聘人员管理
 CandidateURL = "/camel/rest/candidates"
 # 面试管理
@@ -67,6 +71,17 @@ MeetingroomURL  = "camel/rest/meetingrooms"
 [[OaMeetingroomComponent]]
   path = "oa/meetingroom/meetingroomSearch"
   name = "OaMeetingroomSearch"
+
+# 需要自动注册成全局的MeetingroomApply组件
+[[OaMeetingroomApplyComponent]]
+  path = "oa/meetingroomapply/meetingroomApplyView"
+  name = "OaMeetingroomApplyView"
+[[OaMeetingroomApplyComponent]]
+  path = "oa/meetingroomapply/meetingroomApplyAdd"
+  name = "OaMeetingroomApplyAdd"
+[[OaMeetingroomApplyComponent]]
+  path = "oa/meetingroomapply/meetingroomApplySearch"
+  name = "OaMeetingroomApplySearch"
 
 # 需要自动注册成全局的Category组件
 [[OaCategoryComponent]]
