@@ -106,4 +106,38 @@ const customTableTool = (row, btnId, requestUrl, that) => {
   }
 }
 
-export {registerComp, workflowBtnList, customTableTool}
+/**
+ * 工作流操作按钮定义
+ * @type {[null,null,null,null,null]}
+ */
+const uneditableWorkflowBtnList = [
+  {
+    id: 'view',
+    title: '查看',
+    isShow: true,   // 是否显示
+    isPermission: true  // 是否进行权限认证
+  },
+  {
+    id: 'progress',
+    title: '进度',
+    isShow: true,   // 是否显示
+    isPermission: true,  // 是否进行权限认证
+    cond: startedCond
+  },
+  {
+    id: 'start',
+    title: '启动',
+    isShow: true,   // 是否显示
+    isPermission: true,  // 是否进行权限认证
+    cond: unstartCond
+  },
+  {
+    id: 'attachment',
+    title: '附件',
+    isShow: true,   // 是否显示
+    isPermission: true,  // 是否进行权限认证
+    cond: unstartCond
+  }
+]
+
+export {registerComp, workflowBtnList, customTableTool, uneditableWorkflowBtnList}
