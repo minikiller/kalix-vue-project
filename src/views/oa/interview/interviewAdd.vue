@@ -18,7 +18,8 @@
         el-form-item.s-flex_item(label="初试面试内容" prop="interviewContentFirst" v-bind:rules="rules.interviewContentFirst" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.interviewContentFirst")
         el-form-item.s-flex_item(label="初试面试结果" prop="passFirst" v-bind:rules="rules.passFirst" v-bind:label-width="labelWidth")
-          el-checkbox(v-model="formModel.passFirst") 初试是否通过
+          // el-checkbox(v-model="formModel.passFirst") 初试是否通过
+          el-switch.s-flex_item(v-model="formModel.passFirst" active-text="通过" inactive-text="不通过")
       template(v-else-if="formModel.whichInterview === 'second' || formModel.whichInterview === 'review'")
         el-form-item.s-flex_item(label="应聘者姓名" prop="candidateId" v-bind:rules="rules.candidateId" v-bind:label-width="labelWidth")
           el-select(v-model='formModel.candidateId' v-bind:placeholder="candidate.placeholder" v-on:focus="focus")
@@ -30,7 +31,8 @@
         el-form-item.s-flex_item(label="复试面试内容" prop="interviewContentSecond" v-bind:rules="rules.interviewContentSecond" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.interviewContentSecond")
         el-form-item.s-flex_item(label="复试面试结果" prop="passSecond" v-bind:rules="rules.passSecond" v-bind:label-width="labelWidth")
-          el-checkbox(v-model="formModel.passSecond") 复试是否通过
+          // el-checkbox(v-model="formModel.passSecond") 复试是否通过
+          el-switch.s-flex_item(v-model="formModel.passSecond" active-text="通过" inactive-text="不通过")
       template(v-else)
         el-form-item.s-flex_item(label="应聘者姓名" prop="xm" v-bind:rules="rules.xm" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.xm" disabled)
@@ -51,9 +53,11 @@
             el-input(v-model="formModel.interviewContentSecond")
         div.s-flex
           el-form-item.s-flex_item(label="初试面试结果" prop="passFirst" v-bind:rules="rules.passFirst" v-bind:label-width="labelWidth")
-            el-checkbox(v-model="formModel.passFirst") 初试是否通过
+            // el-checkbox(v-model="formModel.passFirst") 初试是否通过
+            el-switch.s-flex_item(v-model="formModel.passFirst" active-text="通过" inactive-text="不通过")
           el-form-item.s-flex_item(label="复试面试结果" prop="passSecond" v-bind:rules="rules.passSecond" v-bind:label-width="labelWidth")
-            el-checkbox(v-model="formModel.passSecond") 复试是否通过
+            // el-checkbox(v-model="formModel.passSecond") 复试是否通过
+            el-switch.s-flex_item(v-model="formModel.passSecond" active-text="通过" inactive-text="不通过")
 </template>
 
 <script type="text/ecmascript-6">
@@ -77,11 +81,9 @@
           dateFirst: [{required: true, message: '请选择初试时间', trigger: 'blur'}],
           interviewerFirst: [{required: true, message: '请输入初试面试官', trigger: 'blur'}],
           interviewContentFirst: [{required: true, message: '请输入初试面试内容', trigger: 'blur'}],
-          // passFirst: [{required: true, message: '请选择初试面试结果', trigger: 'blur'}],
           dateSecond: [{required: true, message: '请选择复试时间', trigger: 'blur'}],
           interviewerSecond: [{required: true, message: '请输入复试面试官', trigger: 'blur'}],
           interviewContentSecond: [{required: true, message: '请输入复试面试内容', trigger: 'blur'}],
-          // passSecond: [{required: true, message: '请选择复试面试结果', trigger: 'blur'}],
           xm: [{required: true, message: '应聘者不允许为空', trigger: 'blur'}]
         },
         targetURL: InterviewURL,

@@ -26,9 +26,11 @@
           el-input(v-model="formModel.interviewContentSecond" readonly)
       div.s-flex
         el-form-item.s-flex_item(label="初试面试结果" prop="passFirst" v-bind:label-width="labelWidth")
-          el-checkbox(v-model="formModel.passFirst" disabled) 初试是否通过
+          // el-checkbox(v-model="formModel.passFirst" disabled) 初试是否通过
+          el-switch.s-flex_item(v-model="formModel.passFirst" active-text="通过" inactive-text="不通过" disabled)
         el-form-item.s-flex_item(label="复试面试结果" prop="passSecond" v-bind:label-width="labelWidth")
-          el-checkbox(v-model="formModel.passSecond" disabled) 复试是否通过
+          // el-checkbox(v-model="formModel.passSecond" disabled) 复试是否通过
+          el-switch.s-flex_item(v-model="formModel.passSecond" active-text="通过" inactive-text="不通过" disabled)
 </template>
 
 <script type="text/ecmascript-6">

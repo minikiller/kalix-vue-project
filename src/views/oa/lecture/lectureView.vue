@@ -40,7 +40,8 @@
         el-form-item.s-flex_item(label="教学效果分数" prop="effectScore" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.effectScore" readonly)
         el-form-item.s-flex_item(label="试讲结果" prop="pass" v-bind:label-width="labelWidth")
-          el-checkbox(v-model="formModel.pass" disabled) 是否通过
+          // el-checkbox(v-model="formModel.pass" disabled) 是否通过
+          el-switch.s-flex_item(v-model="formModel.pass" active-text="通过" inactive-text="不通过" disabled)
 </template>
 
 <script type="text/ecmascript-6">

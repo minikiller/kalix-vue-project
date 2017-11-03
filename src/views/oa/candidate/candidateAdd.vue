@@ -28,7 +28,7 @@
         el-form-item.s-flex_item(label="应聘岗位" prop="position" v-bind:rules="rules.position" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.position")
       div.s-flex
-        el-form-item.s-flex_item(label="年龄" prop="age" v-bind:rules="rules.age" v-bind:label-width="labelWidth")
+        el-form-item.s-flex_item(label="年龄" prop="age" v-bind:label-width="labelWidth")
           el-input-number(v-model="formModel.age" style="width:100%")
         el-form-item.s-flex_item(label="期望工资" prop="salary" v-bind:rules="rules.salary" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.salary")
@@ -61,7 +61,6 @@
           orgId: [{type: 'number', required: true, message: '请选择所在部门', trigger: 'change'}],
           xm: [{required: true, message: '请输入姓名', trigger: 'blur'}],
           sex: [{type: 'number', required: true, message: '请选择性别', trigger: 'change'}],
-          age: [{type: 'number', required: true, message: '请输入年龄', trigger: 'blur'}],
           tel: [{required: true, message: '请输入联系电话', trigger: 'blur'}],
           graduateSchool: [{required: true, message: '请输入毕业学校', trigger: 'blur'}],
           major: [{required: true, message: '请输入专业', trigger: 'blur'}],
