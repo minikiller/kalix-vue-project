@@ -29,8 +29,8 @@ ReimbursementApplyStartURL = "camel/rest/reimbursementapplys/workflow/startProce
 RecruitApplyURL = "/camel/rest/recruitapplys"
 RecruitApplyStartURL = "/camel/rest/recruitapplys/workflow/startProcess?id="
 # 入职申请
-EmployApplyURL = ""
-EmployApplyStartURL = ""
+EmployApplyURL = "/camel/rest/employapplys"
+EmployApplyStartURL = "/camel/rest/employapplys/workflow/startProcess?id="
 # 用车申请
 CarApplyURL = "/camel/rest/carapplys"
 CarApplyStartURL = "/camel/rest/carapplys/workflow/startProcess?id="
@@ -127,17 +127,6 @@ MeetingroomURL  = "camel/rest/meetingrooms"
   path = "oa/reimbursementapply/reimbursementApplySearch"
   name = "OaReimbursementApplySearch"
 
-# 需要自动注册成全局的CarApply组件
-[[CarApplyComponent]]
-  path = "oa/carapply/carApplyView"
-  name = "OaCarApplyView"
-[[CarApplyComponent]]
-  path = "oa/carapply/carApplyAdd"
-  name = "OaCarApplyAdd"
-[[CarApplyComponent]]
-  path = "oa/carapply/carApplySearch"
-  name = "OaCarApplySearch"
-
 # 需要自动注册成全局的ReimbursementApply(用人申请)组件
 [[RecruitApplyComponent]]
   path = "oa/recruitapply/recruitApplyView"
@@ -153,10 +142,7 @@ MeetingroomURL  = "camel/rest/meetingrooms"
 [[EmployApplyComponent]]
   path = "oa/employapply/employApplyView"
   name = "OaEmployApplyView"
-[[RecruitApplyComponent]]
-  path = "oa/employapply/employApplyAdd"
-  name = "OaEmployApplyAdd"
-[[RecruitApplyComponent]]
+[[EmployApplyComponent]]
   path = "oa/employapply/employApplySearch"
   name = "OaEmployApplySearch"
 
