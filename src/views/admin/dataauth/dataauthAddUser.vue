@@ -51,7 +51,7 @@
           for (let i = 0; i < this.userList.length; i++) {
             this.dataList.push({
               key: this.userList[i].id,
-              label: this.userList[i].loginName
+              label: this.userList[i].name
             })
           }
           console.log('this.dataList', this.dataList)
