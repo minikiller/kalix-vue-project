@@ -60,7 +60,7 @@
           personCategory: [{type: 'number', required: true, message: '请选择人员类别', trigger: 'change'}],
           orgId: [{type: 'number', required: true, message: '请选择所在部门', trigger: 'change'}],
           xm: [{required: true, message: '请输入姓名', trigger: 'blur'}],
-          sex: [{type: 'number', required: true, message: '请选择性别', trigger: 'blur'}],
+          sex: [{type: 'number', required: true, message: '请选择性别', trigger: 'change'}],
           age: [{type: 'number', required: true, message: '请输入年龄', trigger: 'blur'}],
           tel: [{required: true, message: '请输入联系电话', trigger: 'blur'}],
           graduateSchool: [{required: true, message: '请输入毕业学校', trigger: 'blur'}],
