@@ -5,17 +5,20 @@
 -->
 
 <template lang="pug">
-  div.login
+  div.login(data-logig)
     div.from-warpper
       div.form
         div.logo
-        el-form.loginForm(v-bind:model="loginForm" v-bind:rules="rules" ref="loginForm" label-width="100px")
-          el-form-item(label="账号" prop="name")
-            el-input(v-model="loginForm.name")
-          el-form-item(label="密码" prop="pass")
-            el-input(type="password" v-model="loginForm.pass" auto-complete="off")
-          el-form-item(label=" ")
-            el-button.btn-submit(type="primary" v-on:click="onSubmit('loginForm')" size="large") 立即登录
+        el-form.loginForm(v-bind:model="loginForm" v-bind:rules="rules" ref="loginForm")
+          div.error(v-if="errorFlag") {{errorMessage}}
+          el-form-item.kalix-form-item(prop="name")
+            el-input(v-model="loginForm.name" placeholder="账号" ref="loginFormName")
+              i.icon-user(slot="prefix")
+          el-form-item.kalix-form-item(prop="pass")
+            el-input(type="password" v-model="loginForm.pass" placeholder="密码" auto-complete="off")
+              i.icon-lock(slot="prefix")
+          el-form-item(label="")
+            el-button.btn-submit(type="primary" v-on:click="onSubmit('loginForm')" size="large") 登录
 </template>
 
 <script type="text/ecmascript-6">
@@ -24,6 +27,7 @@
   import Message from 'common/message'
   import Cache from 'common/cache'
   import Login from 'api/login'
+  import EventBus from 'common/eventbus'
 
   export default {
     data() {
@@ -41,11 +45,19 @@
           pass: [
             {required: true, message: '请输入密码', trigger: 'blur'}
           ]
-        }
+        },
+        errorFlag: false,
+        errorMessage: ''
       }
     },
     activated() {
       this.loginForm = {name: '', pass: ''}
+      EventBus.$on('ElFormItem.validateField', () => {
+//        console.log('el.form.item.validateField')
+      })
+    },
+    mounted() {
+      this.tabInput()
     },
     methods: {
       ...mapMutations({setSaveLogin: 'saveLogin'}),
@@ -63,7 +75,7 @@
                 Cache.save('user_token', data.user.token)
                 Cache.save('user_name', data.user.name)
                 Cache.save('loginname', that.loginForm.name)
-                console.log('access token is: ', data.access_token)
+//                console.log('access token is: ', data.access_token)
                 this.setSaveLogin({
                   access_token: data.access_token,
                   user_name: data.user.name,
@@ -74,22 +86,73 @@
 //                Router.push({path: '/'})
                 this.$router.push({path: '/'})
               } else {
+                this.$refs.loginFormName.focus()
                 Message.error(data.message)
               }
             }).catch(error => {
+              this.$refs.loginFormName.focus()
               Message.error(error.message)
             })
           } else {
             return false
           }
         })
+      },
+      tabInput() {
+        let ipts = document.getElementsByClassName('el-input__inner')
+        for (let i = 0; i < ipts.length; i++) {
+          ipts[i].addEventListener('keydown', e => {
+            if (e.keyCode === 13) {
+              if (ipts[i + 1]) {
+                ipts[i + 1].focus()
+              } else {
+                document.getElementsByClassName('btn-submit')[0].focus()
+              }
+            }
+          })
+        }
       }
     },
     components: {},
-    computed: {}
+    computed: {},
+    watch: {}
   }
 </script>
 
+<style lang="stylus">
+  // .el-form-item.is-error .el-input__inner
+  .login[data-logig]
+    .btn-submit
+      background url("./button-bg.png") 50% 50% no-repeat;
+      border none
+      color #5c4611
+    .icon-user,
+    .icon-lock
+      display block
+      width 21px
+      height 100%
+      background 50% 50% no-repeat
+    .icon-user
+      background-image url("./icon-user.png")
+    .icon-lock
+      background-image url("./icon-lock.png")
+    .kalix-form-item
+      margin-bottom 36px
+      .el-input__inner
+        border-color #d8dce5 !important
+      &.is-success
+        .el-input__inner
+          border-color #d8dce5 !important
+      &.is-error
+        .el-input__inner
+          border-color #bca878 !important
+          box-shadow 0px 0px 6px rgba(188, 168, 120, 0.46)
+        .el-form-item__error
+          padding 0 0 0 22px
+          line-height: 32px;
+          background url("./icon-warning.png") 0 50% no-repeat
+          color: #fe00000
+</style>
 <style scoped lang="stylus">
   @import "./login.styl"
 </style>

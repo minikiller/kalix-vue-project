@@ -35,9 +35,12 @@
     el-form-item(label="用车起始地点" prop="address" v-bind:label-width="labelWidth")
       el-input(v-model="formModel.address" readonly)
     div.s-flex
-      el-form-item.s-flex_item.kalix-form-table-td(label="用车情况" prop="city" v-bind:label-width="labelWidth")
+      // el-form-item.s-flex_item.kalix-form-table-td(label="用车情况" prop="city" v-bind:label-width="labelWidth")
         div(style="text-align:center")
           el-checkbox(v-model="formModel.city" disabled) 是否市内用车
+      el-form-item.s-flex_item.kalix-form-table-td(label="用车情况" prop="city" v-bind:label-width="labelWidth")
+        div(style="text-align:center")
+          el-switch.s-flex_item(v-model="formModel.city" active-text="市内用车" inactive-text="市外用车" disabled)
       el-form-item.s-flex_item.kalix-form-table-td(label="申请人" prop="createBy" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.createBy" readonly)
       el-form-item.s-flex_item.kalix-form-table-td(label="联系电话" prop="operatorPhone" v-bind:label-width="labelWidth")

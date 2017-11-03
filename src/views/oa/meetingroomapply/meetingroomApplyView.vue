@@ -1,5 +1,5 @@
 <!--
-描述：人员管理-临时申请-查看组件
+描述：人员管理-会议室申请-查看组件
 开发人：sunlf
 开发日期：2017年8月17日
 -->
@@ -17,7 +17,7 @@
 <script type="text/ecmascript-6">
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import TempApplyViewForm from './TempApplyViewForm'
+  import TempApplyViewForm from './MeetingroomApplyViewForm'
   import FormModel from './model'
 
   export default {

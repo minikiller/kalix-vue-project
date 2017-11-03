@@ -108,6 +108,7 @@
       clearData() {
         this.tableData = []
         this.loading = false
+        this.pager.totalCount = 0
       }
     },
     data() {
