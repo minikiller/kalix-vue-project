@@ -35,8 +35,8 @@ EmployApplyStartURL = ""
 CarApplyURL = "/camel/rest/carapplys"
 CarApplyStartURL = "/camel/rest/carapplys/workflow/startProcess?id="
 # 出差申请
-EvectionApplyURL = ""
-EvectionApplyStartURL = ""
+EvectionApplyURL = "/camel/rest/evectionapplys"
+EvectionApplyStartURL = "/camel/rest/evectionapplys/workflow/startProcess?id="
 # 会议申请
 MeetingApplyURL = "/camel/rest/meetingapplys"
 MeetingApplyStartURL = "/camel/rest/meetingapplys/workflow/startProcess?id="
