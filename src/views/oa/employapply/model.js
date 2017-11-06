@@ -1,5 +1,5 @@
 const FormModel = {
-  // title: '吉林动画学院入职申请表',
+  title: '吉林动画学院入职申请表',
   orgId: null,              // 部门id
   orgName: '',              // 部门名称
   processInstanceId: '',    // 流程实例id
@@ -10,6 +10,7 @@ const FormModel = {
   applyDate: '',
   creationDate: '',
   createBy: '',
+  candidateId: null,           // 应聘人员id
   personCategory: null,        // 人员类别
   xm: '',                      // 姓名
   sex: null,                   // 性别

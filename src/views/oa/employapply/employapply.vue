@@ -12,9 +12,9 @@
       v-bind:dictDefine="dictDefine")
         template(slot="tableColumnSlot")
           kalix-biz-no-column // 业务编号
-          // el-table-column(prop="title" label="名称" align="center" width="220")
+          el-table-column(prop="title" label="名称" align="center" width="220")
           el-table-column(prop="personCategoryName" label="人员类别" align="center" width="220")
-          kalix-date-column(prop="creationDate" label="创建时间")
+          // kalix-date-column(prop="creationDate" label="创建时间")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
           kalix-date-column(prop="applyDate" label="申请时间")
           el-table-column(prop="xm" label="姓名" align="center" width="220")
