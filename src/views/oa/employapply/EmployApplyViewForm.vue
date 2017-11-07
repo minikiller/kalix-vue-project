@@ -43,7 +43,8 @@
       el-form-item.s-flex_item.kalix-form-table-td(label="人力资源部长签字" prop="manpower" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.manpower" readonly)
     div.table-title 应聘人员信息
-      kalix-candidate-view-form(v-bind:formModel.sync="candidateFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")
+      // kalix-candidate-view-form(v-bind:formModel.sync="candidateFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")
+      kalix-candidate-view-form1(v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")
     <!--template(v-if="formModel.personCategory === 1")-->
       <!--div.table-title 面试情况-->
       <!--kalix-interview-view-form(v-bind:formModel.sync="interviewFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")-->
@@ -59,28 +60,30 @@
 
 <script type="text/ecmascript-6">
   import DateTimePicker from '@/components/biz/date/datetimepicker.vue'
-  import candidateFormModel from '../candidate/model'
-  import CandidateViewForm from '../candidate/CandidateViewForm.vue'
-  import interviewFormModel from '../interview/model'
-  import InterviewViewForm from '../interview/InterviewViewForm.vue'
-  import lectureFormModel from '../lecture/model'
-  import LectureViewForm from '../lecture/LectureViewForm.vue'
+  // import candidateFormModel from '../candidate/model'
+  // import CandidateViewForm from '../candidate/CandidateViewForm.vue'
+  import CandidateViewForm1 from '../candidate/CandidateViewForm1.vue'
+  // import interviewFormModel from '../interview/model'
+  // import InterviewViewForm from '../interview/InterviewViewForm.vue'
+  // import lectureFormModel from '../lecture/model'
+  // import LectureViewForm from '../lecture/LectureViewForm.vue'
 
   export default {
     props: ['formModel'],
     data() {
       return {
-        candidateFormModel: Object.assign({}, candidateFormModel),
-        interviewFormModel: Object.assign({}, interviewFormModel),
-        lectureFormModel: Object.assign({}, lectureFormModel),
+        // candidateFormModel: Object.assign({}, candidateFormModel),
+        // interviewFormModel: Object.assign({}, interviewFormModel),
+        // lectureFormModel: Object.assign({}, lectureFormModel),
         labelWidth: '130px'
       }
     },
     components: {
       KalixDateTimePicker: DateTimePicker,
-      KalixCandidateViewForm: CandidateViewForm,
-      KalixInterviewViewForm: InterviewViewForm,
-      KalixLectureViewForm: LectureViewForm
+      // KalixCandidateViewForm: CandidateViewForm,
+      // KalixInterviewViewForm: InterviewViewForm,
+      // KalixLectureViewForm: LectureViewForm
+      KalixCandidateViewForm1: CandidateViewForm1
     }
   }
 </script>
