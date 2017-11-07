@@ -66,7 +66,9 @@
       onCancelClick() {
         console.log('dialog cancel button clicked !')
         this.visible = false
-        this.$refs.dialogForm.resetFields()
+        if (!this.isView) {
+          this.$refs.dialogForm.resetFields()
+        }
 //        this.$emit('update:formModel', JSON.parse(this.tempFormModel))
         this._afterDialogClose()
       },

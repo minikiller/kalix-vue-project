@@ -4,7 +4,7 @@ const FormModel = {
   orgName: '',        // 部门名称
   xm: '',             // 姓名
   sex: '',            // 性别
-  age: null,          // 年龄
+  age: 25,            // 年龄
   tel: '',            // 联系电话
   graduateSchool: '', // 毕业学校
   major: '',          // 专业

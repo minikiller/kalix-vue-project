@@ -29,5 +29,9 @@ yarn config set registry https://registry.npm.taobao.org
 yarn config set sass-binary-site= http://npm.taobao.org/mirrors/node-sass
 
 set PHANTOMJS_CDNURL=https://npm.taobao.org/dist/phantomjs
+
+set chromedriver_cdnurl=https://npm.taobao.org/mirrors/chromedriver
+
+npm install chromedriver --chromedriver_cdnurl=https://npm.taobao.org/mirrors/chromedriver
 ```
 
