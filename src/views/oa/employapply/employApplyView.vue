@@ -13,7 +13,7 @@
 <script type="text/ecmascript-6">
   import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import EmployApplyViewForm from './EmployApplyViewForm.vue'
+  import EmployApplyViewForm from './EmployApplyAllViewForm.vue'
 
   export default {
     data() {

@@ -11,8 +11,9 @@ const FormModel = {
   creationDate: '',
   createBy: '',
   candidateId: null,           // 应聘人员id
+  candidateName: '',           // 应聘者姓名
   personCategory: null,        // 人员类别
-  xm: '',                      // 姓名
+  // xm: '',                      // 姓名
   sex: null,                   // 性别
   age: null,                   // 年龄
   tel: '',                     // 联系电话
