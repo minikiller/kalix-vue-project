@@ -18,6 +18,7 @@
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
           kalix-date-column(prop="applyDate" label="申请时间")
           el-table-column(prop="xm" label="姓名" align="center" width="220")
+          el-table-column(prop="position" label="xxx" align="center" width="220")
           el-table-column(prop="sexName" label="性别" align="center" width="220")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
           el-table-column(prop="auditResult" label="审批结果" align="center" width="220")

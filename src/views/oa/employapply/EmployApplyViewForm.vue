@@ -44,17 +44,17 @@
         el-input(v-model="formModel.manpower" readonly)
     div.table-title 应聘人员信息
       kalix-candidate-view-form(v-bind:formModel.sync="candidateFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")
-    template(v-if="formModel.personCategory === 1")
-      div.table-title 面试情况
-      kalix-interview-view-form(v-bind:formModel.sync="interviewFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")
-    template(v-else-if="formModel.personCategory === 2")
-      div.table-title 面试情况
-      kalix-interview-view-form(v-bind:formModel.sync="interviewFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")
-      div.table-title 试讲情况
-      kalix-lecture-view-form(v-bind:formModel.sync="lectureFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")
-    template(v-else-if="formModel.personCategory === 3")
-      div.table-title 试讲情况
-      kalix-lecture-view-form(v-bind:formModel.sync="lectureFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")
+    <!--template(v-if="formModel.personCategory === 1")-->
+      <!--div.table-title 面试情况-->
+      <!--kalix-interview-view-form(v-bind:formModel.sync="interviewFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")-->
+    <!--template(v-else-if="formModel.personCategory === 2")-->
+      <!--div.table-title 面试情况-->
+      <!--kalix-interview-view-form(v-bind:formModel.sync="interviewFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")-->
+      <!--div.table-title 试讲情况-->
+      <!--kalix-lecture-view-form(v-bind:formModel.sync="lectureFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")-->
+    <!--template(v-else-if="formModel.personCategory === 3")-->
+      <!--div.table-title 试讲情况-->
+      <!--kalix-lecture-view-form(v-bind:formModel.sync="lectureFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.candidateId")-->
 </template>
 
 <script type="text/ecmascript-6">

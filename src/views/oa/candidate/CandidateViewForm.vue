@@ -1,5 +1,5 @@
 <!--
-描述：办公自动化-用车申请-查看组件
+描述：办公自动化-应聘人员管理-查看组件
 开发人：hqj
 开发日期：2017年10月19日
 -->
@@ -65,6 +65,13 @@
     mounted() {
       if (this.isRequest) {
         this.getBizData()
+      }
+    },
+    watch: {
+      bizId(newVal) {
+        if (this.isRequest) {
+          this.getBizData()
+        }
       }
     },
     methods: {

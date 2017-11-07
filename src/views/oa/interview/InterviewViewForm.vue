@@ -59,6 +59,13 @@
         this.getBizData()
       }
     },
+    watch: {
+      bizId(newVal) {
+        if (this.isRequest) {
+          this.getBizData()
+        }
+      }
+    },
     methods: {
       // 获取业务数据
       getBizData() {
