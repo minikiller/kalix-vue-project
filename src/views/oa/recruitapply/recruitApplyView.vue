@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="recruitApply" ref="kalixBizDialog" v-bind:formModel.sync="formModel" isView)
-    div.el-form.kalix-form-table(slot="dialogFormSlot")
+    div.el-form(slot="dialogFormSlot")
       kalix-recruit-apply-view-form(v-bind:formModel="formModel")
 </template>
 
