@@ -7,7 +7,6 @@
 <template lang="pug">
   div.el-form.kalix-form-table
     div.table-title 吉林动画学院入职申请表
-    | {{formModel.candidateId}}
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="名称" v-bind:label-width="labelWidth" prop="title")
         el-input(v-model="formModel.title" readonly)
