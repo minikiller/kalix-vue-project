@@ -10,8 +10,8 @@
     el-form-item(label="项目名称" v-bind:label-width="labelWidth" prop="projectName")
       el-input(v-model="formModel.projectName")
     div.s-flex
-      el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" prop="orgId" v-bind:label-width="labelWidth")
-        kalix-org-select(v-model="formModel.orgId")
+      el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" prop="orgName" v-bind:label-width="labelWidth")
+        kalix-org-select(v-model="formModel.orgName")
       el-form-item.s-flex_item.kalix-form-table-td(label="申请时间" prop="applyDate"  v-bind:label-width="labelWidth")
         kalix-date-time-picker(v-model="formModel.applyDate" style="width:100%")
     el-form-item(label="出差原因" prop="reason" v-bind:label-width="labelWidth")
