@@ -18,7 +18,8 @@
         v-bind:toolbarBtnList="toolbarBtnList"
         v-on:onToolBarClick="onToolBarClick")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-          el-table(:data="tableData" stripe style="width:100%" v-bind:row-class-name="tableRowClassName"
+          el-table(:data="tableData" stripe style="width:100%"
+          v-bind:row-class-name="tableRowClassName"
           v-loading.body="loading" border fit
           v-bind:height="tableHeight"
           v-on:selection-change="onTableSelectionChange")
@@ -406,40 +407,42 @@
         let that = this
         console.log('baseTable', this.targetURL)
         this.loading = true
-        let _data = {
-          jsonStr: this.jsonStr,
-          page: this.pager.currentPage,
-          start: this.pager.start,
-          limit: this.pager.limit
-        }
-        _data = Object.assign(_data, this.searchParam)
-        this.$http.get(this.targetURL, {
-          params: _data
-        }).then(response => {
-          this.tableData = response.data.data.map((item, index) => {
-            item.rowNumber = index + that.rowNo
-            return item
+        setTimeout(_ => {
+          let _data = {
+            jsonStr: this.jsonStr,
+            page: this.pager.currentPage,
+            start: this.pager.start,
+            limit: this.pager.limit
+          }
+          _data = Object.assign(_data, this.searchParam)
+          this.$http.get(this.targetURL, {
+            params: _data
+          }).then(response => {
+            this.tableData = response.data.data.map((item, index) => {
+              item.rowNumber = index + that.rowNo
+              return item
+            })
+
+            if (this.dictDefine) { // 设置数据字典
+              this.setDictDefine(this.tableData)
+            }
+
+            if (this.customRender) { // 对table的数据进行自定义的修饰
+              this.customRender(this.tableData)
+            }
+
+            this.pager.totalCount = response.data.totalCount
+            this.loading = false
+            document.querySelector('.el-table__body-wrapper').scrollTop = 0
+            if (!this.isFixedColumn) {
+              document.querySelector('.el-table__body-wrapper').style.overflowX = 'hidden'
+            }
+            this._getTableHeight()
+          }).catch(() => {
+            this.loading = false
+            console.log('this.loading = false', this.tableData.length)
           })
-
-          if (this.dictDefine) { // 设置数据字典
-            this.setDictDefine(this.tableData)
-          }
-
-          if (this.customRender) { // 对table的数据进行自定义的修饰
-            this.customRender(this.tableData)
-          }
-
-          this.pager.totalCount = response.data.totalCount
-          this.loading = false
-          document.querySelector('.el-table__body-wrapper').scrollTop = 0
-          if (!this.isFixedColumn) {
-            document.querySelector('.el-table__body-wrapper').style.overflowX = 'hidden'
-          }
-          this._getTableHeight()
-        }).catch(() => {
-          this.loading = false
-          console.log('this.loading = false', this.tableData.length)
-        })
+        }, 500)
         this._validateButton()
       },
       /**
