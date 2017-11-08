@@ -1,25 +1,27 @@
 <template lang="pug">
   div.kalix-article
-    el-row.duty-row(:gutter="0")
-      el-col.duty-col(:span="8")
-        kalix-org-tree(v-on:orgTreeClick="onOrgTreeClick")
-      el-col.duty-col(:span="16" style="padding-top:0")
-        kalix-base-table(ref="kalixBaseTable" bizKey='duty' title='职务列表' v-bind:targetURL='targetURL'
-        v-bind:bizDialog='bizDialog' bizSearch='AdminDutySearch' v-bind:btnList='btnList' v-bind:customRender="customRender"
-        v-bind:isFixedColumn="isFixedColumn" v-bind:dialogOptions="dialogOptions")
-          template(slot="tableColumnSlot")
-            el-table-column(prop="name"  label="职务名称")
-            el-table-column(prop="comment" label="职务描述")
-            el-table-column(prop="orgNameCol" label="组织机构")
-            el-table-column(prop="createBy" label="创建人")
-            kalix-date-column(prop="creationDate" label="创建日期")
+    keep-alive
+      el-row.duty-row(:gutter="0")
+        el-col.duty-col(:span="8")
+          kalix-org-tree(v-on:orgTreeClick="onOrgTreeClick")
+        el-col.duty-col(:span="16" style="padding-top:0")
+          kalix-base-table(ref="kalixBaseTable"
+          bizKey='duty' title='职务列表' v-bind:targetURL='targetURL'
+          v-bind:bizDialog='bizDialog' bizSearch='AdminDutySearch' v-bind:btnList='btnList' v-bind:customRender="customRender"
+          v-bind:isFixedColumn="isFixedColumn" v-bind:dialogOptions="dialogOptions")
+            template(slot="tableColumnSlot")
+              el-table-column(prop="name"  label="职务名称")
+              el-table-column(prop="comment" label="职务描述")
+              el-table-column(prop="orgNameCol" label="组织机构")
+              el-table-column(prop="createBy" label="创建人")
+              kalix-date-column(prop="creationDate" label="创建日期")
 </template>
 
 <script>
   import BaseTable from '@/components/custom/baseTable'
   import DateColumn from 'views/oa/comp/dateColumn'
   import OrgTree from '@/components/biz/tree/OrgTree'
-  import {DutyComponent, ToolButtonList} from '../config.toml'
+  import {DutyComponent, DutyButtonList} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
@@ -56,7 +58,7 @@
       return {
         dialogOptions: {},
         isFixedColumn: true,
-        btnList: ToolButtonList,
+        btnList: DutyButtonList,
         targetURL: '',
         orgId: -1,
         orgName: '',
