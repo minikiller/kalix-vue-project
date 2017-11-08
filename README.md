@@ -46,6 +46,8 @@ yarn test
 ## doc url   
 > command: 
 ```
+npm i docsify-cli -g
+
 docsify serve ./docs
 
 Serving D:\java-develop\project\kalix-vue-project\docs now.
