@@ -14,7 +14,6 @@
         el-tree.filter-tree(v-bind:data="treeData"
         v-bind:props="defaultProps" accordion
         node-key="id" highlight-current
-        v-bind:default-expanded-keys="[40810]"
         v-bind:filter-node-method="filterNode" v-on:node-click="handleNodeClick"
         ref="orgTree")
 </template>
@@ -74,6 +73,11 @@
           params: {}
         }).then(res => {
           this.treeData = res.data.children
+          // 加载数据后自动选中第一个节点
+          this.$nextTick(() => {
+            const firstNode = document.querySelector('.el-tree-node')
+            firstNode.click()
+          })
 //          this._getTableHeight()
         })
         const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
