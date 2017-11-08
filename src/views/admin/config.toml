@@ -4,6 +4,7 @@ AdminDictURL = "/camel/rest/admin/dicts"
 AdminDictsTypesListURL = "/camel/rest/admin/dicts/types/list"
 
 usersURL = "/camel/rest/users"
+dutyURL = "/camel/rest/dutys"
 appsURL = "/camel/rest/system/applications"
 workgroupURL = "/camel/rest/workgroups"
 dataauthURL = "/camel/rest/dataauths"
@@ -66,3 +67,13 @@ AdminCacheKey = "ADMIN-DICT-KEY"
 [[DataAuthComponent]]
  path = "admin/dataauth/dataauthAddUser"
  name = "AdminDataAuthAddUser"
+
+ [[DutyComponent]]
+  path = "admin/duty/dutyView"
+  name = "AdminDutyView"
+ [[DutyComponent]]
+  path = "admin/duty/dutyAdd"
+  name = "AdminDutyAdd"
+ [[DutyComponent]]
+  path = "admin/duty/dutySearch"
+  name = "AdminDutySearch"

@@ -162,6 +162,11 @@
         }
       }
     },
+    watch: {
+      targetURL(newVal) {
+        this.getData()
+      }
+    },
     data() {
       return {
         myFixed: true,
@@ -265,7 +270,7 @@
 //          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
           if (typeof (this.$refs.kalixDialog.init) === 'function') {
-            that.$refs.kalixDialog.init(this.dialogOptions)
+            that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
           }
         }, 20)
       },
@@ -399,7 +404,7 @@
       },
       getData() {
         let that = this
-//        console.log('baseTable', 'getData')
+        console.log('baseTable', this.targetURL)
         this.loading = true
         let _data = {
           jsonStr: this.jsonStr,

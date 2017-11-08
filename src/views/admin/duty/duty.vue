@@ -2,104 +2,79 @@
   div.kalix-article
     el-row.duty-row(:gutter="0")
       el-col.duty-col(:span="8")
-        div.kalix-search
-          div.kalix-search-hd
-            i.tit_icon.iconfont.icon-organization
-            | {{treeTitle}}
-          div.kalix-search-bd
-            el-input(placeholder="输入关键字进行过滤" v-model="filterText")
-            div.kalix-tree-wrapper
-              el-tree.filter-tree(v-bind:data="data2"
-              v-bind:props="defaultProps" accordion
-              node-key="id" highlight-current
-              v-bind:default-expanded-keys="[40810]"
-              v-bind:filter-node-method="filterNode" v-on:node-click="handleNodeClick"
-              ref="tree2")
-      el-col.duty-col(:span="16")
-        div.kalix-wrapper
-          div.kalix-wrapper-hd
-            i(v-bind:class="iconCls")
-            | {{tableTitle}}
-          div.kalix-wrapper-bd
-            div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-              kalix-paged-table(ref="pagedTable" v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr"
-              v-bind:tableHeight="tableHeight")
-                template(slot="tableColumnSlot")
-                  el-table-column(prop="name"  label="职务名称")
-                  el-table-column(prop="comment" label="职务描述")
-                  el-table-column(prop="createBy" label="创建人")
-                  kalix-date-column(prop="creationDate" label="创建日期")
+        kalix-org-tree(v-on:orgTreeClick="onOrgTreeClick")
+      el-col.duty-col(:span="16" style="padding-top:0")
+        kalix-base-table(ref="kalixBaseTable" bizKey='duty' title='职务列表' v-bind:targetURL='targetURL'
+        v-bind:bizDialog='bizDialog' bizSearch='AdminDutySearch' v-bind:btnList='btnList' v-bind:customRender="customRender"
+        v-bind:isFixedColumn="isFixedColumn" v-bind:dialogOptions="dialogOptions")
+          template(slot="tableColumnSlot")
+            el-table-column(prop="name"  label="职务名称")
+            el-table-column(prop="comment" label="职务描述")
+            el-table-column(prop="orgNameCol" label="组织机构")
+            el-table-column(prop="createBy" label="创建人")
+            kalix-date-column(prop="creationDate" label="创建日期")
 </template>
 
 <script>
-  import PagedTable from '@/components/custom/pagedTable'
+  import BaseTable from '@/components/custom/baseTable'
   import DateColumn from 'views/oa/comp/dateColumn'
-  import Cache from 'common/cache'
+  import OrgTree from '@/components/biz/tree/OrgTree'
+  import {DutyComponent, ToolButtonList} from '../config.toml'
+  import {registerComponent} from '@/api/register'
+
+  // 注册全局组件
+  registerComponent(DutyComponent)
 
   export default {
-    watch: {
-      filterText(val) {
-        this.$refs.tree2.filter(val)
-      },
-      orgId(val) {
-        this.targetURL = `/camel/rest/orgs/${this.orgId}/dutys`
-      }
-    },
+    watch: {},
 
     methods: {
-      filterNode(value, data) {
-        if (!value) return true
-        return data.name.indexOf(value) !== -1
-      },
-      handleNodeClick(data) {
+      onOrgTreeClick(data) {
+//        console.log('org data is ', data.id)
         this.orgId = data.id
+        this.orgName = data.name
+        this.targetURL = `/camel/rest/orgs/${data.id}/dutys`
+        this.dialogOptions = {
+          orgId: this.orgId,
+          orgName: this.orgName,
+          targetURL: this.targetURL
+        }
+        console.log('org targetURL data is ', this.targetURL)
+//        this.$refs.kalixBaseTable.getData()
       },
-      getData() {
-        let url = '/camel/rest/orgs?node=root'
-        this.axios.request({
-          method: 'GET',
-          url: url,
-          params: {}
-        }).then(res => {
-          this.data2 = res.data.children
-          this._getTableHeight()
+      customRender(_data) {
+        let that = this
+        console.log('org _data data is ', _data)
+        _data.forEach(function (e) {
+          e.orgNameCol = that.orgName
         })
-        const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
-        if (currentTreeListItem) {
-          this.iconCls = currentTreeListItem.iconCls
-        }
-      },
-      _getTableHeight() {
-        if (this.$refs.kalixTableContainer && this.$refs.kalixTableContainer.clientHeight) {
-          this.tableHeight = this.$refs.kalixTableContainer.clientHeight - 32
-        }
-        console.log('this.tableHeight', this.$refs.kalixTableContainer.clientHeight)
+        console.log('org _data data is ', _data)
       }
     },
 
     data() {
       return {
-        treeTitle: '组织机构树',
-        tableTitle: '职务列表',
-        iconCls: '',
-        filterText: '',
-        data2: [],
-        orgId: '',
+        dialogOptions: {},
+        isFixedColumn: true,
+        btnList: ToolButtonList,
         targetURL: '',
-        defaultProps: {
-          children: 'children',
-          label: 'name'
-        },
-        jsonStr: {},
+        orgId: -1,
+        orgName: '',
+        bizDialog: [
+          {id: 'view', dialog: 'AdminDutyView'},
+          {id: 'edit', dialog: 'AdminDutyAdd'},
+          {id: 'add', dialog: 'AdminDutyAdd'}
+        ],
         tableHeight: 0 //  列表组件高度
       }
     },
     mounted() {
-      this.getData()
+//      this.getData()
     },
     components: {
-      KalixPagedTable: PagedTable,
-      KalixDateColumn: DateColumn
+      KalixBaseTable: BaseTable,
+      KalixDateColumn: DateColumn,
+      KalixOrgTree: OrgTree
     },
     computed: {
       tableContainerStyle() {
@@ -145,19 +120,22 @@
         box-sizing border-box
         overflow auto
 
-
     .el-button
       .iconfont
         font-size 14px
 
   .kalix-article
+    position relative
     height 100%
     .kalix-search,
     .kalix-wrapper
       height 100%
       margin 0
       box-sizing border-box
+    .kalix-search
+      margin-top 0 !important
     .kalix-wrapper
+      margin-bottom 0 !important
       position relative
       top 0
       .kalix-wrapper-hd
