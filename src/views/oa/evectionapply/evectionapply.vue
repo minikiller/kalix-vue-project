@@ -12,7 +12,6 @@
           kalix-date-column(prop="endDate" label="出差结束时间")
           el-table-column(prop="auditresult" label="审批结果" align="center" width="220")
           el-table-column(prop="currentnode" label="当前环节" align="center" width="220")
-          el-table-column(prop="status" label="工作流状态" align="center" width="220")
           kalix-process-status-column
     kalix-task-view(ref="kalixDialog")
 </template>
