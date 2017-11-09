@@ -2,9 +2,9 @@
   div.kalix-article
     keep-alive
       el-row.duty-row(:gutter="0")
-        el-col.duty-col(:span="8")
+        el-col.duty-col(:span="8" style="padding:8px 0 8px 8px;")
           kalix-org-tree(v-on:orgTreeClick="onOrgTreeClick")
-        el-col.duty-col(:span="16" style="padding-top:0")
+        el-col.duty-col(:span="16" )
           kalix-base-table(ref="kalixBaseTable"
           bizKey='duty' title='职务列表' v-bind:targetURL='targetURL'
           v-bind:bizDialog='bizDialog' bizSearch='AdminDutySearch' v-bind:btnList='btnList' v-bind:customRender="customRender"
@@ -129,6 +129,7 @@
   .kalix-article
     position relative
     height 100%
+    overflow hidden
     .kalix-search,
     .kalix-wrapper
       height 100%
@@ -160,6 +161,5 @@
     height 100%
     .duty-col
       height 100%
-      padding 5px;
       box-sizing border-box
 </style>
