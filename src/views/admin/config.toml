@@ -5,6 +5,7 @@ AdminDictsTypesListURL = "/camel/rest/admin/dicts/types/list"
 
 usersURL = "/camel/rest/users"
 dutyURL = "/camel/rest/dutys"
+orgURL = "/camel/rest/orgs"
 appsURL = "/camel/rest/system/applications"
 workgroupURL = "/camel/rest/workgroups"
 dataauthURL = "/camel/rest/dataauths"
@@ -27,6 +28,28 @@ AdminCacheKey = "ADMIN-DICT-KEY"
 [[DutyButtonList]]
   id = "delete"
   title = "删除"
+  isShow = true
+  isPermission = true
+
+[[OrgToolbarList]]
+  id = "view"
+  title = "查看"
+  icon = "icon-view"
+  type = "success"
+  isShow = true    # 是否显示
+  isPermission = true   # 是否进行权限认证
+[[OrgToolbarList]]
+  id = "edit"
+  title = "编辑"
+  icon = "icon-edit"
+  type = "info"
+  isShow = true
+  isPermission = true
+[[OrgToolbarList]]
+  id = "delete"
+  title = "删除"
+  icon = "icon-delete"
+  type = "danger"
   isShow = true
   isPermission = true
 
@@ -85,7 +108,7 @@ AdminCacheKey = "ADMIN-DICT-KEY"
  path = "admin/dataauth/dataauthAddUser"
  name = "AdminDataAuthAddUser"
 
- [[DutyComponent]]
+ [[orgComponent]]
   path = "admin/duty/dutyView"
   name = "AdminDutyView"
  [[DutyComponent]]
@@ -94,3 +117,17 @@ AdminCacheKey = "ADMIN-DICT-KEY"
  [[DutyComponent]]
   path = "admin/duty/dutySearch"
   name = "AdminDutySearch"
+
+
+ [[OrgComponent]]
+  path = "admin/org/orgView"
+  name = "AdminOrgView"
+ [[OrgComponent]]
+  path = "admin/org/orgEdit"
+  name = "AdminOrgEdit"
+ [[OrgComponent]]
+  path = "admin/org/orgAdd"
+  name = "AdminOrgAdd"
+ [[OrgComponent]]
+  path = "admin/org/orgSearch"
+  name = "AdminOrgSearch"

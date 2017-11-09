@@ -19,13 +19,16 @@
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
+  import EventBus from 'common/eventbus'
 
   export default {
     activated() {
-      console.log('base dialog orgDuty is activated')
+      console.log('orgTree component is activated')
+      EventBus.$on('refreshData', this.getData)
     },
     deactivated() {
-      console.log('base dialog orgDuty is deactivated')
+      console.log('orgTree component is deactivated')
+      EventBus.$off('refreshData')
     },
     props: {
       placeholder: {
@@ -35,7 +38,6 @@
     },
     data() {
       return {
-
         currentValue: this.value,
         input: '',
         treeTitle: '组织机构树',
@@ -76,7 +78,9 @@
           // 加载数据后自动选中第一个节点
           this.$nextTick(() => {
             const firstNode = document.querySelector('.el-tree-node')
-            firstNode.click()
+            if (firstNode) {
+              firstNode.click()
+            }
           })
 //          this._getTableHeight()
         })
