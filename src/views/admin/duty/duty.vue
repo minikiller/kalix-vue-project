@@ -21,7 +21,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import DateColumn from 'views/oa/comp/dateColumn'
   import OrgTree from '@/components/biz/tree/OrgTree'
-  import {DutyComponent, ToolButtonList} from '../config.toml'
+  import {DutyComponent, DutyButtonList} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
@@ -58,7 +58,7 @@
       return {
         dialogOptions: {},
         isFixedColumn: true,
-        btnList: ToolButtonList,
+        btnList: DutyButtonList,
         targetURL: '',
         orgId: -1,
         orgName: '',

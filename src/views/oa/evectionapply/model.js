@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/9/22.
  */
 const FormModel = {
-  title: '吉林动画学院用车申请表',
+  title: '吉林动画学院出差申请表',
   orgId: null,
   orgName: '',
   processInstanceId: '',
