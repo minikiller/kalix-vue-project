@@ -1,11 +1,11 @@
 const FormModel = {
   title: '吉林动画学院入职申请表',
-  orgId: null,              // 部门id
-  orgName: '',              // 部门名称
-  processInstanceId: '',    // 流程实例id
-  currentNode: '',          // 当前环节
-  status: null,             // 工作流状态
-  auditResult: '无审批结果', // 审批最终结果
+  orgId: null,                // 部门id
+  orgName: '',                // 部门名称
+  processInstanceId: '',      // 流程实例id
+  currentNode: '',            // 当前环节
+  status: 0,                  // 工作流状态
+  auditResult: '流程尚未启动', // 审批最终结果
   businessNo: '',
   applyDate: '',
   creationDate: '',
