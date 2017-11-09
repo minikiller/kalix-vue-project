@@ -9,16 +9,17 @@
     div.from-warpper
       div.form
         div.logo
-        el-form.loginForm(v-bind:model="loginForm" v-bind:rules="rules" ref="loginForm")
-          div.error(v-if="errorFlag") {{errorMessage}}
+        el-form.loginForm(v-bind:model="loginForm" v-bind:rules="rules" ref="loginForm"
+        v-bind:show-message="false")
+          div.error-message(v-if="error.flag") {{error.message}}
           el-form-item.kalix-form-item(prop="name")
             el-input(v-model="loginForm.name" placeholder="账号" ref="loginFormName")
               i.icon-user(slot="prefix")
           el-form-item.kalix-form-item(prop="pass")
-            el-input(type="password" v-model="loginForm.pass" placeholder="密码" auto-complete="off")
+            el-input(type="password" v-model="loginForm.pass" ref="loginFormPass" placeholder="密码" auto-complete="off")
               i.icon-lock(slot="prefix")
           el-form-item(label="")
-            el-button.btn-submit(type="primary" v-on:click="onSubmit('loginForm')" size="large") 登录
+            el-button.btn-submit(type="primary" v-on:click="onSubmit()" size="large") 登录
 </template>
 
 <script type="text/ecmascript-6">
@@ -46,8 +47,10 @@
             {required: true, message: '请输入密码', trigger: 'blur'}
           ]
         },
-        errorFlag: false,
-        errorMessage: ''
+        error: {
+          flag: false,
+          message: ''
+        }
       }
     },
     activated() {
@@ -62,41 +65,67 @@
     methods: {
       ...mapMutations({setSaveLogin: 'saveLogin'}),
       onSubmit(formName) {
+        if (this._validateForm()) {
+          this.login()
+        }
+//        if (formName) {
+//          this.$refs[formName].validate((valid) => {
+//            if (valid) {
+//              this.login()
+//            } else {
+//              return false
+//            }
+//          })
+//        } else {
+//        }
+      },
+      login() {
+        //  登录
         let that = this
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            Login.remoteLogin({
-              'username': that.loginForm.name,
-              'password': that.loginForm.pass
-            }).then(data => {
-              if (data.success) {
-                Cache.save('id', data.user.id)
-                Cache.save('access_token', data.access_token)
-                Cache.save('user_token', data.user.token)
-                Cache.save('user_name', data.user.name)
-                Cache.save('loginname', that.loginForm.name)
+        Login.remoteLogin({
+          'username': that.loginForm.name,
+          'password': that.loginForm.pass
+        }).then(data => {
+          if (data.success) {
+            Cache.save('id', data.user.id)
+            Cache.save('access_token', data.access_token)
+            Cache.save('user_token', data.user.token)
+            Cache.save('user_name', data.user.name)
+            Cache.save('loginname', that.loginForm.name)
 //                console.log('access token is: ', data.access_token)
-                this.setSaveLogin({
-                  access_token: data.access_token,
-                  user_name: data.user.name,
-                  user_token: data.user.token,
-                  user_id: data.user.id,
-                  user_login_name: that.loginForm.name
-                })
-//                Router.push({path: '/'})
-                this.$router.push({path: '/'})
-              } else {
-                this.$refs.loginFormName.focus()
-                Message.error(data.message)
-              }
-            }).catch(error => {
-              this.$refs.loginFormName.focus()
-              Message.error(error.message)
+            this.setSaveLogin({
+              access_token: data.access_token,
+              user_name: data.user.name,
+              user_token: data.user.token,
+              user_id: data.user.id,
+              user_login_name: that.loginForm.name
             })
+//                Router.push({path: '/'})
+            this.$router.push({path: '/'})
           } else {
+            this.$refs.loginFormName.focus()
+            Message.error(data.message)
+          }
+        }).catch(error => {
+          this.$refs.loginFormName.focus()
+          Message.error(error.message)
+        })
+      },
+      _validateForm() {
+        //  验证表单
+        for (let key in this.rules) {
+          this.error.flag = false
+          this.error.message = ''
+          this.$refs.loginForm.validateField(key, errorMessage => {
+            //  如果错误信息长度 > 0 表示验证不通过
+            this.error.flag = errorMessage.length > 0
+            this.error.message = errorMessage
+          })
+          if (this.error.flag) {
             return false
           }
-        })
+        }
+        return true
       },
       tabInput() {
         let ipts = document.getElementsByClassName('el-input__inner')
@@ -111,11 +140,20 @@
             }
           })
         }
+      },
+      listen() {
+        this.error.flag = false
       }
     },
     components: {},
     computed: {},
-    watch: {}
+    watch: {
+      loginForm: {
+        handler: 'listen',
+        // 深度观察
+        deep: true
+      }
+    }
   }
 </script>
 
@@ -126,6 +164,7 @@
       background url("./button-bg.png") 50% 50% no-repeat;
       border none
       color #5c4611
+      height 42px
     .icon-user,
     .icon-lock
       display block
@@ -136,9 +175,15 @@
       background-image url("./icon-user.png")
     .icon-lock
       background-image url("./icon-lock.png")
+    .el-form-item
+      margin-bottom 0px
+      &:last-child
+        margin-top 16px
     .kalix-form-item
-      margin-bottom 36px
+      & + .kalix-form-item
+        margin-top 13px
       .el-input__inner
+        height 46px
         border-color #d8dce5 !important
       &.is-success
         .el-input__inner
@@ -152,6 +197,15 @@
           line-height: 32px;
           background url("./icon-warning.png") 0 50% no-repeat
           color: #fe00000
+    .error-message
+      background url("./icon-warning.png") 0 50% no-repeat
+      position absolute
+      top 6px
+      left 0
+      line-height 18px
+      color #fe0000
+      font-size 14px
+      padding-left: 24px;
 </style>
 <style scoped lang="stylus">
   @import "./login.styl"
