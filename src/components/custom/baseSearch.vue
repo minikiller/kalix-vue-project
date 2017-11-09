@@ -217,7 +217,7 @@
 <style lang='stylus' type='text/stylus'>
   @import "~@/assets/stylus/color.styl"
   .kalix-search
-    margin 5px
+    margin 8px
     border 1px solid border-color_1
     .kalix-search-hd
       background-color #5fa2dd
@@ -228,11 +228,12 @@
     .kalix-search-bd
       border-top 1px solid border-color_1
       font-size 0
-      padding 5px 15px
+      padding 8px 12px
       text-align left
       .search-container
         display flex
-
+    .el-form-item
+      margin-bottom 0
     .el-button
       .iconfont
         font-size 14px

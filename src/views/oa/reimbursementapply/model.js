@@ -5,8 +5,8 @@ const FormModel = {
   orgName: '',
   processInstanceId: '',
   currentNode: '',
-  status: null,
-  auditResult: '',
+  status: 0,
+  auditResult: '流程尚未启动',
   businessNo: '',
   applyDate: '',
   creationDate: '',
@@ -26,7 +26,10 @@ const FormModel = {
   cashierUser: '',         // 出纳
   payeeUser: '',           // 领款人
   borrowMoney: null,       // 预借金额
-  backMoney: null          // 补退金额
+  backMoney: null,         // 补退金额
+  cjjt: null,   // 城际交通，Double类型，金额
+  qt1: null,    // 其他1，Double类型，金额
+  qt2: null     // 其他2，Double类型，金额
 }
 
 export default FormModel

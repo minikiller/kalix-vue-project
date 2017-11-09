@@ -33,10 +33,19 @@ body
   padding 0
   position relative
 
+input:-webkit-autofill
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+
 .s-flex
   display flex
   .s-flex_item
     flex 1
+    .label-center
+      label
+        width 100%
+        text-align center
+        padding 0
+
 
 .s-check__label
   position relative
@@ -51,7 +60,10 @@ body
   text-overflow ellipsis
 
 .kalix-base-tool-bar
-  padding 12px
+  padding 8px 12px
+  .el-button
+    .iconfont
+      font-size 14px
 
 th
   font-weight bold

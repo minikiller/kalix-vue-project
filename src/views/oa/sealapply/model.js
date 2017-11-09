@@ -7,7 +7,7 @@ const FormModel = {
   sealType: null,
   sealTypeName: '',
   createBy: '',
-  auditResult: '',
+  auditResult: '流程尚未启动',
   currentNode: '',
   departmentHead: '', // 部门负责人
   tableFormField: '', // 分公司负责人
