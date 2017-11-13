@@ -4,8 +4,6 @@ import Vue from 'vue'
 import axios from 'config/axios'
 import VueAxios from 'vue-axios'
 import Vuex from 'vuex'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 import store from './store'
@@ -13,11 +11,11 @@ import store from './store'
 // import Wrapper from '@/components/table/wrapper'
 // import KalixDialog from '@/components/table/dialog'
 import {GlobalComponent, GlobalFilter} from 'config/global.toml'
+import './element-ui'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
-Vue.use(ElementUI)
 
 // for (const item of GlobalComponent) {
 //   console.log(item.name, item.path)
