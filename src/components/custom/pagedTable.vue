@@ -6,7 +6,7 @@
 <template lang="pug">
   div.kalix-paged-table
     el-table(v-bind:data="tableData" style="width:100%"
-    v-bind:height="tableHeight" border fit
+    v-bind:height="tableHeight" fit
     v-on:row-click="rowClick"
     v-on:row-dblclick="rowDblClick"
     v-bind:stripe="stripe"  v-loading.body="loading"
