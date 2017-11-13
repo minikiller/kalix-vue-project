@@ -25,6 +25,7 @@ SealApplyStartURL  = "/camel/rest/sealapplys/workflow/startProcess?id="
 # 报销申请
 ReimbursementApplyURL = "camel/rest/reimbursementapplys"
 ReimbursementApplyStartURL = "camel/rest/reimbursementapplys/workflow/startProcess?id="
+ReimbursementApplyDetailURL = "camel/rest/details"
 # 用人申请
 RecruitApplyURL = "/camel/rest/recruitapplys"
 RecruitApplyStartURL = "/camel/rest/recruitapplys/workflow/startProcess?id="
@@ -126,6 +127,12 @@ MeetingroomURL  = "camel/rest/meetingrooms"
 [[ReimbursementApplyComponent]]
   path = "oa/reimbursementapply/reimbursementApplySearch"
   name = "OaReimbursementApplySearch"
+[[ReimbursementApplyDetailComponent]]
+  path = "oa/reimbursementapply/detail"
+  name = "OaReimbursementApplyDetail"
+[[ReimbursementApplyDetailComponent]]
+  path = "oa/reimbursementapply/detailAdd"
+  name = "OaReimbursementApplyDetailAdd"
 
 # 需要自动注册成全局的ReimbursementApply(用人申请)组件
 [[RecruitApplyComponent]]
@@ -295,5 +302,17 @@ MeetingroomURL  = "camel/rest/meetingrooms"
 [[AttachmentButtonList]]
   id = "attachment"
   title = "附件"
+  isShow = true
+  isPermission = true
+
+# table 的详细按钮定义
+[[DetailToolButtonList]]
+  id = "edit"
+  title = "编辑"
+  isShow = true
+  isPermission = true
+[[DetailToolButtonList]]
+  id = "delete"
+  title = "删除"
   isShow = true
   isPermission = true

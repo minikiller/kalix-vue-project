@@ -11,7 +11,7 @@ const FormModel = {
   applyDate: '',
   creationDate: '',
   createBy: '',
-  reimbursementApplyId: null, // 主表id
+  reimbursementApplyId: 0,    // 主表id
   startMonth: null,           // 开始月
   startDay: null,             // 开始日
   startTime: '',              // 开始时间
@@ -20,7 +20,7 @@ const FormModel = {
   arriveDay: null,            // 到达日
   arriveTime: '',             // 到达时间
   arrivePlace: '',            // 到达地点
-  personNumber: '',           // 人数
+  personNumber: null,         // 人数
   trafficTool: '',            // 交通工具
   trafficMoney: null,         // 交通费
   dayNumber: null,            // 天数
