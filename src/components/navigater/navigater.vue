@@ -7,8 +7,8 @@
 <template lang="pug">
   div.treeList(:class="{'small':menuChk}")
     ul.bd.bg(v-if="!menuChk")
-      li(v-for="item in treeData" v-bind:key="item.id")
-        div.s-flex.tit(@click="showTree(item,$event)")
+      li(v-for="item in treeData" v-bind:key="item.id" v-bind:class="{'active':item.isShow}")
+        div.s-flex.tit.tit-txt(@click="showTree(item,$event)")
           div.s-flex_item
             i.tit_icon(:class="bindClass(item.iconCls)")
             span.txt {{item.text}}

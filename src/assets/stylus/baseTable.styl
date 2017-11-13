@@ -1,17 +1,17 @@
 @import "./color.styl"
+@import "./kalix-color.styl"
 .kalix-wrapper
-  margin 8px
-  border 1px solid border-color_1
+  margin 0px
   position absolute
-  bottom 0
-  top 111px
-  left 0
+  bottom 20px
+  top 142px
+  left 20px
   box-sizing border-box
-  right 0
+  right 20px
+  background-color $background-color-1
   .kalix-wrapper-hd
-    background-color bg-color_1
-    border-bottom 1px solid border-color_1
-    color #FFFFFF
+    background-color $plank-title-background-color
+    color $plank-title-color
     line-height 44px
     padding 0 15px
     text-align left
@@ -35,7 +35,7 @@
       align-items center
       box-sizing border-box
       .btn-wrapper
-        padding 2px 20px
+        padding 2px 0 2px 20px
       .el-button
         .iconfont
           font-size 14px
@@ -61,5 +61,3 @@
       box-align center
       flex-align center
       align-items center
-
-

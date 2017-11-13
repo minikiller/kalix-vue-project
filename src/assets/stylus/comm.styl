@@ -1,3 +1,4 @@
+@import "./kalix-color.styl"
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video
   margin 0
   padding 0
@@ -45,7 +46,6 @@ input:-webkit-autofill
         width 100%
         text-align center
         padding 0
-
 
 .s-check__label
   position relative
@@ -139,3 +139,87 @@ borderStyle = 1px solid #000000
     &:last-child
       border-right none
 
+.base-table-th
+  color $table-th-color
+  background-color $background-color-2
+  border none !important
+  font-size 14px
+  font-weight normal
+
+.base-table-cell
+  color $table-text-color
+  border-bottom-color #fdf4e8 !important
+
+.base-teble-operation
+  .operation-btn
+    font-size 13px
+    cursor pointer
+    color $table-operation-color !important
+    & + .operation-btn
+      margin-left 8px
+
+.base-table-pager
+  .el-pager
+    font-weight normal
+  .el-pagination
+    padding 2px 0
+    .el-select
+      .el-input
+        margin 0
+        .el-input__inner
+          color #a67737
+          border-radius 0
+          border-color #c1b9af
+    .el-pagination__sizes
+      margin-right 0
+    .el-pagination__jump
+      margin-left 20px
+      color #a67737
+      .el-input
+        width 25px
+        .el-input__inner
+          height 21px
+          border-radius 0
+          border-color #c1b9af
+          background-color #fff6e8
+          color #a67737
+    .btn-prev,
+    .btn-next
+      padding 0
+      margin-left 20px
+      color #a67737
+  .pager-slot
+    font-weight normal
+    text-align center
+    color #a67737
+    .pager-count,
+    .pager-current
+      margin-left 20px
+
+.el-select-dropdown
+  border-radius 0
+  .el-select-dropdown__item
+    &.selected
+      color #a67737
+
+.el-button--primary
+  background-color #f3f3f3
+  border-color #dfdfdf
+  color #707070
+  &:focus,
+  &:hover
+    background-color #f9f9f9
+    border-color #e8e8e8
+    color #707070
+
+.kalix-article
+  padding 10px
+
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus,
+.el-select .el-input__inner:focus
+  border-color #bda879
+
+.el-switch.is-checked .el-switch__core
+  border-color: #bda879;
+  background-color: #bda879;

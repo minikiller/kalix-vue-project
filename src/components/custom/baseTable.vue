@@ -18,11 +18,13 @@
         v-bind:toolbarBtnList="toolbarBtnList"
         v-on:onToolBarClick="onToolBarClick")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-          el-table(:data="tableData" stripe style="width:100%"
+          el-table(:data="tableData"  style="width:100%"
           v-bind:row-class-name="tableRowClassName"
           v-loading.body="loading" fit
           v-bind:height="tableHeight"
-          v-on:selection-change="onTableSelectionChange")
+          v-on:selection-change="onTableSelectionChange"
+          header-cell-class-name="base-table-th"
+          cell-class-name="base-table-cell")
             //table的字段
             template(v-if="tableData && tableData.length > 0")
               el-table-column(v-if="hasTableSelection" type="selection" width="55" align="center")
@@ -42,16 +44,23 @@
           div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
         div.kalix-table-pagination.s-flex
-          div
+          div.s-flex_item
+          div.base-table-pager
             el-pagination(v-if="pager.totalCount"
             v-on:size-change="pagerSizeChange"
             v-on:current-change="pagerCurrentChange"
             v-bind:current-page="pager.currentPage"
             v-bind:page-sizes="pager.pageSizes"
             v-bind:page-size="1"
-            layout="total, sizes, prev, pager, next, jumper"
-            v-bind:total="pager.totalCount")
-          div.s-flex_item.btn-wrapper(v-if="tableData.length")
+            layout="sizes, prev, next, slot, jumper,->"
+            v-bind:total="pager.totalCount"
+            prev-text="上一页"
+            next-text="下一页")
+              slot
+                span.pager-slot
+                  span.pager-count 共{{pageCount}}页
+                  span.pager-current {{pager.currentPage}}/{{pageCount}}
+          div.btn-wrapper(v-if="tableData.length")
             el-button(type="primary" size="small" v-on:click="onRefreshClick")
               i.iconfont.icon-refresh
               | 刷新
@@ -497,6 +506,9 @@
       },
       tableContainerStyle() {
         return {'top': (!this.isShowToolBar ? '56px' : '')}
+      },
+      pageCount() {
+        return Math.floor((this.pager.totalCount + this.pager.limit - 1) / this.pager.limit)
       }
     }
   }

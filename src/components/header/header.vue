@@ -6,7 +6,7 @@
 
 <template lang="pug">
   div
-    div#ToolBar
+    div.toolBar
       div.toolbar-wrapper
         div.s-flex.bd
           div.logo(:class="{'small':menuChk}")
@@ -25,18 +25,19 @@
             ul.aside
               li
                 el-badge(:value="msgCount")
-                  el-button(icon="message" v-on:click="onMsgClick") 消息
+                  el-button(icon="el-icon-message" v-on:click="onMsgClick") 消息
               li
                 el-dropdown(@command="handleCommand")
-                  div.s-flex.el-dropdown-link {{userName}}  &nbsp;
-                    div.avatar(v-bind:style="styleObject")
-                      <!--img(v-bind:src="icon" v-show="icon.length > 0" width=32 height=32)-->
+                  div.s-flex.el-dropdown-link
+                    div.avatar-wrapper
+                      div.avatar(v-bind:style="styleObject")
+                      span.user-name {{userName}}
                     i.el-icon-caret-bottom.el-icon--right
                   el-dropdown-menu(slot="dropdown")
                     el-dropdown-item(command="changeInfo") 个人信息修改
                     el-dropdown-item(command="changePwd") 修改密码
                     el-dropdown-item(command="logout") 登出
-              li
+              li(v-if="false")
                 el-select(v-model="themeValue" v-on:change="onChangeTheme" placeholder="请选择" v-bind:style="{width:'100px'}")
                   el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
     user-editpwd(ref="userEditpwd")

@@ -4,8 +4,8 @@
       el-row.duty-row(:gutter="0")
         el-col.duty-col(:span="8" style="padding:8px 0 8px 8px;")
           kalix-org-tree(v-on:orgTreeClick="onOrgTreeClick")
-        el-col.duty-col(:span="16" )
-          kalix-base-table(ref="kalixBaseTable"
+        el-col.duty-col(:span="16")
+          kalix-base-table.duty-wrapper(ref="kalixBaseTable"
           bizKey='duty' title='职务列表' v-bind:targetURL='targetURL'
           v-bind:bizDialog='bizDialog' bizSearch='AdminDutySearch' v-bind:btnList='btnList' v-bind:customRender="customRender"
           v-bind:isFixedColumn="isFixedColumn" v-bind:dialogOptions="dialogOptions")
@@ -130,6 +130,7 @@
     position relative
     height 100%
     overflow hidden
+    box-sizing border-box
     .kalix-search,
     .kalix-wrapper
       height 100%
@@ -162,4 +163,8 @@
     .duty-col
       height 100%
       box-sizing border-box
+  .duty-wrapper
+    margin -10px 0
+    .kalix-wrapper
+      bottom 0 !important
 </style>

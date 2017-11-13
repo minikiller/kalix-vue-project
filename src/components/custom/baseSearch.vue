@@ -216,12 +216,13 @@
 
 <style lang='stylus' type='text/stylus'>
   @import "~@/assets/stylus/color.styl"
+  @import "~@/assets/stylus/kalix-color.styl"
   .kalix-search
-    margin 8px
-    border 1px solid border-color_1
+    margin 10px
+    background-color $background-color-1
     .kalix-search-hd
-      background-color #5fa2dd
-      color txt-color_1
+      background-color $plank-title-background-color
+      color $plank-title-color
       line-height 44px
       padding 0 15px
       text-align left

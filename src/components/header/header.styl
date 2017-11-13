@@ -1,11 +1,12 @@
 @import "~@/assets/stylus/base.styl"
-#ToolBar
+@import "~@/assets/stylus/kalix-color.styl"
+.toolBar
   position fixed
   top 0
   left 0
   width 100%
-  box-shadow 0 1px 3px 0px rgba(0, 0, 0, 0.3)
   z-index 9
+  background-color $background-color-1
   .bd
     height 65px
     .logo
@@ -30,10 +31,11 @@
             .link-btn
               line-height 32px
               padding 0 12px
+              color: $header-text-color
               &hover
                 background-color #efefef
               &.router-link-active
-                background-color rgb(225, 225, 225)
+                color: $header-text-select-color
         &.aside
           margin-right 20px
           li
@@ -43,15 +45,24 @@
               margin-top 10px
           .el-dropdown-link
             align-items: center;
-            margin-top: 8px;
-            .avatar
+            margin-top: 12px;
+            .avatar-wrapper
               flex 1
-              width 40px
-              height 40px
+              line-height 36px
+            .avatar
+              float left
+              display inline-block
+              width 36px
+              height 36px
               border-radius 50%
               background-color transparent
-              margin-right 8px
-              border 1px solid border-color_1
+              margin-right 10px
               box-sizing border-box
+            .user-name
+              font-size 16px
+              margin-right 7px
           .el-select
             margin-top 10px
+            .el-icon-caret-bottom
+              &.el-icon--right
+                color #5d6266
