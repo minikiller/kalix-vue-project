@@ -172,7 +172,6 @@
         }, 1000)
       }
       return {
-        user: null,
         detailFormModel: Object.assign({}, DetailFormModel),
         rules: {
           reimbursementApplyId: [{validator: checkReimbursementApplyId, trigger: 'blur'}],
@@ -210,7 +209,15 @@
           cityTrafficMoney: [{type: 'number', message: '市内交通费用必须为数字值'}]
         },
         targetURL: ReimbursementApplyDetailURL,
-        labelWidth: '100px'
+        labelWidth: '100px',
+        test1: {
+          type: Number,
+          default: 0
+        },
+        test2: {
+          type: Number,
+          default: 0
+        }
       }
     },
     components: {
@@ -218,6 +225,16 @@
     },
     created() {
     },
-    methods: {}
+    watch: {
+      detailFormModel: {
+        handler: 'watchFormModel',
+        deep: true
+      }
+    },
+    methods: {
+      watchFormModel(newVal) {
+        this.detailFormModel.subsidyMoney = newVal.subsidyStandard * newVal.dayNumber
+      }
+    }
   }
 </script>

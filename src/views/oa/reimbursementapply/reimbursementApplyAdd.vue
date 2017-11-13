@@ -46,6 +46,13 @@
           div.s-flex
             el-input.s-flex_item.kalix-form-table-td(v-model="formModel.qt1")
             el-input.s-flex_item.kalix-form-table-td(v-model="formModel.qt2")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="测试1" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.borrowMoney")
+        el-form-item.s-flex_item.kalix-form-table-td(label="测试2" v-bind:labelWidth="labelWidth")
+          el-input(v-model="formModel.backMoney")
+        el-form-item.s-flex_item.kalix-form-table-td(label="合计" v-bind:labelWidth="labelWidth")
+          el-input(v-model="formModel.cjjt")
 </template>
 
 <script type="text/ecmascript-6">
@@ -91,9 +98,18 @@
         return (this.label_width + 1) + 'px'
       }
     },
+    watch: {
+      formModel: {
+        handler: 'watchFormModel',
+        deep: true
+      }
+    },
     methods: {
       onOrgIdChange(item) {
         this.formModel.orgName = item.name
+      },
+      watchFormModel(newVal) {
+        this.formModel.cjjt = newVal.backMoney * newVal.borrowMoney
       }
     }
   }
