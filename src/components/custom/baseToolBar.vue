@@ -7,7 +7,7 @@
 <template lang="pug">
   div.kalix-base-tool-bar
     template(v-for="btn in defaultBtnList")
-      el-button(v-if="btn.isShow" v-on:click="toggle(btn.id)" type="primary")
+      el-button(v-if="btn.isShow" v-on:click="toggle(btn.id)" v-bind:type="btn.type||'primary'")
         i.iconfont(v-bind:class="btn.icon")
         | {{btn.title}}
 </template>

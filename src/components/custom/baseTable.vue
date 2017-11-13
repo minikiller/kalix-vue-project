@@ -20,7 +20,7 @@
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
           el-table(:data="tableData" stripe style="width:100%"
           v-bind:row-class-name="tableRowClassName"
-          v-loading.body="loading" border fit
+          v-loading.body="loading" fit
           v-bind:height="tableHeight"
           v-on:selection-change="onTableSelectionChange")
             //table的字段
