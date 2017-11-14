@@ -31,18 +31,18 @@ import {
   DatePicker,
   TimeSelect,
   TimePicker,
-  Popover,
-  Tooltip,
-  Breadcrumb,
-  BreadcrumbItem,
+  // Popover,
+  // Tooltip,
+  // Breadcrumb,
+  // BreadcrumbItem,
   Form,
   FormItem,
   Tabs,
   TabPane,
   Tag,
   Tree,
-  Alert,
-  Slider,
+  // Alert,
+  // Slider,
   Icon,
   Row,
   Col,
@@ -50,21 +50,21 @@ import {
   Progress,
   Badge,
   Card,
-  Rate,
-  Steps,
-  Step,
-  Carousel,
-  CarouselItem,
-  Collapse,
-  CollapseItem,
-  Cascader,
-  ColorPicker,
+  // Rate,
+  // Steps,
+  // Step,
+  // Carousel,
+  // CarouselItem,
+  // Collapse,
+  // CollapseItem,
+  // Cascader,
+  // ColorPicker,
   Transfer,
   Container,
-  Header,
-  Aside,
-  Main,
-  Footer,
+  // Header,
+  // Aside,
+  // Main,
+  // Footer,
   Loading,
   MessageBox,
   Message,
@@ -99,18 +99,18 @@ Vue.use(TableColumn)
 Vue.use(DatePicker)
 Vue.use(TimeSelect)
 Vue.use(TimePicker)
-Vue.use(Popover)
-Vue.use(Tooltip)
-Vue.use(Breadcrumb)
-Vue.use(BreadcrumbItem)
+// Vue.use(Popover)
+// Vue.use(Tooltip)
+// Vue.use(Breadcrumb)
+// Vue.use(BreadcrumbItem)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Tag)
 Vue.use(Tree)
-Vue.use(Alert)
-Vue.use(Slider)
+// Vue.use(Alert)
+// Vue.use(Slider)
 Vue.use(Icon)
 Vue.use(Row)
 Vue.use(Col)
@@ -118,20 +118,20 @@ Vue.use(Upload)
 Vue.use(Progress)
 Vue.use(Badge)
 Vue.use(Card)
-Vue.use(Rate)
-Vue.use(Steps)
-Vue.use(Step)
-Vue.use(Carousel)
-Vue.use(CarouselItem)
-Vue.use(Collapse)
-Vue.use(CollapseItem)
-Vue.use(Cascader)
-Vue.use(ColorPicker)
+// Vue.use(Rate)
+// Vue.use(Steps)
+// Vue.use(Step)
+// Vue.use(Carousel)
+// Vue.use(CarouselItem)
+// Vue.use(Collapse)
+// Vue.use(CollapseItem)
+// Vue.use(Cascader)
+// Vue.use(ColorPicker)
 Vue.use(Container)
-Vue.use(Header)
-Vue.use(Aside)
-Vue.use(Main)
-Vue.use(Footer)
+// Vue.use(Header)
+// Vue.use(Aside)
+// Vue.use(Main)
+// Vue.use(Footer)
 Vue.use(Transfer)
 
 Vue.use(Loading.directive)
