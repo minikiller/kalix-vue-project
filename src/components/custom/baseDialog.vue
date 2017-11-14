@@ -5,8 +5,10 @@
 -->
 
 <template lang="pug">
-  el-dialog.dialog-form(v-bind:title="dialogTitle" v-bind:visible="visible" v-bind:before-close="close"
-  v-bind:close-on-click-modal="false" v-bind:size="size")
+  el-dialog.dialog-form(v-bind:title="dialogTitle" v-bind:visible="visible"
+  v-bind:before-close="close"
+  v-bind:close-on-click-modal="false" v-bind:size="size"
+  v-bind:append-to-body="true")
     el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
       slot(name="dialogFormSlot")
     div.dialog-footer(slot="footer")
