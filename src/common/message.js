@@ -2,11 +2,11 @@
  * Created by sunlf on 2017/7/21.
  * 封装消息显示
  */
-import Vue from 'vue'
+import {Message} from 'element-ui'
 
 export default {
   message(_type, _msg, _showClose = true) {
-    Vue.$message({
+    Message({
       type: _type,
       showClose: _showClose,
       message: _msg

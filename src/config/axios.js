@@ -3,15 +3,16 @@
  * Created by sunlf on 2017/7/21.
  */
 import axios from 'axios'
-// import ElementUI from 'element-ui'
 import Message from 'common/message'
 import {baseURL} from 'config/global.toml'
 import {LoadingTimeOut, LoadingFailure} from 'config/info.toml'
 import Cache from 'common/cache'
 import Router from 'router'
+
 // axios 配置
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = baseURL
+
 // http请求拦截器
 // var loadinginstace
 axios.interceptors.request.use(config => {

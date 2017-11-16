@@ -12,10 +12,6 @@ msgURL = "/camel/rest/messages/polling/msg"
 
 #按钮 权限认证的地址
 SecurityBtnUrl = "/camel/rest/system/applications/modules/children/buttons/"
-
-
-
-
 ScheduleDictsURL = "/camel/rest/schedule/dicts"
 ScheduleDictsTypesListURL = "/camel/rest/schedule/dicts/types/list"
 
