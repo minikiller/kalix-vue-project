@@ -1601,6 +1601,10 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
 
+crypto-js@^3.1.9-1:
+  version "3.1.9-1"
+  resolved "http://registry.npm.taobao.org/crypto-js/download/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
+
 css-color-names@0.0.4:
   version "0.0.4"
   resolved "http://registry.npm.taobao.org/css-color-names/download/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
@@ -1962,6 +1966,10 @@ domutils@^1.5.1:
 duplexer@^0.1.1:
   version "0.1.1"
   resolved "http://registry.npm.taobao.org/duplexer/download/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
+
+easemob-websdk@^1.4.12:
+  version "1.4.12"
+  resolved "http://registry.npm.taobao.org/easemob-websdk/download/easemob-websdk-1.4.12.tgz#bc2ca5459a5417f9177e53008e0eb3162a8b9b41"
 
 ecc-jsbn@~0.1.1:
   version "0.1.1"
@@ -5882,6 +5890,10 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "http://registry.npm.taobao.org/strip-json-comments/download/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
+strophe.js@^1.2.14:
+  version "1.2.14"
+  resolved "http://registry.npm.taobao.org/strophe.js/download/strophe.js-1.2.14.tgz#7ceeec51b3272cc5c6c6ae77474780a5840f1aa7"
+
 stylus-loader@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/stylus-loader/download/stylus-loader-3.0.1.tgz#77f4b34fd030d25b2617bcf5513db5b0730c4089"
@@ -6325,11 +6337,11 @@ vue@^2.1.0:
   version "2.4.4"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.4.4.tgz#ea9550b96a71465fd2b8b17b61673b3561861789"
 
-vue@^2.5.3:
+vue@^2.5.2:
   version "2.5.3"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.3.tgz#e1a3b1f49b6e93e574ce040b95cbc873912fecc1"
 
-vuex@^3.0.1:
+vuex@^3.0.0:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/vuex/download/vuex-3.0.1.tgz#e761352ebe0af537d4bb755a9b9dc4be3df7efd2"
 
