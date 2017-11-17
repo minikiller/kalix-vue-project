@@ -107,6 +107,7 @@
             Message.error(data.message)
           }
         }).catch(error => {
+          console.log('login error ', error)
           this.$refs.loginFormName.focus()
           Message.error(error.message)
         })
