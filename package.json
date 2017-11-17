@@ -25,6 +25,7 @@
     "pretty-bytes": "^4.0.2",
     "strophe.js": "^1.2.14",
     "stylus": "^0.54.5",
+    "smooth-scrollbar": "^8.2.3",
     "underscore": "^1.8.3",
     "vue": "^2.5.2",
     "vue-axios": "^2.0.2",
