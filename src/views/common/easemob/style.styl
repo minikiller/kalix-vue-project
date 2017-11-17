@@ -18,26 +18,22 @@
       height 100%
       float left
       margin-left 20px
-    .main-panel
+    .main-panel,
+    .chat-panel
       position: relative;
-      display: block !important;
-      width: 280px;
-      background: #fff;
-      border-radius: 7px;
-      -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, .7);
-      -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, .7);
-      box-shadow: 2px 2px 6px rgba(0, 0, 0, .7);
       height: 80%;
-      top: 12%;
+      top: 5%;
+      border-radius: 6px;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, .7);
+    .main-panel
+      display: block;
+      width: 280px;
+      background-color: #fff;
       transition: none !important;
       transform: none !important;
     .chat-panel
       width: 100%;
-      height: 80%;
-      top: 12%;
-      border-radius: 6px;
       overflow: hidden;
-      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
   &.black header,
   &.black footer
     background: #333;
@@ -626,7 +622,7 @@
   .send_chat_btn
     width: 56px;
 
-
+  /* “测试”按钮 */
   .btn-test
     position absolute
     background-color #000000
@@ -639,3 +635,33 @@
     border-radius: 5px;
     border: 1px solid #0a0a0a;
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.51);
+
+  /* 底部 菜单栏*/
+  .footer-menu
+    position: absolute
+    bottom 0
+    left 50%
+    transform translate3d(-50%, 0, 0)
+    .footer-bg
+      position absolute
+      bottom 0
+      left 0
+      width 100%
+      height 35px
+      color: #fff;
+      background: #333;
+      background: -webkit-gradient(linear, left top, left bottom, from(#555), to(#222));
+      background: linear-gradient(#555, #222);
+      border-radius 6px 6px 0 0
+    .footer-wrapper
+      position relative
+      align-items flex-end
+      justify-content center
+      display flex
+      height 175px
+      padding 0 30px
+      font-size 0
+    .mac-avatar
+      width 64px
+      height 64px
+      position: relative;

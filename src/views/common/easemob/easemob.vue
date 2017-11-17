@@ -1,5 +1,5 @@
 <template>
-  <div class="im black">
+  <div class="im black" id="im">
     <div class="btn-test" @click="onIntoTest">测试</div>
     <div class="im-wrapper">
       <div class="main_container">
@@ -270,12 +270,28 @@
         </div>
       </div>
     </div>
+    <div class="footer-menu" id="dock">
+      <div class="footer-bg"></div>
+      <div class="footer-wrapper">
+        <img class="mac-avatar" src="./images/mac/Finder.png" title="Finder" />
+        <img class="mac-avatar" src="./images/mac/Appstore.png" title="Appstore" />
+        <img class="mac-avatar" src="./images/mac/mail.png" title="Mail" />
+        <img class="mac-avatar" src="./images/mac/Safari.png" title="safari"/>
+        <img class="mac-avatar" src="./images/mac/FaceTime.png" title="FaceTime" />
+        <img class="mac-avatar" src="./images/mac/AddressBook.png" title="AddressBook"/>
+        <img class="mac-avatar" src="./images/mac/iCalendar.png" title="iCalendar" />
+        <img class="mac-avatar" src="./images/mac/iTunes.png" title="iTunes" />
+        <img class="mac-avatar" src="./images/mac/PhotoBooth.png" title="PhotoBooth" />
+        <img class="mac-avatar" src="./images/mac/iPhoto.png" title="iPhoto" />
+      </div>
+    </div>
     <easemob-test ref="easemobTest"></easemob-test>
   </div>
 </template>
 <script type="text/ecmascript-6">
   import EasemobTest from './easemobtest'
   import Scrollbar from 'smooth-scrollbar'
+  import $ from 'jquery'
 
   export default {
     data() {
@@ -288,8 +304,41 @@
     mounted() {
       this.getData()
       Scrollbar.init(document.querySelector('.scrollbar'))
+      this.init()
     },
     methods: {
+      init() {
+        let oMenu = document.getElementById('dock')
+        let aImg = oMenu.getElementsByTagName('img')
+//        let baseSize = 64
+        let max = 320
+        let iWid = 128
+        $('#im').mousemove(e => {
+          let oEvent = e || event
+          for (let i = 0; i < aImg.length; i++) {
+            let imgX = aImg[i].offsetLeft + oMenu.offsetLeft + aImg[i].offsetWidth / 2
+            let imgY = aImg[i].offsetTop + oMenu.offsetTop + aImg[i].offsetHeight / 2
+
+            let a = imgX - (oEvent.clientX + 125)
+            let b = imgY - oEvent.clientY
+
+            let c = Math.sqrt(a * a + b * b)
+
+            let scale = 1 - c / max
+
+            if (scale < 0.5) {
+              scale = 0.5
+            }
+            let size = iWid * scale
+            $(aImg[i]).css({'width': size + 'px', 'height': size + 'px'})
+          }
+        }).mouseout(e => {
+          $('#dock img').css({'width': 64 + 'px', 'height': 64 + 'px'})
+        })
+      },
+      selectMac() {
+        console.log('selectMac')
+      },
       onIntoTest() {
         this.$refs.easemobTest.show()
       },
