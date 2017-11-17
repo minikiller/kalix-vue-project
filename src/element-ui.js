@@ -67,11 +67,15 @@ import {
   // Footer,
   Loading,
   MessageBox,
+
   // Message,
   Notification
 } from 'element-ui'
 
-console.log('begin init element ui finished')
+import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+import 'element-ui/lib/theme-chalk/base.css'
+
+Vue.component(ElCollapseTransition.name, ElCollapseTransition)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Autocomplete)
@@ -134,6 +138,7 @@ Vue.use(Container)
 // Vue.use(Main)
 // Vue.use(Footer)
 Vue.use(Transfer)
+// Vue.use(ElCollapseTransition)
 
 Vue.use(Loading.directive)
 
