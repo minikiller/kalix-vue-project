@@ -5,18 +5,19 @@
 -->
 
 <template lang="pug">
-  el-dialog.dialog-form(v-bind:title="dialogTitle" v-bind:visible="visible"
-  v-bind:before-close="close"
-  v-bind:close-on-click-modal="false" v-bind:size="size"
-  v-bind:append-to-body="true")
-    el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
-      slot(name="dialogFormSlot")
-    div.dialog-footer(slot="footer")
-      template(v-if="isView")
-        el-button(type="primary" v-on:click="onCancelClick") 关 闭
-      template(v-else)
-        el-button(v-on:click="onCancelClick") 取 消
-        el-button(type="primary" v-on:click="onSubmitClick") 提 交
+  transition(name="down-in")
+    el-dialog.dialog-form(v-bind:title="dialogTitle" v-bind:visible="visible"
+    v-bind:before-close="close"
+    v-bind:close-on-click-modal="false" v-bind:size="size"
+    v-bind:append-to-body="true")
+      el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
+        slot(name="dialogFormSlot")
+      div.dialog-footer(slot="footer")
+        template(v-if="isView")
+          el-button(type="primary" v-on:click="onCancelClick") 关 闭
+        template(v-else)
+          el-button(v-on:click="onCancelClick") 取 消
+          el-button(type="primary" v-on:click="onSubmitClick") 提 交
 </template>
 
 <script type="text/ecmascript-6">
@@ -156,4 +157,14 @@
 </script>
 
 <style scoped lang="stylus" type="text/stylus">
+  .down-in-enter-active
+    transition: all 0.2s ease
+
+  .down-in-leave-active
+    transition: all 0.2s ease
+
+  .down-in-enter, .down-in-leave-active
+    opacity 0
+    transform scale(0.8)
+
 </style>
