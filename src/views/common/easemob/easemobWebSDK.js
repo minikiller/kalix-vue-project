@@ -20,7 +20,7 @@ console.log(conn)
 conn.listen({
   // 连接成功回调
   onOpened: function (message) {
-    console.log('呵呵哒啊')
+    console.log('=====登录成功！！！')
     // 如果isAutoLogin设置为false，那么必须手动设置上线，否则无法收消息
     // 手动上线指的是调用conn.setPresence() 如果conn初始化时已将isAutoLogin设置为true
     // 则无需调用conn.setPresence()
@@ -69,8 +69,8 @@ conn.listen({
   },
   // 处理“广播”或“发布-订阅”消息，如联系人订阅请求、处理群组、聊天室被踢解散等消息
   onPresence: function (message) {
-    console.log('onPresence')
-    console.log(message)
+    console.log('onPresence', message)
+    handlePresence(message)
   },
   onRoster(message) {
     console.log('处理好友申请')
@@ -108,3 +108,49 @@ conn.listen({
   onMutedMessage: function (message) {
   }
 })
+
+// 收到联系人订阅请求的处理方法，具体的type值所对应的值请参考xmpp协议规范
+let handlePresence = function (e) {
+  // 对方收到请求加为好友
+  if (e.type === 'subscribe') {
+    // 同意添加好友操作的实现方法
+    conn.subscribed({
+      to: 'username',
+      message: '[resp:true]'
+    })
+    // 需要反向添加对方好友
+    conn.subscribe({
+      to: e.from,
+      message: '[resp:true]'
+    })
+  }
+
+  // switch (message.type) {
+  //   // 对方请求添加好友
+  //   case 'subscribe':
+  //     break;
+  //   case 'subscribed':                          // 对方同意添加好友，已方同意添加好友
+  //     break;
+  //   case 'unsubscribe':                         // 对方删除好友
+  //     break;
+  //   case 'unsubscribed':                        // 被拒绝添加好友，或被对方删除好友成功
+  //     break;
+  //   case 'memberJoinPublicGroupSuccess':                 // 成功加入聊天室
+  //     console.log('join chat room success');
+  //     break;
+  //   case 'joinChatRoomFaild':                   // 加入聊天室失败
+  //     console.log('join chat room faild');
+  //     break;
+  //   case 'joinPublicGroupSuccess':              // 意义待查
+  //     console.log('join public group success', message.from);
+  //     break;
+  //   case 'createGroupACK':
+  //     conn.createGroupAsync({
+  //       from: message.from,
+  //       success: function (option) {
+  //         console.log('Create Group Succeed');
+  //       }
+  //     });
+  //     break;
+  // }
+}
