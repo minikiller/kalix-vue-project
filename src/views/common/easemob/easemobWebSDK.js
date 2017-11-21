@@ -1,3 +1,4 @@
+import Message from 'common/message'
 require('easemob-websdk')
 
 let WebIM = window.WebIM
@@ -24,6 +25,7 @@ conn.listen({
     // 如果isAutoLogin设置为false，那么必须手动设置上线，否则无法收消息
     // 手动上线指的是调用conn.setPresence() 如果conn初始化时已将isAutoLogin设置为true
     // 则无需调用conn.setPresence()
+    getFriendList()
   },
   onClosed(message) {
     console.log('连接关闭回调')
@@ -113,6 +115,12 @@ conn.listen({
 let handlePresence = function (e) {
   // 对方收到请求加为好友
   if (e.type === 'subscribe') {
+    // MessageBox.$message({
+    //   title: '对方收到请求加为好友',
+    //   confirmButtonText: '同意',
+    //   cancelButtonText: '拒绝'
+    // })
+    Message.warning('hhhhhhhhhhhhhhhhhhhhhhhhhhhh')
     // 同意添加好友操作的实现方法
     conn.subscribed({
       to: 'username',
@@ -153,4 +161,32 @@ let handlePresence = function (e) {
   //     });
   //     break;
   // }
+}
+
+// 获取好友列表
+let getFriendList = function () {
+  conn.getRoster({
+    success: roster => {
+      // 获取好友列表，并进行好友列表渲染，roster格式为：
+      /** [
+       {
+         jid:'asemoemo#chatdemoui_test1@easemob.com',
+         name:'test1',
+         subscription: 'both'
+       }
+       ]
+       */
+      for (let i = 0, l = roster.length; i < l; i++) {
+        let ros = roster[i]
+        // ros.subscription值为both/to为要显示的联系人，此处与APP需保持一致，才能保证两个客户端登录后的好友列表一致
+        if (ros.subscription === 'both' || ros.subscription === 'to') {
+          console.log('my friends =====' + ros.name)
+        }
+      }
+    },
+    error: err => {
+      alert('获取好友失败')
+      console.log(err)
+    }
+  })
 }
