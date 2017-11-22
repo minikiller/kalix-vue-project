@@ -40,11 +40,7 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {
-    MeetingroomApplyURL,
-    OaMeetingroomApplyComponent,
-    MeetingroomApplyStartURL
-  } from '../config.toml'
+  import {MeetingroomApplyURL, OaMeetingroomApplyComponent, MeetingroomApplyStartURL} from '../config.toml'
   import {registerComponent} from '@/api/register'
   import {workflowBtnList, registerComp, customTableTool} from '@/views/oa/comp'
   import TaskView from '@/views/oa/comp/taskView'
