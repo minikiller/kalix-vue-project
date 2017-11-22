@@ -70,6 +70,7 @@
   import lan from 'config/language'
   import './easemobWebSDK'
   import Message from 'common/message'
+  import Cookie from 'js-cookie'
 
   export default {
     data() {
@@ -122,9 +123,10 @@
       onLogin() {
         let key = btoa(this.user.userName)
         let myCookieKey = 'webim_' + key
-        let localToken = window.WebIM.utils.getCookie()[myCookieKey]
-        alert('localToken====' + localToken)
+//        let localToken = window.WebIM.utils.getCookie()[myCookieKey]
+//        alert('localToken====' + localToken)
         // alert('登录' + localStorage.token)
+        let localToken = Cookie.get(myCookieKey)
         let options = {}
         if (this.isToken) {
           options = {
@@ -149,7 +151,8 @@
               let encryptUsername = btoa(this.user.userName)
               let accessToken = token.access_token
               alert('登录成功,access_token:' + accessToken)
-              window.WebIM.utils.setCookie('webim_' + encryptUsername, token, 1)
+//              window.WebIM.utils.setCookie('webim_' + encryptUsername, token, 1)
+              Cookie.set('webim_' + encryptUsername, token)
             },
             error: err => {
               alert(err)
