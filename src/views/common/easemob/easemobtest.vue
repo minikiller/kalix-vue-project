@@ -7,24 +7,21 @@
   div.el-form.easemobtest(v-show="visible")
     el-form
       el-tabs
-        el-tab-pane(v-bind:label="lan.signUp")
+        el-tab-pane(v-bind:label="lan.signIn + '/' + lan.signUp")
           el-form-item(label="用户名" label-width="100px")
             el-input(v-model="user.userName")
           el-form-item(label="密码" label-width="100px")
             el-input(v-model="user.pass")
           el-form-item(label="昵称" label-width="100px")
             el-input(v-model="user.nickName")
-          el-button(type="primary" v-on:click="onRegister") {{lan.signUp}}
-        el-tab-pane(v-bind:label="lan.signIn")
-          el-form-item(label="用户名" label-width="100px")
-            el-input(v-model="user.userName")
-          el-form-item(label="密码" label-width="100px")
-            el-input(v-model="user.pass")
           el-button(type="primary" v-on:click="onLogin") {{lan.signIn}}
           el-switch(v-model="isToken" active-text="使用token" inactive-text="非token")
           br
           br
           el-button(type="primary" v-on:click="onLogout") 退出
+          br
+          br
+          el-button(type="primary" v-on:click="onRegister") {{lan.signUp}}
         el-tab-pane(label="获取好友")
           el-button(type="primary" v-on:click="getFriendList") 获取好友
           div 好友列表
