@@ -29,7 +29,7 @@
             'chartContainer': '#chart-container',
             'data': this.datascource,
             'nodeContent': 'text',
-//            'direction': 'l2r',
+            'direction': 'l2r',
             'depth': 2,
             'pan': true,
             'zoom': true
