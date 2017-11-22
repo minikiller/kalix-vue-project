@@ -29,7 +29,8 @@
           el-button(type="primary" v-on:click="getFriendList") 获取好友
           div 好友列表
           ul(v-if="roster.length")
-            li(v-for="ro in roster" v-bind:key="ro.jid") {{ro.name}}
+            <!--li(v-for="ro in roster" v-bind:key="ro.jid" v-on:click="getFriend(ro)") {{ro.name}}-->
+            li(v-for="ro in roster" v-bind:key="ro.jid" v-on:click="myChatTest(ro)") {{ro.name}}
           div(v-if="!roster.length")
             div 你还没有任何好友
         el-tab-pane(label="添加好友")
@@ -40,17 +41,32 @@
           el-button(type="primary" v-on:click="addMember") 添加好友
         el-tab-pane(label="获取群组")
           el-button(type="primary" v-on:click="getGroupList") 获取群组
-          div 群组列表
-          ul(v-if="roster.length")
-            li(v-for="ro in roster" v-bind:key="ro.jid") {{ro.name}}
+          div 群组列表(点击某一群组可以查询群组成员、群组黑名单、获取群组信息)
+          ul(v-if="groups.length")
+            li(v-for="gr in groups" v-bind:key="gr.groupid" v-on:click="getGroupMember(gr)") {{gr.groupname}}
           div(v-if="!roster.length")
             div 你还没有添加任何群组
-        el-tab-pane(label="添加群组")
+          br
+          br
+          div 群组成员
+          ul(v-if="groupMembers.length")
+            li(v-for="grme in groupMembers" v-bind:key="grme.member" v-on:click="getFriend(grme)") {{grme.member}}
+          div(v-if="!groupMembers.length")
+            div 无成员
+          br
+          br
+          div 群组黑名单
+          br
+          br
+          div 获取群组信息
+          div
+        el-tab-pane(label="添加/修改群组")
           el-form-item(label="群组账号" label-width="100px")
             el-input(v-model="memberAccount" placeholder="请输入需要添加群组账号")
           el-form-item(label="验证信息" label-width="100px")
             el-input(v-model="validateMessage" placeholder="请输入验证信息")
           el-button(type="primary") 添加群组
+          el-button(type="primary") 修改群组
 </template>
 
 <script type="text/ecmascript-6">
@@ -72,7 +88,8 @@
         roster: [],
         memberAccount: '',
         validateMessage: '加个好友呗!我是...',
-        groups: []
+        groups: [],
+        groupMembers: []
       }
     },
     mounted() {
@@ -149,6 +166,7 @@
         window.conn.close()
         this.roster = []
         this.groups = []
+        this.groupMembers = []
       },
       // 获取好友列表
       getFriendList() {
@@ -178,6 +196,132 @@
           }
         })
       },
+      getFriend(data) {
+        if (data.name) {
+          alert(data.name)
+        } else if (data.member) {
+          alert(data.member)
+        }
+      },
+      // 聊天
+      myChatTest(data) {
+        // 单聊
+        this.sendPrivateText(data)
+//        this.sendPrivateAudio(data)
+//        this.sendPrivateVideo(data)
+      },
+      // 单聊发送文本消息
+      sendPrivateText(data) {
+        // 生成本地消息id
+        let id = window.conn.getUniqueId()
+        // 创建文本消息
+        /* eslint-disable */
+        let msg = new window.WebIM.message('txt', id)
+        let msgContent = '你好，有空聊一下么'
+        msg.set({
+          // 消息内容
+          msg: msgContent,
+          // 接收消息对象(用户id)
+          to: data.jid,
+          roomType: false,
+          success: (id, serverMsgId) => {
+            console.log('send private text Success')
+            Message.success('send private text Success')
+          },
+          fail: (e) => {
+            console.log('Send private text error')
+            Message.error('Send private text error')
+          }
+        })
+        msg.body.chatType = 'singleChat'
+        window.conn.send(msg.body)
+      },
+      // 单聊发送音频消息
+      sendPrivateAudio(data) {
+        // 生成本地消息id
+        let id = window.conn.getUniqueId()
+        // 创建音频消息
+        let msg = new window.WebIM.message('audio', id)
+        // 选择音频的input
+//        let input = document.getElementById('audio')
+        let input = null
+        // 将音频转化为二进制文件
+        let file = window.WebIM.utils.getFileUrl(input)
+        let allowType = {
+          'mp3': true,
+          'amr': true,
+          'wmv': true
+        }
+        if (file.filetype.toLowerCase() in allowType) {
+          let option = {
+            apiUrl: window.WebIM.config.apiURL,
+            file: file,
+            // 接收消息对象
+            to: data.name,
+            roomType: false,
+            chatType: 'singleChat',
+            // 消息上传失败
+            onFileUploadError: () => {
+              console.log('onFileUploadError')
+            },
+            // 消息上传成功
+            onFileUploadComplete: () => {
+              console.log('onFileUploadComplete')
+            },
+            // 消息发送成功
+            success: () => {
+              console.log('Success')
+            },
+            flashUpload: window.WebIM.flashUpload
+          }
+          msg.set(option)
+          window.conn.send(msg.body)
+        }
+      },
+      // 单聊发送视频消息
+      sendPrivateVideo(data) {
+        // 生成本地消息id
+        let id = window.conn.getUniqueId()
+        // 创建视频消息
+        let msg = new WebIM.message('video', id)
+        // 选择视频的input
+//        let input = document.getElementById('video')
+        let input = null
+        // 将视频转化为二进制文件
+        let file = window.WebIM.utils.getFileUrl(input)
+        let allowType = {
+          'mp4': true,
+          'wmv': true,
+          'avi': true,
+          'rmvb': true,
+          'mkv': true
+        }
+        if (file.filetype.toLowerCase() in allowType) {
+          let option = {
+            apiUrl: window.WebIM.config.apiURL,
+            file: file,
+            // 接收消息对象
+            to: data.name,
+            roomType: false,
+            chatType: 'singleChat',
+            // 消息上传失败
+            onFileUploadError: () => {
+              console.log('onFileUploadError')
+            },
+            // 消息上传成功
+            onFileUploadComplete: () => {
+              console.log('onFileUploadComplete')
+            },
+            // 消息发送成功
+            success: () => {
+              console.log('Success')
+            },
+            flashUpload: windwo.WebIM.flashUpload
+          }
+          msg.set(option)
+          window.conn.send(msg.body)
+        }
+      },
       // 添加好友
       addMember() {
         if (!this.memberAccount) {
@@ -194,7 +338,7 @@
         }
 
         if (window.WebIM.config.isWindowSDK) {
-          window.WebIM.doQuery('{"type":"addFriend","to":"' + this.memberAccount + '","message":"' + this.user.userName + this.lan.request + '"}',
+          window.WebIM.doQuery('{"type":"addMember","to":"' + this.memberAccount + '","message":"' + this.user.userName + this.lan.request + '"}',
             function success(str) {
               Message.success(this.lan.contact_added)
             },
@@ -214,15 +358,65 @@
       // 列出当前登录用户加入的所有群组
       getGroupList() {
         this.groups = []
-        window.conn.getGroup({
+        if (window.WebIM.config.isWindowSDK) {
+          window.WebIM.doQuery('{"type":"getGroupList"}',
+            function success(str) {
+              let rooms = []
+              if (str) {
+                /* eslint-disable */
+                rooms = eval('(' + str + ')')
+              }
+              console.log(rooms)
+              Message.success(rooms)
+            },
+            function failure(errCode, errMessage) {
+              Message.error('getGroupList:' + errCode + ' ' + errMessage)
+            })
+        } else {
+          window.conn.getGroup({
+            success: resp => {
+              console.log('Response: ', resp)
+              this.groups = resp.data
+            },
+            error: e => {
+              console.log(e)
+              Message.error(e)
+            }
+          })
+        }
+      },
+      // 查询群组成员
+      getGroupMember(data) {
+        this.groupMembers = []
+        let pageNum = 1, pageSize = 1000;
+        window.conn.listGroupMember({
+          pageNum: pageNum,
+          pageSize: pageSize,
+          groupId: data.groupid,
           success: resp => {
-            console.log('Response: ', resp)
-            this.groups = resp.data
+            let result = resp.data
+            this.groupMembers = result.filter(item => {
+              return item.member
+            })
           },
-          error: e => {
+          error: function (e) {
             console.log(e)
+            Message.error(e)
           }
-        })
+        });
+      },
+      // 获取群组黑名单
+      getGroupBlackList(data) {
+        let option = {
+          roomId: data.groupid,
+          success: list => {
+            console.log('Get group black list: ', list)
+          },
+          error: () => {
+            console.log('Get group black list error.')
+          }
+        }
+        conn.getGroupBlacklist(option);
       }
     }
   }
