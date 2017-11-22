@@ -71,8 +71,8 @@
                           <img class="avatar" src="./images/user-2.png"/>
                         </div>
                         <div class="user-list_item_main">
-                          <p class="member_nick">Activex交互群</p>
-                          <p class="member_msg text_ellipsis">小可爱加入群</p>
+                          <p class="member_nick">某同事</p>
+                          <p class="member_msg text_ellipsis">好的</p>
                         </div>
                         <div class="time">16:25</div>
                       </li>
@@ -81,8 +81,8 @@
                           <img class="avatar" src="./images/sys-message.png"/>
                         </div>
                         <div class="user-list_item_main">
-                          <p class="member_nick">Activex交互群</p>
-                          <p class="member_msg text_ellipsis">小可爱加入群</p>
+                          <p class="member_nick">实时消息</p>
+                          <p class="member_msg text_ellipsis">参加今天的下午5点会</p>
                         </div>
                         <div class="time">16:25</div>
                       </li>
@@ -91,8 +91,8 @@
                           <img class="avatar" src="./images/user-file.png"/>
                         </div>
                         <div class="user-list_item_main">
-                          <p class="member_nick">Activex交互群</p>
-                          <p class="member_msg text_ellipsis">小可爱加入群</p>
+                          <p class="member_nick">审批文件</p>
+                          <p class="member_msg text_ellipsis">《参加全国大学生竞赛》</p>
                         </div>
                         <div class="time">16:25</div>
                       </li>
@@ -303,6 +303,84 @@
             </div>
           </div>
         </div>
+        <div v-show="false" class="panel chat-panel group-panel">
+          <div class="panel_header">
+            <div class="item">
+              <div class="tool-btn close"></div>
+            </div>
+          </div>
+          <div class="group-title">办公自动化</div>
+          <div class="group-body scrollbar">
+            <ul class="items">
+              <li class="item">
+                <div class="title">
+                  <i class="icon"></i>
+                  <div class="text">流程管理</div>
+                </div>
+                <div class="cells">
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="title">
+                  <i class="icon"></i>
+                  <div class="text">流程管理</div>
+                </div>
+                <div class="cells">
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="title">
+                  <i class="icon"></i>
+                  <div class="text">流程管理</div>
+                </div>
+                <div class="cells">
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="title">
+                  <i class="icon"></i>
+                  <div class="text">流程管理</div>
+                </div>
+                <div class="cells">
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="title">
+                  <i class="icon"></i>
+                  <div class="text">流程管理</div>
+                </div>
+                <div class="cells">
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="title">
+                  <i class="icon"></i>
+                  <div class="text">流程管理</div>
+                </div>
+                <div class="cells">
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                  <div class="cell">子菜单</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     <div class="footer-menu" id="dock">
@@ -311,7 +389,7 @@
         <div class="mac-avatar" v-for="(item,index) in menuList" :class="bindCls(item.id,item.iconCls)"></div>
       </div>
     </div>
-    <easemob-test ref="easemobTest"></easemob-test>
+    <!--<easemob-test ref="easemobTest"></easemob-test>-->
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -322,6 +400,7 @@
   import Cache from 'common/cache'
   import $ from 'jquery'
   import _ from 'underscore'
+  import ChatPanel from './chatPanel.vue'
 
   export default {
     data() {
@@ -488,7 +567,8 @@
       }
     },
     components: {
-      EasemobTest
+      EasemobTest,
+      ChatPanel
     }
   }
 </script>

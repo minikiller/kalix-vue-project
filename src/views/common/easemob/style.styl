@@ -1,16 +1,4 @@
-$macAvatarW = 50px
-$macAvatarFontSize = 26px
-$borderRadius = 4px
-macAvatarStyle(ratio)
-  width ($macAvatarW * (ratio / 100%)) + $macAvatarW
-  height ($macAvatarW * (ratio / 100%)) + $macAvatarW
-  line-height ($macAvatarW * (ratio / 100%)) + $macAvatarW
-  font-size ($macAvatarFontSize * (ratio / 100%)) + $macAvatarFontSize
-
-text_ellipsis()
-  overflow hidden
-  text-overflow ellipsis
-  white-space nowrap
+@import "panel-base.styl"
 
 .im
   position relative
@@ -147,6 +135,68 @@ text_ellipsis()
       width: 100%;
       overflow: hidden;
       display block
+    .group-panel
+      display block
+      width 1004px
+      overflow: hidden;
+      background-color rgba(254, 254, 240, 0.94)
+      .panel_header
+        background-color transparent
+      .group-title
+        text-align center
+        font-size 18px
+        margin 0 54px
+        line-height 53px
+        border-bottom 4px solid #686868
+      .group-body
+        position absolute
+        padding 0 54px
+        top 157px
+        left 0
+        bottom 56px
+        width 100%
+        box-sizing border-box
+        overflow hidden
+        .items
+          padding 0
+          .item
+            display flex
+            align-items flex-start
+            & + .item
+              margin-top 17px
+            .title
+              text-align center
+              font-size 0
+              margin-right 23px
+              .icon
+                display inline-block
+                width 72px
+                height 72px
+                border-radius 20px
+                background-color #ccadfb
+              .text
+                margin-top 9px
+                font-size 14px
+                line-height 14px
+                color #1e1e1d
+            .cells
+              padding 14px 30px
+              min-height 61px
+              flex 1
+              font-size 0
+              margin-top 4px
+              background-color #f3f3f3
+              border 1px solid #e1e1e1
+              border-radius 11px
+              box-sizing border-box
+              .cell
+                margin 4px 20px
+                display inline-block
+                color #1e1e1d
+                cursor pointer
+                font-size 14px
+                line-height 24px
+
   .panel_body_container
     position: absolute;
     left: 0;
