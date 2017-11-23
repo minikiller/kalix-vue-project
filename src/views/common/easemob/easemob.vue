@@ -303,6 +303,8 @@
             </div>
           </div>
         </div>
+        <!-- 分类窗口 -->
+        <group-panel ref="groupPanel" :group-data="groupItem"></group-panel>
         <div v-show="false" class="panel chat-panel group-panel">
           <div class="panel_header">
             <div class="item">
@@ -386,7 +388,9 @@
     <div class="footer-menu" id="dock">
       <div class="footer-bg"></div>
       <div class="footer-wrapper" id="macAvatars">
-        <div class="mac-avatar" v-for="(item,index) in menuList" :class="bindCls(item.id,item.iconCls)"></div>
+        <div class="mac-avatar" v-for="(item,index) in menuList"
+             :class="bindCls(item.id,item.iconCls)"
+             @click="selectMac(item)"></div>
       </div>
     </div>
     <!--<easemob-test ref="easemobTest"></easemob-test>-->
@@ -401,6 +405,7 @@
   import $ from 'jquery'
   import _ from 'underscore'
   import ChatPanel from './chatPanel.vue'
+  import GroupPanel from './groupPanel.vue'
 
   export default {
     data() {
@@ -411,7 +416,8 @@
         menuList: [],
         isShowSideBar: false,
         currentBackgroundImg: 8,
-        isChatShow: false
+        isChatShow: false,
+        groupItem: {}
       }
     },
     created() {
@@ -478,8 +484,13 @@
       onOpenUserInfo() {
         this.isShowSideBar = !this.isShowSideBar
       },
-      selectMac() {
-        console.log('selectMac')
+      /**
+       *  底部分类按钮选中
+       * */
+      selectMac(item) {
+        console.log('selectMac(', item)
+        this.groupItem = item
+        this.$refs.groupPanel.open()
       },
       onIntoTest() {
         this.$refs.easemobTest.show()
@@ -568,7 +579,8 @@
     },
     components: {
       EasemobTest,
-      ChatPanel
+      ChatPanel,
+      GroupPanel
     }
   }
 </script>
