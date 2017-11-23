@@ -1,16 +1,4 @@
-$macAvatarW = 50px
-$macAvatarFontSize = 26px
-$borderRadius = 4px
-macAvatarStyle(ratio)
-  width ($macAvatarW * (ratio / 100%)) + $macAvatarW
-  height ($macAvatarW * (ratio / 100%)) + $macAvatarW
-  line-height ($macAvatarW * (ratio / 100%)) + $macAvatarW
-  font-size ($macAvatarFontSize * (ratio / 100%)) + $macAvatarFontSize
-
-text_ellipsis()
-  overflow hidden
-  text-overflow ellipsis
-  white-space nowrap
+@import "panel-base.styl"
 
 .im
   position relative
