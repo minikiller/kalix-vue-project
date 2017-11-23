@@ -5131,6 +5131,16 @@ qjobs@^1.1.4:
   version "1.1.5"
   resolved "http://registry.npm.taobao.org/qjobs/download/qjobs-1.1.5.tgz#659de9f2cf8dcc27a1481276f205377272382e73"
 
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+
+qrcode-vue@^1.0.3:
+  version "1.0.3"
+  resolved "http://registry.npm.taobao.org/qrcode-vue/download/qrcode-vue-1.0.3.tgz#0bb5a06b85c52c1bfafa12f90b15776d6838f32e"
+  dependencies:
+    qr.js "0.0.0"
+
 qs@6.5.1, qs@~6.5.1:
   version "6.5.1"
   resolved "http://registry.npm.taobao.org/qs/download/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
