@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'views/demo/Hello'
+import Qrcode from 'views/demo/qrcode'
 import Test from 'views/demo/test'
 import Show from 'views/demo/highcharts/show'
 import VueShow from 'views/demo/highcharts/vue-chart.vue'
@@ -15,8 +16,13 @@ const router = new Router({
   routes: [
     {
       path: '/demo',
-      name: 'hello',
+      name: 'demo',
       component: Hello
+    },
+    {
+      path: '/demo/qrcode',
+      name: 'qrcode',
+      component: Qrcode
     },
     {
       path: '/login',
@@ -53,7 +59,8 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (Cache.get('id') === null && to.name !== 'login') {
+  console.log('router is to ', to.name)
+  if (Cache.get('id') === null && to.name !== 'login' && to.name !== 'demo') {
     next({path: '/login'})
   }
   next()
