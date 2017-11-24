@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'views/demo/Hello'
+import Qrcode from 'views/demo/qrcode'
 import Test from 'views/demo/test'
 import Show from 'views/demo/highcharts/show'
 import VueShow from 'views/demo/highcharts/vue-chart.vue'
 import Login from '@/components/login/login'
 import Cache from 'common/cache'
 import Home from '@/components/home/home'
+import QrcodeLogin from 'views/demo/qrcodelogin'
+import SealapplyFrom from 'views/oa/sealapplyfrom/sealapplyfrom'
 
 Vue.use(Router)
 
@@ -15,8 +18,28 @@ const router = new Router({
   routes: [
     {
       path: '/demo',
-      name: 'hello',
+      name: 'demo',
       component: Hello
+    },
+    {
+      path: '/demo/qrcode',
+      name: 'qrcode',
+      component: Qrcode
+    },
+    {
+      path: '/demo/qrcodelogin',
+      name: 'qrcodelogin',
+      component: QrcodeLogin
+    },
+    {
+      path: '/demo/sealapplyfrom',
+      name: 'sealapplyfrom',
+      component: SealapplyFrom
+    },
+    {
+      path: '/demo/login',
+      name: 'demologin',
+      component: Login
     },
     {
       path: '/login',
@@ -53,7 +76,8 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (Cache.get('id') === null && to.name !== 'login') {
+  console.log('router is to ', to.name)
+  if (Cache.get('id') === null && to.name !== 'login' && to.name !== 'qrcode' && to.name !== 'qrcodelogin') {
     next({path: '/login'})
   }
   next()

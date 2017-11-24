@@ -24,6 +24,7 @@
     "js-cookie": "^2.2.0",
     "mockjs": "^1.0.0",
     "pretty-bytes": "^4.0.2",
+    "qrcode-vue": "^1.0.3",
     "smooth-scrollbar": "^8.2.3",
     "strophe.js": "^1.2.14",
     "stylus": "^0.54.5",
