@@ -518,5 +518,10 @@
 .icon-research-statistics-datastatistics:before{content: "\e680";}
 
 
+/*art*/
+.icon-art:before{content: "\e681";}
+.icon-art-recruit:before{content: "\e683";}
+.icon-art-candidate:before{content: "\e682";}
+
 
 
