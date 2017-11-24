@@ -1,20 +1,23 @@
 <template lang="pug">
   div.qrcode
-    div.title 吉林动画学院用章申请表
-    kalix-qrcode.kalix-qrcode(value="http://192.168.1.109:8282/demo/qrcodelogin")
+    div.title {{title}}
+    kalix-qrcode.kalix-qrcode(v-bind:value="resUrl")
 </template>
-
 <script type="text/ecmascript-6">
   import KalixQrcode from '@/components/qrcode/qrcode'
 
   export default {
+    props: {
+      title: '',
+      resUrl: ''
+    },
     components: {
       KalixQrcode
     }
   }
-</script>
 
-<style lang="stylus">
+</script>
+<style scoped lang="stylus" type="text/stylus">
   .qrcode
     position fixed
     top 20%

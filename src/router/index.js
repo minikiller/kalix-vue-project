@@ -8,8 +8,12 @@ import VueShow from 'views/demo/highcharts/vue-chart.vue'
 import Login from '@/components/login/login'
 import Cache from 'common/cache'
 import Home from '@/components/home/home'
-import QrcodeLogin from 'views/demo/qrcodelogin'
+// import QrcodeLogin from 'views/demo/qrcodelogin'
 import SealapplyFrom from 'views/oa/sealapplyfrom/sealapplyfrom'
+// 二维码登录
+import ComQrcode from 'views/qrcode/comQrcode'
+import StrQrcode from 'views/qrcode/strQrcode'
+import QrcodeLogin from 'views/qrcode/qrcodeLogin'
 
 Vue.use(Router)
 
@@ -22,12 +26,17 @@ const router = new Router({
       component: Hello
     },
     {
-      path: '/demo/qrcode',
-      name: 'qrcode',
-      component: Qrcode
+      path: '/qrcode/comqrcode',
+      name: 'comqrcode',
+      component: ComQrcode
     },
     {
-      path: '/demo/qrcodelogin',
+      path: '/qrcode/strqrcode',
+      name: 'strqrcode',
+      component: StrQrcode
+    },
+    {
+      path: '/qrcode/login/:key',
       name: 'qrcodelogin',
       component: QrcodeLogin
     },
@@ -76,7 +85,12 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('router is to ', to.name)
+  // console.log('router is to ', to)
+  if (!to.path.search(/\/qrcode\//i)) {
+    // 进入二维码页面
+    next()
+    return
+  }
   if (Cache.get('id') === null && to.name !== 'login' && to.name !== 'qrcode' && to.name !== 'qrcodelogin') {
     next({path: '/login'})
   }
