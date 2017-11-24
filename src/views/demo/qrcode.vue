@@ -16,8 +16,11 @@
 
 <style scoped lang="stylus">
   .qrcode
+    position fixed
+    top 20%
+    left 0
     text-align center
-    padding 150px
+    width 100%
     .title
       font-size 24px
       margin-bottom 50px
