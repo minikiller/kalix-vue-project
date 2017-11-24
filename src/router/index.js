@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'views/demo/Hello'
-import Qrcode from 'views/demo/qrcode'
 import Test from 'views/demo/test'
 import Show from 'views/demo/highcharts/show'
 import VueShow from 'views/demo/highcharts/vue-chart.vue'
