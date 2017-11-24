@@ -1,14 +1,47 @@
+<!--
+描述：艺术中心-企业招聘
+开发人：sunlf
+开发日期：2017年8月17日
+-->
+
 <template lang="pug">
-  div
-    kalix-qrcode(:value="'http://baidu.com'")
+  keep-alive
+    base-table(bizKey="recruit" title='公司招聘列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    v-bind:bizDialog="bizDialog"
+    bizSearch="ArtRecruitSearch" v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
-  import KalixQrcode from '@/components/qrcode/qrcode'
+  import BaseTable from '@/components/custom/baseTable'
+  import {RecruitURL, RecruitComponent, ToolButtonList} from '../config.toml'
+  import {registerComponent} from '@/api/register'
+
+  // 注册全局组件
+  registerComponent(RecruitComponent)
 
   export default {
+    data() {
+      return {
+        btnList: ToolButtonList,
+        targetURL: RecruitURL,
+        tableFields: [
+          {prop: 'title', label: '标题'},
+          {prop: 'content', label: '内容'},
+          {prop: 'publishPeople', label: '发布人'},
+          {prop: 'publishDate', label: '发布时间'}
+        ],
+        bizDialog: [
+          {id: 'view', dialog: 'ArtRecruitView'},
+          {id: 'edit', dialog: 'ArtRecruitAdd'},
+          {id: 'add', dialog: 'ArtRecruitAdd'}
+        ]
+      }
+    },
+    created() {
+    },
+    methods: {},
     components: {
-      KalixQrcode
+      BaseTable
     }
   }
 </script>

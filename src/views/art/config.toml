@@ -1,6 +1,8 @@
 # 系统管理項目配置文件
 
 ArtDictURL = "/camel/rest/art/dicts"
+CandidateURL = "/camel/rest/artcandidates"
+RecruitURL = "/camel/rest/recruits"
 ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
 
 # table 的默认按钮定义
@@ -19,3 +21,25 @@ ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
   title = "删除"
   isShow = true
   isPermission = true
+
+# 需要自动注册成全局的recruit组件
+[[RecruitComponent]]
+  path = "art/recruit/recruitView"
+  name = "ArtRecruitView"
+[[RecruitComponent]]
+  path = "art/recruit/recruitAdd"
+  name = "ArtRecruitAdd"
+[[RecruitComponent]]
+  path = "art/recruit/recruitSearch"
+  name = "ArtRecruitSearch"
+
+# 需要自动注册成全局的News组件
+[[CandidateComponent]]
+  path = "art/candidate/candidateView"
+  name = "ArtCandidateView"
+[[CandidateComponent]]
+  path = "art/candidate/candidateAdd"
+  name = "ArtCandidateAdd"
+[[CandidateComponent]]
+  path = "art/candidate/candidateSearch"
+  name = "ArtCandidateSearch"
