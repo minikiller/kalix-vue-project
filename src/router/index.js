@@ -60,7 +60,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   console.log('router is to ', to.name)
-  if (Cache.get('id') === null && to.name !== 'login' && to.name !== 'demo') {
+  if (Cache.get('id') === null && to.name !== 'login' && to.name !== 'qrcode') {
     next({path: '/login'})
   }
   next()
