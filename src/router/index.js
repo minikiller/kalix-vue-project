@@ -8,6 +8,8 @@ import VueShow from 'views/demo/highcharts/vue-chart.vue'
 import Login from '@/components/login/login'
 import Cache from 'common/cache'
 import Home from '@/components/home/home'
+import QrcodeLogin from 'views/demo/qrcodelogin'
+import SealapplyFrom from 'views/oa/sealapplyfrom/sealapplyfrom'
 
 Vue.use(Router)
 
@@ -23,6 +25,21 @@ const router = new Router({
       path: '/demo/qrcode',
       name: 'qrcode',
       component: Qrcode
+    },
+    {
+      path: '/demo/qrcodelogin',
+      name: 'qrcodelogin',
+      component: QrcodeLogin
+    },
+    {
+      path: '/demo/sealapplyfrom',
+      name: 'sealapplyfrom',
+      component: SealapplyFrom
+    },
+    {
+      path: '/demo/login',
+      name: 'demologin',
+      component: Login
     },
     {
       path: '/login',
@@ -60,7 +77,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   console.log('router is to ', to.name)
-  if (Cache.get('id') === null && to.name !== 'login' && to.name !== 'qrcode') {
+  if (Cache.get('id') === null && to.name !== 'login' && to.name !== 'qrcode' && to.name !== 'qrcodelogin') {
     next({path: '/login'})
   }
   next()
