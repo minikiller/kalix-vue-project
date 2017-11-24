@@ -1,9 +1,49 @@
+<!--
+描述：艺术中心-学生应聘
+开发人：sunlf
+开发日期：2017年8月17日
+-->
+
 <template lang="pug">
-    div
+  keep-alive
+    base-table(bizKey="candidate" title='学生应聘列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    v-bind:bizDialog="bizDialog"
+    bizSearch="ArtCandidateSearch" v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
-    export default {}
+  import BaseTable from '@/components/custom/baseTable'
+  import {CandidateURL, CandidateComponent, ToolButtonList} from '../config.toml'
+  import {registerComponent} from '@/api/register'
+
+  // 注册全局组件
+  registerComponent(CandidateComponent)
+
+  export default {
+    data() {
+      return {
+        btnList: ToolButtonList,
+        targetURL: CandidateURL,
+        tableFields: [
+          {prop: 'title', label: '标题'},
+          {prop: 'content', label: '内容'},
+          {prop: 'publishPeople', label: '发布人'},
+          {prop: 'publishDate', label: '发布时间'}
+        ],
+        bizDialog: [
+          {id: 'view', dialog: 'ArtCandidateView'},
+          {id: 'edit', dialog: 'ArtCandidateAdd'},
+          {id: 'add', dialog: 'ArtCandidateAdd'}
+        ]
+      }
+    },
+    created() {
+    },
+    methods: {},
+    components: {
+      BaseTable
+    }
+  }
 </script>
 
 <style scoped lang="stylus">
