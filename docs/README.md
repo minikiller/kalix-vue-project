@@ -17,3 +17,4 @@ https://dzone.com/articles/how-to-publish-your-vuejs-component-on-npm
 https://github.com/prograhammer/vue-library-template
 https://github.com/anthonygore/vue-clock-simple
 https://github.com/euvl/vue-js-popover
+http://www.jb51.net/article/126100.htm
