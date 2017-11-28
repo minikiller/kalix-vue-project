@@ -5,8 +5,7 @@
 -->
 
 <template lang="pug">
-  kalix-search(title="公司招聘查询"
-  v-bind:searchFields="searchFields" v-bind:form-rules="rules")
+  kalix-search(title="招聘信息查询" v-bind:searchFields="searchFields")
 </template>
 
 <script type="text/ecmascript-6">
@@ -16,11 +15,9 @@
     data() {
       return {
         searchFields: [
-          {label: '标题', prop: 'title'}
-        ],
-        rules: {
-          name: [{required: true, message: '请输入标题', trigger: 'blur'}]
-        }
+          {label: '发布时间', prop: 'publishDateBegin', type: 'date', field: 'publishDate:begin:gt'},
+          {label: '-', prop: 'publishDateEnd', type: 'date', field: 'publishDate:end:lt'}
+        ]
       }
     },
     created() {

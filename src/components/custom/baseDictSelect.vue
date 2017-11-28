@@ -4,9 +4,14 @@
 开发日期：2017年8月24日
 -->
 <template lang="pug">
-  el-select(v-model='currentValue' v-on:input="change($event)" v-bind:disabled="disabled"
-    v-bind:placeholder='placeholder')
-    el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
+  div(v-if="multiple")
+    el-select(v-model='selectedOptions' v-bind:disabled="disabled"
+    v-bind:placeholder='placeholder' v-bind:multiple="multiple")
+      el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
+  div(v-else)
+    el-select(v-model='currentValue' v-on:input="change($event)" v-bind:disabled="disabled"
+    v-bind:placeholder='placeholder' v-bind:multiple="multiple")
+      el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
 
 <script type="text/ecmascript-6">
@@ -27,7 +32,18 @@
         required: true
       },
       disabled: Boolean, // 是否禁止
-      value: null
+      value: null,
+      multiple: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data() {
+      return {
+        items: [],
+        currentValue: this.value,
+        selectedOptions: []
+      }
     },
     mounted() {
       this.visibleChange()
@@ -42,17 +58,22 @@
         this.items = data_.filter(item => {
           return item.type === this.dictType
         })
-      }
-    },
-    data() {
-      return {
-        items: [],
-        currentValue: this.value
+        if (this.multiple) {
+          this.selectedOptions = JSON.parse('[' + this.value + ']')
+        }
       }
     },
     watch: {
       value(nv, ov) {
-        this.currentValue = nv
+        if (this.multiple) {
+          this.selectedOptions = JSON.parse('[' + nv + ']')
+        } else {
+          this.currentValue = nv
+        }
+      },
+      selectedOptions(nv) {
+        let rtn = nv.join(',')
+        this.$emit('input', rtn)
       }
     }
   }

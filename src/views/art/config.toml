@@ -33,7 +33,7 @@ ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
   path = "art/recruit/recruitSearch"
   name = "ArtRecruitSearch"
 
-# 需要自动注册成全局的News组件
+# 需要自动注册成全局的candidate组件
 [[CandidateComponent]]
   path = "art/candidate/candidateView"
   name = "ArtCandidateView"
