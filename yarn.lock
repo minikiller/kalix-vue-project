@@ -2012,6 +2012,15 @@ element-ui@^2.0.4:
     deepmerge "^1.2.0"
     throttle-debounce "^1.0.1"
 
+element-ui@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.npmjs.org/element-ui/-/element-ui-2.0.5.tgz#e001cb3514d8303a54f2b7d893b916acfc9ac57d"
+  dependencies:
+    async-validator "~1.8.1"
+    babel-helper-vue-jsx-merge-props "^2.0.0"
+    deepmerge "^1.2.0"
+    throttle-debounce "^1.0.1"
+
 elliptic@^6.0.0:
   version "6.4.0"
   resolved "http://registry.npm.taobao.org/elliptic/download/elliptic-6.4.0.tgz#cac9af8762c85836187003c8dfe193e5e2eae5df"
@@ -3594,6 +3603,13 @@ jstransformer@1.0.0:
   dependencies:
     is-promise "^2.0.0"
     promise "^7.0.1"
+
+kalix-base@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/kalix-base/-/kalix-base-1.0.9.tgz#435a65d88897caad8ccf1fbf85a97180bd0a7074"
+  dependencies:
+    element-ui "^2.0.5"
+    stylus "^0.54.5"
 
 karma-coverage@^1.1.1:
   version "1.1.1"

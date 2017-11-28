@@ -287,18 +287,20 @@
             </div>
           </div>
           <div class="panel_body_container panel_top-distance" style="bottom: 176px;">
-            <div class="panel_body chat_container"></div>
+            <div class="panel_body chat_container" id="session_list">
+
+            </div>
           </div>
           <div class="panel_footer chat_toolbar_footer">
             <div class="chat_toolbar">
               <div class="chat_toolbar_item face"></div>
               <div class="chat_toolbar_item file"></div>
-              <div class="chat_toolbar_item video"></div>
+              <div class="chat_toolbar_item video" @click="sendVideoMessage"></div>
             </div>
             <div class="chat_input">
-              <textarea class="chat_textarea"></textarea>
+              <textarea id="content" class="chat_textarea"></textarea>
               <div class="chat_button_list">
-                <div class="btn-item">发送</div>
+                <div class="btn-item" @click="sendTextMessage">发送</div>
               </div>
             </div>
           </div>
@@ -397,7 +399,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-  import EasemobTest from './easemobtest'
+  // import Vue from 'vue'
   import Scrollbar from 'smooth-scrollbar'
   import {isEmptyObject} from 'common/util'
   import {applicationURL} from 'config/global.toml'
@@ -406,7 +408,13 @@
   import _ from 'underscore'
   import ChatPanel from './chatPanel.vue'
   import GroupPanel from './groupPanel.vue'
+  import EasemobApi from './js/api'
+  // Object.defineProperty(Vue.prototype, '$moment', { value: EasemobTest })
 
+  // 公有云初始化
+  // let config = {
+    // protobuf: './local-sdk/protobuf-2.2.7.min.js' //支持http(s)网络路径、本地相对路径
+  // }
   export default {
     data() {
       return {
@@ -430,6 +438,7 @@
         Scrollbar.init(item)
       })
       this.init()
+      EasemobApi.api.initRevice($('#session_list'))
     },
     methods: {
       init() {
@@ -461,6 +470,12 @@
               .next().addClass('next_next')
           }
         })
+      },
+      sendTextMessage() {
+        EasemobApi.api.sendTextMessage($('#session_list'), $('#content'))
+      },
+      sendVideoMessage() {
+        EasemobApi.api.startDoCall()
       },
       onSelectUserChat() {
         this.isChatShow = true
@@ -578,12 +593,14 @@
       }
     },
     components: {
-      EasemobTest,
+      EasemobApi,
       ChatPanel,
       GroupPanel
     }
   }
 </script>
+
+
 <style scoped lang="stylus" type="text/stylus">
   @import "style.styl"
 </style>
