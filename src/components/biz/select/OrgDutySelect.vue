@@ -44,7 +44,6 @@
         el-button(type="primary" v-on:click="onConfirm") 确 定
 </template>
 <script type="text/ecmascript-6">
-  import PagedTable from '@/components/custom/pagedTable'
   import DateColumn from 'views/oa/comp/dateColumn'
   import Cache from 'common/cache'
   import Message from 'common/message'
@@ -162,7 +161,6 @@
       }
     },
     components: {
-      KalixPagedTable: PagedTable,
       KalixDateColumn: DateColumn
     },
     computed: {

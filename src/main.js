@@ -12,10 +12,12 @@ import store from './store'
 // import KalixDialog from '@/components/table/dialog'
 import {GlobalComponent, GlobalFilter} from 'config/global.toml'
 import './element-ui'
+import KalixBase from 'kalix-base'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
+Vue.use(KalixBase)
 
 // for (const item of GlobalComponent) {
 //   console.log(item.name, item.path)
