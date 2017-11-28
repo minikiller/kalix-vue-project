@@ -18,8 +18,7 @@
   export default {
     data() {
       return {
-        formModel: Object.assign({}, FormModel),
-        labelWidth: '110px'
+        formModel: Object.assign({}, FormModel)
       }
     },
     components: {
