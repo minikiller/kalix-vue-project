@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   el-select(v-model='currentValue' v-on:input="change($event)" v-bind:disabled="disabled"
-    v-bind:placeholder='placeholder')
+  v-bind:placeholder='placeholder')
     el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
 
@@ -30,15 +30,42 @@
       value: null
     },
     mounted() {
-      this.visibleChange()
+      this.getDict()
     },
     methods: {
       change: function (val) {
         this.$emit('input', val)
       },
+      getDict() {
+        this.name = this.appName.toUpperCase()
+        if (this.name) {
+          const DictURL = `/camel/rest/${this.name}/dicts`
+          const DictKey = `${this.name.toUpperCase()}-DICT-KEY`
+          if (!Cache.get(DictKey)) {
+            const data = {
+              page: 1,
+              start: 0,
+              limit: 200
+            }
+            this.axios.get(DictURL, {
+              params: data
+            }).then(response => {
+              if (response.data) {
+                Cache.save(DictKey, JSON.stringify(response.data.data))
+                this.initItems(response.data.data)
+              }
+            })
+          } else {
+            this.visibleChange()
+          }
+        }
+      },
       visibleChange() {
         const DictKey = `${this.appName.toUpperCase()}-DICT-KEY`
         let data_ = JSON.parse(Cache.get(DictKey)) // get data from cache
+        this.initItems(data_)
+      },
+      initItems(data_) {
         this.items = data_.filter(item => {
           return item.type === this.dictType
         })
