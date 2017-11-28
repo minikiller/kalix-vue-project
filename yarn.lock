@@ -3594,9 +3594,9 @@ jstransformer@1.0.0:
     is-promise "^2.0.0"
     promise "^7.0.1"
 
-kalix-base@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/kalix-base/-/kalix-base-1.0.9.tgz#435a65d88897caad8ccf1fbf85a97180bd0a7074"
+kalix-base@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/kalix-base/-/kalix-base-1.0.12.tgz#0e8e100b6e972f2b08798698a51958e6605bf3eb"
   dependencies:
     element-ui "^2.0.5"
     stylus "^0.54.5"

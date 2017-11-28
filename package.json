@@ -22,7 +22,7 @@
     "highcharts": "^6.0.2",
     "jquery": "^3.2.1",
     "js-cookie": "^2.2.0",
-    "kalix-base": "^1.0.9",
+    "kalix-base": "^1.0.12",
     "mockjs": "^1.0.0",
     "pretty-bytes": "^4.0.2",
     "qrcode-vue": "^1.0.3",
