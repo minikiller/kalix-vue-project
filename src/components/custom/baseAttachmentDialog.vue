@@ -36,7 +36,7 @@
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
   import {AttachmentURL} from 'config/global.toml'
-  import PagedTable from '@/components/custom/pagedTable'
+//  import PagedTable from '@/components/custom/pagedTable'
   import DateColumn from 'views/oa/comp/dateColumn'
   import prettyBytes from 'pretty-bytes'
 
@@ -146,7 +146,7 @@
     },
     computed: {},
     components: {
-      KalixPagedTable: PagedTable,
+//      KalixPagedTable: PagedTable,
       KalixDateColumn: DateColumn
     }
   }
