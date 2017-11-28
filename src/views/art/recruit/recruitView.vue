@@ -50,8 +50,8 @@
           el-input(v-model="formModel.appliedTechnology" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="个人要求" prop="personRequires" v-bind:label-width="labelWidth")
-          el-input(v-bind:value="formModel.personRequires|getDictName('ART','个人要求')" readonly)
-          // kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" style="width:100%")
+          // el-input(v-bind:value="formModel.personRequires|getDictName('ART','个人要求')" readonly)
+          kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" multiple style="width:100%" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="工作类型" prop="jobType" v-bind:label-width="labelWidth")
           el-input(v-bind:value="formModel.jobType|getDictName('ART','工作类型')" readonly)
 </template>
@@ -60,6 +60,7 @@
   import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
   import DatePicker from '@/components/biz/date/datepicker.vue'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
 
   export default {
     data() {
@@ -70,7 +71,8 @@
     },
     components: {
       KalixDialog: Dialog,
-      KalixDatePicker: DatePicker
+      KalixDatePicker: DatePicker,
+      KalixDictSelect: BaseDictSelect
     },
     methods: {
     }
