@@ -73,7 +73,6 @@
   import {TaskActivitiesURL, TaskFormURL} from '../config.toml'
   import {AttachmentURL} from 'config/global.toml'
   import Dialog from '@/components/custom/baseDialog'
-  import PagedTable from '@/components/custom/pagedTable'
   import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
   import EventBus from 'common/eventbus'
   import Message from 'common/message'
@@ -123,8 +122,7 @@
     },
     components: {
       KalixDialog: Dialog,
-      KalixDateColumn: DateColumn,
-      KalixPagedTable: PagedTable
+      KalixDateColumn: DateColumn
     },
     watch: {
       visible(newValue) {    // 根据dialog的状态重置表单

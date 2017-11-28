@@ -53,7 +53,7 @@
           el-input(v-model="formModel.appliedTechnology")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="个人要求" prop="personRequires" v-bind:label-width="labelWidth")
-          kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" style="width:100%")
+          kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" multiple style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="工作类型" prop="jobType" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.jobType" appName="art" dictType="工作类型" style="width:100%")
 </template>
