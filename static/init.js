@@ -30,11 +30,13 @@ function init(params, callbacks, modules){
 	RongIMLib.RongIMClient.init(appKey);
 
   // 初始化视频通话
+  var localWindow = modules.localWindow;
   var options = {
     container : {
-      local: null //local 为放置视频窗口的 DOM 节点
+      local: localWindow
     }
   };
+
 // 初始化 WebCallLib
   RongIMLib.RongCallLib.init(options);
   var instance = RongIMClient.getInstance();
