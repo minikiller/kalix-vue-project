@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.cnt
+  div.art-form
     div.form-container
       div.swiper-container
         div.swiper-wrapper
@@ -187,8 +187,8 @@
     }
   }
 </script>
-<style scoped lang="stylus" type="text/stylus">
-  .cnt
+<style lang="stylus" type="text/stylus">
+  .art-form
     position fixed
     top 0px
     left 0px
@@ -244,6 +244,8 @@
     .swiper-container
       width 100%
       height 100%
+    .el-select
+      width 100% !important
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button
