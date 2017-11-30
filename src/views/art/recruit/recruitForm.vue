@@ -197,6 +197,7 @@
           border-bottom 0
     .ipt-date
       width: 100%;
+      height 40px
       border: 0;
       outline: 0;
       box-sizing border-box
