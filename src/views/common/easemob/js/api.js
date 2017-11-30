@@ -29,7 +29,7 @@ let callbacks = {
   }
 }
 config= {
-  localWindow : vueObj[0]
+  localWindow : vueObj.attr("id")
 };
 init(params, callbacks, config);
 api.initRevice = function (reviecObj){
