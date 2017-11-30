@@ -7,6 +7,7 @@ let clibinstance
 let targetId='user10'
 let config = {};
 let vueObj=''
+let voip=''
 let params = {
   appKey: 'kj7swf8okidb2',
   token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
@@ -29,11 +30,12 @@ let callbacks = {
   }
 }
 config= {
-  localWindow : vueObj.attr("id")
+  localWindow : voip
 };
 init(params, callbacks, config);
 api.initRevice = function (reviecObj){
   vueObj=reviecObj;
+  voip=vueObj.attr("id");
 }
 api.afterConnected = function (){
   // document.getElementById("panel").style.display = "none";
