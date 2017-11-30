@@ -33,7 +33,7 @@ function init(params, callbacks, modules){
   var localWindow = modules.localWindow;
   var options = {
     container : {
-      local: localWindow
+      local: 'session_list'
     }
   };
 
