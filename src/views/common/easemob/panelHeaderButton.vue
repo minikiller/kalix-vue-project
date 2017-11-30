@@ -1,10 +1,15 @@
 <template lang="pug">
-  div.panel-header-button(v-bind:class="type")
+  div.panel-header-button(v-bind:class="type" v-on:click="click")
 </template>
 <script type="text/ecmascript-6">
   export default {
     props: {
       type: ''
+    },
+    methods: {
+      click() {
+        this.$emit('click')
+      }
     }
   }
 </script>
