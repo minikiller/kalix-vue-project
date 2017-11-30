@@ -296,6 +296,7 @@
               <div class="chat_toolbar_item face"></div>
               <div class="chat_toolbar_item file"></div>
               <div class="chat_toolbar_item video" @click="sendVideoMessage"></div>
+              <div class="chat_toolbar_item video" @click="acceptVideo"></div>
             </div>
             <div class="chat_input">
               <textarea id="content" class="chat_textarea"></textarea>
@@ -476,6 +477,9 @@
       },
       sendVideoMessage() {
         EasemobApi.api.startDoCall()
+      },
+      acceptVideo() {
+        EasemobApi.api.joinCall()
       },
       onSelectUserChat() {
         this.isChatShow = true

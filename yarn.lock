@@ -857,7 +857,7 @@ babel-register@^6.22.0, babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.x, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.x, babel-runtime@^6.0.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "http://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -936,6 +936,12 @@ better-assert@~1.0.0:
   resolved "http://registry.npm.taobao.org/better-assert/download/better-assert-1.0.2.tgz#40866b9e1b9e0b55b481894311e68faffaebc522"
   dependencies:
     callsite "1.0.0"
+
+better-scroll@^1.5.0:
+  version "1.5.0"
+  resolved "http://registry.npm.taobao.org/better-scroll/download/better-scroll-1.5.0.tgz#7b121f76276446ba37c272f1e52fc0107b1a0e41"
+  dependencies:
+    babel-runtime "^6.0.0"
 
 big.js@^3.1.3:
   version "3.2.0"
@@ -1918,6 +1924,10 @@ dom-serializer@0:
   dependencies:
     domelementtype "~1.1.1"
     entities "~1.1.1"
+
+dom7@^2.0.1:
+  version "2.0.1"
+  resolved "http://registry.npm.taobao.org/dom7/download/dom7-2.0.1.tgz#a8a2c802cf17c20b051d9414143061472201a233"
 
 domain-browser@^1.1.1:
   version "1.1.7"
@@ -3594,9 +3604,9 @@ jstransformer@1.0.0:
     is-promise "^2.0.0"
     promise "^7.0.1"
 
-kalix-base@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/kalix-base/-/kalix-base-1.0.9.tgz#435a65d88897caad8ccf1fbf85a97180bd0a7074"
+kalix-base@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/kalix-base/-/kalix-base-1.0.12.tgz#0e8e100b6e972f2b08798698a51958e6605bf3eb"
   dependencies:
     element-ui "^2.0.5"
     stylus "^0.54.5"
@@ -5988,6 +5998,12 @@ svgo@^0.7.0:
     mkdirp "~0.5.1"
     sax "~1.2.1"
     whet.extend "~0.9.9"
+
+swiper@^4.0.6:
+  version "4.0.6"
+  resolved "http://registry.npm.taobao.org/swiper/download/swiper-4.0.6.tgz#a40ce681bc8408929a9544629d2d40e267e8fadb"
+  dependencies:
+    dom7 "^2.0.1"
 
 table@^3.7.8:
   version "3.8.3"

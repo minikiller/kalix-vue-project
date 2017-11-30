@@ -25,10 +25,8 @@
 <script type="text/ecmascript-6">
   //  import Router from 'router'
   import {mapMutations} from 'vuex'
-  import Message from 'common/message'
-  import Cache from 'common/cache'
+  import {Cache, Message, Eventbus} from 'kalix-base'
   import Login from 'api/login'
-  import EventBus from 'common/eventbus'
 
   export default {
     data() {
@@ -55,9 +53,10 @@
     },
     activated() {
       this.loginForm = {name: '', pass: ''}
-      EventBus.$on('ElFormItem.validateField', () => {
+      console.log('Eventbus', Eventbus)
+//      EventBus.$on('ElFormItem.validateField', () => {
 //        console.log('el.form.item.validateField')
-      })
+//      })
     },
     mounted() {
       this.tabInput()

@@ -1,14 +1,15 @@
-function init(params, callbacks, modules){
+/* eslint-disable */
+export default{init,callbacks}
+function init(params, callbacks, modules) {
 	var appKey = params.appKey;
 	var token = params.token;
 	var navi = params.navi || "";
-
 	modules = modules || {};
 	var RongIMLib = modules.RongIMLib || window.RongIMLib;
 	var RongIMClient = RongIMLib.RongIMClient;
 	var protobuf = modules.protobuf || null;
 
-	var config = {};
+
 
 	//私有云切换navi导航，私有云格式 '120.92.10.214:8888'
 	if(navi !== ""){
@@ -25,27 +26,21 @@ function init(params, callbacks, modules){
 	if(protobuf != null){
 		config.protobuf = protobuf;
 	};
-
-
 	RongIMLib.RongIMClient.init(appKey);
-
-  // 初始化视频通话
-  var localWindow = modules.localWindow;
+	// 初始化视频通话
   var options = {
     container : {
-      local: 'session_list'
+      local: null //local 为放置视频窗口的 DOM 节点
     }
   };
-
 // 初始化 WebCallLib
   RongIMLib.RongCallLib.init(options);
   var instance = RongIMClient.getInstance();
   var CallLibInstance = RongIMLib.RongCallLib.getInstance();
-
 	// 连接状态监听器
 	RongIMClient.setConnectionStatusListener({
 		onChanged: function (status) {
-			// console.log(status);
+			// console.log('status----->'+status);
 		    switch (status) {
 		        case RongIMLib.ConnectionStatus["CONNECTED"]:
 		        case 0:
@@ -142,3 +137,4 @@ function init(params, callbacks, modules){
 		}
 	});
 }
+
