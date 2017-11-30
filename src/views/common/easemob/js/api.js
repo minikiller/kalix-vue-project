@@ -1017,6 +1017,12 @@ api.startDoCall = function (){
   });
 }
 api.joinCall = function () {
+  var options = {
+    container : {
+      local: vueObj
+    }
+  };
+  RongIMLib.RongCallLib.init(options);
   clibinstance.joinCall(mediaType, {
     onSuccess: function () {
       console.log("接受视频成功");
