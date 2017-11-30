@@ -30,12 +30,14 @@ let callbacks = {
   }
 }
 config= {
-  localWindow : voip
+  localWindow : vueObj
 };
+
 init(params, callbacks, config);
 api.initRevice = function (reviecObj){
   vueObj=reviecObj;
-  voip=vueObj.attr("id");
+alert('vueObj-------->'+vueObj);
+  //voip=vueObj.attr("id");
 }
 api.afterConnected = function (){
   // document.getElementById("panel").style.display = "none";
@@ -998,6 +1000,12 @@ var converType = RongIMLib.ConversationType.PRIVATE;
  var extra = "";
 //
 api.startDoCall = function (){
+  var options = {
+    container : {
+      local: vueObj
+    }
+  };
+  RongIMLib.RongCallLib.init(options);
   clibinstance.startCall(converType,targetId,invertUserIds,mediaType,extra,{
     onSuccess:function(){
       // => startCall successfully
