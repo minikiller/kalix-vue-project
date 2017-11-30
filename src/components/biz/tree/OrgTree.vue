@@ -34,7 +34,10 @@
       placeholder: {
         default: '请选择职务'
       },
-      value: null
+      value: null,
+      organizationId: {
+        default: -1
+      }
     },
     data() {
       return {
@@ -68,7 +71,12 @@
         console.log('org tree data is ', data.id)
       },
       getData() {
-        let url = '/camel/rest/orgs?node=root'
+        let url = ''
+        if (this.organizationId === -1) {
+          url = '/camel/rest/orgs?node=root'
+        } else {
+          url = '/camel/rest/orgs/' + this.organizationId
+        }
         this.axios.request({
           method: 'GET',
           url: url,

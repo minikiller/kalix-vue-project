@@ -1,9 +1,10 @@
 # 系统管理項目配置文件
 
-ArtDictURL = "/camel/rest/art/dicts"
 CandidateURL = "/camel/rest/artcandidates"
 RecruitURL = "/camel/rest/recruits"
+ArtDictURL = "/camel/rest/art/dicts"
 ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
+TeachingUnitOrgID = 42014
 
 # table 的默认按钮定义
 [[ToolButtonList]]
@@ -43,3 +44,14 @@ ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
 [[CandidateComponent]]
   path = "art/candidate/candidateSearch"
   name = "ArtCandidateSearch"
+
+# 需要自动注册成全局的majorCourse组件
+[[MajorCourseComponent]]
+  path = "art/majorcourse/majorCourseView"
+  name = "MajorCourseView"
+[[MajorCourseComponent]]
+  path = "art/majorcourse/majorCourseAdd"
+  name = "MajorCourseAdd"
+[[MajorCourseComponent]]
+  path = "art/majorcourse/majorCourseSearch"
+  name = "MajorCourseSearch"
