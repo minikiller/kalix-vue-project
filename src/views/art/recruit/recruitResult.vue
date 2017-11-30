@@ -47,12 +47,6 @@
     margin 0 auto
     box-sizing border-box
     text-align center
-    &.success
-      background-color rgb(67, 132, 52)
-    &.error
-      background-color rgb(255, 0, 51)
-    &.close
-      background-color rgb(0, 124, 199)
     .wrapper
       position relative
       &:before
@@ -67,6 +61,15 @@
         font-size 100px
         color #ffffff
       .title
-        font-size 18px
+        font-size 24x
         margin-top 30px
+    &.success
+      .icon
+        color rgb(67, 132, 52)
+    &.error
+      .icon
+        color rgb(255, 0, 51)
+    &.close
+      .icon
+        color rgb(0, 124, 199)
 </style>
