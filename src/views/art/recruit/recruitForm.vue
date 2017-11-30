@@ -1,10 +1,11 @@
 <template lang="pug">
   div.cnt
-    div.swiper-container
-      div.swiper-wrapper
-        div.swiper-slide
-          div.wrapper
-            el-form(ref="dialogForm" v-bind:model="formModel")
+    div.form-container
+      div.swiper-container
+        div.swiper-wrapper
+          div.swiper-slide
+            div.wrapper
+              el-form(ref="dialogForm" v-bind:model="formModel")
                 div.el-form.kalix-form-table
                   div.table-title 企业信息
                   div.s-flex
@@ -55,9 +56,10 @@
                       kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" style="width:100%")
                     el-form-item.s-flex_item.kalix-form-table-td(label="工作类型" prop="jobType" v-bind:label-width="labelWidth")
                       kalix-dict-select(v-model="formModel.jobType" appName="art" dictType="工作类型" style="width:100%")
-                div.btns
-                  el-button(v-on:click="onCancelClick") 取 消
-                  el-button(type="primary" v-on:click="onSubmitClick") 提 交
+    div.footer-toolbar
+      div.btns
+        el-button.btn-item(v-on:click="onCancelClick") 关 闭
+        el-button.btn-item(type="primary" v-on:click="onSubmitClick") 提 交
 </template>
 <script type="text/ecmascript-6">
   import FormModel from './model'
@@ -68,6 +70,7 @@
   import DatePicker from '@/components/biz/date/datepicker.vue'
   import Vue from 'vue'
   import Swiper from 'swiper'
+  import {formatDate} from 'common/typeFormat'
 
   export default {
     data() {
@@ -87,6 +90,11 @@
       KalixDatePicker: DatePicker
     },
     mounted() {
+      history.pushState(null, null, document.URL)
+      window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL)
+      })
+
       let swiper = new Swiper('.swiper-container', {
         direction: 'vertical',
         slidesPerView: 'auto',
@@ -139,8 +147,13 @@
         }
       },
       onCancelClick() {
+        this.resultRedirect('close')
       },
       onSubmitClick() {
+        // 保证日期时间提交验证
+        if (this.formModel.publishDate !== '') {
+          this.formModel.publishDate = formatDate(new Date(this.formModel.publishDate), 'yyy-MM-dd hh:mm:ss')
+        }
         this.$refs.dialogForm.validate((valid) => {
           console.log('valid', valid)
           if (valid) {
@@ -151,19 +164,14 @@
               params: {}
             }).then(response => {
               if (response.data.success) {
-                Message.success(response.data.msg)
+//                Message.success(response.data.msg)
                 this.visible = false
                 this.$refs.dialogForm.resetFields()
-                // 关闭对话框
-//                this.close()
-                // 清空form
-//                this.$parent.resetDialogForm()
-//                this.$emit('resetDialogForm')
+                this.resultRedirect('success')
               } else {
-                Message.error(response.data.msg)
+                this.resultRedirect('error')
               }
               // 刷新列表
-              this._afterDialogClose()
               console.log('[kalix] dialog submit button clicked !')
               this.visible = false
             })
@@ -172,6 +180,9 @@
             return false
           }
         })
+      },
+      resultRedirect(target) {
+        window.open(window.location.origin + '/art/result/' + target)
       }
     }
   }
@@ -186,7 +197,7 @@
     height 100%
     background-color #ffffff
     .wrapper
-      padding 12px
+      padding 0 12px
     .s-flex
       display block
     .kalix-form-table
@@ -207,13 +218,32 @@
       color: inherit;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-    .btns
+    .form-container
+      position: fixed;
+      top 12px
+      left 0px
+      bottom 64px
+      width 100%
+      overflow: hidden;
+    .footer-toolbar
+      position fixed
+      left 0
+      bottom 0
+      width 100%
+      padding 12px
       text-align center
-      margin-top 12px
+      box-sizing border-box
+      background-color #ffffff
+      .btns
+        display flex
+        margin 0 -6px
+        .btn-item
+          flex 1
+          margin 0 6px
+
     .swiper-container
       width 100%
       height 100%
-
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button

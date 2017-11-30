@@ -14,6 +14,7 @@ import ComQrcode from 'views/qrcode/comQrcode'
 import StrQrcode from 'views/qrcode/strQrcode'
 import QrcodeLogin from 'views/qrcode/qrcodeLogin'
 import recruitForm from 'views/art/recruit/recruitForm'
+import recruitResult from 'views/art/recruit/recruitResult'
 
 Vue.use(Router)
 
@@ -44,6 +45,11 @@ const router = new Router({
       path: '/art/recruitform',
       name: 'recruitform',
       component: recruitForm
+    },
+    {
+      path: '/art/result/:key',
+      name: 'recruitResult',
+      component: recruitResult
     },
     {
       path: '/demo/sealapplyfrom',
