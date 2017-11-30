@@ -6,7 +6,7 @@ let instance
 let clibinstance
 let targetId='user10'
 let config = {};
-let vueObj
+let vueObj=''
 let params = {
   appKey: 'kj7swf8okidb2',
   token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
@@ -28,6 +28,9 @@ let callbacks = {
     // afterConnected();
   }
 }
+config= {
+  localWindow : vueObj[0]
+};
 init(params, callbacks, config);
 api.initRevice = function (reviecObj){
   vueObj=reviecObj;
@@ -1003,5 +1006,17 @@ api.startDoCall = function (){
     }
   });
 }
-
+api.joinCall = function () {
+  clibinstance.joinCall(mediaType, {
+    onSuccess: function () {
+      console.log("接受视频成功");
+    },
+    onError: function (err) {
+      console.log("acceptVideo err ", err);
+    }
+  });
+}
+api.hungupCall = function () {
+  clibinstance.hungupCall(conversationType, targetId, ErrorCode.HANGUP);
+}
 export default {api,recallMessage}
