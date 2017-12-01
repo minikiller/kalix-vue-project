@@ -8,12 +8,9 @@ let targetId='user10'
 let config = {};
 let vueObj=''
 let voip=''
-let params = {
-  appKey: 'kj7swf8okidb2',
-  token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
-}
 
-api.init = function (params, callbacks, modules){
+
+api.init = function (params, modules){
   var appKey = params.appKey;
   var token = params.token;
   var navi = params.navi || "";
@@ -51,7 +48,6 @@ api.init = function (params, callbacks, modules){
       local: $('#session_list')[0]
     }
   };
-
 // 初始化 WebCallLib
   RongIMLib.RongCallLib.init(options);
   var instance = RongIMClient.getInstance();
@@ -157,28 +153,24 @@ api.init = function (params, callbacks, modules){
     }
   });
 }
-
 let callbacks = {
-  getInstance : function(_instance){
-    instance = _instance;
+  getInstance : function(_instance) {
+    instance = _instance
   },
-  getClibInstance : function(_clibinstance){
-    clibinstance = _clibinstance;
+  getClibInstance : function(_clibinstance) {
+    clibinstance = _clibinstance
   },
-  receiveNewMessage : function(message){
+  receiveNewMessage : function(message) {
     // 判断消息类型
     // console.log("新消息",message,start);
-    api.receiveMessage(message)
+    EasemobApi.api.receiveMessage(message)
   },
-  getCurrentUser : function(userInfo){
-    userId = userInfo.userId;
+  getCurrentUser : function(userInfo) {
+    userId = userInfo.userId
     // afterConnected();
   }
 }
-config= {
-  localWindow : vueObj
-};
-api.init(params, callbacks, config);
+//api.init(params, callbacks, config);
 api.initRevice = function (reviecObj){
   vueObj=reviecObj;
   //voip=vueObj.attr("id");
