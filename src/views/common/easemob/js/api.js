@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+import $ from 'jquery'
 let api = {}
 let userId
 let instance
@@ -40,11 +40,16 @@ api.init = function (params, callbacks, modules){
   if(protobuf != null){
     config.protobuf = protobuf;
   };
+
+
   RongIMLib.RongIMClient.init(appKey);
+
   // 初始化视频通话
   var localWindow = modules.localWindow;
   var options = {
-    container : 'session_list'
+    container : {
+      local: $('#session_list')[0]
+    }
   };
 
 // 初始化 WebCallLib
