@@ -32,9 +32,7 @@ function init(params, callbacks, modules){
   // 初始化视频通话
   var localWindow = modules.localWindow;
   var options = {
-    container : {
-      local: 'session_list'
-    }
+    container : 'session_list'
   };
 
 // 初始化 WebCallLib

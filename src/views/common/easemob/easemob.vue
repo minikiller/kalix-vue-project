@@ -287,7 +287,7 @@
             </div>
           </div>
           <div class="panel_body_container panel_top-distance" style="bottom: 176px;">
-            <div class="panel_body chat_container" id="session_list">
+            <div class="panel_body chat_container"  style="width: 400px;height: 400px;" id="session_list">
 
             </div>
           </div>
@@ -597,9 +597,9 @@
       }
     },
     components: {
-      EasemobApi,
       ChatPanel,
-      GroupPanel
+      GroupPanel,
+      EasemobApi
     }
   }
 </script>
