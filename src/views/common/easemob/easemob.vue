@@ -287,10 +287,12 @@
             </div>
           </div>
           <div class="panel_body_container panel_top-distance" style="bottom: 176px;">
-            <div class="panel_body chat_container" id="session_list">
-
+            <div class="panel_body chat_container"   id="session_list">
+              <div class="con" id="self_panel">
+              </div>
             </div>
           </div>
+
           <div class="panel_footer chat_toolbar_footer">
             <div class="chat_toolbar">
               <div class="chat_toolbar_item face"></div>
@@ -597,9 +599,9 @@
       }
     },
     components: {
-      EasemobApi,
       ChatPanel,
-      GroupPanel
+      GroupPanel,
+      EasemobApi
     }
   }
 </script>
@@ -607,4 +609,27 @@
 
 <style scoped lang="stylus" type="text/stylus">
   @import "style.styl"
+</style>
+<style>
+  .con{
+    margin: 0 auto;
+    height: 400px !important;
+    width: 400px !important;
+    padding: 5px;
+    border-left:1px dashed black;
+    border-bottom:1px dashed black;
+    border: 1px green solid;
+  }
+  .child_panel{
+    height: 150px !important;
+    width: 200px !important;
+    border:1px solid white;
+    filter:alpha(opacity:30);
+    padding: 5px;
+    position: absolute;
+    right: 30%;
+    bottom:80%;
+    z-index: 999;
+    margin-top: 20px;
+  }
 </style>
