@@ -16,7 +16,7 @@
           stu: {
             username: '学生应聘',
             password: '123',
-            resUrl: '/art/RecruitForm'
+            resUrl: '/art/candidateform'
           },
           com: {
             username: '企业招聘',
