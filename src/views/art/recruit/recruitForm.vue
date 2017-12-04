@@ -152,7 +152,7 @@
       onSubmitClick() {
         // 保证日期时间提交验证
         if (this.formModel.publishDate !== '') {
-          this.formModel.publishDate = formatDate(new Date(this.formModel.publishDate), 'yyy-MM-dd hh:mm:ss')
+          this.formModel.publishDate = formatDate(new Date(this.formModel.publishDate), 'yyyy-MM-dd hh:mm:ss')
         }
         this.$refs.dialogForm.validate((valid) => {
           console.log('valid', valid)
@@ -167,7 +167,9 @@
 //                Message.success(response.data.msg)
                 this.visible = false
                 this.$refs.dialogForm.resetFields()
-                this.resultRedirect('success')
+                // this.resultRedirect('success')
+                this.$router.push({path: '/art/result/success'})
+                // window.open(window.location.origin + '/art/result/' + target)
               } else {
                 this.resultRedirect('error')
               }
