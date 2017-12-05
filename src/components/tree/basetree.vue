@@ -73,7 +73,9 @@
           url: url,
           params: {}
         }).then(res => {
-          this.treeData = res.data.children
+          if (res.data.children) {
+            this.treeData = res.data.children
+          }
           // 加载数据后自动选中第一个节点
           this.$nextTick(() => {
             const firstNode = document.querySelector('.el-tree-node')

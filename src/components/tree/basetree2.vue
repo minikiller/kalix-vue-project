@@ -24,6 +24,9 @@
         type: Boolean,
         default: true
       },
+      parentNodeId: {
+        default: -1
+      },
       disabled: {
         type: Boolean,
         default: false
@@ -62,7 +65,12 @@
         if (!this.treeDataURL) {
           return
         }
-        let url = this.treeDataURL + '?isAll=' + this.isAll
+        let url = ''
+        if (this.parentNodeId === -1) {
+          url = this.treeDataURL + '?isAll=' + this.isAll
+        } else {
+          url = this.treeDataURL + '/' + this.parentNodeId
+        }
         this.axios.request({
           method: 'GET',
           url: url,
