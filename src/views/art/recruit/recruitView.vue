@@ -42,7 +42,7 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="学历" prop="education" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.education" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="职能类别" prop="functionCategoryId" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.functionCategoryId" readonly)
+          kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.salary" readonly)
@@ -58,21 +58,25 @@
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
+  import {FunctionCategroyURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
   import DatePicker from '@/components/biz/date/datepicker.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import FcTree2 from '@/components/tree/basetree2'
 
   export default {
     data() {
       return {
         formModel: Object.assign({}, FormModel),
-        labelWidth: '140px'
+        labelWidth: '140px',
+        functionCategroyURL: FunctionCategroyURL
       }
     },
     components: {
       KalixDialog: Dialog,
       KalixDatePicker: DatePicker,
-      KalixDictSelect: BaseDictSelect
+      KalixDictSelect: BaseDictSelect,
+      KalixFcTree2: FcTree2
     },
     methods: {
     }
