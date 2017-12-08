@@ -9,7 +9,7 @@
     keep-alive
       el-row.duty-row(:gutter="0")
         el-col.duty-col(:span="8" style="padding:8px 0 8px 8px;")
-          kalix-org-tree(v-bind:organizationId="orgId" v-on:orgTreeClick="onOrgTreeClick")
+          kalix-org-tree(v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId" v-on:nodeClick="onOrgTreeClick")
         el-col.duty-col(:span="16")
           kalix-base-table.duty-wrapper(ref="kalixBaseTable"
           bizKey="majorCourse" title='专业课程列表' v-bind:targetURL="targetURL"
@@ -26,8 +26,9 @@
 <script>
   import BaseTable from '@/components/custom/baseTable'
   import {TeachingUnitOrgID, MajorCourseComponent, ToolButtonList} from '../config.toml'
+  import {orgURL} from '@/config/global.toml'
   import {registerComponent} from '@/api/register'
-  import OrgTree from '@/components/biz/tree/OrgTree'
+  import OrgTree from '@/components/tree/basetree'
   import DateColumn from 'views/oa/comp/dateColumn'
 
   // 注册全局组件
@@ -47,13 +48,15 @@
         dialogOptions: {},
         orgId: TeachingUnitOrgID,
         orgName: '',
-        tableHeight: 0 // 列表组件高度
+        orgURL: orgURL
       }
     },
     components: {
       KalixBaseTable: BaseTable,
       KalixOrgTree: OrgTree,
       KalixDateColumn: DateColumn
+    },
+    mounted() {
     },
     methods: {
       onOrgTreeClick(data) {
@@ -153,6 +156,7 @@
     .duty-col
       height 100%
       box-sizing border-box
+
   .duty-wrapper
     margin -10px 0
     .kalix-wrapper

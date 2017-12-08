@@ -45,7 +45,7 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="学历" prop="education" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.education")
         el-form-item.s-flex_item.kalix-form-table-td(label="职能类别" prop="functionCategoryId" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.functionCategoryId")
+          kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:label-width="labelWidth")
           el-input-number(v-model="formModel.salary" v-bind:step="500" style="width:100%")
@@ -60,10 +60,11 @@
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
-  import {RecruitURL} from '../config.toml'
+  import {RecruitURL, FunctionCategroyURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import DatePicker from '@/components/biz/date/datepicker.vue'
+  import FcTree2 from '@/components/tree/basetree2'
   import Vue from 'vue'
 
   export default {
@@ -75,13 +76,15 @@
           companyName: [{required: true, message: '请输入企业名称', trigger: 'blur'}]
         },
         targetURL: RecruitURL,
-        labelWidth: '140px'
+        labelWidth: '140px',
+        functionCategroyURL: FunctionCategroyURL
       }
     },
     components: {
       KalixDialog: Dialog,
       KalixDictSelect: BaseDictSelect,
-      KalixDatePicker: DatePicker
+      KalixDatePicker: DatePicker,
+      KalixFcTree2: FcTree2
     },
     methods: {
       initData() {
