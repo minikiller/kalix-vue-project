@@ -22,6 +22,25 @@ api.init = function (params, modules){
 
   var config = {};
 
+  var config_emoji = {
+    size: 24, // 大小, 默认 24, 建议15 - 55
+    url: '../static/images/emojis.png', // 所有 emoji 的背景图片
+    lang: 'zh', // 选择的语言, 默认 zh
+    // 扩展表情
+    extension: {
+      dataSource: {
+        "u1F914":{
+          "en":"thinking face", // 英文名称
+          "zh":"思考", // 中文名称
+          "tag":"🤔", // 原生emoji
+          "position":"0px 0px" // 所在背景图位置坐标
+        },
+      },
+      // 新增 emoji 的背景图 url
+      url: 'https://emojipedia-us.s3.amazonaws.com/thumbs/160/apple/96/thinking-face_1f914.png'
+    }
+  };
+
   //私有云切换navi导航，私有云格式 '120.92.10.214:8888'
   if(navi !== ""){
     config.navi = navi;
@@ -61,6 +80,7 @@ api.init = function (params, modules){
         case RongIMLib.ConnectionStatus["CONNECTED"]:
         case 0:
           console.log("连接成功")
+          RongIMLib.RongIMEmoji.init(config_emoji);
           callbacks.getInstance && callbacks.getInstance(instance);
           callbacks.getClibInstance&& callbacks.getClibInstance(CallLibInstance);
           break;
@@ -163,11 +183,11 @@ let callbacks = {
   receiveNewMessage : function(message) {
     // 判断消息类型
     // console.log("新消息",message,start);
-    EasemobApi.api.receiveMessage(message)
+    api.receiveMessage(message)
   },
   getCurrentUser : function(userInfo) {
     userId = userInfo.userId
-    // afterConnected();
+    api.afterConnected();
   }
 }
 //api.init(params, callbacks, config);
@@ -176,6 +196,7 @@ api.initRevice = function (reviecObj){
   //voip=vueObj.attr("id");
 }
 api.afterConnected = function (){
+  api.getConversationList()
   // document.getElementById("panel").style.display = "none";
   // document.getElementById("btns").style.display = "block";
 }
@@ -255,11 +276,11 @@ api.sendTextMessage = function (session_show,centent){
    4、发送其他消息类型与发送 TextMessage 逻辑、方式一致
    */
   var pushData = "pushData" + Date.now();
-
   var isMentioned = false;
-
+ var message= RongIMLib.RongIMEmoji.symbolToHTML(centent[0].innerText);
+  console.log(message);
   var content = {
-    content: [centent.val()
+    content: [ message
     ].join(","),
     user : {
       "id" : "this-is-a-test-id",	//不支持中文及特殊字符
@@ -605,14 +626,28 @@ api.getConversationList = function (){
   var conversationTypes = null;  //具体格式设置需要补充
   var limit = 150; //获取会话的数量，不传或传null为全部，暂不支持分页
   var start = new Date().getTime();
-  instance.getConversationList({
+    instance.getConversationList({
     onSuccess: function(list) {
-      // list.sort(function(a,b){
-      // 	return a.sentTime > b.sentTime;
-      // });
-
-      var title = "成功获取 " + list.length + " 个会话";
+      var datas=[];
+    for(var i=0;i<list.length;i++) {
+      var newDate =formatDateTime(list[i].latestMessage.sentTime);
+      // datas.push({
+      //   username:list[i].latestMessage.content.user.name,
+      //   content:list[i].latestMessage.content.content,
+      //   time:newDate
+      // })
+      var id="lt_win"+i;
+     $('#user-list-session').append('<li id="'+id+'" onclick=onSelectUserChat("'+id+'","isChatShow_win") ' +
+                                    'class="user-list_item"><div class="avatar_wrapper">' +
+                                    '<img class="avatar" src="../static/images/im/4.jpg"/></div>' +
+                                    '<div class="user-list_item_main">' +
+                                    '<p class="member_nick">'+list[i].latestMessage.content.user.name+'</p>' +
+                                    '<p class="member_msg text_ellipsis">'+list[i].latestMessage.content.content+'</p></div>' +
+                                    '<div class="time">'+newDate+'</div></li>');
+    }
+      var title = "成功获取1 " + list.length + " 个会话";
       console.log(title);
+      return datas
     },
     onError: function(error) {
       console.log("获取会话失败");
@@ -711,7 +746,8 @@ api.clearUnreadCount = function (){
 
 
 api.receiveMessage = function (message){
-  vueObj.append('<div class="receiver"><div class="receiver-avatar"><img src="/static/images/im/6.jpg" width="30" height="30"></div><div class="receiver-cont"><div class="left_triangle"></div><span>'+message.content.content+'</span></div></div>');
+ var message_zh= RongIMLib.RongIMEmoji.symbolToHTML(message.content.content);
+  vueObj.append('<div class="receiver"><div class="receiver-avatar"><img src="/static/images/im/6.jpg" width="30" height="30"></div><div class="receiver-cont"><div class="left_triangle"></div><span>'+message_zh+'</span></div></div>');
 }
 
 
@@ -1159,4 +1195,138 @@ api.joinCall = function () {
 api.hungupCall = function () {
   clibinstance.hungupCall(conversationType, targetId, ErrorCode.HANGUP);
 }
+
+api.getAllEmoji = function () {
+  var list = RongIMLib.RongIMEmoji.list;
+  var shadowDomList = [];
+  for (var i = 0; i < list.length; i++) {
+    shadowDomList.push(list[i].node);
+  }
+  bindClickEmoji(shadowDomList);
+}
+
+function bindClickEmoji(emojis) {
+  for(var i=0;i<emojis.length;i++){
+    var emojiHtml = emojis[i];
+    vueObj.append(emojiHtml);
+    emojiHtml.onclick = clickEmoji;
+  }
+}
+var edit=$('#content');
+edit.onfocus = function () {
+  window.setTimeout(function () {
+    var sel, range;
+    if (window.getSelection && document.createRange) {
+      range = document.createRange();
+      range.selectNodeContents(edit);
+      range.collapse(true);
+      range.setEnd(edit, edit.childNodes.length);
+      range.setStart(edit, edit.childNodes.length);
+      sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    } else if (document.body.createTextRange) {
+      range = document.body.createTextRange();
+      range.moveToElementText(edit);
+      range.collapse(true);
+      range.select();
+    }
+  }, 1)
+}
+
+function clickEmoji(event) {
+  var e = event || window.event;
+  var target = e.target || e.srcElement;
+  if (document.all && !document.addEventListener === false) {
+  }
+ // var message = RongIMLib.RongIMEmoji.symbolToHTML(target.getAttribute("name"));
+  $('#content').focus();
+  //setFocus($('#content'));
+ // console.log(target);
+ // setFocus($('#content'));
+  pasteHtmlAtCaret(target.getAttribute("name"));
+}
+
+// function appendChild(text) {
+//
+//   pasteHtmlAtCaret(text,false);
+//   //$('#content').append(text);
+// }
+
+function setFocus(el) {
+  el = el[0]; // jquery 对象转dom对象
+  el.focus();
+  var range = document.createRange();
+  range.selectNodeContents(el);
+  range.collapse(false);
+  var sel = window.getSelection();
+  //判断光标位置，如不需要可删除
+  if(sel.anchorOffset!=0){
+    return;
+  };
+  sel.removeAllRanges();
+  sel.addRange(range);
+};
+
+function pasteHtmlAtCaret(html, selectPastedContent) {
+  var sel, range;
+  if (window.getSelection) {
+    // IE9 and non-IE
+    sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount) {
+      range = sel.getRangeAt(0);
+      range.deleteContents();
+      // Range.createContextualFragment() would be useful here but is
+      // only relatively recently standardized and is not supported in
+      // some browsers (IE9, for one)
+      var el = document.createElement("div");
+      el.innerHTML = html;
+      var frag = document.createDocumentFragment(), node, lastNode;
+      while ( (node = el.firstChild) ) {
+        lastNode = frag.appendChild(node);
+      }
+      //var firstNode = frag.firstChild;
+      range.insertNode(frag);
+      // Preserve the selection
+      if (lastNode) {
+         range = range.cloneRange();
+         range.setStartAfter(lastNode);
+        if (selectPastedContent) {
+          range.setStartBefore(firstNode);
+        } else {
+          range.collapse(true);
+        }
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+  } else if ( (sel = document.selection) && sel.type != "Control") {
+    // IE < 9
+    var originalRange = sel.createRange();
+    originalRange.collapse(true);
+    sel.createRange().pasteHTML(html);
+    if (selectPastedContent) {
+      range = sel.createRange();
+      range.setEndPoint("StartToStart", originalRange);
+      range.select();
+    }
+  }
+}
+
+
+function formatDateTime(inputTime) {
+  var date = new Date(inputTime);
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? ('0' + m) : m;
+  var d = date.getDate();
+  d = d < 10 ? ('0' + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? ('0' + h) : h;
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  minute = minute < 10 ? ('0' + minute) : minute;
+  second = second < 10 ? ('0' + second) : second;
+  return  h+':'+minute;
+};
 export default {api,recallMessage}

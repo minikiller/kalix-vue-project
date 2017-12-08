@@ -52,40 +52,7 @@
               <div class="panel_body_container panel_body-wrapper panel_top-distance">
                 <ul class="tab_body member_tab_body">
                   <li class="scrollbar active">
-                    <ul class="user-list">
-                      <li @click="onSelectUserChat" class="user-list_item">
-                        <div class="avatar_wrapper">
-                          <img class="avatar" src="./images/user-1.png"/>
-                          <div class="badge">
-                            <div class="badge-text">1</div>
-                          </div>
-                        </div>
-                        <div class="user-list_item_main">
-                          <p class="member_nick">Activex交互群</p>
-                          <p class="member_msg text_ellipsis">小可爱加入群</p>
-                        </div>
-                        <div class="time">16:25</div>
-                      </li>
-                      <li @click="onSelectUserChat" class="user-list_item">
-                        <div class="avatar_wrapper">
-                          <img class="avatar" src="./images/user-2.png"/>
-                        </div>
-                        <div class="user-list_item_main">
-                          <p class="member_nick">某同事</p>
-                          <p class="member_msg text_ellipsis">好的</p>
-                        </div>
-                        <div class="time">16:25</div>
-                      </li>
-                      <li class="user-list_item">
-                        <div class="avatar_wrapper">
-                          <img class="avatar" src="./images/sys-message.png"/>
-                        </div>
-                        <div class="user-list_item_main">
-                          <p class="member_nick">实时消息</p>
-                          <p class="member_msg text_ellipsis">参加今天的下午5点会</p>
-                        </div>
-                        <div class="time">16:25</div>
-                      </li>
+                    <ul class="user-list" id="user-list-session">
                       <li class="user-list_item">
                         <div class="avatar_wrapper">
                           <img class="avatar" src="./images/user-file.png"/>
@@ -272,7 +239,7 @@
           </div>
         </div>
         <!-- 聊天窗口 -->
-        <div v-show="isChatShow" class="panel chat-panel">
+        <div v-show="isChatShow" id="isChatShow_win" class="panel chat-panel">
           <div class="panel_header">
             <div class="panel_title" style="padding: 0 25px;">
               <div class="avatar_wrapper">
@@ -287,21 +254,22 @@
             </div>
           </div>
           <div class="panel_body_container panel_top-distance" style="bottom: 176px;">
-            <div class="panel_body chat_container"  style="width: 400px;height: 400px;" id="session_list">
+            <div class="panel_body chat_container"  style="width: 700px;height: 400px;" id="session_list">
 
             </div>
           </div>
           <div class="panel_footer chat_toolbar_footer">
             <div class="chat_toolbar">
-              <div class="chat_toolbar_item face"></div>
+              <div class="chat_toolbar_item face" @click="getAllEmoji"></div>
               <div class="chat_toolbar_item file"></div>
               <div class="chat_toolbar_item video" @click="sendVideoMessage"></div>
               <div class="chat_toolbar_item video" @click="acceptVideo"></div>
             </div>
             <div class="chat_input">
-              <textarea id="content" class="chat_textarea"></textarea>
+              <div id="content" contenteditable="true" @blur="saveRange" class="chat_textarea"></div>
               <div class="chat_button_list">
                 <div class="btn-item" @click="sendTextMessage">发送</div>
+                <div class="btn-item" @click="getConversationList">会话列表</div>
               </div>
             </div>
           </div>
@@ -447,7 +415,9 @@
       })
       this.init()
       EasemobApi.api.init(params, config)
-     // EasemobApi.api.initRevice($('#session_list'))
+      EasemobApi.api.initRevice($('#session_list'))
+
+      // this.getConversationList()
     },
     methods: {
       init() {
@@ -485,6 +455,19 @@
       },
       sendVideoMessage() {
         EasemobApi.api.startDoCall()
+      },
+      saveRange() {
+        $('#content').focus()
+        var selection = window.getSelection ? window.getSelection() : document.selection
+        if (!selection.rangeCount) return
+        var range = selection.createRange ? selection.createRange() : selection.getRangeAt(0)
+        window._range = range
+      },
+      getConversationList() {
+        EasemobApi.api.getConversationList()
+      },
+      getAllEmoji() {
+        EasemobApi.api.getAllEmoji()
       },
       acceptVideo() {
         EasemobApi.api.joinCall()
@@ -610,9 +593,10 @@
       EasemobApi
     }
   }
+
 </script>
 
 
-<style scoped lang="stylus" type="text/stylus">
+<style lang="stylus" type="text/stylus">
   @import "style.styl"
 </style>
