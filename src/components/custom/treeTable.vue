@@ -349,7 +349,6 @@
           })
         } else {
           Message.error('至少选择一条数据')
-          return
         }
       },
       refresh() { // 刷新表格数据

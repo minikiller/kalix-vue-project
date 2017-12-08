@@ -136,7 +136,6 @@
           })
         } else {
           alert('请输入学号')
-          return
         }
       }
     }

@@ -1,4 +1,4 @@
-@import "panel-base.styl"
+@import "./panel-base.styl"
 
 .im
   position relative
@@ -404,11 +404,6 @@
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
-      background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0%, #e7e8eb), color-stop(50%, #dadbe0), color-stop(75%, #c7cbd2), color-stop(95%, #d3d6db), color-stop(100%, #d3d6dd));
-      background-image: -webkit-linear-gradient(#e7e8eb, #dadbe0 50%, #c7cbd2 75%, #d3d6db 95%, #d3d6dd);
-      background-image: -moz-linear-gradient(#e7e8eb, #dadbe0 50%, #c7cbd2 75%, #d3d6db 95%, #d3d6dd);
-      background-image: -o-linear-gradient(#e7e8eb, #dadbe0 50%, #c7cbd2 75%, #d3d6db 95%, #d3d6dd);
-      background-image: linear-gradient(#e7e8eb, #dadbe0 50%, #c7cbd2 75%, #d3d6db 95%, #d3d6dd);
       border: 1px solid #eceef2;
       border-bottom-color: #c1c7d2;
       border-right-color: #c1c7d2
@@ -732,8 +727,6 @@
         border: 1px solid;
         border-color: #2c2727 #2c2727 #1a1919;
         background: #333;
-        background: -webkit-gradient(linear, left top, left bottom, from(#555), to(#222));
-        background: -webkit-linear-gradient(top, #555, #222);
       &.btn_blue
         padding: 6px 10px !important;
         display: block !important;
@@ -748,23 +741,11 @@
         min-width: 56px;
         height: 42px;
         background: #396b9e;
-        background: -webkit-gradient(linear, left top, left bottom, from(#5f9cc5), to(#396b9e));
-        background: -webkit-linear-gradient(top, #5f9cc5, #396b9e);
-        background: -moz-linear-gradient(top, #5f9cc5, #396b9e);
-        background: -ms-linear-gradient(top, #5f9cc5, #396b9e);
-        background: -o-linear-gradient(top, #5f9cc5, #396b9e);
-        background: linear-gradient(top, #5f9cc5, #396b9e);
         -webkit-text-shadow: 0 1px 1px #194b7e;
         -moz-text-shadow: 0 1px 1px #194b7e;
         text-shadow: 0 1px 1px #194b7e
         &.active
           background: #5393c5;
-          background: -webkit-gradient(linear, left top, left bottom, from(#5393c5), to(#6facd5));
-          background: -webkit-linear-gradient(top, #5393c5, #6facd5);
-          background: -moz-linear-gradient(top, #5393c5, #6facd5);
-          background: -ms-linear-gradient(top, #5393c5, #6facd5);
-          background: -o-linear-gradient(top, #5393c5, #6facd5);
-          background: linear-gradient(top, #5393c5, #6facd5)
       .btn_img
         background-size: 100% 100% !important;
       &.btn_search
