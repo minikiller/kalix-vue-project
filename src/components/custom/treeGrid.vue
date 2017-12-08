@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <div class='kalix-wrapper' v-bind:style="setWrapperStyle">
+    div.kalix-wrapper(v-bind:style="setWrapperStyle()")
+    div.kalix-wrapper-hd
+    i(v-bind:class="iconCls")
+    | {{title}}
   <div :style="{width:tableWidth}" class='autoTbale'>
     <table class="table table-bordered" id='hl-tree-table'>
       <thead>
@@ -43,18 +49,16 @@
       </tbody>
     </table>
   </div>
+  </div>>
 </template>
 <script>
+  import Cache from 'common/cache'
+
   export default {
     name: 'treeGrid',
     props: {
       columns: Array,
-      items: {
-        type: Array,
-        default: function () {
-          return []
-        }
-      }
+      targetURL: ''
     },
     data() {
       return {
@@ -65,7 +69,8 @@
         screenWidth: document.body.clientWidth, // 自适应宽
         tdsWidth: 0, // td总宽
         timer: false, // 控制监听时长
-        dataLength: 0 // 树形数据长度
+        dataLength: 0, // 树形数据长度
+        items: [] // 表格数据
       }
     },
     computed: {
@@ -106,6 +111,7 @@
       }
     },
     mounted() {
+      this.getData()
       if (this.items) {
         this.dataLength = this.Length(this.items)
         this.initData(this.deepCopy(this.items), 1, null)
@@ -129,6 +135,34 @@
       }
     },
     methods: {
+      // 获取表格数据
+      getData() {
+        this.axios.request({
+          method: 'GET',
+          url: this.targetURL,
+          params: {}
+        }).then(res => {
+          this.items = res.data.children
+          // 加载数据后自动选中第一个节点
+          this.$nextTick(() => {
+            const firstNode = document.querySelector('.el-tree-node')
+            if (firstNode) {
+              firstNode.click()
+            }
+          })
+//          this._getTableHeight()
+        })
+        const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
+        if (currentTreeListItem) {
+          this.iconCls = currentTreeListItem.iconCls
+        }
+      },
+      setWrapperStyle() {
+        if (!this.bizSearch) {
+          return {'top': 0}
+        }
+        return {}
+      },
       // 有无多选框折叠位置优化
       iconRow() {
         for (var i = 0, len = this.columns.length; i < len; i++) {
@@ -413,7 +447,9 @@
     }
   }
 </script>
-<style>
+<style scoped lang="stylus" type="text/stylus">
+  @import "~@/assets/stylus/baseTable"
+
   .autoTbale {
     overflow: auto;
   }
