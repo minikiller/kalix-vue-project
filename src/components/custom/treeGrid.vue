@@ -1,55 +1,67 @@
 <template>
   <div>
+    <div class='kalix-article'>
+      <keep-alive>
+        <component
+          v-bind:is="bizSearch"
+          ref="bizSearchRef"
+          v-if="bizSearch"
+          v-on:onSearchBtnClick="onSearchClick">
+        </component>
+      </keep-alive>
+    </div>
     <div class='kalix-wrapper' v-bind:style="setWrapperStyle">
-    div.kalix-wrapper(v-bind:style="setWrapperStyle()")
-    div.kalix-wrapper-hd
-    i(v-bind:class="iconCls")
-    | {{title}}
-  <div :style="{width:tableWidth}" class='autoTbale'>
-    <table class="table table-bordered" id='hl-tree-table'>
-      <thead>
-      <tr>
-        <th v-for="(column,index) in cloneColumns">
-          <label v-if="column.type === 'selection'">
-            <input type="checkbox" v-model="checks" @click="handleCheckAll">
-          </label>
-          <label v-else>
-            {{ renderHeader(column, index) }}
-            <span class="ivu-table-sort" v-if="column.sortable">
+      <div class="kalix-wrapper-hd">
+        <i class="iconCls">
+          {{title}}
+        </i>
+      </div>
+      <div :style="{width:tableWidth}" class='autoTbale'>
+        <table class="table table-bordered" id='hl-tree-table'>
+          <thead>
+          <tr>
+            <th v-for="(column,index) in cloneColumns">
+              <label v-if="column.type === 'selection'">
+                <input type="checkbox" v-model="checks" @click="handleCheckAll">
+              </label>
+              <label v-else>
+                {{ renderHeader(column, index) }}
+                <span class="ivu-table-sort" v-if="column.sortable">
                                 <Icon type="arrow-up-b" :class="{on: column._sortType === 'asc'}"
                                       @click.native="handleSort(index, 'asc')"/>
                                 <Icon type="arrow-down-b" :class="{on: column._sortType === 'desc'}"
                                       @click.native="handleSort(index, 'desc')"/>
                             </span>
-          </label>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="(item,index) in initItems" :key="item.id" v-show="show(item)" :class="{'child-tr':item.parent}">
-        <td v-for="(column,snum) in columns" :key="column.key" :style=tdStyle(column)>
-          <label v-if="column.type === 'selection'">
-            <input type="checkbox" :value="item.id" v-model="checkGroup">
-          </label>
-          <div v-if="column.type === 'action'">
-            <i-button :type="action.type" size="small" @click="RowClick(item,$event,index,action.text)"
-                      v-for='action in (column.actions)' :key="action.text">{{action.text}}
-            </i-button>
-          </div>
-          <label @click="toggle(index,item)" v-if="!column.type">
+              </label>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(item,index) in initItems" :key="item.id" v-show="show(item)" :class="{'child-tr':item.parent}">
+            <td v-for="(column,snum) in columns" :key="column.key" :style=tdStyle(column)>
+              <label v-if="column.type === 'selection'">
+                <input type="checkbox" :value="item.id" v-model="checkGroup">
+              </label>
+              <div v-if="column.type === 'action'">
+                <i-button :type="action.type" size="small" @click="RowClick(item,$event,index,action.text)"
+                          v-for='action in (column.actions)' :key="action.text">{{action.text}}
+                </i-button>
+              </div>
+              <label @click="toggle(index,item)" v-if="!column.type">
                             <span v-if='snum==iconRow()'>
                                 <i v-html='item.spaceHtml'></i>
                                 <i v-if="item.children&&item.children.length>0" class="ivu-icon"
                                    :class="{'ivu-icon-plus-circled':!item.expanded,'ivu-icon-minus-circled':item.expanded }"></i>
                                 <i v-else class="ms-tree-space"></i>
                             </span> {{renderBody(item, column) }}
-          </label>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+              </label>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  </div>>
 </template>
 <script>
   import Cache from 'common/cache'
@@ -57,6 +69,13 @@
   export default {
     name: 'treeGrid',
     props: {
+      title: {  // 表格组件标题名
+        type: String,
+        required: true
+      },
+      bizSearch: {  //  使用的搜索组件名称
+        type: String
+      },
       columns: Array,
       targetURL: ''
     },
