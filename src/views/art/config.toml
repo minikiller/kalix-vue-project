@@ -56,3 +56,14 @@ FunctionCategroyURL = "/camel/rest/functioncategorys"
 [[MajorCourseComponent]]
   path = "art/majorcourse/majorCourseSearch"
   name = "MajorCourseSearch"
+
+# 需要自动注册成全局的functioncategory组件
+[[FunctionCategoryComponent]]
+  path = "art/functioncategory/functioncategoryView"
+  name = "FunctionCategoryView"
+[[FunctionCategoryComponent]]
+  path = "art/functioncategory/functioncategoryAdd"
+  name = "FunctionCategoryAdd"
+[[FunctionCategoryComponent]]
+  path = "art/functioncategory/functioncategorySearch"
+  name = "FunctionCategorySearch"
