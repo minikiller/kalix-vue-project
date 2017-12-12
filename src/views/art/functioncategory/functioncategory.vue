@@ -52,10 +52,12 @@
           type: 'action',
           actions: [{
             type: 'primary',
-            text: '编辑'
+            text: '编辑',
+            icon: 'el-icon-edit'
           }, {
             type: 'error',
-            text: '删除'
+            text: '删除',
+            icon: 'el-icon-delete'
           }],
           width: '150'
         }],
