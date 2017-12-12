@@ -9,7 +9,9 @@
     Kalix-tree-grid(
       v-bind:items='data'
       v-bind:columns='columns'
-      v-bind:targetURL="targetURL")
+      v-bind:targetURL="targetURL"
+      title="职能类别列表"
+      bizSearch="FunctionCategorySearch")
 </template>
 
 <script type="text/ecmascript-6">
@@ -29,21 +31,21 @@
           type: 'selection',
           width: '50'
         }, {
-          title: '编码',
-          key: 'code',
-          sortable: true,
-          width: '150'
-        }, {
           title: '名称',
           key: 'name',
           width: '150'
         }, {
-          title: '状态',
-          key: 'status',
+          title: '机构代码',
+          key: 'code',
+          sortable: true,
           width: '150'
         }, {
-          title: '备注',
-          key: 'remark',
+          title: '创建人',
+          key: 'createBy',
+          width: '150'
+        }, {
+          title: '创建日期',
+          key: 'creationDate',
           width: '150'
         }, {
           title: '操作',
@@ -75,13 +77,13 @@
             code: '00001',
             name: '测试数据01',
             status: '启用',
-            remark: '测试数据测试数据',
+            remark: '测试数据测试数据'
           }, {
             id: '02',
             code: '00002',
             name: '测试数据02',
             status: '启用',
-            remark: '测试数据测试数据',
+            remark: '测试数据测试数据'
           }]
         }, {
           id: '3',
