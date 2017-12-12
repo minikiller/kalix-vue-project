@@ -87,6 +87,10 @@
       KalixDictSelect: BaseDictSelect
     },
     methods: {
+      open(obj) {
+        this.formModel = obj
+        this.$refs.kalixBizDialog.open('', true)
+      },
       change(event) {
         alert(event)
       }
