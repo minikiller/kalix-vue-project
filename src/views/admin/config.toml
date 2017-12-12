@@ -111,7 +111,7 @@ AdminCacheKey = "ADMIN-DICT-KEY"
  path = "admin/dataauth/dataauthAddUser"
  name = "AdminDataAuthAddUser"
 
- [[orgComponent]]
+ [[DutyComponent]]
   path = "admin/duty/dutyView"
   name = "AdminDutyView"
  [[DutyComponent]]
