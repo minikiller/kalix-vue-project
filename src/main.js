@@ -14,6 +14,11 @@ import {GlobalComponent, GlobalFilter} from 'config/global.toml'
 import './element-ui'
 import KalixBase from 'kalix-base'
 
+// 列表树引入
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+Vue.use(iView)
+
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
