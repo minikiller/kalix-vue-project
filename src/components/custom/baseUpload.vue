@@ -62,7 +62,7 @@
     methods: {
       // 组件初始化
       fentch () {
-        if (this.value !== '') {
+        if (this.value != null && this.value !== '') {
           let pathParts = this.value.split('/')
           // let fileName = pathParts[pathParts.length - 1]
           this.fileName = pathParts.pop()

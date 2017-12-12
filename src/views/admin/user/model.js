@@ -1,5 +1,5 @@
 const FormModel = {
-  usertype: null,      // 用户类型,字典[用户类型]
+  userType: null,      // 用户类型,字典[用户类型]
   code: '',            // 工号
   position: null,      // 岗位,字典[岗位名称]
   sex: '',             // 性别
@@ -10,7 +10,8 @@ const FormModel = {
   email: '',           // 邮箱
   phone: '',           // 固定电话
   mobile: '',          // 手机
-  available: 1         // 是否可用
+  available: 1,        // 是否可用
+  icon: ''             // 头像
 }
 
 export default FormModel
