@@ -49,16 +49,16 @@ userURL = "/camel/rest/users"
   isPermission = true
 
 [[GlobalFilter]]
-  path = "./components/filters/dictFilter.js"
+  path = "filters/dictFilter.js"
   name = "getDictName"
 
 # 附件管理
 [[GlobalComponent]]
-  path = "./components/custom/baseAttachmentDialog"
+  path = "custom/baseAttachmentDialog.vue"
   name = "AttachmentDialog"
 # 附件上传
 [[GlobalComponent]]
-  path = "./components/custom/baseUpload"
+  path = "custom/baseUpload.vue"
   name = "kalixUpload"
 
 # baseToolBar 的默认按钮定义
