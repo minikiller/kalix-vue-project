@@ -20,8 +20,8 @@
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'ADMIN-DICT-KEY',
           type: '用户类型',
-          targetField: 'usertypeName',
-          sourceField: 'usertype'
+          targetField: 'userTypeName',
+          sourceField: 'userType'
         }, {
           cacheKey: 'ADMIN-DICT-KEY',
           type: '岗位名称',
@@ -32,7 +32,7 @@
         buttonPermissionPrefix: userBtnPermissionPrefix,
         targetURL: usersURL,
         tableFields: [
-          {prop: 'usertypeName', label: '用户类型'},
+          {prop: 'userTypeName', label: '用户类型'},
           {prop: 'code', label: '用户代码'},
           {prop: 'loginName', label: '登录名'},
           {prop: 'name', label: '名称'},
@@ -42,8 +42,8 @@
           {prop: 'mobile', label: '手机'}
         ],
         bizDialog: [
-          {id: 'view', dialog: 'KalixUserView'},
-          {id: 'edit', dialog: 'KalixUserEdit'},
+          {id: 'view', dialog: 'AdminUserView'},
+          {id: 'edit', dialog: 'AdminUserEdit'},
           {id: 'add', dialog: 'AdminUserAdd'}
         ]
       }
