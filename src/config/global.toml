@@ -56,10 +56,6 @@ userURL = "/camel/rest/users"
 [[GlobalComponent]]
   path = "custom/baseAttachmentDialog.vue"
   name = "AttachmentDialog"
-# 附件上传
-[[GlobalComponent]]
-  path = "custom/baseUpload.vue"
-  name = "kalixUpload"
 
 # baseToolBar 的默认按钮定义
 [[GlobalToolBarButtonList]]
