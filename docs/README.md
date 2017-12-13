@@ -18,3 +18,8 @@ https://github.com/prograhammer/vue-library-template
 https://github.com/anthonygore/vue-clock-simple
 https://github.com/euvl/vue-js-popover
 http://www.jb51.net/article/126100.htm
+
+## code split
+https://dzone.com/articles/3-code-splitting-patterns-for-vuejs-and-webpack
+https://dzone.com/articles/4-ways-to-boost-your-vuejs-app-with-webpack
+https://vuejsdevelopers.com/2017/10/30/vue-js-dynamic-imports-lazy-load/
