@@ -1,7 +1,7 @@
 <template lang="pug">
   div.qrcode
     div.title {{title}}
-    kalix-qrcode.kalix-qrcode(v-bind:value="resUrl")
+    kalix-qrcode.kalix-qrcode(v-bind:value="resUrl" data-qrcode)
 </template>
 <script type="text/ecmascript-6">
   import KalixQrcode from '@/components/qrcode/qrcode'
@@ -15,9 +15,8 @@
       KalixQrcode
     }
   }
-
 </script>
-<style scoped lang="stylus" type="text/stylus">
+<style lang="stylus" type="text/stylus">
   .qrcode
     position fixed
     top 20%
@@ -27,7 +26,7 @@
     .title
       font-size 24px
       margin-bottom 50px
-    .kalix-qrcode
+    .kalix-qrcode[data-qrcode]
       display inline-block
       border 1px solid #ededed
       padding 10px

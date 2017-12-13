@@ -11,8 +11,11 @@ import Home from '@/components/home/home'
 import SealapplyFrom from 'views/oa/sealapplyfrom/sealapplyfrom'
 // 二维码登录
 import ComQrcode from 'views/qrcode/comQrcode'
-import StrQrcode from 'views/qrcode/strQrcode'
+import StuQrcode from 'views/qrcode/stuQrcode'
 import QrcodeLogin from 'views/qrcode/qrcodeLogin'
+import candidateForm from 'views/art/candidate/candidateForm'
+import recruitForm from 'views/art/recruit/recruitForm'
+import recruitResult from 'views/art/recruit/recruitResult'
 
 Vue.use(Router)
 
@@ -30,14 +33,29 @@ const router = new Router({
       component: ComQrcode
     },
     {
-      path: '/qrcode/strqrcode',
-      name: 'strqrcode',
-      component: StrQrcode
+      path: '/qrcode/stuqrcode',
+      name: 'stuqrcode',
+      component: StuQrcode
     },
     {
       path: '/qrcode/login/:key',
       name: 'qrcodelogin',
       component: QrcodeLogin
+    },
+    {
+      path: '/art/recruitform',
+      name: 'recruitform',
+      component: recruitForm
+    },
+    {
+      path: '/art/candidateform',
+      name: 'candidateform',
+      component: candidateForm
+    },
+    {
+      path: '/art/result/:key',
+      name: 'recruitResult',
+      component: recruitResult
     },
     {
       path: '/demo/sealapplyfrom',

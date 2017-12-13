@@ -6,9 +6,9 @@
 
 <template lang="pug">
   keep-alive
-    base-table(bizKey="candidate" title='学生应聘列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:bizDialog="bizDialog"
-    bizSearch="ArtCandidateSearch" v-bind:btnList="btnList")
+    base-table(bizKey="artCandidate" title='应聘信息列表' v-bind:targetURL="targetURL"
+    v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields"  bizSearch="ArtCandidateSearch" v-bind:btnList="btnList"
+    v-bind:dictDefine="dictDefine")
 </template>
 
 <script type="text/ecmascript-6">
@@ -22,13 +22,27 @@
   export default {
     data() {
       return {
+        dictDefine: [{ // 定义数据字典的显示
+          cacheKey: 'ART-DICT-KEY',
+          type: '性别',
+          targetField: 'sexName',
+          sourceField: 'sex'
+        }, {
+          cacheKey: 'ART-DICT-KEY',
+          type: '企业行业',
+          targetField: 'expectingIndustryName',
+          sourceField: 'expectingIndustry'
+        }],
         btnList: ToolButtonList,
         targetURL: CandidateURL,
         tableFields: [
-          {prop: 'title', label: '标题'},
-          {prop: 'content', label: '内容'},
-          {prop: 'publishPeople', label: '发布人'},
-          {prop: 'publishDate', label: '发布时间'}
+          {prop: 'studentNo', label: '学号'},
+          {prop: 'name', label: '姓名'},
+          {prop: 'sex', label: '性别'},
+          {prop: 'phone', label: '联系电话'},
+          {prop: 'address', label: '联系地址'},
+          {prop: 'expectingIndustryName', label: '期望行业'},
+          {prop: 'updateDate', label: '更新时间'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'ArtCandidateView'},

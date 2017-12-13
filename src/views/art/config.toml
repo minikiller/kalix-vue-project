@@ -1,9 +1,11 @@
 # 系统管理項目配置文件
 
-ArtDictURL = "/camel/rest/art/dicts"
 CandidateURL = "/camel/rest/artcandidates"
 RecruitURL = "/camel/rest/recruits"
+ArtDictURL = "/camel/rest/art/dicts"
 ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
+TeachingUnitOrgID = 22601
+FunctionCategroyURL = "/camel/rest/functioncategorys"
 
 # table 的默认按钮定义
 [[ToolButtonList]]
@@ -33,7 +35,7 @@ ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
   path = "art/recruit/recruitSearch"
   name = "ArtRecruitSearch"
 
-# 需要自动注册成全局的News组件
+# 需要自动注册成全局的candidate组件
 [[CandidateComponent]]
   path = "art/candidate/candidateView"
   name = "ArtCandidateView"
@@ -43,3 +45,25 @@ ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
 [[CandidateComponent]]
   path = "art/candidate/candidateSearch"
   name = "ArtCandidateSearch"
+
+# 需要自动注册成全局的majorCourse组件
+[[MajorCourseComponent]]
+  path = "art/majorcourse/majorCourseView"
+  name = "MajorCourseView"
+[[MajorCourseComponent]]
+  path = "art/majorcourse/majorCourseAdd"
+  name = "MajorCourseAdd"
+[[MajorCourseComponent]]
+  path = "art/majorcourse/majorCourseSearch"
+  name = "MajorCourseSearch"
+
+# 需要自动注册成全局的functioncategory组件
+[[FunctionCategoryComponent]]
+  path = "art/functioncategory/functioncategoryView"
+  name = "FunctionCategoryView"
+[[FunctionCategoryComponent]]
+  path = "art/functioncategory/functioncategoryAdd"
+  name = "FunctionCategoryAdd"
+[[FunctionCategoryComponent]]
+  path = "art/functioncategory/functioncategorySearch"
+  name = "FunctionCategorySearch"

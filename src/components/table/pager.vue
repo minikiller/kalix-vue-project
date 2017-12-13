@@ -30,7 +30,7 @@
       },
       limit: {
         default: () => {
-          PageConfig.sizes[0]
+          return PageConfig.sizes[0]
         }
       },
       start: {

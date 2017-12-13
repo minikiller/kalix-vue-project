@@ -12,10 +12,12 @@ import store from './store'
 // import KalixDialog from '@/components/table/dialog'
 import {GlobalComponent, GlobalFilter} from 'config/global.toml'
 import './element-ui'
+import KalixBase from 'kalix-base'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
+Vue.use(KalixBase)
 
 // for (const item of GlobalComponent) {
 //   console.log(item.name, item.path)
@@ -23,15 +25,16 @@ Vue.use(VueAxios, axios)
 //   Vue.component(item.name, com)
 // }
 
+const _import = require('./components/_import_' + process.env.NODE_ENV)
 // 注册全局组件
 GlobalComponent.forEach((item) => {
   console.log('[kalix]-[main.js] registry component name is: ' + item.name, '; registry path is: ' + item.path)
-  Vue.component(item.name, require('' + item.path).default)
+  Vue.component(item.name, _import(item.path))
 })
 // 注册全局过滤器
 GlobalFilter.forEach((item) => {
   console.log('[kalix]-[main.js] registry filter name is: ' + item.name, '; registry path is: ' + item.path)
-  Vue.filter(item.name, require('' + item.path).default)
+  Vue.filter(item.name, _import(item.path))
 })
 
 // Vue.component('kalix-search', Search)

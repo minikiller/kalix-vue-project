@@ -49,7 +49,7 @@
       limit: {
         type: Number,
         default: function () {
-          PageConfig.limit
+          return PageConfig.limit
         }
       },
       btnOption: {

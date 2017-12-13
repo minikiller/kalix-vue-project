@@ -2,7 +2,7 @@
   div.panel.chat-panel.group-panel(v-show="isVisible")
     panel-header
       template(slot="right")
-        panel-header-button(type="close")
+        panel-header-button(type="close" v-on:click="close")
     div.group-title {{groupData.text}}
     div.group-body.scrollbar
       ul.items
@@ -44,10 +44,10 @@
     methods: {
       open() {
         this.isVisible = true
-        this.initData()
       },
       close() {
         this.isVisible = false
+        console.log('close')
       },
       initData() {
         let treeListData = []
@@ -56,8 +56,8 @@
         if (Cache.get('treeListData')) {
           treeListData = JSON.parse(Cache.get('treeListData'))
         }
-        if (treeListData.createDate && (treeListData.createDate - cd) < cacheTime && treeListData[this.currApp]) {
-          this.treeData = treeListData[this.currApp]
+        if (treeListData.createDate && (treeListData.createDate - cd) < cacheTime && treeListData[this.groupData.id]) {
+          this.treeData = treeListData[this.groupData.id]
         } else {
           const data = {_dc: cd, node: 'root'}
           this.axios({
@@ -69,7 +69,7 @@
             if (response.data && response.data.code !== 401) {
               this.treeData = response.data
               if (this.treeData.length) {
-                treeListData[this.currApp] = this.treeData
+                treeListData[this.groupData.id] = this.treeData
                 treeListData.createDate = nowDate.getTime()
                 Cache.save('treeListData', JSON.stringify(treeListData))
               }
@@ -84,6 +84,11 @@
     components: {
       PanelHeader,
       panelHeaderButton
+    },
+    watch: {
+      groupData(newValue) {
+        this.initData()
+      }
     }
   }
 </script>

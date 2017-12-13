@@ -1,27 +1,31 @@
 <!--
 描述：basetree2 树形控件
+     使用场景：如选取组织机构树等树形表结构数据时，可以使用该控件
+     使用方法见docs/component/tree.md
 开发人：hqj
 开发日期：2017年8月28日
 -->
 
 <template lang="pug">
   div.block
-    el-cascader(placeholder="试试搜索：吉林动画学院"
-    v-bind:options="data2" v-bind:props="defaultProps" v-bind:disabled="disabled"
-    filterable change-on-select :show-all-levels="false"
-    v-model="selectedOptions" v-on:change="handleChange")
+    el-cascader(v-bind:options="treeData" v-bind:props="defaultProps" v-bind:show-all-levels="false"
+    v-model="selectedOptions" change-on-select clearable v-bind:disabled="disabled"
+    v-on:change="handleChange")
 </template>
 
 <script type="text/ecmascript-6">
-  import Vue from 'vue'
-  import {orgURL} from 'config/global.toml'
-
   export default {
     props: {
+      treeDataURL: {
+        default: ''
+      },
       value: null,
       isAll: {
         type: Boolean,
-        default: false
+        default: true
+      },
+      parentNodeId: {
+        default: -1
       },
       disabled: {
         type: Boolean,
@@ -30,7 +34,7 @@
     },
     data() {
       return {
-        data2: [],
+        treeData: [],
         defaultProps: {
           label: 'name',
           value: 'id',
@@ -45,7 +49,7 @@
     watch: {
       value(newValue) {
         if (!newValue) {
-          console.log('[OrgTree newValue]', newValue)
+          console.log('[BaseTree2 newValue]', newValue)
           this.selectedOptions = []
         }
       }
@@ -54,48 +58,67 @@
     methods: {
       // 组件初始化
       fentch() {
-        // 获取机构数据
-        let getOrgURL = orgURL + '?isAll=' + this.isAll
-        Vue.axios.get(getOrgURL).then((response) => {
-          let obj = response.data
-          // 如果根节点id=-1,去掉根节点
-          if (obj.id === -1) {
-            this.data2 = obj.children
-          } else {
-            this.data2.push(obj)
-          }
+        this.getData()
+      },
+      // 获取数据
+      getData() {
+        if (!this.treeDataURL) {
+          return
+        }
+        let url = ''
+        if (this.parentNodeId === -1) {
+          url = this.treeDataURL + '?isAll=' + this.isAll
+        } else {
+          url = this.treeDataURL + '/' + this.parentNodeId
+        }
+        this.axios.request({
+          method: 'GET',
+          url: url,
+          params: {}
+        }).then(res => {
+          // let obj = response.data
+          // // 如果根节点id=-1,去掉根节点
+          // if (obj.id === -1) {
+          //   this.treeData = obj.children
+          // } else {
+          //   this.treeData.push(obj)
+          // }
+          this.treeData = res.data.children
+
           // 处理子节点children标签为空的数据,移除children标签
-          this.dealWithOrgsArray(this.data2)
-          console.log('optionOrgTree is ', this.data2)
+          this.dealWithNullChildren(this.treeData)
         })
 
         // 获取指定机构id的父节点路径
         if (this.value) {
-          let orgParentPathURL = orgURL + '/' + this.value + '/parentpath'
-          Vue.axios.get(orgParentPathURL).then((response) => {
-            this.selectedOptions = JSON.parse('[' + response.data + ']')
+          let treeParentPathURL = this.treeDataURL + '/' + this.value + '/parentpath'
+          this.axios.request({
+            method: 'GET',
+            url: treeParentPathURL,
+            params: {}
+          }).then(res => {
+            this.selectedOptions = JSON.parse('[' + res.data + ']')
           })
         }
       },
-      handleChange(value) {
-        this.$emit('nodeChange', value)
-        let orgId = value.slice()
-        orgId = orgId.pop() * 1
-        console.log(orgId)
-        this.$emit('input', orgId)
-      },
-      dealWithOrgsArray(orgarray) {
-        if (orgarray && orgarray.length > 0) {
-          for (let i = 0; i < orgarray.length; i++) {
-            if (orgarray[i].children) {
-              if (orgarray[i].children.length === 0) {
-                delete orgarray[i].children
+      dealWithNullChildren(array) {
+        if (array && array.length > 0) {
+          for (let i = 0; i < array.length; i++) {
+            if (array[i].children) {
+              if (array[i].children.length === 0) {
+                delete array[i].children
               } else {
-                this.dealWithOrgsArray(orgarray[i].children)
+                this.dealWithNullChildren(array[i].children)
               }
             }
           }
         }
+      },
+      handleChange(value) {
+        this.$emit('nodeChange', value)
+        let treeId = value.slice()
+        treeId = treeId.pop() * 1
+        this.$emit('input', treeId)
       }
     }
   }

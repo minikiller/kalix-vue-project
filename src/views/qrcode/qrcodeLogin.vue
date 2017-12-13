@@ -14,14 +14,14 @@
         let key = this.$route.params.key
         let params = {
           stu: {
-            username: '学生',
+            username: '学生应聘',
             password: '123',
-            resUrl: '/art/companyRecruit'
+            resUrl: '/art/candidateform'
           },
           com: {
-            username: '企业',
+            username: '企业招聘',
             password: '123',
-            resUrl: '/art/studentCandidate'
+            resUrl: '/art/recruitform'
           }
         }
         setTimeout(() => {
