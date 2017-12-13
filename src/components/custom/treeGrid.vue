@@ -1,47 +1,58 @@
 <template lang="pug">
-  div
-    div.kalix-article
-      keep-alive
-        component(
-        v-bind:is="bizSearch"
-        ref="bizSearchRef"
-        v-if="bizSearch"
-        v-on:onSearchBtnClick="onSearchClick")
+  div.kalix-article
+    keep-alive
+      component(
+      v-bind:is="bizSearch"
+      ref="bizSearchRef"
+      v-if="bizSearch"
+      v-on:onSearchBtnClick="onSearchClick")
     div.kalix-wrapper(v-bind:style="setWrapperStyle")
       div.kalix-wrapper-hd
-        i.iconCls {{title}}
-      div.autoTbale(v-bind:style="{width:tableWidth}")
-        table.table.table-bordered(id="hl-tree-table")
-          thead(v-bind:style="tdStyle(column)")
-            tr
-              th(v-for="(column,index) in cloneColumns")
-                label(v-if="column.type === 'selection'")
-                  input(type="checkbox" v-model="checks" v-on:click="handleCheckAll")
-                label(v-else) {{ renderHeader(column, index) }}
-                  span.ivu-table-sort(v-if="column.sortable")
-                    i(v-bind:class="{on: column._sortType === 'asc'}"
-                    v-on:click.native="handleSort(index, 'asc')" title="上箭头")
-                    i(v-bind:class="{on: column._sortType === 'desc'}"
-                    v-on:click.native="handleSort(index, 'desc')" title="下箭头")
-          tbody
-            tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent}")
-              td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
-                label(v-if="column.type === 'selection'")
-                  input(type="checkbox" v-bind:value="item.id" v-model="checkGroup")
-                div(v-if="column.type === 'action'" align="center")
-                  i(v-bind:class="action.icon" v-on:click="RowClick(item,$event,index,action.text)" style="width:20px"
-                  v-for='action in (column.actions)' v-bind:key="action.text")
-                label(v-on:click="toggle(index,item)" v-if="!column.type")
-                  span(v-if='snum==iconRow()')
-                    i(v-html='item.spaceHtml')
-                    i.el-icon(v-if="item.children&&item.children.length>0"
-                    v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded }")
-                    i(v-else class="ms-tree-space")
-                  | {{renderBody(item, column)}}
+        i(v-bind:class="iconCls")
+        | {{title}}
+      div.kalix-wrapper-bd
+        kalix-tool-bar(v-if="isShowToolBar"
+        v-bind:toolbarBtnList="toolbarBtnList"
+        v-on:onToolBarClick="onToolBarClick")
+        div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle" style="overflow-y:auto;")
+          div.autoTbale(v-bind:style="{width:tableWidth}")
+            table.table.table-bordered(id="hl-tree-table")
+              thead
+                tr
+                  th(v-for="(column,index) in cloneColumns")
+                    label(v-if="column.type === 'selection'")
+                      input(type="checkbox" v-model="checks" v-on:click="handleCheckAll")
+                    label(v-else) {{ renderHeader(column, index) }}
+                      span.ivu-table-sort(v-if="column.sortable")
+                        i(v-bind:class="{on: column._sortType === 'asc'}"
+                        v-on:click.native="handleSort(index, 'asc')" title="上箭头")
+                        i(v-bind:class="{on: column._sortType === 'desc'}"
+                        v-on:click.native="handleSort(index, 'desc')" title="下箭头")
+              tbody
+                tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent}")
+                  td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
+                    label(v-if="column.type === 'selection'")
+                      input(type="checkbox" v-bind:value="item.id" v-model="checkGroup")
+                    div(v-if="column.type === 'action'")
+                      i(v-bind:class="action.icon" v-on:click="RowClick(item,$event,index,action.text)" style="width:20px"
+                      v-for='action in (column.actions)' v-bind:key="action.text")
+                    label(v-on:click="toggle(index,item)" v-if="!column.type")
+                      span(v-if='snum==iconRow()')
+                        i(v-html='item.spaceHtml')
+                        i.el-icon(v-if="item.children&&item.children.length>0"
+                        v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded }")
+                        i(v-else class="ms-tree-space")
+                      | {{renderBody(item, column)}}
+      component(:is="whichBizDialog" ref="kalixDialog"
+      v-bind:formModel="formModel"
+      v-bind:formRules="formRules")
 </template>
 <script>
   import Cache from 'common/cache'
-
+  import EventBus from 'common/eventbus'
+  import TableTool from './baseTableTool'
+  import ToolBar from './baseToolBar'
+  import Dialog from './baseDialog'
   export default {
     name: 'treeGrid',
     props: {
@@ -49,8 +60,21 @@
         type: String,
         required: true
       },
+      isShowToolBar: { // 是否显示工具栏
+        type: Boolean,
+        default: true
+      },
+      toolbarBtnList: {   //  toolBar 中按钮数组
+        type: Array,
+        default: () => {
+          return []
+        }
+      },
       bizSearch: {  //  使用的搜索组件名称
         type: String
+      },
+      bizDialog: {  //  使用的对话框组件名称
+        type: Array
       },
       columns: Array,
       targetURL: ''
@@ -66,7 +90,8 @@
         tdsWidth: 0, // td总宽
         timer: false, // 控制监听时长
         dataLength: 0, // 树形数据长度
-        items: [] // 表格数据
+        items: [], // 表格数据
+        whichBizDialog: '' //
       }
     },
     computed: {
@@ -129,6 +154,20 @@
           this.screenWidth = window.screenWidth
         })()
       }
+      // 注册事件接受
+      const that = this
+      window.addEventListener('resize', () => {
+        that._getTableHeight()
+      })
+      EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', () => {
+//        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
+        this.whichBizDialog = ''
+      })
+      //  绑定表格 icon 图标
+      const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
+      if (currentTreeListItem) {
+        this.iconCls = currentTreeListItem.iconCls
+      }
     },
     methods: {
       // 获取表格数据
@@ -158,6 +197,49 @@
           return {'top': 0}
         }
         return {}
+      },
+      tableContainerStyle() {
+        return {'top': (!this.isShowToolBar ? '56px' : '')}
+      },
+      _getTableHeight() {
+        if (this.$refs.kalixTableContainer && this.$refs.kalixTableContainer.clientHeight) {
+          this.tableHeight = this.$refs.kalixTableContainer.clientHeight
+        }
+      },
+      onToolBarClick(btnId) {
+        // baseToolBar 回调事件
+        switch (btnId) {
+          case 'add':
+            this.onAddClick()
+            break
+          case 'refresh':
+            this.onRefreshClick()
+            break
+          default:
+            this.customToolBar(btnId, this)
+            break
+        }
+      },
+      onAddClick() {
+        // 添加按钮点击事件
+        // this.whichBizDialog = ''
+        let that = this
+        let dig =
+          this.bizDialog.filter((item) => {
+            return item.id === 'add'
+          })
+//        console.log(dig[0].dialog)3
+        this.whichBizDialog = dig[0].dialog
+        console.log('[onAddClick]', dig[0].dialog)
+//        this.$emit('update:formModel', {})
+        setTimeout(() => {
+//          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
+          console.log('wwwwwwwww', that.$refs.kalixDialog)
+          that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
+          if (typeof (this.$refs.kalixDialog.init) === 'function') {
+            that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
+          }
+        }, 20)
       },
       // 有无多选框折叠位置优化
       iconRow() {
@@ -441,7 +523,11 @@
     beforeDestroy() {
       window.onresize = null
     },
-    components: {}
+    components: {
+      KalixTableTool: TableTool,
+      KalixToolBar: ToolBar,
+      KalixDialog: Dialog
+    }
   }
 </script>
 <style scoped lang="stylus" type="text/stylus">
@@ -455,20 +541,35 @@
     width: 100%;
     border-spacing: 0;
     border-collapse: collapse;
+    line-height: 23px;
   }
 
   .table-bordered {
-    border: 1px solid #EBEBEB;
+    border: 0px solid #EBEBEB;
   }
 
   .table > tbody > tr > td,
-  .table > tbody > tr > th,
-  .table > thead > tr > td,
-  .table > thead > tr > th {
+  .table > tbody > tr > th {
     border-top: 1px solid #e7eaec;
     line-height: 1.42857;
     padding: 8px;
     vertical-align: middle;
+    font-size: 14px;
+    line-height: 23px;
+  }
+
+  .table > thead > tr > td,
+  .table > thead > tr > th {
+    /*border-top: 1px solid #e7eaec;*/
+    border: 0;
+    line-height: 1.42857;
+    padding: 8px;
+    vertical-align: middle;
+    font-family: Arial;
+    color: #b18e60;
+    font-size: 14px;
+    line-height: 23px;
+    font-family: inherit;
   }
 
   .table-bordered > tbody > tr > td,
@@ -477,7 +578,8 @@
   .table-bordered > tfoot > tr > th,
   .table-bordered > thead > tr > td,
   .table-bordered > thead > tr > th {
-    border: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+    border-top: 1px solid #e7e7e7;
   }
 
   .table > thead > tr > th {

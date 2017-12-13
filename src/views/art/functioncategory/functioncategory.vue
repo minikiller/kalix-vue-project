@@ -11,7 +11,9 @@
       v-bind:columns='columns'
       v-bind:targetURL="targetURL"
       title="职能类别列表"
-      bizSearch="FunctionCategorySearch")
+      bizSearch="FunctionCategorySearch"
+      v-bind:btnList="btnList"
+      v-bind:bizDialog="bizDialog")
 </template>
 
 <script type="text/ecmascript-6">
