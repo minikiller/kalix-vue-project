@@ -10,6 +10,9 @@
   import {usersURL, userBtnPermissionPrefix, UserComponent} from '../config.toml'
   import {userBtnList} from '../user/index'
   import {registerComponent} from '@/api/register'
+  import Message from 'common/message'
+  import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
+  import EventBus from 'common/eventbus'
 
   // 注册全局组件
   registerComponent(UserComponent)
@@ -59,24 +62,26 @@
       customTableTool(row, btnId, that) {
         switch (btnId) {
           case 'startStopUsing': { // 启用/停用
-            /* that.$confirm('流程启动后业务数据将无法修改！确定要启动吗?', '提示', {
-             confirmButtonText: '确定',
-             cancelButtonText: '取消',
-             type: 'warning'
-             }).then(() => {
-             return Vue.axios.request({
-             method: 'GET',
-             url: requestUrl + row.id
-             })
-             }).then((res) => {
-             Message.processResult(res)
-             EventBus.$emit(ON_REFRESH_DATA)
-             }) */
-            if (row.available === 1) {
-              alert('停用')
-            } else {
-              alert('启用')
-            }
+            let warnInfo = '确定要' + (row.available === 1 ? '停用' : '启用') + '该用户吗？'
+            that.$confirm(warnInfo, '警告', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              return this.axios.request({
+                method: 'PUT',
+                url: this.targetURL + '/' + row.id,
+                params: {},
+                data: {
+                  id: row.id,
+                  available: (row.available === 1 ? 0 : 1)
+                }
+              })
+            }).then((res) => {
+              console.log(res)
+              Message.processResult(res)
+              EventBus.$emit(ON_REFRESH_DATA)
+            })
             break
           }
           case 'key': { // 重置密码
