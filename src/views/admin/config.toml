@@ -89,14 +89,20 @@ AdminCacheKey = "ADMIN-DICT-KEY"
  path = "admin/user/userView"
  name = "AdminUserView"
 [[UserComponent]]
- path = "admin/user/userEdit"
- name = "AdminUserEdit"
-[[UserComponent]]
  path = "admin/user/userAdd"
  name = "AdminUserAdd"
 [[UserComponent]]
  path = "admin/user/userSearch"
  name = "AdminUserSearch"
+[[UserComponent]]
+ path = "admin/user/userEdit"
+ name = "AdminUserEdit"
+[[UserComponent]]
+ path = "admin/user/userResetpwd"
+ name = "AdminUserResetpwd"
+[[UserComponent]]
+ path = "admin/user/userAuthView"
+ name = "AdminUserAuthView"
 
 [[DataAuthComponent]]
  path = "admin/dataauth/dataauthView"

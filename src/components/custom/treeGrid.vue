@@ -1,67 +1,43 @@
-<template>
-  <div>
-    <div class='kalix-article'>
-      <keep-alive>
-        <component
-          v-bind:is="bizSearch"
-          ref="bizSearchRef"
-          v-if="bizSearch"
-          v-on:onSearchBtnClick="onSearchClick">
-        </component>
-      </keep-alive>
-    </div>
-    <div class='kalix-wrapper' v-bind:style="setWrapperStyle">
-      <div class="kalix-wrapper-hd">
-        <i class="iconCls">
-          {{title}}
-        </i>
-      </div>
-      <div :style="{width:tableWidth}" class='autoTbale'>
-        <table class="table table-bordered" id='hl-tree-table'>
-          <thead>
-          <tr>
-            <th v-for="(column,index) in cloneColumns">
-              <label v-if="column.type === 'selection'">
-                <input type="checkbox" v-model="checks" @click="handleCheckAll">
-              </label>
-              <label v-else>
-                {{ renderHeader(column, index) }}
-                <span class="ivu-table-sort" v-if="column.sortable">
-                                <Icon type="arrow-up-b" :class="{on: column._sortType === 'asc'}"
-                                      @click.native="handleSort(index, 'asc')"/>
-                                <Icon type="arrow-down-b" :class="{on: column._sortType === 'desc'}"
-                                      @click.native="handleSort(index, 'desc')"/>
-                            </span>
-              </label>
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(item,index) in initItems" :key="item.id" v-show="show(item)" :class="{'child-tr':item.parent}">
-            <td v-for="(column,snum) in columns" :key="column.key" :style=tdStyle(column)>
-              <label v-if="column.type === 'selection'">
-                <input type="checkbox" :value="item.id" v-model="checkGroup">
-              </label>
-              <div v-if="column.type === 'action'">
-                <i-button :type="action.type" size="small" @click="RowClick(item,$event,index,action.text)"
-                          v-for='action in (column.actions)' :key="action.text">{{action.text}}
-                </i-button>
-              </div>
-              <label @click="toggle(index,item)" v-if="!column.type">
-                            <span v-if='snum==iconRow()'>
-                                <i v-html='item.spaceHtml'></i>
-                                <i v-if="item.children&&item.children.length>0" class="ivu-icon"
-                                   :class="{'ivu-icon-plus-circled':!item.expanded,'ivu-icon-minus-circled':item.expanded }"></i>
-                                <i v-else class="ms-tree-space"></i>
-                            </span> {{renderBody(item, column) }}
-              </label>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  div
+    div.kalix-article
+      keep-alive
+        component(
+        v-bind:is="bizSearch"
+        ref="bizSearchRef"
+        v-if="bizSearch"
+        v-on:onSearchBtnClick="onSearchClick")
+    div.kalix-wrapper(v-bind:style="setWrapperStyle")
+      div.kalix-wrapper-hd
+        i.iconCls {{title}}
+      div.autoTbale(v-bind:style="{width:tableWidth}")
+        table.table.table-bordered(id="hl-tree-table")
+          thead(v-bind:style="tdStyle(column)")
+            tr
+              th(v-for="(column,index) in cloneColumns")
+                label(v-if="column.type === 'selection'")
+                  input(type="checkbox" v-model="checks" v-on:click="handleCheckAll")
+                label(v-else) {{ renderHeader(column, index) }}
+                  span.ivu-table-sort(v-if="column.sortable")
+                    i(v-bind:class="{on: column._sortType === 'asc'}"
+                    v-on:click.native="handleSort(index, 'asc')" title="上箭头")
+                    i(v-bind:class="{on: column._sortType === 'desc'}"
+                    v-on:click.native="handleSort(index, 'desc')" title="下箭头")
+          tbody
+            tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent}")
+              td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
+                label(v-if="column.type === 'selection'")
+                  input(type="checkbox" v-bind:value="item.id" v-model="checkGroup")
+                div(v-if="column.type === 'action'" align="center")
+                  i(v-bind:class="action.icon" v-on:click="RowClick(item,$event,index,action.text)" style="width:20px"
+                  v-for='action in (column.actions)' v-bind:key="action.text")
+                label(v-on:click="toggle(index,item)" v-if="!column.type")
+                  span(v-if='snum==iconRow()')
+                    i(v-html='item.spaceHtml')
+                    i.el-icon(v-if="item.children&&item.children.length>0"
+                    v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded }")
+                    i(v-else class="ms-tree-space")
+                  | {{renderBody(item, column)}}
 </template>
 <script>
   import Cache from 'common/cache'
@@ -81,6 +57,7 @@
     },
     data() {
       return {
+        iconCls: '',
         initItems: [], // 处理后数据数组
         cloneColumns: [], // 处理后的表头数据
         checkGroup: [], // 复选框数组
@@ -202,7 +179,6 @@
         }
         return style
       },
-
       // 排序事件
       handleSort(index, type) {
         this.cloneColumns.forEach((col) => {
@@ -403,7 +379,6 @@
           return column.title || '#'
         }
       },
-
       // 返回内容
       renderBody(row, column, index) {
         return row[column.key]
@@ -459,11 +434,14 @@
           '[object Object]': 'object'
         }
         return map[toString.call(obj)]
+      },
+      onSearchClick() {
       }
     },
     beforeDestroy() {
       window.onresize = null
-    }
+    },
+    components: {}
   }
 </script>
 <style scoped lang="stylus" type="text/stylus">
@@ -542,3 +520,4 @@
     margin: 0;
   }
 </style>
+

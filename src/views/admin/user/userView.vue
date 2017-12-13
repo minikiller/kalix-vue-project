@@ -13,7 +13,10 @@
       el-form-item(label="登录名" prop="loginName" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.loginName" readonly)
       el-form-item(label="状态" prop="available" v-bind:label-width="labelWidth")
-        el-switch(v-model="formModel.available" active-text="停用" inactive-text="启用" active-value="0" inactive-value="1" disabled)
+        template(v-if="formModel.available === 1")
+          | 启用
+        template(v-else)
+          | 停用
       template(v-if="formModel.userType === 0 || formModel.userType === 2")
         el-form-item(label="工号" prop="code" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.code" readonly)
