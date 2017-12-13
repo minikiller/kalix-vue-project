@@ -1,4 +1,5 @@
 const FormModel = {
+  id: null,
   userType: null,      // 用户类型,字典[用户类型]
   code: '',            // 工号
   position: null,      // 岗位,字典[岗位名称]

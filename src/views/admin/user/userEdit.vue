@@ -88,8 +88,7 @@
     },
     methods: {
       open(obj) {
-        this.formModel = obj
-        this.$refs.kalixBizDialog.open('', true)
+        this.$refs.kalixBizDialog.open('', true, obj)
       },
       change(event) {
         alert(event)
