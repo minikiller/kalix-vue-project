@@ -1,15 +1,18 @@
 <template lang="pug">
   keep-alive
-    base-table(bizKey="user" title='用户列表'
-    v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-    v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
-    v-bind:formModel="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    bizSearch="AdminUserSearch"  v-bind:btnList="btnList")
+    base-table(bizKey="user" title='用户列表' v-bind:targetURL="targetURL"
+    v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields" bizSearch="AdminUserSearch" v-bind:btnList="btnList"
+    v-bind:customTableTool="customTableTool" v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
+    v-bind:dictDefine="dictDefine" ref="userTable")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {usersURL, userBtnPermissionPrefix, ToolButtonList, UserComponent} from '../config.toml'
+  import {usersURL, userBtnPermissionPrefix, UserComponent} from '../config.toml'
+  import {userBtnList} from '../user/index'
   import {registerComponent} from '@/api/register'
+  import Message from 'common/message'
+  import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
+  import EventBus from 'common/eventbus'
 
   // 注册全局组件
   registerComponent(UserComponent)
@@ -17,47 +20,96 @@
   export default {
     data() {
       return {
-        btnList: ToolButtonList,
+        dictDefine: [{ // 定义数据字典的显示
+          cacheKey: 'ADMIN-DICT-KEY',
+          type: '用户类型',
+          targetField: 'userTypeName',
+          sourceField: 'userType'
+        }, {
+          cacheKey: 'ADMIN-DICT-KEY',
+          type: '岗位名称',
+          targetField: 'positionName',
+          sourceField: 'position'
+        }],
+        btnList: userBtnList,
         buttonPermissionPrefix: userBtnPermissionPrefix,
         targetURL: usersURL,
         tableFields: [
-          {prop: 'id', label: '工号'},
+          {prop: 'userTypeName', label: '用户类型'},
+          {prop: 'code', label: '用户代码'},
           {prop: 'loginName', label: '登录名'},
-          {prop: 'name', label: '姓名'},
+          {prop: 'name', label: '名称'},
           {prop: 'sex', label: '性别'},
-          {prop: 'workGroup', label: '工作组'},
-          {prop: 'usertype', label: '用户类型'}
+          {prop: 'email', label: '邮箱'},
+          {prop: 'phone', label: '固定电话'},
+          {prop: 'mobile', label: '手机'}
         ],
-        bizDialog: [{id: 'view', dialog: 'KalixUserEdit'},
-          {id: 'add', dialog: 'KalixUserAdd'}
-        ],
-        formModel: {
-          code: '',
-          loginName: '',
-          name: '',
-          sex: '',
-          password: '',
-          confirmPassword: '',
-          position: '',
-          usertype: '',
-          available: 1
-        },
-        formRules: {
-          name: [
-            {required: true, message: '请输入 name', trigger: 'blur'}
-          ],
-          label: [
-            {required: true, message: '请输入 label', trigger: 'blur'}
-          ]
-        }
+        bizDialog: [
+          {id: 'view', dialog: 'AdminUserView'},
+          {id: 'edit', dialog: 'AdminUserEdit'},
+          {id: 'add', dialog: 'AdminUserAdd'},
+          {id: 'key', dialog: 'AdminUserResetpwd'},
+          {id: 'auth', dialog: 'AdminUserAuthView'}
+        ]
       }
+    },
+    components: {
+      BaseTable
     },
     created() {
     },
-    methods: {},
-    components: {
-      BaseTable
-//      KalixUserAdd: UserAdd
+    methods: {
+      customTableTool(row, btnId, that) {
+        switch (btnId) {
+          case 'startStopUsing': { // 启用/停用
+            let warnInfo = '确定要' + (row.available === 1 ? '停用' : '启用') + '该用户吗？'
+            that.$confirm(warnInfo, '警告', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              return this.axios.request({
+                method: 'PUT',
+                url: this.targetURL + '/' + row.id,
+                params: {},
+                data: {
+                  id: row.id,
+                  available: (row.available === 1 ? 0 : 1)
+                }
+              })
+            }).then((res) => {
+              console.log(res)
+              Message.processResult(res)
+              EventBus.$emit(ON_REFRESH_DATA)
+            })
+            break
+          }
+          case 'key': { // 重置密码
+            that.whichBizDialog = ''
+            let dig =
+              that.bizDialog.filter((item) => {
+                return item.id === 'key'
+              })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('', true, row)
+            }, 20)
+            break
+          }
+          case 'auth' : { // 权限查看
+            that.whichBizDialog = ''
+            let dig =
+              that.bizDialog.filter((item) => {
+                return item.id === 'auth'
+              })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('', false, row)
+            }, 20)
+            break
+          }
+        }
+      }
     }
   }
 </script>

@@ -1,13 +1,13 @@
 <!--
-描述：艺术中心-专业课程设置-新增组件
-开发人：hqj
-开发日期：2017年11月30日
+描述：艺术中心-职能类别-新增组件
+开发人：fengjing
+开发日期：2017年12月12日
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="majorCourse" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
+  kalix-dialog.user-add(bizKey="functioncategory" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="所属专业" prop="orgid" v-bind:label-width="labelWidth")
+      el-form-item(label="所属类别" prop="parentid" v-bind:label-width="labelWidth")
         el-input(v-text="orgName")
         input(v-model="formModel.orgid" type="hidden")
       el-form-item(label="课程名称" prop="name" v-bind:rules="rules.name" v-bind:label-width="labelWidth")

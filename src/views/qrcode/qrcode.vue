@@ -15,7 +15,6 @@
       KalixQrcode
     }
   }
-
 </script>
 <style lang="stylus" type="text/stylus">
   .qrcode

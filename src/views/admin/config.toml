@@ -86,14 +86,23 @@ AdminCacheKey = "ADMIN-DICT-KEY"
  name = "AdminWorkGroupSearch"
 
 [[UserComponent]]
- path = "admin/user/userEdit"
- name = "AdminUserEdit"
+ path = "admin/user/userView"
+ name = "AdminUserView"
 [[UserComponent]]
  path = "admin/user/userAdd"
  name = "AdminUserAdd"
 [[UserComponent]]
  path = "admin/user/userSearch"
  name = "AdminUserSearch"
+[[UserComponent]]
+ path = "admin/user/userEdit"
+ name = "AdminUserEdit"
+[[UserComponent]]
+ path = "admin/user/userResetpwd"
+ name = "AdminUserResetpwd"
+[[UserComponent]]
+ path = "admin/user/userAuthView"
+ name = "AdminUserAuthView"
 
 [[DataAuthComponent]]
  path = "admin/dataauth/dataauthView"
@@ -108,7 +117,7 @@ AdminCacheKey = "ADMIN-DICT-KEY"
  path = "admin/dataauth/dataauthAddUser"
  name = "AdminDataAuthAddUser"
 
- [[orgComponent]]
+ [[DutyComponent]]
   path = "admin/duty/dutyView"
   name = "AdminDutyView"
  [[DutyComponent]]

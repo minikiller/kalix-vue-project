@@ -211,7 +211,6 @@
     computed: {},
     watch: {}
   }
-
 </script>
 
 <style lang='stylus' type='text/stylus'>

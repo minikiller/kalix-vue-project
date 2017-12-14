@@ -71,4 +71,3 @@ export function concatObject(newObj, oldObj) {
 export function getNewObject(obj) {
   return JSON.parse(JSON.stringify(obj))
 }
-

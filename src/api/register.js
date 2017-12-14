@@ -12,4 +12,3 @@ const registerComponent = function (compList) {
   })
 }
 export {registerComponent}
-

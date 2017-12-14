@@ -143,7 +143,6 @@
           })
         } else {
           alert('请输入企业组织机构代码')
-          return
         }
       },
       onCancelClick() {
