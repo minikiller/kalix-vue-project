@@ -6,14 +6,13 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="functioncategory" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
-    div.el-form(slot="dialogFormSlot")
-      el-form-item(label="所属类别" prop="parentid" v-bind:label-width="labelWidth")
-        el-input(v-text="orgName")
-        input(v-model="formModel.orgid" type="hidden")
-      el-form-item(label="课程名称" prop="name" v-bind:rules="rules.name" v-bind:label-width="labelWidth")
+    div.el-form(slot="dialogFormSlot" align="center")
+      el-form-item(prop="parentId" v-bind:label-width="labelWidth" type="hidden")
+        el-input(v-model="formModel.parentId" type="hidden" )
+      el-form-item(label="所属类别" v-bind:label-width="labelWidth"  readonly)
+        el-input(v-model="formModel.parentName")
+      el-form-item(label="类别名称" prop="name" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.name")
-      el-form-item(label="课程描述" prop="comment" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.comment")
 </template>
 
 <script type="text/ecmascript-6">
@@ -25,11 +24,10 @@
       return {
         formModel: Object.assign({}, FormModel),
         rules: {
-          name: [{required: true, message: '请输入课程名称', trigger: 'blur'}]
+          name: [{required: true, message: '请输名称', trigger: 'blur'}]
         },
         targetURL: '',
-        labelWidth: '110px',
-        orgName: ''
+        labelWidth: '110px'
       }
     },
     components: {
@@ -39,9 +37,9 @@
     },
     methods: {
       init(dialogOption) {
-        this.orgName = dialogOption.orgName
-        this.formModel.orgid = dialogOption.orgId
-        this.targetURL = dialogOption.targetURL
+//        this.orgName = dialogOption.orgName
+//        this.formModel.orgid = dialogOption.orgId
+//        this.targetURL = dialogOption.targetURL
       }
     }
   }

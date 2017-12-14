@@ -1,6 +1,7 @@
 const FormModel = {
+  id: '',          // 主键
   name: '',        // 名称
-  code: '',     // 编码
+  code: '',        // 编码
   createBy: '',    // 创建人
   creationDate: '' // 创建日期
 }
