@@ -37,27 +37,27 @@ ResearchCacheKey = "RESEARCH-DICT-KEY"
   path = "research/worker/workerSearch"
   name = "ResearchWorkerSearch"
 
- # 需要自动注册成全局的Student组件
-  [[StudentComponent]]
-    path = "research/student/studentView"
-    name = "ResearchStudentView"
-  [[StudentComponent]]
-    path = "research/student/studentAdd"
-    name = "ResearchStudentAdd"
-  [[StudentComponent]]
-    path = "research/student/studentSearch"
-    name = "ResearchStudentSearch"
+# 需要自动注册成全局的Student组件
+[[StudentComponent]]
+  path = "research/student/studentView"
+  name = "ResearchStudentView"
+[[StudentComponent]]
+  path = "research/student/studentAdd"
+  name = "ResearchStudentAdd"
+[[StudentComponent]]
+  path = "research/student/studentSearch"
+  name = "ResearchStudentSearch"
 
- # 需要自动注册成全局的CompetitionInfo组件
-  [[CompetitionInfoComponent]]
-    path = "research/competitioninfo/competitioninfoView"
-    name = "ResearchCompetitionInfoView"
-  [[CompetitionInfoComponent]]
-    path = "research/competitioninfo/competitioninfoAdd"
-    name = "ResearchCompetitionInfoAdd"
-  [[CompetitionInfoComponent]]
-    path = "research/competitioninfo/competitioninfoSearch"
-    name = "ResearchCompetitionInfoSearch"
+# 需要自动注册成全局的CompetitionInfo组件
+[[CompetitionInfoComponent]]
+  path = "research/competitioninfo/competitioninfoView"
+  name = "ResearchCompetitionInfoView"
+[[CompetitionInfoComponent]]
+  path = "research/competitioninfo/competitioninfoAdd"
+  name = "ResearchCompetitionInfoAdd"
+[[CompetitionInfoComponent]]
+  path = "research/competitioninfo/competitioninfoSearch"
+  name = "ResearchCompetitionInfoSearch"
 
 # 需要自动注册成全局的Signup组件
   [[SignupComponent]]
