@@ -269,7 +269,6 @@
               <div id="content" contenteditable="true" @blur="saveRange" class="chat_textarea"></div>
               <div class="chat_button_list">
                 <div class="btn-item" @click="sendTextMessage">发送</div>
-                <div class="btn-item" @click="getConversationList">会话列表</div>
               </div>
             </div>
           </div>
