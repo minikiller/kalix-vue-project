@@ -7,6 +7,7 @@
   background 50% 50% no-repeat
   background-size cover
   transition background .5s
+  perspective 800px
   .im-wrapper
     width 1002px
     margin 0 auto
@@ -41,10 +42,13 @@
       margin-left 14px
     .main-panel,
     .chat-panel
-      position: relative;
       height: 80%;
       top: 5%;
       border-radius: $borderRadius
+    .main-panel
+      position: relative;
+    .chat-panel
+      position: absolute;
     .main-panel
       display: block;
       width: 280px;

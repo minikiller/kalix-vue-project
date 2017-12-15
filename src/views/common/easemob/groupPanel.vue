@@ -1,17 +1,18 @@
 <template lang="pug">
-  div.panel.chat-panel.group-panel(v-show="isVisible")
-    panel-header
-      template(slot="right")
-        panel-header-button(type="close" v-on:click="close")
-    div.group-title {{groupData.text}}
-    div.group-body.scrollbar
-      ul.items
-        li.item(v-for="item in treeData" v-bind:key="item.id")
-          div.title
-            i.icon(v-bind:class="setCls(item.iconCls)")
-            div.text {{item.text}}
-          div.cells
-            div.cell(v-for="cell in item.children" v-bind:key="cell.id") {{cell.text}}
+  transition(v-bind:name="'turn'")
+    div.panel.chat-panel.group-panel(v-if="isVisible")
+      panel-header
+        template(slot="right")
+          panel-header-button(type="close" v-on:click="close")
+      div.group-title {{groupData.text}}
+      div.group-body.scrollbar
+        ul.items
+          li.item(v-for="item in treeData" v-bind:key="item.id")
+            div.title
+              i.icon(v-bind:class="setCls(item.iconCls)")
+              div.text {{item.text}}
+            div.cells
+              div.cell(v-for="cell in item.children" v-bind:key="cell.id") {{cell.text}}
 </template>
 <script type="text/ecmascript-6">
   import PanelHeader from './panelHeader.vue'
@@ -21,18 +22,13 @@
   import Scrollbar from 'smooth-scrollbar'
 
   export default {
-    props: {
-      groupData: {
-        default: () => {
-          return {}
-        }
-      }
-    },
     data() {
       return {
         isVisible: false,
+        isMin: false,
         groupTitle: '',
-        treeData: []
+        treeData: [],
+        groupData: {}
       }
     },
     mounted() {
@@ -42,12 +38,19 @@
       })
     },
     methods: {
-      open() {
+      open(item) {
         this.isVisible = true
+        this.isMin = false
+        this.groupData = item
+        // console.log('open item', item)
       },
       close() {
+        this.isMin = true
         this.isVisible = false
         console.log('close')
+      },
+      min() {
+        this.isMin = true
       },
       initData() {
         let treeListData = []
@@ -95,7 +98,7 @@
 <style scoped lang="stylus" type="text/stylus">
   .group-panel
     display block
-    width 1004px
+    width 1004px !important
     overflow: hidden;
     background-color rgba(254, 254, 240, 0.94)
     .panel_header
@@ -167,4 +170,35 @@
               font-size 14px
               line-height 24px
 
+  /* 翻板 */
+  .turn-enter-active,
+  .turn-leave-active
+    transition all .3s
+    transform-style preserve-3d
+
+  .turn-enter-active
+    transform-origin center top
+
+  .turn-leave-active
+    transform-origin center bottom
+
+  .turn-enter,
+  .turn-leave-active
+    opacity 0
+
+  .turn-enter
+    transform scale(.9) rotateX(-10deg)
+
+  .turn-leave-active
+    transform scale(.9) rotateX(10deg)
+
+  /* 缩放 */
+  .zoom-enter-active,
+  .zoom-leave-active
+    transition all .5s
+
+  .zoom-enter,
+  .zoom-leave-active
+    opacity 0
+    transform scale(.9)
 </style>

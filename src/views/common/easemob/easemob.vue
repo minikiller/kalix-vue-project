@@ -254,7 +254,7 @@
             </div>
           </div>
           <div class="panel_body_container panel_top-distance" style="bottom: 176px;">
-            <div class="panel_body chat_container"  style="width: 700px;height: 400px;" id="session_list">
+            <div class="panel_body chat_container" style="width: 700px;height: 400px;" id="session_list">
 
             </div>
           </div>
@@ -274,85 +274,10 @@
           </div>
         </div>
         <!-- 分类窗口 -->
-        <group-panel ref="groupPanel" :group-data="groupItem"></group-panel>
-        <div v-show="false" class="panel chat-panel group-panel">
-          <div class="panel_header">
-            <div class="item">
-              <div class="tool-btn close"></div>
-            </div>
-          </div>
-          <div class="group-title">办公自动化</div>
-          <div class="group-body scrollbar">
-            <ul class="items">
-              <li class="item">
-                <div class="title">
-                  <i class="icon"></i>
-                  <div class="text">流程管理</div>
-                </div>
-                <div class="cells">
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                </div>
-              </li>
-              <li class="item">
-                <div class="title">
-                  <i class="icon"></i>
-                  <div class="text">流程管理</div>
-                </div>
-                <div class="cells">
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                </div>
-              </li>
-              <li class="item">
-                <div class="title">
-                  <i class="icon"></i>
-                  <div class="text">流程管理</div>
-                </div>
-                <div class="cells">
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                </div>
-              </li>
-              <li class="item">
-                <div class="title">
-                  <i class="icon"></i>
-                  <div class="text">流程管理</div>
-                </div>
-                <div class="cells">
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                </div>
-              </li>
-              <li class="item">
-                <div class="title">
-                  <i class="icon"></i>
-                  <div class="text">流程管理</div>
-                </div>
-                <div class="cells">
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                </div>
-              </li>
-              <li class="item">
-                <div class="title">
-                  <i class="icon"></i>
-                  <div class="text">流程管理</div>
-                </div>
-                <div class="cells">
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                  <div class="cell">子菜单</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <component v-bind:is="item.view" v-bind:ref="key" v-if="plankList"
+                   v-for="(item,key) in plankList"
+                   v-bind:key="item.title"></component>
+        <!--<group-panel ref="groupPanel" v-bind:group-data="groupItem"></group-panel>-->
       </div>
     </div>
     <div class="footer-menu" id="dock">
@@ -377,19 +302,23 @@
   import ChatPanel from './chatPanel.vue'
   import GroupPanel from './groupPanel.vue'
   import EasemobApi from './js/api'
+  import {registerComponent} from '@/api/register'
+  import {GroupPanelComponent} from '../config.toml'
+  // 注册全局组件
+  registerComponent(GroupPanelComponent)
   // Object.defineProperty(Vue.prototype, '$moment', { value: EasemobTest })
 
   // 公有云初始化
   // let config = {
-    // protobuf: './local-sdk/protobuf-2.2.7.min.js' //支持http(s)网络路径、本地相对路径
+  // protobuf: './local-sdk/protobuf-2.2.7.min.js' //支持http(s)网络路径、本地相对路径
   // }
-  let params = {
-    appKey: 'kj7swf8okidb2',
-    token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
-  }
-  let config = {
-    localWindow: $('#session_list')
-  }
+  // let params = {
+  //   appKey: 'kj7swf8okidb2',
+  //   token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
+  // }
+  // let config = {
+  //   localWindow: $('#session_list')
+  // }
   export default {
     data() {
       return {
@@ -400,7 +329,8 @@
         isShowSideBar: false,
         currentBackgroundImg: 8,
         isChatShow: false,
-        groupItem: {}
+        groupItem: {},
+        plankList: {}
       }
     },
     created() {
@@ -413,8 +343,8 @@
         Scrollbar.init(item)
       })
       this.init()
-      EasemobApi.api.init(params, config)
-      EasemobApi.api.initRevice($('#session_list'))
+      // EasemobApi.api.init(params, config)
+      // EasemobApi.api.initRevice($('#session_list'))
 
       // this.getConversationList()
     },
@@ -497,9 +427,22 @@
        *  底部分类按钮选中
        * */
       selectMac(item) {
-        console.log('selectMac(', item)
-        this.groupItem = item
-        this.$refs.groupPanel.open()
+        // console.log('selectMac(', item)
+        // this.$refs.groupPanel.open(item)
+        console.log('this.activePlank', this.activePlank)
+        if (this.$refs[this.activePlank] && this.activePlank !== item.id) {
+          this.$refs[this.activePlank][0].min()
+          console.log('min')
+        }
+        this.activePlank = item.id
+        if (!this.plankList[item.id]) {
+          this.$set(this.plankList, item.id, {
+            view: require('./groupPanel.vue').default
+          })
+        }
+        setTimeout(() => {
+          this.$refs[item.id][0].open(item)
+        }, 20)
       },
       onIntoTest() {
         this.$refs.easemobTest.show()
@@ -593,8 +536,6 @@
     }
   }
 </script>
-
-
 <style lang="stylus" type="text/stylus">
   @import "style.styl"
 </style>
