@@ -66,9 +66,11 @@
               })
             that.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              if (row.id && row.id > 0) {
+              if (row.id && row.id > 0) { // 修改
                 that.$refs.kalixDialog.$refs.kalixBizDialog.open('', true, row)
-              } else {
+              } else { // 新增
+                this.$delete(row, 'version')
+                this.$delete(row, 'version_')
                 that.$refs.kalixDialog.$refs.kalixBizDialog.open('', false, row)
               }
             }, 20)
