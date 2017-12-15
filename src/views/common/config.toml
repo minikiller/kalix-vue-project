@@ -88,3 +88,8 @@ ReceiverURL = "/camel/rest/messages/receiver"
   title = "删除"
   isShow = true
   isPermission = true
+
+# 需要自动注册成全局的 分类列表 组件
+[[GroupPanelComponent]]
+  path = "common/easemob/groupPanel"
+  name = "CommonGroupPanel"

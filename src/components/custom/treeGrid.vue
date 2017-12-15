@@ -20,8 +20,7 @@
               thead
                 tr
                   th(v-for="(column,index) in cloneColumns")
-                    label(v-if="column.type === 'selection'")
-                      input(type="checkbox" v-model="checks" v-on:click="handleCheckAll")
+                    i(v-if="column.type === 'hidden'" type="hidden" v-bind:style="{width:0}")
                     label(v-else) {{ renderHeader(column, index) }}
                       span.ivu-table-sort(v-if="column.sortable")
                         i(v-bind:class="{on: column._sortType === 'asc'}"
@@ -29,20 +28,20 @@
                         i(v-bind:class="{on: column._sortType === 'desc'}"
                         v-on:click.native="handleSort(index, 'desc')" title="下箭头")
               tbody
-                tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent}")
+                tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent,'active':item.id === checkId}" v-on:click="toSelect(item)")
                   td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
-                    label(v-if="column.type === 'selection'")
-                      input(type="checkbox" v-bind:value="item.id" v-model="checkGroup")
                     div(v-if="column.type === 'action'")
                       i(v-bind:class="action.icon" v-on:click="RowClick(item,$event,index,action.text)" style="width:20px"
                       v-for='action in (column.actions)' v-bind:key="action.text")
-                    label(v-on:click="toggle(index,item)" v-if="!column.type")
-                      span(v-if='snum==iconRow()')
-                        i(v-html='item.spaceHtml')
-                        i.el-icon(v-if="item.children&&item.children.length>0"
-                        v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded }")
-                        i(v-else class="ms-tree-space")
-                      | {{renderBody(item, column)}}
+                    i(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
+                    div(v-else)
+                      label(v-on:click="toggle(index,item)" v-if="!column.type")
+                        span(v-if='snum==iconRow()')
+                          i(v-html='item.spaceHtml')
+                          i.el-icon(v-if="item.children&&item.children.length>0"
+                          v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded }")
+                          i(v-else class="ms-tree-space")
+                        | {{renderBody(item, column)}}
       component(:is="whichBizDialog" ref="kalixDialog"
       v-bind:formModel="formModel"
       v-bind:formRules="formRules")
@@ -77,7 +76,8 @@
         type: Array
       },
       columns: Array,
-      targetURL: ''
+      targetURL: '',
+      formModel: null
     },
     data() {
       return {
@@ -91,7 +91,9 @@
         timer: false, // 控制监听时长
         dataLength: 0, // 树形数据长度
         items: [], // 表格数据
-        whichBizDialog: '' //
+        whichBizDialog: '', //
+        checkId: -1,
+        checkedItem: null
       }
     },
     computed: {
@@ -234,8 +236,9 @@
 //        this.$emit('update:formModel', {})
         setTimeout(() => {
 //          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
-          console.log('wwwwwwwww', that.$refs.kalixDialog)
-          that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
+          this.formModel.parentName = this.checkedItem.name
+          this.formModel.parentId = this.checkedItem.id
+          that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加', false, this.formModel)
           if (typeof (this.$refs.kalixDialog.init) === 'function') {
             that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
           }
@@ -272,6 +275,16 @@
           this.cloneColumns[index]._sortType = type
         }
         this.$emit('on-sort-change', this.cloneColumns[index]['key'], this.cloneColumns[index]['_sortType'])
+      },
+      // 选中某一行
+      toSelect(item) {
+        if (this.checkId === item.id) {
+          this.checkId = -1
+        } else {
+          this.checkId = item.id
+          this.checkedItem = item
+          console.log('item', item)
+        }
       },
       // 点击某一行事件
       RowClick(data, event, index, text) {
@@ -518,6 +531,8 @@
         return map[toString.call(obj)]
       },
       onSearchClick() {
+      },
+      formRules() {
       }
     },
     beforeDestroy() {
@@ -558,6 +573,10 @@
     line-height: 23px;
   }
 
+  .table > tbody > tr .focus {
+    background-color: #eee;
+  }
+
   .table > thead > tr > td,
   .table > thead > tr > th {
     /*border-top: 1px solid #e7eaec;*/
@@ -595,6 +614,10 @@
     background-color: #fbfbfb;
   }
 
+  #hl-tree-table > tbody > tr.active {
+    background-color #ffefbb
+  }
+
   #hl-tree-table > tbody > .child-tr {
     background-color: #fff;
   }
@@ -621,5 +644,6 @@
   #hl-tree-table th > label {
     margin: 0;
   }
+
 </style>
 

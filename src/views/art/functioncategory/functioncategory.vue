@@ -7,16 +7,18 @@
 <template lang="pug">
   keep-alive
     Kalix-tree-grid(
-      v-bind:items='data'
-      v-bind:columns='columns'
-      v-bind:targetURL="targetURL"
-      title="职能类别列表"
-      bizSearch="FunctionCategorySearch"
-      v-bind:btnList="btnList"
-      v-bind:bizDialog="bizDialog")
+    v-bind:items='data'
+    v-bind:columns='columns'
+    v-bind:targetURL="targetURL"
+    title="职能类别列表"
+    bizSearch="FunctionCategorySearch"
+    v-bind:btnList="btnList"
+    v-bind:bizDialog="bizDialog"
+    v-bind:formModel="formModel")
 </template>
 
 <script type="text/ecmascript-6">
+  import FormModel from './model'
   import TreeGrid from '@/components/custom/treeGrid'
   import {registerComponent} from '@/api/register'
   //  import Vue from 'vue'
@@ -29,9 +31,11 @@
       return {
         btnList: ToolButtonList,
         targetURL: FunctionCategroyURL,
+        formModel: Object.assign({}, FormModel),
         columns: [{
-          type: 'selection',
-          width: '50'
+          type: 'hidden',
+          key: 'id',
+          width: '0'
         }, {
           title: '名称',
           key: 'name',
