@@ -6,6 +6,8 @@ ArtDictURL = "/camel/rest/art/dicts"
 ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
 TeachingUnitOrgID = 22601
 FunctionCategroyURL = "/camel/rest/functioncategorys"
+CompanyURL = "/camel/rest/companys"
+StudentURL = "/camel/rest/students"
 
 # table 的默认按钮定义
 [[ToolButtonList]]
@@ -21,6 +23,18 @@ FunctionCategroyURL = "/camel/rest/functioncategorys"
 [[ToolButtonList]]
   id = "delete"
   title = "删除"
+  isShow = true
+  isPermission = true
+
+# table 使用的按钮定义
+[[ToolButtonList1]]
+  id = "view"
+  title = "查看"
+  isShow = true    # 是否显示
+  isPermission = true   # 是否进行权限认证
+[[ToolButtonList1]]
+  id = "newEdit"
+  title = "编辑"
   isShow = true
   isPermission = true
 
@@ -45,6 +59,28 @@ FunctionCategroyURL = "/camel/rest/functioncategorys"
 [[CandidateComponent]]
   path = "art/candidate/candidateSearch"
   name = "ArtCandidateSearch"
+
+# 需要自动注册成全局的artCompany组件
+[[ArtCompanyComponent]]
+  path = "art/company/companyView"
+  name = "ArtCompanyView"
+[[ArtCompanyComponent]]
+  path = "art/company/companyAdd"
+  name = "ArtCompanyAdd"
+[[ArtCompanyComponent]]
+  path = "art/company/companySearch"
+  name = "ArtCompanySearch"
+
+# 需要自动注册成全局的artStudent组件
+[[ArtStudentComponent]]
+  path = "art/student/studentView"
+  name = "ArtStudentView"
+[[ArtStudentComponent]]
+  path = "art/student/studentAdd"
+  name = "ArtStudentAdd"
+[[ArtStudentComponent]]
+  path = "art/student/studentSearch"
+  name = "ArtStudentSearch"
 
 # 需要自动注册成全局的majorCourse组件
 [[MajorCourseComponent]]
