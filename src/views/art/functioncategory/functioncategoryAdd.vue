@@ -18,15 +18,16 @@
 <script type="text/ecmascript-6">
   import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
+  import {FunctionCategroyURL} from '../config.toml'
 
   export default {
     data() {
       return {
+        targetURL: FunctionCategroyURL,
         formModel: Object.assign({}, FormModel),
         rules: {
           name: [{required: true, message: '请输名称', trigger: 'blur'}]
         },
-        targetURL: '',
         labelWidth: '110px'
       }
     },
@@ -36,11 +37,7 @@
     created() {
     },
     methods: {
-      init(dialogOption) {
-//        this.orgName = dialogOption.orgName
-//        this.formModel.orgid = dialogOption.orgId
-//        this.targetURL = dialogOption.targetURL
-      }
-    }
+    },
+    watch: {}
   }
 </script>
