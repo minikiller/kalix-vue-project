@@ -4,6 +4,7 @@ AdminDictURL = "/camel/rest/admin/dicts"
 AdminDictsTypesListURL = "/camel/rest/admin/dicts/types/list"
 
 usersURL = "/camel/rest/users"
+rolesURL = "/camel/rest/roles"
 dutyURL = "/camel/rest/dutys"
 orgURL = "/camel/rest/orgs"
 appsURL = "/camel/rest/system/applications"
@@ -140,3 +141,34 @@ AdminCacheKey = "ADMIN-DICT-KEY"
  [[OrgComponent]]
   path = "admin/org/orgSearch"
   name = "AdminOrgSearch"
+
+# 需要自动注册成全局的role组件
+  [[RoleComponent]]
+   path = "admin/role/roleView"
+   name = "AdminRoleView"
+  [[RoleComponent]]
+   path = "admin/role/roleAdd"
+   name = "AdminRoleAdd"
+  [[RoleComponent]]
+   path = "admin/role/roleSearch"
+   name = "AdminRoleSearch"
+  [[RoleComponent]]
+   path = "admin/role/roleEdit"
+   name = "AdminRoleEdit"
+  [[UserComponent]]
+   path = "admin/role/roleAuthView"
+   name = "AdminRoleAuthView"
+
+
+  [[DataAuthComponent]]
+   path = "admin/dataauth/dataauthView"
+   name = "AdminDataAuthView"
+  [[DataAuthComponent]]
+   path = "admin/dataauth/dataauthAdd"
+   name = "AdminDataAuthAdd"
+  [[DataAuthComponent]]
+   path = "admin/dataauth/dataauthSearch"
+   name = "AdminDataAuthSearch"
+  [[DataAuthComponent]]
+   path = "admin/dataauth/dataauthAddUser"
+   name = "AdminDataAuthAddUser"

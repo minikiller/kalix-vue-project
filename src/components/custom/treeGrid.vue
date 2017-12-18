@@ -101,7 +101,8 @@
         items: [], // 表格数据
         whichBizDialog: '', //
         checkId: -1,
-        checkedItem: null
+        checkedItem: null,
+        searchParam: {} //  列表查询条件
       }
     },
     activated() {
@@ -527,7 +528,7 @@
         return map[toString.call(obj)]
       },
       onSearchClick(_searchParam) { // 查询按钮点击事件
-        console.log('[kalix] base table search clicked')
+        console.log('[kalix] base table search clicked', _searchParam)
         this.searchParam = _searchParam
         this.refresh()
       },
