@@ -45,6 +45,9 @@ StudentURL = "/camel/rest/students"
   path = "art/recruit/recruitAdd"
   name = "ArtRecruitAdd"
 [[RecruitComponent]]
+  path = "art/recruit/recruitEdit"
+  name = "ArtRecruitEdit"
+[[RecruitComponent]]
   path = "art/recruit/recruitSearch"
   name = "ArtRecruitSearch"
 

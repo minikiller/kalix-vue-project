@@ -1,7 +1,7 @@
 <!--
-描述：艺术中心-公司招聘
-开发人：sunlf
-开发日期：2017年8月17日
+描述：艺术中心-招聘管理-公司招聘
+开发人：hqj-修改
+开发日期：2017年12月18日
 -->
 
 <template lang="pug">
@@ -38,15 +38,17 @@
         tableFields: [
           {prop: 'companyName', label: '企业名称'},
           {prop: 'companyNatureName', label: '企业性质'},
-          {prop: 'region', label: '地区'},
-          {prop: 'city', label: '城市'},
+          {prop: 'companyEmail', label: '企业邮箱'},
+          {prop: 'companyPhone', label: '企业固定电话'},
+          {prop: 'publishDate', label: '发布时间'},
+          {prop: 'region', label: '工作地区'},
+          {prop: 'city', label: '工作城市'},
           {prop: 'position', label: '职位描述'},
-          {prop: 'jobTypeName', label: '工作类型'},
-          {prop: 'publishDate', label: '发布时间'}
+          {prop: 'jobTypeName', label: '工作类型'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'ArtRecruitView'},
-          {id: 'edit', dialog: 'ArtRecruitAdd'},
+          {id: 'edit', dialog: 'ArtRecruitEdit'},
           {id: 'add', dialog: 'ArtRecruitAdd'}
         ]
       }
