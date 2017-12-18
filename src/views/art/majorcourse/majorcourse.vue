@@ -25,8 +25,8 @@
 
 <script>
   import BaseTable from '@/components/custom/baseTable'
-  import {TeachingUnitOrgID, MajorCourseComponent, ToolButtonList} from '../config.toml'
-  import {orgURL} from '@/config/global.toml'
+  import {MajorCourseComponent, ToolButtonList} from '../config.toml'
+  import {orgURL, TeachingUnitOrgID} from '@/config/global.toml'
   import {registerComponent} from '@/api/register'
   import OrgTree from '@/components/tree/basetree'
   import DateColumn from 'views/oa/comp/dateColumn'
@@ -46,9 +46,9 @@
         ],
         isFixedColumn: true,
         dialogOptions: {},
+        orgURL: orgURL,
         orgId: TeachingUnitOrgID,
-        orgName: '',
-        orgURL: orgURL
+        orgName: ''
       }
     },
     components: {

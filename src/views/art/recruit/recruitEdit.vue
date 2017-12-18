@@ -1,10 +1,11 @@
 <!--
-描述：艺术中心-公司招聘-查看组件
+描述：艺术中心-招聘管理-公司招聘-编辑组件
 开发人：hqj
 开发日期：2017年12月18日
 -->
+
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="artRecruit" ref="kalixBizDialog" v-bind:formModel.sync="formModel" isView)
+  kalix-dialog.user-add(bizKey="artRecruit" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 企业信息
       el-form-item.kalix-form-table-td(label="企业组织机构代码" prop="companyCode" v-bind:label-width="labelWidth")
@@ -38,57 +39,61 @@
         el-input(v-model="formModel.companyAddress" readonly)
       div.table-title 招聘信息
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="发布时间" prop="publishDate" v-bind:label-width="labelWidth")
-          kalix-date-picker(v-model="formModel.publishDate" placeholder="发布时间" style="width:100%" disabled)
+        el-form-item.s-flex_item.kalix-form-table-td(label="发布时间" prop="publishDate" v-bind:rules="rules.publishDate" v-bind:label-width="labelWidth")
+          kalix-date-picker(v-model="formModel.publishDate" placeholder="发布时间" style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="职位描述" prop="position" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.position" readonly)
+          el-input(v-model="formModel.position")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="工作地区" prop="region" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.region" readonly)
+          el-input(v-model="formModel.region")
         el-form-item.s-flex_item.kalix-form-table-td(label="工作城市" prop="city" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.city" readonly)
+          el-input(v-model="formModel.city")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="岗位要求" prop="positionRequires" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.positionRequires" readonly)
+          el-input(v-model="formModel.positionRequires")
         el-form-item.s-flex_item.kalix-form-table-td(label="岗位个数" prop="jobNumbers" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.jobNumbers" readonly)
+          el-input-number(v-model="formModel.jobNumbers" v-bind:min="1" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="学历" prop="education" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.education" readonly)
+          el-input(v-model="formModel.education")
         el-form-item.s-flex_item.kalix-form-table-td(label="职能类别" prop="functionCategoryId" v-bind:label-width="labelWidth")
-          kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL" disabled)
+          kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.salary" readonly)
+          el-input-number(v-model="formModel.salary" v-bind:step="500" style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="应用技术名称" prop="appliedTechnology" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.appliedTechnology" readonly)
+          el-input(v-model="formModel.appliedTechnology")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="个人要求" prop="personRequires" v-bind:label-width="labelWidth")
-          kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" multiple style="width:100%" disabled)
+          kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" multiple style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="工作类型" prop="jobType" v-bind:label-width="labelWidth")
-          kalix-dict-select(v-model="formModel.jobType" appName="art" dictType="工作类型" style="width:100%" disabled)
+          kalix-dict-select(v-model="formModel.jobType" appName="art" dictType="工作类型" style="width:100%")
 </template>
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
-  import {FunctionCategroyURL} from '../config.toml'
+  import {RecruitURL, FunctionCategroyURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import DatePicker from '@/components/biz/date/datepicker.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import DatePicker from '@/components/biz/date/datepicker.vue'
   import FcTree2 from '@/components/tree/basetree2'
 
   export default {
     data() {
       return {
         formModel: Object.assign({}, FormModel),
+        rules: {
+          publishDate: [{required: true, message: '请输入发布时间', trigger: 'blur'}]
+        },
+        targetURL: RecruitURL,
         labelWidth: '140px',
         functionCategroyURL: FunctionCategroyURL
       }
     },
     components: {
       KalixDialog: Dialog,
-      KalixDatePicker: DatePicker,
       KalixDictSelect: BaseDictSelect,
+      KalixDatePicker: DatePicker,
       KalixFcTree2: FcTree2
     },
     methods: {

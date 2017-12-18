@@ -38,7 +38,7 @@
       template(v-else-if="formModel.userType === 3")
         el-form-item(label="企业组织机构代码" prop="code" v-bind:rules="rules.code_qy" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.code")
-        el-form-item(label="公司名称" prop="name" v-bind:rules="rules.name" v-bind:label-width="labelWidth")
+        el-form-item(label="企业名称" prop="name" v-bind:rules="rules.name" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.name")
         el-form-item(label="邮箱" prop="email" v-bind:rules="rules.email" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.email")
@@ -120,7 +120,7 @@
     },
     methods: {
       change(event) {
-        alert(event)
+        this.$refs.kalixBizDialog.$refs.dialogForm.clearValidate()
       }
     }
   }

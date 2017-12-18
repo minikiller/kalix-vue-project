@@ -36,7 +36,7 @@
           el-input(v-model="formModel.region")
         el-form-item.s-flex_item.kalix-form-table-td(label="城市" prop="city" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.city")
-      el-form-item.kalix-form-table-td(label="企业详细地址" prop="address" v-bind:label-width="labelWidth")
+      el-form-item.kalix-form-table-td(label="企业详细地址" prop="address" v-bind:rules="rules.address" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.address")
 </template>
 
@@ -50,6 +50,9 @@
     data() {
       return {
         formModel: Object.assign({}, FormModel),
+        rules: {
+          address: [{required: true, message: '请输入企业详细地址', trigger: 'blur'}]
+        },
         targetURL: CompanyURL,
         labelWidth: '140px'
       }

@@ -1,11 +1,11 @@
 <!--
-描述：人员管理-学生维护-查詢组件
-开发人：fj
-开发日期：2017年8月22日
+描述：艺术中心-系统管理-学生信息-查询组件
+开发人：hqj
+开发日期：2017年12月14日
 -->
 
 <template lang="pug">
-  kalix-search(title="学生查询" v-bind:searchFields="searchFields")
+  kalix-search(title="学生信息查询" v-bind:searchFields="searchFields")
 </template>
 
 <script type="text/ecmascript-6">
@@ -16,7 +16,7 @@
       return {
         searchFields: [
           {label: '姓名', prop: 'name'},
-          {label: '所属班级', prop: 'classId', type: 'orgTree', dataType: 'number', isAll: true},
+          {label: '专业', prop: 'majorId', type: 'orgTree', dataType: 'number', isAll: true},
           {
             label: '性别',
             prop: 'sex',
