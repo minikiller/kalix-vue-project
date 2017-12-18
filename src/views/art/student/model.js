@@ -22,7 +22,7 @@ const FormModel = {
   postalcode: '',         // 邮政编码
   homePhone: '',          // 家庭联系电话
   province: '',           // 生源省份
-  entranceYear: '',       // 入学年份
+  entranceYear: null,     // 入学年份
   trainingLevel: '',      // 学生培养层次
   period: ''              // 学习年限
 }

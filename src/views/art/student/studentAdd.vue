@@ -65,8 +65,8 @@
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
-  import {StudentURL, TeachingUnitOrgID} from '../config.toml'
-  import {orgURL} from '@/config/global.toml'
+  import {StudentURL} from '../config.toml'
+  import {orgURL, TeachingUnitOrgID} from '@/config/global.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
   import MajorTree2 from '@/components/tree/basetree2'
   import DatePicker from '@/components/biz/date/datepicker.vue'
