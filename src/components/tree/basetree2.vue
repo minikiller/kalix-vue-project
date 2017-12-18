@@ -83,8 +83,9 @@
           // } else {
           //   this.treeData.push(obj)
           // }
-          this.treeData = res.data.children
-
+          if (res.data.children) {
+            this.treeData = res.data.children
+          }
           // 处理子节点children标签为空的数据,移除children标签
           this.dealWithNullChildren(this.treeData)
         })
