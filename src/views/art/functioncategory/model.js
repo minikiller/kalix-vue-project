@@ -1,9 +1,9 @@
 const FormModel = {
-  id: '',          // 主键
   name: '',        // 名称
   code: '',        // 编码
-  createBy: '',    // 创建人
-  creationDate: '' // 创建日期
+  isLeaf: null,    // 是否是叶子节点
+  parentId: null,  // 父id
+  parentName: ''   // 父节点名称
 }
 
 export default FormModel

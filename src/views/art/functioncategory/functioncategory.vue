@@ -37,6 +37,10 @@
           key: 'id',
           width: '0'
         }, {
+          type: 'hidden',
+          key: 'parentId',
+          width: '0'
+        }, {
           title: '名称',
           key: 'name',
           width: '150'
@@ -57,11 +61,11 @@
           title: '操作',
           type: 'action',
           actions: [{
-            type: 'primary',
+            type: 'edit',
             text: '编辑',
             icon: 'el-icon-edit'
           }, {
-            type: 'error',
+            type: 'delete',
             text: '删除',
             icon: 'el-icon-delete'
           }],

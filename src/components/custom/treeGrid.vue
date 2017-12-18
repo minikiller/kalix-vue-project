@@ -31,15 +31,15 @@
                 tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent,'active':item.id === checkId}" v-on:click="toSelect(item)")
                   td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
                     div(v-if="column.type === 'action'")
-                      i(v-bind:class="action.icon" v-on:click="RowClick(item,$event,index,action.text)" style="width:20px"
+                      i(v-bind:class="action.icon" v-on:click="btnClick(item,action.type)" style="width:20px"
                       v-for='action in (column.actions)' v-bind:key="action.text")
-                    i(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
+                    input(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
                     div(v-else)
                       label(v-on:click="toggle(index,item)" v-if="!column.type")
-                        span(v-if='snum==iconRow()')
+                        span(v-if='snum==2')
                           i(v-html='item.spaceHtml')
                           i.el-icon(v-if="item.children&&item.children.length>0"
-                          v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded }")
+                          v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded}")
                           i(v-else class="ms-tree-space")
                         | {{renderBody(item, column)}}
       component(:is="whichBizDialog" ref="kalixDialog"
@@ -52,6 +52,11 @@
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
   import Dialog from './baseDialog'
+  import Message from 'common/message'
+  import {
+    ON_SEARCH_BUTTON_CLICK,
+    ON_REFRESH_DATA
+  } from './event.toml'
   export default {
     name: 'treeGrid',
     props: {
@@ -77,7 +82,10 @@
       },
       columns: Array,
       targetURL: '',
-      formModel: null
+      formModel: null,
+      customTableTool: { // 对table的操作按钮进行自定义的操作
+        type: Function
+      }
     },
     data() {
       return {
@@ -95,6 +103,16 @@
         checkId: -1,
         checkedItem: null
       }
+    },
+    activated() {
+      console.log(this.bizKey + '  is activated')
+      EventBus.$on(ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
+      EventBus.$on(ON_REFRESH_DATA, this.refresh)
+    },
+    deactivated() {
+      console.log(this.bizKey + '  is deactivated')
+      EventBus.$off(ON_SEARCH_BUTTON_CLICK)
+      EventBus.$off(ON_REFRESH_DATA)
     },
     computed: {
       tableWidth() {
@@ -223,6 +241,7 @@
         }
       },
       onAddClick() {
+        this.formModel.isLeaf = 1
         // 添加按钮点击事件
         // this.whichBizDialog = ''
         let that = this
@@ -236,8 +255,13 @@
 //        this.$emit('update:formModel', {})
         setTimeout(() => {
 //          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
-          this.formModel.parentName = this.checkedItem.name
-          this.formModel.parentId = this.checkedItem.id
+          if (this.checkId === -1) {
+            this.formModel.parentName = '根'
+            this.formModel.parentId = -1
+          } else {
+            this.formModel.parentName = this.checkedItem.name
+            this.formModel.parentId = this.checkedItem.id
+          }
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加', false, this.formModel)
           if (typeof (this.$refs.kalixDialog.init) === 'function') {
             that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
@@ -285,11 +309,6 @@
           this.checkedItem = item
           console.log('item', item)
         }
-      },
-      // 点击某一行事件
-      RowClick(data, event, index, text) {
-        let result = this.makeData(data)
-        this.$emit('on-row-click', result, event, index, text)
       },
       // 点击事件 返回数据处理
       makeData(data) {
@@ -415,29 +434,6 @@
           })
         }
       },
-      // checkbox 全选 选择事件
-      handleCheckAll() {
-        this.checks = !this.checks
-        if (this.checks) {
-          this.checkGroup = this.getArray(this.checkGroup.concat(this.All(this.items)))
-        } else {
-          this.checkGroup = []
-        }
-        // this.$emit('on-selection-change', this.checkGroup)
-      },
-      // 数组去重
-      getArray(a) {
-        var hash = {},
-          len = a.length,
-          result = []
-        for (var i = 0; i < len; i++) {
-          if (!hash[a[i]]) {
-            hash[a[i]] = true
-            result.push(a[i])
-          }
-        }
-        return result
-      },
       checkAllGroupChange(data) {
         if (this.dataLength > 0 && data.length === this.dataLength) {
           this.checks = true
@@ -530,13 +526,70 @@
         }
         return map[toString.call(obj)]
       },
-      onSearchClick() {
+      onSearchClick(_searchParam) { // 查询按钮点击事件
+        console.log('[kalix] base table search clicked')
+        this.searchParam = _searchParam
+        this.refresh()
       },
       formRules() {
+      },
+      onRefreshClick() { // 刷新按钮点击事件
+        this.getData()
+      },
+      refresh() {
+        this.getData()
+      },
+      btnClick(row, btnId) { // table工具栏点击事件
+        console.log(row, btnId)
+        let result = this.makeData(row)
+        switch (btnId) {
+          case 'edit': {
+            this.whichBizDialog = ''
+            let dig =
+              this.bizDialog.filter((item) => {
+                return item.id === 'edit'
+              })
+            console.log('[kalix] edit dialog is: ' + dig[0].dialog)
+            this.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+//              this.$emit('update:formModel', row)
+//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+              this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true, result)
+              if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                this.$refs.kalixDialog.init(this.dialogOptions)
+              }
+            }, 20)
+            console.log('edit is clicked')
+            break
+          }
+
+          case 'delete': {
+            console.log('delete is clicked')
+            this.$confirm('确定要删除吗?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              return this.axios.request({
+                method: 'DELETE',
+                url: this.targetURL + '/' + row.id,
+                params: {},
+                data: {
+                  id: row.id
+                }
+              })
+            }).then(response => {
+              this.getData()
+              Message.success(response.data.msg)
+            }).catch(() => {
+            })
+            break
+          }
+          default: // 默认转到调用props的方法
+            this.customTableTool(row, btnId, this)
+            break
+        }
       }
-    },
-    beforeDestroy() {
-      window.onresize = null
     },
     components: {
       KalixTableTool: TableTool,
