@@ -24,8 +24,8 @@
           el-input(v-model="formModel.mobile" readonly)
       div.table-title 学生详细信息
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="专业" prop="classId" v-bind:label-width="labelWidth")
-          org-tree.inline(v-model="formModel.classId" v-bind:isAll="true" disabled)
+        el-form-item.s-flex_item.kalix-form-table-td(label="专业" prop="majorId" v-bind:label-width="labelWidth")
+          kalix-major-tree2(v-model="formModel.majorId" v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="辅导员" prop="instructor" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.instructor" readonly)
       div.s-flex
@@ -63,18 +63,23 @@
 </template>
 <script type="text/ecmascript-6">
   import FormModel from './model'
+  import {orgURL, TeachingUnitOrgID} from '@/config/global.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
+  import MajorTree2 from '@/components/tree/basetree2'
   import DatePicker from '@/components/biz/date/datepicker.vue'
 
   export default {
     data() {
       return {
         formModel: Object.assign({}, FormModel),
+        orgURL: orgURL,
+        orgId: TeachingUnitOrgID,
         labelWidth: '140px'
       }
     },
     components: {
       KalixDialog: Dialog,
+      KalixMajorTree2: MajorTree2,
       KalixDatePicker: DatePicker
     },
     created() {
