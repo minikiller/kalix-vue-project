@@ -120,7 +120,7 @@
     },
     methods: {
       change(event) {
-        alert(event)
+        this.$refs.kalixBizDialog.$refs.dialogForm.clearValidate()
       }
     }
   }
