@@ -16,7 +16,7 @@
       return {
         searchFields: [
           {label: '姓名', prop: 'name'},
-          {label: '专业', prop: 'majorId', type: 'orgTree', dataType: 'number', isAll: true},
+//          {label: '专业', prop: 'majorId', type: 'orgTree', dataType: 'number', isAll: true},
           {
             label: '性别',
             prop: 'sex',
