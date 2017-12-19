@@ -1,7 +1,7 @@
 <!--
-描述：艺术中心-学生应聘
-开发人：sunlf
-开发日期：2017年8月17日
+描述：艺术中心-招聘管理-学生应聘
+开发人：hqj
+开发日期：2017年12月18日
 -->
 
 <template lang="pug">
@@ -24,11 +24,6 @@
       return {
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'ART-DICT-KEY',
-          type: '性别',
-          targetField: 'sexName',
-          sourceField: 'sex'
-        }, {
-          cacheKey: 'ART-DICT-KEY',
           type: '企业行业',
           targetField: 'expectingIndustryName',
           sourceField: 'expectingIndustry'
@@ -36,17 +31,17 @@
         btnList: ToolButtonList,
         targetURL: CandidateURL,
         tableFields: [
-          {prop: 'studentNo', label: '学号'},
+          {prop: 'creationDate', label: '创建时间'},
+          {prop: 'code', label: '学号'},
           {prop: 'name', label: '姓名'},
-          {prop: 'sex', label: '性别'},
-          {prop: 'phone', label: '联系电话'},
-          {prop: 'address', label: '联系地址'},
-          {prop: 'expectingIndustryName', label: '期望行业'},
-          {prop: 'updateDate', label: '更新时间'}
+          {prop: 'region', label: '工作地区'},
+          {prop: 'city', label: '工作城市'},
+          {prop: 'education', label: '学历'},
+          {prop: 'expectingIndustryName', label: '期望行业'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'ArtCandidateView'},
-          {id: 'edit', dialog: 'ArtCandidateAdd'},
+          {id: 'edit', dialog: 'ArtCandidateEdit'},
           {id: 'add', dialog: 'ArtCandidateAdd'}
         ]
       }

@@ -131,6 +131,7 @@
           Vue.axios.get(CompanyURL, params).then((response) => {
             if (response.data.data && response.data.data.length > 0) {
               let rec = response.data.data[0]
+              // this.formModel = Object.assign({}, rec)
               this.formModel.companyName = rec.name
               this.formModel.companyEmail = rec.email
               this.formModel.companyPhone = rec.phone
