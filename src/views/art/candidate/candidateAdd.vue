@@ -119,7 +119,32 @@
       KalixDictSelect: BaseDictSelect
     },
     methods: {
+      initData() {
+        // this.$set(this.formModel, 'name', '')
+        this.formModel.name = ''
+        this.formModel.sex = ''
+        this.formModel.email = ''
+        this.formModel.phone = ''
+        this.formModel.mobile = ''
+        this.formModel.majorId = null
+        this.formModel.majorName = ''
+        this.formModel.instructor = ''
+        this.formModel.identificationCard = ''
+        this.formModel.birthday = null
+        this.formModel.nation = ''
+        this.formModel.placeOfOrigin = ''
+        this.formModel.politicalStatus = ''
+        this.formModel.joinPartyDate = null
+        this.formModel.address = ''
+        this.formModel.postalcode = ''
+        this.formModel.homePhone = ''
+        this.formModel.province = ''
+        this.formModel.entranceYear = null
+        this.formModel.trainingLevel = ''
+        this.formModel.period = ''
+      },
       getStudent() {
+        this.initData()
         let studentNo = this.formModel.code
         // let sort = '[{\'property\': \'updateDate\', \'direction\': \'DESC\'}]'
         if (studentNo) {
@@ -134,28 +159,31 @@
           Vue.axios.get(StudentURL, params).then((response) => {
             if (response.data.data && response.data.data.length > 0) {
               let rec = response.data.data[0]
-              this.formModel = Object.assign({}, rec)
-//              this.formModel.name = rec.name
-//              this.formModel.sex = rec.sex
-//              this.formModel.email = rec.email
-//              this.formModel.phone = rec.phone
-//              this.formModel.mobile = rec.mobile
-//              this.formModel.majorId = rec.majorId
-//              this.formModel.majorName = rec.majorName
-//              this.formModel.instructor = rec.instructor
-//              this.formModel.identificationCard = rec.identificationCard
-//              this.formModel.birthday = rec.birthday
-//              this.formModel.nation = rec.nation
-//              this.formModel.placeOfOrigin = rec.placeOfOrigin
-//              this.formModel.politicalStatus = rec.politicalStatus
-//              this.formModel.joinPartyDate = rec.joinPartyDate
-//              this.formModel.address = rec.address
-//              this.formModel.postalcode = rec.postalcode
-//              this.formModel.homePhone = rec.homePhone
-//              this.formModel.province = rec.province
-//              this.formModel.entranceYear = rec.entranceYear
-//              this.formModel.trainingLevel = rec.trainingLevel
-//              this.formModel.period = rec.period
+              /* this.$nextTick(() => {
+               this.formModel = Object.assign({}, rec)
+               }) */
+              // this.$set(this.formModel, 'majorId', rec.majorId)
+              this.formModel.name = rec.name
+              this.formModel.sex = rec.sex
+              this.formModel.email = rec.email
+              this.formModel.phone = rec.phone
+              this.formModel.mobile = rec.mobile
+              this.formModel.majorId = rec.majorId
+              this.formModel.majorName = rec.majorName
+              this.formModel.instructor = rec.instructor
+              this.formModel.identificationCard = rec.identificationCard
+              this.formModel.birthday = rec.birthday
+              this.formModel.nation = rec.nation
+              this.formModel.placeOfOrigin = rec.placeOfOrigin
+              this.formModel.politicalStatus = rec.politicalStatus
+              this.formModel.joinPartyDate = rec.joinPartyDate
+              this.formModel.address = rec.address
+              this.formModel.postalcode = rec.postalcode
+              this.formModel.homePhone = rec.homePhone
+              this.formModel.province = rec.province
+              this.formModel.entranceYear = rec.entranceYear
+              this.formModel.trainingLevel = rec.trainingLevel
+              this.formModel.period = rec.period
             }
           })
         } else {

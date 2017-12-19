@@ -106,21 +106,38 @@
       KalixDictSelect: BaseDictSelect
     },
     mounted() {
-      this.getStudent()
     },
     watch: {
-//      formModel: {
-//        handler: 'watchFormModel'
-//      }
+      formModel: {
+        handler: 'watchFormModel'
+      }
     },
     methods: {
       initData() {
+        this.$set(this.formModel, 'sex', '')
+        this.$set(this.formModel, 'email', '')
+        this.$set(this.formModel, 'phone', '')
+        this.$set(this.formModel, 'mobile', '')
+        this.$set(this.formModel, 'majorId', null)
+        this.$set(this.formModel, 'majorName', '')
+        this.$set(this.formModel, 'instructor', '')
+        this.$set(this.formModel, 'identificationCard', '')
+        this.$set(this.formModel, 'birthday', null)
+        this.$set(this.formModel, 'nation', '')
+        this.$set(this.formModel, 'placeOfOrigin', '')
+        this.$set(this.formModel, 'politicalStatus', '')
+        this.$set(this.formModel, 'joinPartyDate', null)
+        this.$set(this.formModel, 'address', '')
+        this.$set(this.formModel, 'postalcode', '')
+        this.$set(this.formModel, 'homePhone', '')
+        this.$set(this.formModel, 'province', '')
+        this.$set(this.formModel, 'entranceYear', null)
+        this.$set(this.formModel, 'trainingLevel', '')
+        this.$set(this.formModel, 'period', '')
       },
       getStudent() {
-        console.log('watch is running')
         this.initData()
         let studentNo = this.formModel.code
-        console.log('code value is ', studentNo)
         // let sort = '[{\'property\': \'updateDate\', \'direction\': \'DESC\'}]'
         if (studentNo) {
           let params = {
@@ -133,33 +150,27 @@
           }
           Vue.axios.get(StudentURL, params).then((response) => {
             if (response.data.data && response.data.data.length > 0) {
-              this.studentModel = response.data.data[0]
-              this.$nextTick(() => {
-//                this.formModel.email = 'sdfsfdf'
-                this.formModel = Object.assign(this.formModel, this.studentModel)
-              })
-
-//              this.$emit('update:formModel', rec) // 设置sync才有效
-//              this.formModel.sex = rec.sex
-//              this.formModel.email = rec.email
-//              this.formModel.phone = rec.phone
-//              this.formModel.mobile = rec.mobile
-//              this.formModel.majorId = rec.majorId
-//              this.formModel.majorName = rec.majorName
-//              this.formModel.instructor = rec.instructor
-//              this.formModel.identificationCard = rec.identificationCard
-//              this.formModel.birthday = rec.birthday
-//              this.formModel.nation = rec.nation
-//              this.formModel.placeOfOrigin = rec.placeOfOrigin
-//              this.formModel.politicalStatus = rec.politicalStatus
-//              this.formModel.joinPartyDate = rec.joinPartyDate
-//              this.formModel.address = rec.address
-//              this.formModel.postalcode = rec.postalcode
-//              this.formModel.homePhone = rec.homePhone
-//              this.formModel.province = rec.province
-//              this.formModel.entranceYear = rec.entranceYear
-//              this.formModel.trainingLevel = rec.trainingLevel
-//              this.formModel.period = rec.period
+              let rec = response.data.data[0]
+              this.$set(this.formModel, 'sex', rec.sex)
+              this.$set(this.formModel, 'email', rec.email)
+              this.$set(this.formModel, 'phone', rec.phone)
+              this.$set(this.formModel, 'mobile', rec.mobile)
+              this.$set(this.formModel, 'majorId', rec.majorId)
+              this.$set(this.formModel, 'majorName', rec.majorName)
+              this.$set(this.formModel, 'instructor', rec.instructor)
+              this.$set(this.formModel, 'identificationCard', rec.identificationCard)
+              this.$set(this.formModel, 'birthday', rec.birthday)
+              this.$set(this.formModel, 'nation', rec.nation)
+              this.$set(this.formModel, 'placeOfOrigin', rec.placeOfOrigin)
+              this.$set(this.formModel, 'politicalStatus', rec.politicalStatus)
+              this.$set(this.formModel, 'joinPartyDate', rec.joinPartyDate)
+              this.$set(this.formModel, 'address', rec.address)
+              this.$set(this.formModel, 'postalcode', rec.postalcode)
+              this.$set(this.formModel, 'homePhone', rec.homePhone)
+              this.$set(this.formModel, 'province', rec.province)
+              this.$set(this.formModel, 'entranceYear', rec.entranceYear)
+              this.$set(this.formModel, 'trainingLevel', rec.trainingLevel)
+              this.$set(this.formModel, 'period', rec.period)
             }
           })
         } else {
