@@ -49,8 +49,9 @@
     watch: {
       value(newValue) {
         if (!newValue) {
-          console.log('[BaseTree2 newValue]', newValue)
           this.selectedOptions = []
+        } else {
+          this.fentch()
         }
       }
     },
