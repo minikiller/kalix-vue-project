@@ -62,6 +62,11 @@ LectureURL = "/camel/rest/lectures"
 # 会议室
 MeetingroomURL  = "camel/rest/meetingrooms"
 
+# 红头文件申请
+RedheadApplyURL  = "camel/rest/redheadapplys"
+RedheadApplyStartURL  = "/camel/rest/redheadapplys/workflow/startProcess?id="
+DocumentURL  = "camel/rest/documents"
+
 # 需要自动注册成全局的Meetingroom组件
 [[OaMeetingroomComponent]]
   path = "oa/meetingroom/meetingroomView"
@@ -197,6 +202,17 @@ MeetingroomURL  = "camel/rest/meetingrooms"
   path = "oa/tempapply/tempApplySearch"
   name = "OaTempApplySearch"
 
+# 需要自动注册成全局的RedheadApply(红头文件申请)组件
+[[RedheadApplyComponent]]
+  path = "oa/redheadapply/redheadApplyView"
+  name = "OaRedheadApplyView"
+[[RedheadApplyComponent]]
+  path = "oa/redheadapply/redheadApplyAdd"
+  name = "OaRedheadApplyAdd"
+[[RedheadApplyComponent]]
+  path = "oa/redheadapply/redheadApplySearch"
+  name = "OaRedheadApplySearch"
+
 # 需要自动注册成全局的Candidate(应聘人员管理)组件
 [[CandidateComponent]]
   path = "oa/candidate/candidateView"
@@ -229,6 +245,17 @@ MeetingroomURL  = "camel/rest/meetingrooms"
 [[LectureComponent]]
   path = "oa/lecture/lectureSearch"
   name = "OaLectureSearch"
+
+# 需要自动注册成全局的文号管理组件
+[[DocumentComponent]]
+  path = "oa/document/documentView"
+  name = "OaDocumentView"
+[[DocumentComponent]]
+  path = "oa/document/documentAdd"
+  name = "OaDocumentAdd"
+[[DocumentComponent]]
+  path = "oa/document/documentSearch"
+  name = "OaDocumentSearch"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]

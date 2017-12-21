@@ -8,7 +8,6 @@ import Login from '@/components/login/login'
 import Cache from 'common/cache'
 import Home from '@/components/home/home'
 // import QrcodeLogin from 'views/demo/qrcodelogin'
-import SealapplyFrom from 'views/oa/sealapplyfrom/sealapplyfrom'
 // 二维码登录
 import ComQrcode from 'views/qrcode/comQrcode'
 import StuQrcode from 'views/qrcode/stuQrcode'
@@ -56,11 +55,6 @@ const router = new Router({
       path: '/art/result/:key',
       name: 'recruitResult',
       component: recruitResult
-    },
-    {
-      path: '/demo/sealapplyfrom',
-      name: 'sealapplyfrom',
-      component: SealapplyFrom
     },
     {
       path: '/demo/login',
