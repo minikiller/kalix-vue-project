@@ -55,8 +55,8 @@ import {
   // Step,
   // Carousel,
   // CarouselItem,
-  // Collapse,
-  // CollapseItem,
+  Collapse,
+  CollapseItem,
   Cascader,
   // ColorPicker,
   Transfer,
@@ -128,8 +128,8 @@ Vue.use(Card)
 // Vue.use(Step)
 // Vue.use(Carousel)
 // Vue.use(CarouselItem)
-// Vue.use(Collapse)
-// Vue.use(CollapseItem)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
 Vue.use(Cascader)
 // Vue.use(ColorPicker)
 Vue.use(Container)
