@@ -13,7 +13,7 @@
             el-tag(type="success")
               i.header-icon.el-icon-date
               | &nbsp;业务数据
-          el-form(v-bind:model="formModel" ref="bizDataForm")
+          el-form(v-bind:model="bizForm" ref="bizDataForm")
             component(v-bind:is="whichBizForm" v-bind:form-model="bizForm" ref="bizData")
             div(v-if="formClass.indexOf('Modify')>0" style="text-align:right;margin-top:12px;")
               el-button(type="success" v-on:click="onSubmit") 提交
@@ -180,6 +180,8 @@
         })
       },
       onSubmit() { // 修改业务数据
+        // console.log('this.whichBizForm', this.whichBizForm)
+        // console.log('this.$refs.bizDataForm', this.$refs.bizDataForm)
         this.$refs.bizDataForm.validate((valid) => {
           console.log('valid', valid)
           if (valid) {

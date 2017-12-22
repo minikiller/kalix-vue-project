@@ -49,7 +49,11 @@
       return {
         targetURL: RedheadApplyURL,
         rules: {
-          title: [{required: true, message: '请输入名称', trigger: 'blur'}]
+          title: [{required: true, message: '请输入名称', trigger: 'blur'}],
+          orgId: [{type: 'number', required: true, message: '请选择申请部门', trigger: 'change'}],
+          docType: [{type: 'number', required: true, message: '请选择文号类型', trigger: 'change'}],
+          docCategory: [{required: true, message: '请选择文件种类', trigger: 'change'}],
+          docContent: [{required: true, message: '请输入发文内容', trigger: 'blur'}]
         }
       }
     },
