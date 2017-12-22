@@ -11,7 +11,7 @@
   v-bind:isView="readonly"
   )
     div.el-form.kalix-form-table(slot="dialogFormSlot")
-      kalix-seal-apply-view-form(v-bind:form-model="formModel")
+      kalix-redhead-apply-view-form(v-bind:form-model="formModel")
 </template>
 
 <script type="text/ecmascript-6">

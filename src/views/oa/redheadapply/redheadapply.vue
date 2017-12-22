@@ -18,6 +18,7 @@
         template(slot="tableColumnSlot")
           kalix-biz-no-column(title="文号")  // 业务编号
           el-table-column(prop="title" label="业务名称" align="center" width="220")
+          el-table-column(prop="docCategory" label="文件种类" align="center" width="100")
           el-table-column(prop="docContent" label="发文内容" align="center" width="220")
           el-table-column(prop="docTypeName" label="文号类型" align="center" width="220")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
