@@ -54,7 +54,16 @@
 //        required: true
       },
       isView: false,
-      title: ''
+      title: '',
+      submitBefore: {  // 提交前执行  submitBefore(baseDialog,function Submit)
+        type: Function
+      },
+      submitAfter: {  // 提交后执行  submitBefore(baseDialog)
+        type: Function
+      },
+      submitCustom: {  // 自定义提交事件  submitBefore(baseDialog)
+        type: Function
+      }
     },
     render() {
 
@@ -66,16 +75,12 @@
       }
     },
     methods: {
-      onCancelClick() {
-        console.log('dialog cancel button clicked !')
-        this.visible = false
-        if (!this.isView) {
-          this.$refs.dialogForm.resetFields()
+      submitComplete() { // 提交完成后执行
+        if (this.submitAfter && typeof (this.submitAfter) === 'function') {
+          this.submitAfter(this)
         }
-//        this.$emit('update:formModel', JSON.parse(this.tempFormModel))
-        this._afterDialogClose()
       },
-      onSubmitClick() {
+      submitAction() {  // 提交
         this.$refs.dialogForm.validate((valid) => {
           console.log('valid', valid)
           if (valid) {
@@ -89,6 +94,7 @@
                 Message.success(response.data.msg)
                 this.visible = false
                 this.$refs.dialogForm.resetFields()
+                this.submitComplete()
                 // 关闭对话框
 //                this.close()
                 // 清空form
@@ -96,6 +102,7 @@
 //                this.$emit('resetDialogForm')
               } else {
                 Message.error(response.data.msg)
+                this.submitComplete()
               }
               // 刷新列表
               EventBus.$emit(ON_REFRESH_DATA)
@@ -105,9 +112,30 @@
             })
           } else {
             Message.error('请检查输入项！')
+            this.submitComplete()
             return false
           }
         })
+      },
+      onCancelClick() {
+        console.log('dialog cancel button clicked !')
+        this.visible = false
+        if (!this.isView) {
+          this.$refs.dialogForm.resetFields()
+        }
+//        this.$emit('update:formModel', JSON.parse(this.tempFormModel))
+        this._afterDialogClose()
+      },
+      onSubmitClick() {
+        if (this.submitCustom && typeof (this.submitCustom) === 'function') {
+          this.submitCustom(this)
+        } else if (this.submitBefore && typeof (this.submitBefore) === 'function') {
+          this.submitBefore(this, () => {
+            this.submitAction()
+          })
+        } else {
+          this.submitAction()
+        }
       },
       onBeforeClose() {
         this.close()
