@@ -143,6 +143,19 @@ AdminCacheKey = "ADMIN-DICT-KEY"
   name = "AdminOrgSearch"
 
 # 需要自动注册成全局的role组件
+#  [[RoleComponent]]
+#   path = "admin/role/roleView"
+#   name = "AdminRoleView"
+#  [[RoleComponent]]
+#   path = "admin/role/roleAdd"
+#   name = "AdminRoleAdd"
+#  [[RoleComponent]]
+#   path = "admin/role/roleSearch"
+#   name = "AdminRoleSearch"
+#  [[RoleComponent]]
+#   path = "admin/role/roleEdit"
+#   name = "AdminRoleEdit"
+
 
 
   [[DataAuthComponent]]

@@ -8,7 +8,8 @@
   keep-alive
     base-table(bizKey="note" title='公告列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
-    bizSearch="CommonNoteSearch" v-bind:btnList="btnList")
+    bizSearch="CommonNoteSearch" v-bind:btnList="btnList"
+    v-bind:customTableTool="customTableTool" )
 </template>
 
 <script type="text/ecmascript-6">
@@ -28,12 +29,13 @@
           {prop: 'title', label: '标题'},
           {prop: 'content', label: '内容'},
           {prop: 'publishPeople', label: '发布人'},
-            {prop: 'publishDate', label: '发布时间'}
+          {prop: 'publishDate', label: '发布时间'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'CommonNoteView'},
           {id: 'edit', dialog: 'CommonNoteAdd'},
-          {id: 'add', dialog: 'CommonNoteAdd'}
+          {id: 'add', dialog: 'CommonNoteAdd'},
+          {id: 'preview', dialog: 'CommonNotePreview'}
         ],
         formModel: {
           title: '',
@@ -51,7 +53,25 @@
     created() {
 //      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
-    methods: {},
+    methods: {
+      customTableTool(row, btnId, that) {
+        switch (btnId) {
+          case 'preview': { // 启用/停用
+            console.log('开始预览咯！！！')
+            that.whichBizDialog = ''
+            let dig =
+              that.bizDialog.filter((item) => {
+                return item.id === 'preview'
+              })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.open(row)
+            }, 20)
+            break
+          }
+        }
+      }
+    },
     components: {
       BaseTable
 //      KalixUserAdd: UserAdd

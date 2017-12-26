@@ -39,6 +39,9 @@ ReceiverURL = "/camel/rest/messages/receiver"
 [[NoteComponent]]
   path = "common/note/noteSearch"
   name = "CommonNoteSearch"
+[[NoteComponent]]
+  path = "common/note/notePreview"
+  name = "CommonNotePreview"
 
 # 需要自动注册成全局的 Sender 组件
 [[SenderComponent]]
@@ -88,6 +91,10 @@ ReceiverURL = "/camel/rest/messages/receiver"
   title = "删除"
   isShow = true
   isPermission = true
+[[ToolButtonList]]
+  id = "preview"
+  title = "预览"
+  isShow = true
 
 # 需要自动注册成全局的 分类列表 组件
 [[GroupPanelComponent]]

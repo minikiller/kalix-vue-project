@@ -7,6 +7,9 @@
 <template lang="pug">
   kalix-dialog.user-add(bizKey="note"
   ref="kalixBizDialog" v-bind:form-model.sync="formModel" v-bind:targetURL="targetURL"
+  v-bind:submitBefore="submitBefore"
+  v-bind:submitAfter="submitAfter"
+  v-bind:submitCustom="submitCustom"
   )
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="标题" prop="title" v-bind:rules="rules.title")
@@ -37,6 +40,17 @@
       KalixDialog: Dialog
     },
     methods: {
+      submitBefore(baseDialog, callBack) {
+        console.log('[baseDialog Submit] 提交前 submitBefore', baseDialog)
+        callBack()
+      },
+      submitAfter(baseDialog) {
+        console.log('[baseDialog Submit] 提交后 submitAfter', baseDialog)
+      },
+      submitCustom(baseDialog) {
+        console.log('[baseDialog Submit] 自定义提交 submitCustom', baseDialog)
+        baseDialog.close()
+      }
     }
   }
 </script>

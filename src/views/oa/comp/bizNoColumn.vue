@@ -4,7 +4,7 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  el-table-column(prop="name" label="编号" width="280" align="center")
+  el-table-column(prop="name" v-bind:label="title" width="280" align="center")
     template(slot-scope="scope")
       el-tag(v-if="scope.row[name]") {{ scope.row[name] }}
 </template>
@@ -15,8 +15,11 @@
       name: {
         type: String,
         default: 'businessNo'
+      },
+      title: {
+        type: String,
+        default: '编号'
       }
-
     }
   }
 </script>
