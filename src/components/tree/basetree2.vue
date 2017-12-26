@@ -10,7 +10,7 @@
   div.block
     el-cascader(v-bind:options="treeData" v-bind:props="defaultProps" v-bind:show-all-levels="false"
     v-model="selectedOptions" change-on-select clearable v-bind:disabled="disabled"
-    v-on:change="handleChange")
+    v-on:change="handleChange" style="width:100%;")
 </template>
 
 <script type="text/ecmascript-6">

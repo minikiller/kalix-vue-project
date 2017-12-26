@@ -16,7 +16,8 @@
       div.kalix-wrapper-bd
         kalix-tool-bar(v-if="isShowToolBar"
         v-bind:toolbarBtnList="toolbarBtnList"
-        v-on:onToolBarClick="onToolBarClick")
+        v-on:onToolBarClick="onToolBarClick"
+        v-on:onCheckBtnList="onCheckBtnList")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
           el-table(:data="tableData"  style="width:100%"
           v-bind:row-class-name="tableRowClassName"
@@ -99,10 +100,6 @@
       hasTableSelection: { // 表格是否有选择框
         type: Boolean,
         default: false
-      },
-      isShowToolBar: { // 是否显示工具栏
-        type: Boolean,
-        default: true
       },
       dialogOptions: {},
       bizKey: {  // 主鍵
@@ -193,11 +190,12 @@
           start: 0
         },
         tableHeight: 0, //  列表组件高度
-        searchParam: {} //  列表查询条件
+        searchParam: {}, //  列表查询条件
+        isShowToolBar: true // 是否显示工具栏
       }
     },
     created() {
-      console.log('toolBarbtnList', this.toolBarbtnList)
+      console.log('toolbarBtnList', this.toolbarBtnList)
       this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
       this.getData()
     },
@@ -228,6 +226,9 @@
       }
     },
     methods: {
+      onCheckBtnList(flag) {
+        this.isShowToolBar = flag
+      },
       onToolBarClick(btnId) {
         // baseToolBar 回调事件
         switch (btnId) {

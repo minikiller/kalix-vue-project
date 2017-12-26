@@ -9,7 +9,7 @@
     base-table(bizKey="note" title='公告列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     bizSearch="CommonNoteSearch" v-bind:btnList="btnList"
-    v-bind:customTableTool="customTableTool" )
+    v-bind:customTableTool="customTableTool")
 </template>
 
 <script type="text/ecmascript-6">
@@ -23,6 +23,9 @@
   export default {
     data() {
       return {
+        toolbarBtnList: [
+          {id: 'add', isShow: false}
+        ],
         btnList: ToolButtonList,
         targetURL: NoteURL,
         tableFields: [

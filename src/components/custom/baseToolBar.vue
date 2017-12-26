@@ -33,6 +33,10 @@
       initToolBtnList() {
         let defaultToolBarBtnList = getNewObject(GlobalToolBarButtonList)
         this.defaultBtnList = concatArrayObject(this.toolbarBtnList, defaultToolBarBtnList)
+        let items = this.defaultBtnList.filter(item => {
+          return item.isShow
+        })
+        this.$emit('onCheckBtnList', items.length)
       },
       toggle(btnId) {
         this.$emit(ON_TOOLBAR_CLICK, btnId)
