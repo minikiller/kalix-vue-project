@@ -8,8 +8,9 @@
   kalix-dialog.user-add(bizKey="artRecruit" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 企业信息
-      el-form-item.kalix-form-table-td(label="企业组织机构代码" prop="companyCode" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.companyCode" readonly)
+      div
+        el-form-item.kalix-form-table-td(label="企业组织机构代码" prop="companyCode" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.companyCode" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="企业名称" prop="companyName" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.companyName" readonly)
@@ -35,8 +36,9 @@
           el-input(v-model="formModel.companyRegion" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="企业所在城市" prop="companyCity" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.companyCity" readonly)
-      el-form-item.kalix-form-table-td(label="企业详细地址" prop="companyAddress" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.companyAddress" readonly)
+      div
+        el-form-item.kalix-form-table-td(label="企业详细地址" prop="companyAddress" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.companyAddress" readonly)
       div.table-title 招聘信息
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="发布时间" prop="publishDate" v-bind:rules="rules.publishDate" v-bind:label-width="labelWidth")

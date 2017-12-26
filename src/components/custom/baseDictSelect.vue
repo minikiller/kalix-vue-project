@@ -6,11 +6,11 @@
 <template lang="pug">
   div(v-if="multiple")
     el-select(v-model='selectedOptions' v-bind:disabled="disabled"
-    v-bind:placeholder='placeholder' v-bind:multiple="multiple")
+    v-bind:placeholder='placeholder' v-bind:multiple="multiple"  style="width:100%;")
       el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
   div(v-else)
     el-select(v-model='currentValue' v-on:input="change($event)" v-bind:disabled="disabled"
-    v-bind:placeholder='placeholder' v-bind:multiple="multiple")
+    v-bind:placeholder='placeholder' v-bind:multiple="multiple"  style="width:100%;")
       el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
 
