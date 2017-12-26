@@ -12,16 +12,16 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {StudentURL, ArtStudentComponent, ToolButtonList1} from '../config.toml'
+  import {StudentURL, ArtStudentComponent, ToolButtonStudentList, ArtScoreComponent} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
-  registerComponent(ArtStudentComponent)
+  registerComponent(ArtStudentComponent, ArtScoreComponent)
 
   export default {
     data() {
       return {
-        btnList: ToolButtonList1,
+        btnList: ToolButtonStudentList,
         toolbarBtnList: [
           {id: 'add', isShow: false}
         ],
@@ -40,7 +40,8 @@
         ],
         bizDialog: [
           {id: 'view', dialog: 'ArtStudentView'},
-          {id: 'newEdit', dialog: 'ArtStudentAdd'}
+          {id: 'newEdit', dialog: 'ArtStudentAdd'},
+          {id: 'scoreManage', dialog: 'ArtScoreManage'}
         ]
       }
     },
@@ -67,6 +68,18 @@
                 this.$delete(row, 'version_')
                 that.$refs.kalixDialog.$refs.kalixBizDialog.open('', false, row)
               }
+            }, 20)
+            break
+          }
+          case 'scoreManage' : { // 成绩管理
+            that.whichBizDialog = ''
+            let dig =
+              that.bizDialog.filter((item) => {
+                return item.id === 'scoreManage'
+              })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.openDialog(row)
             }, 20)
             break
           }

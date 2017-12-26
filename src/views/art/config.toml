@@ -7,6 +7,7 @@ ArtDictsTypesListURL = "/camel/rest/art/dicts/types/list"
 FunctionCategroyURL = "/camel/rest/functioncategorys"
 CompanyURL = "/camel/rest/companys"
 StudentURL = "/camel/rest/students"
+MajorCourseURL = "/camel/rest/majorcourses"
 
 # table 的默认按钮定义
 [[ToolButtonList]]
@@ -25,15 +26,44 @@ StudentURL = "/camel/rest/students"
   isShow = true
   isPermission = true
 
-# table 使用的按钮定义
-[[ToolButtonList1]]
+# table-company 使用的按钮定义
+[[ToolButtonCompanyList]]
   id = "view"
   title = "查看"
   isShow = true    # 是否显示
   isPermission = true   # 是否进行权限认证
-[[ToolButtonList1]]
+[[ToolButtonCompanyList]]
   id = "newEdit"
   title = "编辑"
+  isShow = true
+  isPermission = true
+
+# table-score 使用的按钮定义
+[[ToolButtonScoreList]]
+  id = "newEdit"
+  title = "编辑"
+  isShow = true
+  isPermission = true
+[[ToolButtonScoreList]]
+  id = "delete"
+  title = "删除"
+  isShow = true
+  isPermission = true
+
+# table-student 使用的按钮定义
+[[ToolButtonStudentList]]
+  id = "view"
+  title = "查看"
+  isShow = true    # 是否显示
+  isPermission = true   # 是否进行权限认证
+[[ToolButtonStudentList]]
+  id = "newEdit"
+  title = "编辑"
+  isShow = true
+  isPermission = true
+[[ToolButtonStudentList]]
+  id = "scoreManage"
+  title = "成绩管理"
   isShow = true
   isPermission = true
 
@@ -86,6 +116,9 @@ StudentURL = "/camel/rest/students"
 [[ArtStudentComponent]]
   path = "art/student/studentSearch"
   name = "ArtStudentSearch"
+[[ArtStudentComponent]]
+  path = "art/score/score"
+  name = "ArtScoreManage"
 
 # 需要自动注册成全局的majorCourse组件
 [[MajorCourseComponent]]
@@ -108,3 +141,11 @@ StudentURL = "/camel/rest/students"
 [[FunctionCategoryComponent]]
   path = "art/functioncategory/functioncategorySearch"
   name = "FunctionCategorySearch"
+
+# 需要自动注册成全局的score组件
+[[ArtScoreComponent]]
+  path = "art/score/scoreAdd"
+  name = "ArtScoreAdd"
+[[ArtScoreComponent]]
+  path = "art/score/scoreSearch"
+  name = "ArtScoreSearch"
