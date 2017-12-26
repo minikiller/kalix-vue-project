@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/9/22.
  */
 const FormModel = {
+  id: null,        // 学生id
   userId: null,    // 与用户关联id
   code: '',        // 学号
   name: '',        // 姓名

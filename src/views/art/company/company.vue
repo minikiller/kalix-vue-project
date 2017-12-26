@@ -14,7 +14,7 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {CompanyURL, ArtCompanyComponent, ToolButtonList1} from '../config.toml'
+  import {CompanyURL, ArtCompanyComponent, ToolButtonCompanyList} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
@@ -29,7 +29,7 @@
           targetField: 'natureName',
           sourceField: 'nature'
         }],
-        btnList: ToolButtonList1,
+        btnList: ToolButtonCompanyList,
         toolbarBtnList: [
           {id: 'add', isShow: false}
         ],
