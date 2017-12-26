@@ -7,7 +7,7 @@ const FormModel = {
   applyDate: '', // 工作流业务申请时间
   createBy: '', // 申请人
   docContent: '', // 发文内容
-  docCategory: '', // 文件种类
+  docAssort: [], // 文件种类
   docType: '', // 发文类型
   docStatus: '', // 文档状态
   docDate: '', // 发文时间

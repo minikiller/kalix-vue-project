@@ -15,8 +15,6 @@
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.orgName" readonly)
-      el-form-item.s-flex_item.kalix-form-table-td(label="文件种类" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.docCategory" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="文号类型" v-bind:label-width="labelWidth")
         el-input(v-bind:value="formModel.docType|getDictName('OA','文号类型')" readonly)

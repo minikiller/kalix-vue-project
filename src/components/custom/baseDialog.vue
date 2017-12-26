@@ -71,7 +71,8 @@
     data() {
       return {
         privateTitle: '',
-        visible: false
+        visible: false,
+        isEdit: false
       }
     },
     methods: {
