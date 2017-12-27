@@ -40,7 +40,7 @@
                           i(v-html='item.spaceHtml')
                           i.el-icon(v-if="item.children&&item.children.length>0"
                           v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded}")
-                          i(v-else class="ms-tree-space")
+                          i(v-else class="kailx-ms-tree-space")
                         | {{renderBody(item, column)}}
       component(:is="whichBizDialog" ref="kalixDialog"
       v-bind:formModel="formModel"
@@ -389,7 +389,7 @@
         let level = item.level + 1
         let spaceHtml = ''
         for (var i = 1; i < level; i++) {
-          spaceHtml += "<i class='ms-tree-space'></i>"
+          spaceHtml += "<i class='ms-tree-space kailx-ms-tree-space'></i>"
         }
         if (item.children) {
           if (item.expanded) {
@@ -599,6 +599,12 @@
     }
   }
 </script>
+<style lang="stylus" type="text/stylus">
+  .kailx-ms-tree-space {
+    display inline-block
+    width 1em
+  }
+</style>
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
 

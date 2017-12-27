@@ -96,6 +96,4 @@
   }
 </script>
 <style scoped lang="stylus">
-  .el-form
-    padding 30px 70px 30px 20px
 </style>
