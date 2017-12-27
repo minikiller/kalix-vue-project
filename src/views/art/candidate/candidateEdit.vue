@@ -10,9 +10,9 @@
       div.table-title 个人基本信息
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="学号" prop="code" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.code" readonly)
+          el-input(v-model="formModel.code" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="姓名" prop="name" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.name" readonly)
+          el-input(v-model="formModel.name" disabled)
       div.table-title 应聘信息
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="工作地区" prop="region" v-bind:rules="rules.region" v-bind:label-width="labelWidth")
@@ -26,11 +26,12 @@
           el-input-number(v-model="formModel.salary" v-bind:step="500" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="个人特点" prop="skills" v-bind:rules="rules.skills" v-bind:label-width="labelWidth")
-          kalix-dict-select(v-model="formModel.skills" appName="art" dictType="个人要求" multiple style="width:100%")
+          kalix-dict-select(v-model="formModel.skills" appName="art" dictType="个人要求" multiple placeholder="请选择,可多选" style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="职业规划目标" prop="careerGoal" v-bind:rules="rules.careerGoal" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.careerGoal")
-      el-form-item.s-flex.kalix-form-table-td(label="期望行业" prop="expectingIndustry" v-bind:rules="rules.expectingIndustry" v-bind:label-width="labelWidth")
-        kalix-dict-select(v-model="formModel.expectingIndustry" appName="art" dictType="企业行业" style="width:100%")
+      div
+        el-form-item.kalix-form-table-td(label="期望行业" prop="expectingIndustry" v-bind:rules="rules.expectingIndustry" v-bind:label-width="labelWidth")
+          kalix-dict-select(v-model="formModel.expectingIndustry" appName="art" dictType="企业行业" style="width:100%")
 </template>
 
 <script type="text/ecmascript-6">

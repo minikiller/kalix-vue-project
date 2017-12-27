@@ -10,35 +10,35 @@
       div.table-title 企业信息
       div
         el-form-item.kalix-form-table-td(label="企业组织机构代码" prop="companyCode" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyCode" readonly)
+          el-input(v-model="formModel.companyCode" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="企业名称" prop="companyName" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyName" readonly)
+          el-input(v-model="formModel.companyName" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="企业邮箱" prop="companyEmail" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyEmail" readonly)
+          el-input(v-model="formModel.companyEmail" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="固定电话" prop="companyPhone" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyPhone" readonly)
+          el-input(v-model="formModel.companyPhone" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="手机" prop="companyMobile" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyMobile" readonly)
+          el-input(v-model="formModel.companyMobile" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="企业性质" prop="companyNature" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.companyNature" appName="art" dictType="企业性质" style="width:100%" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="企业规模" prop="companyScale" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyScale" readonly)
+          el-input(v-model="formModel.companyScale" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="企业行业" prop="companyIndustry" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.companyIndustry" appName="art" dictType="企业行业" style="width:100%" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="企业年限" prop="companyLife" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyLife" readonly)
+          el-input(v-model="formModel.companyLife" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="企业所在地区" prop="companyRegion" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyRegion" readonly)
+          el-input(v-model="formModel.companyRegion" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="企业所在城市" prop="companyCity" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyCity" readonly)
+          el-input(v-model="formModel.companyCity" disabled)
       div
         el-form-item.kalix-form-table-td(label="企业详细地址" prop="companyAddress" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.companyAddress" readonly)
+          el-input(v-model="formModel.companyAddress" disabled)
       div.table-title 招聘信息
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="发布时间" prop="publishDate" v-bind:rules="rules.publishDate" v-bind:label-width="labelWidth")

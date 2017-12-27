@@ -40,7 +40,7 @@
           {prop: 'companyNatureName', label: '企业性质'},
           {prop: 'companyEmail', label: '企业邮箱'},
           {prop: 'companyPhone', label: '企业固定电话'},
-          {prop: 'publishDate', label: '发布时间'},
+          {prop: 'publishDate', label: '发布时间', width: '160'},
           {prop: 'region', label: '工作地区'},
           {prop: 'city', label: '工作城市'},
           {prop: 'position', label: '职位描述'},

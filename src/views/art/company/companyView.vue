@@ -17,8 +17,9 @@
           el-input(v-model="formModel.email" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="固定电话" prop="phone" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.phone" readonly)
-      el-form-item.kalix-form-table-td(label="手机" prop="mobile" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.mobile" readonly)
+      div
+        el-form-item.kalix-form-table-td(label="手机" prop="mobile" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.mobile" readonly)
       div.table-title 企业详细信息
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="企业性质" prop="nature" v-bind:label-width="labelWidth")
@@ -35,8 +36,9 @@
           el-input(v-model="formModel.region" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="城市" prop="city" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.city" readonly)
-      el-form-item.kalix-form-table-td(label="企业详细地址" prop="address" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.address" readonly)
+      div
+        el-form-item.kalix-form-table-td(label="企业详细地址" prop="address" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.address" readonly)
 </template>
 
 <script type="text/ecmascript-6">

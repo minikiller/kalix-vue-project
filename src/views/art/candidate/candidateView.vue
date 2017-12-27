@@ -42,8 +42,9 @@
           el-input(v-model="formModel.politicalStatus" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="入党(团)时间" prop="joinPartyDate" v-bind:label-width="labelWidth")
           kalix-date-picker(v-model="formModel.joinPartyDate" readonly)
-      el-form-item.kalix-form-table-td(label="联系地址" prop="address" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.address" readonly)
+      div
+        el-form-item.kalix-form-table-td(label="联系地址" prop="address" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.address" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.postalcode" readonly)
@@ -75,8 +76,9 @@
           kalix-dict-select(v-model="formModel.skills" appName="art" dictType="个人要求" multiple style="width:100%" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="职业规划目标" prop="careerGoal" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.careerGoal" readonly)
-      el-form-item.s-flex.kalix-form-table-td(label="期望行业" prop="expectingIndustry" v-bind:label-width="labelWidth")
-        kalix-dict-select(v-model="formModel.expectingIndustry" appName="art" dictType="企业行业" style="width:100%" disabled)
+      div
+        el-form-item.kalix-form-table-td(label="期望行业" prop="expectingIndustry" v-bind:label-width="labelWidth")
+          kalix-dict-select(v-model="formModel.expectingIndustry" appName="art" dictType="企业行业" style="width:100%" disabled)
 </template>
 
 <script type="text/ecmascript-6">
