@@ -4,7 +4,7 @@
 开发日期：2017年9月21日
 -->
 <template lang="pug">
-  el-date-picker(v-model='currentValue' v-bind:type="type" v-bind:placeholder="placeholder" v-bind:readonly="readonly")
+  el-date-picker(v-model='currentValue' v-bind:type="type" v-bind:placeholder="placeholder" v-bind:readonly="readonly" style="width:100%")
 </template>
 <script type="text/ecmascript-6">
   import {DatepickerMixin} from './datepickerMixin'

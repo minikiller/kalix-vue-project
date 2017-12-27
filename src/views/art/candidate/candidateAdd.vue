@@ -11,57 +11,58 @@
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="学号" prop="code" v-bind:rules="rules.code" v-bind:label-width="labelWidth")
           div.s-flex
-            el-input(v-model="formModel.code")
+            el-input(v-model="formModel.code" placeholder="请输入学号进行查询" v-on:focus="onCodeFocus")
             el-button(type="primary" icon="el-icon-search" v-on:click="getStudent") 查询
         el-form-item.s-flex_item.kalix-form-table-td(label="姓名" prop="name" v-bind:rules="rules.name" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.name" readonly)
+          el-input(v-model="formModel.name" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="性别" prop="sex" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.sex" readonly)
+          el-input(v-model="formModel.sex" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="邮箱" prop="email" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.email" readonly)
+          el-input(v-model="formModel.email" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="固定电话" prop="phone" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.phone" readonly)
+          el-input(v-model="formModel.phone" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="手机" prop="mobile" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.mobile" readonly)
+          el-input(v-model="formModel.mobile" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="专业" prop="majorId" v-bind:label-width="labelWidth")
-          kalix-major-tree2(v-model="formModel.majorId" v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId")
+          kalix-major-tree2(v-model="formModel.majorId" v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="辅导员" prop="instructor" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.instructor" readonly)
+          el-input(v-model="formModel.instructor" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="身份证号" prop="identificationCard" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.identificationCard" readonly)
+          el-input(v-model="formModel.identificationCard" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" v-bind:label-width="labelWidth")
-          kalix-date-picker(v-model="formModel.birthday" readonly)
+          kalix-date-picker.kalix-date(v-model="formModel.birthday" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="民族" prop="nation" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.nation" readonly)
+          el-input(v-model="formModel.nation" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="籍贯" prop="placeOfOrigin" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.placeOfOrigin" readonly)
+          el-input(v-model="formModel.placeOfOrigin" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="政治面貌" prop="politicalStatus" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.politicalStatus" readonly)
+          el-input(v-model="formModel.politicalStatus" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="入党(团)时间" prop="joinPartyDate" v-bind:label-width="labelWidth")
-          kalix-date-picker(v-model="formModel.joinPartyDate" readonly)
-      el-form-item.kalix-form-table-td(label="联系地址" prop="address" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.address" readonly)
+          kalix-date-picker.kalix-date(v-model="formModel.joinPartyDate" readonly)
+      div
+        el-form-item.kalix-form-table-td(label="联系地址" prop="address" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.address" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.postalcode" readonly)
+          el-input(v-model="formModel.postalcode" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="家庭联系电话" prop="homePhone" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.homePhone" readonly)
+          el-input(v-model="formModel.homePhone" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="生源省份" prop="province" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.province" readonly)
+          el-input(v-model="formModel.province" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="入学年份" prop="entranceYear" v-bind:label-width="labelWidth")
-          kalix-date-picker(v-model="formModel.entranceYear" type="year" readonly)
+          kalix-date-picker.kalix-date(v-model="formModel.entranceYear" type="year" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="学生培养层次" prop="trainingLevel" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.trainingLevel" readonly)
+          el-input(v-model="formModel.trainingLevel" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="学习年限" prop="period" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.period" readonly)
+          el-input(v-model="formModel.period" disabled)
       div.table-title 应聘信息
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="工作地区" prop="region" v-bind:rules="rules.region" v-bind:label-width="labelWidth")
@@ -75,11 +76,12 @@
           el-input-number(v-model="formModel.salary" v-bind:step="500" style="width:100%")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="个人特点" prop="skills" v-bind:rules="rules.skills" v-bind:label-width="labelWidth")
-          kalix-dict-select(v-model="formModel.skills" appName="art" dictType="个人要求" multiple style="width:100%")
+          kalix-dict-select(v-model="formModel.skills" appName="art" dictType="个人要求" multiple placeholder="请选择,可多选" style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="职业规划目标" prop="careerGoal" v-bind:rules="rules.careerGoal" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.careerGoal")
-      el-form-item.s-flex.kalix-form-table-td(label="期望行业" prop="expectingIndustry" v-bind:rules="rules.expectingIndustry" v-bind:label-width="labelWidth")
-        kalix-dict-select(v-model="formModel.expectingIndustry" appName="art" dictType="企业行业" style="width:100%")
+      div
+        el-form-item.kalix-form-table-td(label="期望行业" prop="expectingIndustry" v-bind:rules="rules.expectingIndustry" v-bind:label-width="labelWidth")
+          kalix-dict-select(v-model="formModel.expectingIndustry" appName="art" dictType="企业行业" style="width:100%")
 </template>
 
 <script type="text/ecmascript-6">
@@ -119,6 +121,9 @@
       KalixDictSelect: BaseDictSelect
     },
     methods: {
+      onCodeFocus() {
+        this.initData()
+      },
       initData() {
         // this.$set(this.formModel, 'name', '')
         this.formModel.name = ''
@@ -193,4 +198,8 @@
     }
   }
 </script>
-
+<style lang="stylus">
+  .kalix-date
+    .el-input__inner
+      background-color: #f5f7fa
+</style>
