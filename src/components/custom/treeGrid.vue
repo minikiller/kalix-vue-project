@@ -31,8 +31,8 @@
                 tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent,'active':item.id === checkId}" v-on:click="toSelect(item)")
                   td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
                     div(v-if="column.type === 'action'")
-                      i(v-bind:class="action.icon" v-on:click="btnClick(item,action.type)" style="width:20px"
-                      v-for='action in (column.actions)' v-bind:key="action.text")
+                      template(v-for="action in column.actions")
+                        el-button(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
                     input(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
                     div(v-else)
                       label(v-on:click="toggle(index,item)" v-if="!column.type")
@@ -100,7 +100,7 @@
         dataLength: 0, // 树形数据长度
         items: [], // 表格数据
         whichBizDialog: '', //
-        checkId: -1,
+        checkId: 1,
         checkedItem: null,
         searchParam: {} //  列表查询条件
       }
@@ -256,16 +256,22 @@
 //        this.$emit('update:formModel', {})
         setTimeout(() => {
 //          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
-          if (this.checkId === -1) {
-            this.formModel.parentName = '根'
-            this.formModel.parentId = -1
+          if (this.checkId === 1) {
+            this.checkedItem = this.initItems[0]
+            this.formModel.parentName = '职能类别'
+            this.formModel.parentId = 1
           } else {
             this.formModel.parentName = this.checkedItem.name
             this.formModel.parentId = this.checkedItem.id
           }
-          that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加', false, this.formModel)
-          if (typeof (this.$refs.kalixDialog.init) === 'function') {
-            that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
+          let len = this.checkedItem.code.length
+          if (len > 6) {
+            this.$alert('无法在该层级下增加节点！')
+          } else {
+            that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加', false, this.formModel)
+            if (typeof (this.$refs.kalixDialog.init) === 'function') {
+              that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
+            }
           }
         }, 20)
       },
@@ -303,13 +309,9 @@
       },
       // 选中某一行
       toSelect(item) {
-        if (this.checkId === item.id) {
-          this.checkId = -1
-        } else {
-          this.checkId = item.id
-          this.checkedItem = item
-          console.log('item', item)
-        }
+        this.checkId = item.id
+        this.checkedItem = item
+        console.log('item', item)
       },
       // 点击事件 返回数据处理
       makeData(data) {
