@@ -9,8 +9,8 @@ const FormModel = {
   scale: '',         // 企业规模
   industry: null,    // 企业行业，字典
   life: '',          // 企业年限
-  region: '',        // 地区
-  city: '',          // 城市
+  region: null,      // 所在省份（地区）
+  city: '',          // 所在城市
   address: ''        // 企业详细地址
 }
 

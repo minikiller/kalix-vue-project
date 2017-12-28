@@ -28,6 +28,11 @@
           type: '企业性质',
           targetField: 'natureName',
           sourceField: 'nature'
+        }, {
+          cacheKey: 'ART-DICT-KEY',
+          type: '省份',
+          targetField: 'regionName',
+          sourceField: 'region'
         }],
         btnList: ToolButtonCompanyList,
         toolbarBtnList: [
@@ -38,8 +43,8 @@
           {prop: 'code', label: '企业组织机构代码'},
           {prop: 'name', label: '企业名称'},
           {prop: 'natureName', label: '企业性质'},
-          {prop: 'region', label: '地区'},
-          {prop: 'city', label: '城市'},
+          {prop: 'regionName', label: '所在省份'},
+          {prop: 'city', label: '所在城市'},
           {prop: 'email', label: '邮箱'},
           {prop: 'phone', label: '固定电话'},
           {prop: 'address', label: '企业详细地址'}
@@ -67,11 +72,11 @@
             that.whichBizDialog = dig[0].dialog
             setTimeout(() => {
               if (row.id && row.id > 0) { // 修改
-                that.$refs.kalixDialog.$refs.kalixBizDialog.open('', true, row)
+                that.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true, row)
               } else { // 新增
                 this.$delete(row, 'version')
                 this.$delete(row, 'version_')
-                that.$refs.kalixDialog.$refs.kalixBizDialog.open('', false, row)
+                that.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', false, row)
               }
             }, 20)
             break
