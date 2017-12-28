@@ -8,14 +8,15 @@ const FormModel = {
   companyScale: '',         // 企业规模
   companyIndustry: null,    // 企业行业，字典
   companyLife: '',          // 企业年限
-  companyRegion: '',        // 企业所在地区
+  companyRegion: null,      // 企业所在省份（地区）
   companyCity: '',          // 企业所在城市
   companyAddress: '',       // 企业详细地址
-  publishDate: null,        // 发布时间
-  region: '',               // 工作地区
+  publishDate: new Date(),  // 发布时间
+  region: null,             // 工作省份（地区）
   city: '',                 // 工作城市
-  position: '',             // 职位描述
+  position: '',             // 岗位名称(职位描述)
   positionRequires: '',     // 岗位要求
+  requireSofts: '',         // 岗位所需软件
   jobNumbers: 1,            // 岗位个数
   education: '',            // 学历
   functionCategoryId: null, // 职能类别，对象字典
