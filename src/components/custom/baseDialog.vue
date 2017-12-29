@@ -6,18 +6,25 @@
 
 <template lang="pug">
   transition(name="down-in")
-    el-dialog.dialog-form(v-bind:title="dialogTitle" v-bind:visible="visible"
-    v-bind:before-close="close"
-    v-bind:close-on-click-modal="false" v-bind:size="size"
+    el-dialog.dialog-form(v-bind:visible="visible"
+    v-bind:show-close="false"
+    v-bind:close-on-click-modal="false"
+    width="664px"
     v-bind:append-to-body="true")
-      el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
-        slot(name="dialogFormSlot")
+      div.dialog-title(slot="title") {{dialogTitle}}
+      div.dialog-body
+        el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
+          slot(name="dialogFormSlot")
       div.dialog-footer(slot="footer")
         template(v-if="isView")
-          el-button(type="primary" v-on:click="onCancelClick") 关 闭
+          div.btn-item(v-on:click="onCancelClick") 关 闭
+          <!--el-button(type="primary" v-on:click="onCancelClick") 关 闭-->
         template(v-else)
-          el-button(v-on:click="onCancelClick") 取 消
-          el-button(type="primary" v-on:click="onSubmitClick") 提 交
+          div.btn-item(v-on:click="onCancelClick") 取 消
+          div.btn-item.primary(v-on:click="onSubmitClick") 提 交
+
+          <!--el-button(v-on:click="onCancelClick") 取 消-->
+          <!--el-button(type="primary" v-on:click="onSubmitClick") 提 交-->
 </template>
 
 <script type="text/ecmascript-6">
@@ -184,8 +191,15 @@
     }
   }
 </script>
-
+<style lang="stylus" type="text/stylus">
+  /*.el-dialog__footer*/
+  .dialog-body
+    .el-input__inner
+      border-radius 0
+      border-color #d9d9d9
+</style>
 <style scoped lang="stylus" type="text/stylus">
+  @import "../../assets/stylus/border.styl"
   .down-in-enter-active
     transition: all 0.2s ease
 
@@ -195,5 +209,36 @@
   .down-in-enter, .down-in-leave-active
     opacity 0
     transform scale(0.8)
+  .dialog-title
+    position relative
+    text-align center
+    color #fea356
+    margin -15px -15px -10px
+    line-height 38px
+    padding-top 22px
+    &:after
+      setBottomLine()
+      left 58px
+      right 58px
+
+  .dialog-body
+    padding 0 38px
+  .dialog-footer
+    background-color aqua
+    margin -10px -15px -15px
+    display flex
+    text-align center
+    height 58px
+    line-height 58px
+    color #fff
+    font-size 18px
+    overflow hidden
+    border-radius 0 0 4px 4px
+    .btn-item
+      flex 1
+      background-color #333333
+      cursor pointer
+      &.primary
+        background-color #fea356
 
 </style>

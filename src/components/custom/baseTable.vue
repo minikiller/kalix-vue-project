@@ -6,18 +6,21 @@
 
 <template lang="pug">
   div.kalix-article
+    div.kalix-article-hd
+      div.main
+        i(v-bind:class="iconCls")
+        | {{title}}
+      div.btn-wrapper
+        panel-header-button(type="close" v-on:click="closeBaseTable")
     keep-alive
       component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch"
       v-on:onSearchBtnClick="onSearchClick")
+    kalix-tool-bar(v-if="isShowToolBar"
+    v-bind:toolbarBtnList="toolbarBtnList"
+    v-on:onToolBarClick="onToolBarClick"
+    v-on:onCheckBtnList="onCheckBtnList")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
-      div.kalix-wrapper-hd
-        i(v-bind:class="iconCls")
-        | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar(v-if="isShowToolBar"
-        v-bind:toolbarBtnList="toolbarBtnList"
-        v-on:onToolBarClick="onToolBarClick"
-        v-on:onCheckBtnList="onCheckBtnList")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
           el-table(:data="tableData"  style="width:100%"
           v-bind:row-class-name="tableRowClassName"
@@ -71,6 +74,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import panelHeaderButton from '@/components/panel/panelHeaderButton.vue'
   import {PageConfig, SecurityBtnUrl} from 'config/global.toml'
   import TableTool from './baseTableTool'
   import ToolBar from './baseToolBar'
@@ -226,6 +230,10 @@
       }
     },
     methods: {
+      closeBaseTable() {
+        // 关闭窗体
+        EventBus.$emit('ON_CLOSE_BASETABLE')
+      },
       onCheckBtnList(flag) {
         this.isShowToolBar = flag
       },
@@ -497,6 +505,7 @@
       }
     },
     components: {
+      panelHeaderButton,
       KalixTableTool: TableTool,
       KalixToolBar: ToolBar,
       KalixDialog: Dialog
@@ -517,4 +526,57 @@
 
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
+  .kalix-article
+    position absolute
+    width 1024px
+    height 80%
+    left 50%
+    top 5%
+    margin-left -358px
+    border-radius 4px
+    overflow hidden
+    display flex
+    flex-direction column
+    padding 0
+    background-color #fefef0
+    .kalix-wrapper
+      position relative
+      flex 1
+      top 0
+      left 0
+      right 0
+      background-color transparent
+
+    .kalix-article-hd
+      background-color #ae935c
+      color $plank-title-color
+      line-height 54px
+      text-align left
+      display flex
+      justify-content center
+      align-items center
+      .main
+        margin-left 10px
+        flex 1
+      .btn-wrapper
+        display flex
+        margin-right 15px
+    .kalix-base-tool-bar
+      position absolute
+      right 0
+      top 54px
+    .kalix-wrapper
+      overflow hidden
+      .kalix-wrapper-bd
+        height 100%
+        display flex
+        flex-direction column
+        .kalix-table-container
+          position relative
+          flex 1
+          top 0
+          bottom 0
+        .kalix-table-pagination
+          position relative
+
 </style>

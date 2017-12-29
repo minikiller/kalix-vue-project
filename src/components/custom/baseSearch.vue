@@ -8,9 +8,6 @@
 
 <template lang="pug">
   div.kalix-search
-    div.kalix-search-hd
-      i.iconfont.icon-query
-      | {{title}}
     div.kalix-search-bd
       el-form.search-container(ref="searchForm" v-bind:model="form" v-bind:inline="true")
         slot(name="searchFormSlot")
@@ -217,10 +214,11 @@
   @import "~@/assets/stylus/color.styl"
   @import "~@/assets/stylus/kalix-color.styl"
   .kalix-search
-    margin 10px
+    margin 0px
+    border-radius 4px 4px 0 0
     background-color $background-color-1
     .kalix-search-hd
-      background-color $plank-title-background-color
+      background-color #ae935c
       color $plank-title-color
       line-height 44px
       padding 0 15px
