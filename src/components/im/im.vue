@@ -1,5 +1,6 @@
 <template lang="pug">
   div.im
+    // 侧栏
     div.side_bar(v-bind:class="{'show':isShowSideBar}")
       div.tool-btn.close.side_bar_close
       div.user_info
@@ -23,6 +24,7 @@
         li.side_list_item
           i.icon(style="background-image: url(/static/images/im/icon-5.png)")
           | 编辑
+    // 主内容区
     div.im-wrapper
       div.im-cantainer
         div.im-box(v-show="navTabSelected === 'conversation'")
