@@ -216,7 +216,7 @@
   .kalix-search
     margin 0px
     border-radius 4px 4px 0 0
-    background-color $background-color-1
+    background-color: rgba(254,254,240,0.94);
     .kalix-search-hd
       background-color #ae935c
       color $plank-title-color

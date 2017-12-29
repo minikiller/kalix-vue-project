@@ -523,7 +523,11 @@
     }
   }
 </script>
-
+<style lang="stylus" type="text/stylus">
+  .el-table
+    tr
+      background-color #fefeef
+</style>
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
   .kalix-article
@@ -578,5 +582,6 @@
           bottom 0
         .kalix-table-pagination
           position relative
-
+        .no-list
+          background-color #fefeef
 </style>
