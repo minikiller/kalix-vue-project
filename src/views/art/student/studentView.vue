@@ -29,22 +29,22 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="辅导员" prop="instructor" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.instructor" readonly)
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="身份证号" prop="identificationCard" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.identificationCard" readonly)
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="身份证号" prop="identificationCard" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.identificationCard" readonly)-->
         el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" v-bind:label-width="labelWidth")
           kalix-date-picker(v-model="formModel.birthday" readonly)
-      div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="民族" prop="nation" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.nation" readonly)
+      div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="籍贯" prop="placeOfOrigin" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.placeOfOrigin" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="现联系地址" prop="address" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.address" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="政治面貌" prop="politicalStatus" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.politicalStatus" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="入党(团)时间" prop="joinPartyDate" v-bind:label-width="labelWidth")
           kalix-date-picker(v-model="formModel.joinPartyDate" readonly)
-      el-form-item.kalix-form-table-td(label="联系地址" prop="address" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.address" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.postalcode" readonly)
@@ -52,7 +52,7 @@
           el-input(v-model="formModel.homePhone" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="生源省份" prop="province" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.province" readonly)
+          kalix-dict-select(v-model="formModel.province" appName="research" dictType="省份" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="入学年份" prop="entranceYear" v-bind:label-width="labelWidth")
           kalix-date-picker(v-model="formModel.entranceYear" type="year" readonly)
       div.s-flex
@@ -67,6 +67,7 @@
   import Dialog from '@/components/custom/baseDialog.vue'
   import MajorTree2 from '@/components/tree/basetree2'
   import DatePicker from '@/components/biz/date/datepicker.vue'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
 
   export default {
     data() {
@@ -80,7 +81,8 @@
     components: {
       KalixDialog: Dialog,
       KalixMajorTree2: MajorTree2,
-      KalixDatePicker: DatePicker
+      KalixDatePicker: DatePicker,
+      KalixDictSelect: BaseDictSelect
     },
     created() {
     },
