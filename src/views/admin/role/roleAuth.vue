@@ -96,6 +96,9 @@
           }
         }
       },
+      close() {
+        this.onCancelClick()
+      },
       // 封装数据格式
       getIds(array) {
         if (array && array.length > 0) {
