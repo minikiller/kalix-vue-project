@@ -1,0 +1,57 @@
+# 科研管理項目配置文件
+
+MonitorDictsURL = "/camel/rest/monitor/dicts"
+MonitorDictsTypesListURL = "/camel/rest/monitor/dicts/types/list"
+
+HardwareInfoURL = "/camel/rest/hardwareInfos"
+restHardwareInfoURL = "/camel/rest/restHardwareinfos"
+HardwareLogURL= "/camel/rest/hardwarelogs"
+SignupURL = "/camel/rest/signups"
+signupBtnPermissionPrefix = "research:researchCompetitionModule:competitionSigninMenu:"
+competitBtnPermissionPrefix = "research:researchCompetitionModule:competitionInfoMenu:"
+awardBtnPermissionPrefix = "research:researchCompetitionModule:competitionAwardMenu:"
+AwardURL = "/camel/rest/awards"
+MonitorCacheKey = "MONITOR-DICT-KEY"
+
+# 需要自动注册成全局的Hardwareinfo组件
+[[HardwareinfoComponent]]
+  path = "monitor/hardwareinfo/hardwareinfoView"
+  name = "MonitorHardwareInfoView"
+[[HardwareinfoComponent]]
+  path = "monitor/hardwareinfo/hardwareinfoAdd"
+  name = "MonitorHardwareInfoAdd"
+[[HardwareinfoComponent]]
+  path = "monitor/hardwareinfo/hardwareinfoSearch"
+  name = "MonitorHardwareInfoSearch"
+[[HardwarelogComponent]]
+  path = "monitor/hardwarelog/hardwarelogSearch"
+  name = "MonitorHardwareLogSearch"
+ [[HardwarelogComponent]]
+   path = "monitor/hardwarelog/hardwarelogView"
+   name = "MonitorHardwareLogView"
+
+
+
+# table 的默认按钮定义
+[[ToolButtonList]]
+  id = "rest"
+  title = "重置"
+  isShow = true    # 是否显示
+  isPermission = true   # 是否进行权限认证
+[[ToolButtonList]]
+  id = "view"
+  title = "查看"
+  icon = "icon-view"
+  type = "success"
+  isShow = true    # 是否显示
+  isPermission = true   # 是否进行权限认证
+
+
+
+[[LogToolbarList]]
+  id = "view"
+  title = "查看"
+  icon = "icon-view"
+  type = "success"
+  isShow = true    # 是否显示
+  isPermission = true   # 是否进行权限认证

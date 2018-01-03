@@ -31,9 +31,9 @@
             el-radio(label="女")
         el-form-item(label="邮箱" prop="email" v-bind:rules="rules.email" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.email")
-        el-form-item(label="固定电话" prop="phone" v-bind:rules="rules.phone" v-bind:label-width="labelWidth")
+        el-form-item(label="固定电话" prop="phone" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.phone")
-        el-form-item(label="手机" prop="mobile" v-bind:label-width="labelWidth")
+        el-form-item(label="手机" prop="mobile" v-bind:rules="rules.mobile" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.mobile")
       template(v-else-if="formModel.userType === 3")
         el-form-item(label="企业组织机构代码" prop="code" v-bind:rules="rules.code_qy" v-bind:label-width="labelWidth")
@@ -105,7 +105,8 @@
             {required: true, message: '请输入邮箱地址', trigger: 'blur'},
             {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
           ],
-          phone: [{required: true, message: '请输入固定电话', trigger: 'blur'}]
+          phone: [{required: true, message: '请输入固定电话', trigger: 'blur'}],
+          mobile: [{required: true, message: '请输入手机', trigger: 'blur'}]
         },
         targetURL: usersURL,
         labelWidth: '140px'

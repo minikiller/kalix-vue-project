@@ -61,11 +61,11 @@ MajorCourseURL = "/camel/rest/majorcourses"
   title = "编辑"
   isShow = true
   isPermission = true
-[[ToolButtonStudentList]]
-  id = "scoreManage"
-  title = "成绩管理"
-  isShow = true
-  isPermission = true
+#[[ToolButtonStudentList]]
+#  id = "scoreManage"
+#  title = "成绩管理"
+#  isShow = true
+#  isPermission = true
 
 # 需要自动注册成全局的recruit组件
 [[RecruitComponent]]

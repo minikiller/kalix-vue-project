@@ -39,7 +39,8 @@
             const data = {
               page: 1,
               start: 0,
-              limit: 200
+              limit: 200,
+              sort: '[{\'property\': \'value\', \'direction\': \'ASC\'}]'
             }
             this.axios.get(DictURL, {
               params: data

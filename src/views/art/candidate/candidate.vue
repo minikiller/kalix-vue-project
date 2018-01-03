@@ -24,6 +24,11 @@
       return {
         dictDefine: [{ // 定义数据字典的显示
           cacheKey: 'ART-DICT-KEY',
+          type: '省份',
+          targetField: 'regionName',
+          sourceField: 'region'
+        }, {
+          cacheKey: 'ART-DICT-KEY',
           type: '企业行业',
           targetField: 'expectingIndustryName',
           sourceField: 'expectingIndustry'
@@ -34,7 +39,7 @@
           {prop: 'creationDate', label: '创建时间'},
           {prop: 'code', label: '学号'},
           {prop: 'name', label: '姓名'},
-          {prop: 'region', label: '工作地区'},
+          {prop: 'regionName', label: '工作省份'},
           {prop: 'city', label: '工作城市'},
           {prop: 'education', label: '学历'},
           {prop: 'expectingIndustryName', label: '期望行业'}
