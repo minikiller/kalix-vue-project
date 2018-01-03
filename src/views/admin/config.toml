@@ -157,7 +157,7 @@ AdminCacheKey = "ADMIN-DICT-KEY"
    path = "admin/role/roleAdd"
    name = "AdminRoleEdit"
   [[RoleComponent]]
-   path = "admin/role/roleAddUser1"
+   path = "admin/role/roleAddUser"
    name = "AdminRoleAddUser"
    [[RoleComponent]]
    path = "admin/role/roleAuth"
