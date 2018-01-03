@@ -86,7 +86,7 @@
       customTableTool(row, btnId, that) {
         switch (btnId) {
           case 'newEdit' : { // 新编辑
-            this.onNewEdit()
+            this.onNewEdit(row, that)
             break
           }
         }
