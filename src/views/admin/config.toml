@@ -12,6 +12,7 @@ workgroupURL = "/camel/rest/workgroups"
 dataauthURL = "/camel/rest/dataauths"
 addusersURL = "/camel/rest//dataauths/[id]/users"
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
+roleBtnPermissionPrefix = "admin:permissionModule:roleMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
 dataAuthBtnPermissionPrefix = "admin:permissionModule:dataAuthMenu:"
 AdminCacheKey = "ADMIN-DICT-KEY"
@@ -143,19 +144,24 @@ AdminCacheKey = "ADMIN-DICT-KEY"
   name = "AdminOrgSearch"
 
 # 需要自动注册成全局的role组件
-#  [[RoleComponent]]
-#   path = "admin/role/roleView"
-#   name = "AdminRoleView"
-#  [[RoleComponent]]
-#   path = "admin/role/roleAdd"
-#   name = "AdminRoleAdd"
-#  [[RoleComponent]]
-#   path = "admin/role/roleSearch"
-#   name = "AdminRoleSearch"
-#  [[RoleComponent]]
-#   path = "admin/role/roleEdit"
-#   name = "AdminRoleEdit"
-
+  [[RoleComponent]]
+   path = "admin/role/roleView"
+   name = "AdminRoleView"
+  [[RoleComponent]]
+   path = "admin/role/roleAdd"
+   name = "AdminRoleAdd"
+  [[RoleComponent]]
+   path = "admin/role/roleSearch"
+   name = "AdminRoleSearch"
+  [[RoleComponent]]
+   path = "admin/role/roleAdd"
+   name = "AdminRoleEdit"
+  [[RoleComponent]]
+   path = "admin/role/roleAddUser1"
+   name = "AdminRoleAddUser"
+   [[RoleComponent]]
+   path = "admin/role/roleAuth"
+   name = "AdminRoleAuth"
 
 
   [[DataAuthComponent]]
