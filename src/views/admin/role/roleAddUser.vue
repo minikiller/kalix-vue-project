@@ -46,8 +46,7 @@
       console.log('如果有传入 mounted')
     },
     components: {
-      KalixDialog: Dialog,
-      Transfer: Transfer
+      KalixDialog: Dialog
     },
     methods: {
       getData() {
