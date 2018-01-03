@@ -1,89 +1,110 @@
 <template lang="pug">
-  div.im
-    // 侧栏
-    div.side_bar(v-bind:class="{'show':isShowSideBar}")
-      div.tool-btn.close.side_bar_close
-      div.user_info
-        div.avatar_wrapper
-          div.avatar(v-bind:style="styleObject")
-        div.user_name {{userName}}
-        div.user_org 动画研究院
-      ul.side_list
-        li.side_list_item.selected
-          i.icon(style="background-image: url(/static/images/im/icon-1.png)")
-          | 首页
-        li.side_list_item
-          i.icon(style="background-image: url(/static/images/im/icon-2.png)")
-          | 历史纪录
-        li.side_list_item
-          i.icon(style="background-image: url(/static/images/im/icon-3.png)")
-          | 个人设置
-        li.side_list_item
-          i.icon(style="background-image: url(/static/images/im/icon-4.png)")
-          | 收藏
-        li.side_list_item
-          i.icon(style="background-image: url(/static/images/im/icon-5.png)")
-          | 编辑
-    // 主内容区
-    div.im-wrapper
-      div.im-cantainer
-        div.im-box(v-show="navTabSelected === 'conversation'")
-          div.im-hd
-            div.avatar_wrapper(v-on:click="onOpenUserInfo")
+  div.im-main(v-bind:class="bindCls")
+    transition(name="ima2")
+      div.im2(v-if="isMini")
+        div.im-btn-restore(v-on:click="onRestorem")
+        div.user_info
+          div.avatar_wrapper
+            div.avatar(v-bind:style="styleObject")
+          div.user_name {{userName}}
+    transition(name="ima")
+      div.im(v-if="!isMini")
+        // 侧栏
+        div.side_bar(v-bind:class="{'show':isShowSideBar}")
+          div.tool-btn.close.side_bar_close
+          div.user_info
+            div.avatar_wrapper
               div.avatar(v-bind:style="styleObject")
-              div.text {{userName}}
-          div.im-bd
-            ul.group_list.member_group_list
-              li.list_group.clearfix(v-bind:key="item.id" v-for="(item,index) in treeData" v-bind:class="{'active':item.active}")
-                div.list_group_title.list_group_white_title.list_arrow_right(v-on:click="selectItem(item,index)")
-                  span {{item.name}}
-                  span.onlinePercent 6/34
-        div.im-box(v-show="navTabSelected === 'contact'")
-          div.im-hd
-            div.avatar_wrapper(v-on:click="onOpenUserInfo")
-              div.avatar(v-bind:style="styleObject")
-              div.text {{userName}}
-          div.im-bd
-            ul.user-list(id="user-list-session")
-              li.user-list_item
-                div.user_avatar_wrapper
-                  img.avatar(src="/static/images/im/user-1.png")
-                div.user-list_item_main
-                  p.member_nick user
-                  p.member_msg.text_ellipsis 消息
-                div.time 16:25
-              li.user-list_item
-                div.user_avatar_wrapper
-                  img.avatar(src="/static/images/im/user-2.png")
-                div.user-list_item_main
-                  p.member_nick 用户2
-                  p.member_msg.text_ellipsis 《参加全国大学生竞赛》
-                div.time 16:25
-              li.user-list_item
-                div.user_avatar_wrapper
-                  img.avatar(src="/static/images/im/sys-message.png")
-                div.user-list_item_main
-                  p.member_nick 实时消息
-                  p.member_msg.text_ellipsis 参加今天的下午5点会
-                div.time 16:25
-              li.user-list_item
-                div.user_avatar_wrapper
-                  img.avatar(src="/static/images/im/user-file.png")
-                div.user-list_item_main
-                  p.member_nick 审批文件
-                  p.member_msg.text_ellipsis 《参加全国大学生竞赛》
-                div.time 16:25
-      div.panel_footer
-        div.nav_tab
-          ul.nav_tab_head
-            li.contact(v-on:click="onNavTabClick('contact')" v-bind:class="{'selected':navTabSelected === 'contact'}")
-              div.icon
-            li.conversation(v-on:click="onNavTabClick('conversation')" v-bind:class="{'selected':navTabSelected === 'conversation'}")
-              div.icon
-            li.plugin(v-on:click="onNavTabClick('plugin')" v-bind:class="{'selected':navTabSelected === 'plugin'}")
-              div.icon
-            li.setup(v-on:click="onNavTabClick('setup')" v-bind:class="{'selected':navTabSelected === 'setup'}")
-              div.icon
+            div.user_name {{userName}}
+            div.user_org 动画研究院
+          ul.side_list
+            li.side_list_item.selected
+              i.icon(style="background-image: url(/static/images/im/icon-1.png)")
+              | 首页
+            li.side_list_item
+              i.icon(style="background-image: url(/static/images/im/icon-2.png)")
+              | 历史纪录
+            li.side_list_item
+              i.icon(style="background-image: url(/static/images/im/icon-3.png)")
+              | 个人设置
+            li.side_list_item
+              i.icon(style="background-image: url(/static/images/im/icon-4.png)")
+              | 收藏
+            li.side_list_item
+              i.icon(style="background-image: url(/static/images/im/icon-5.png)")
+              | 编辑
+        // 主内容区
+        div.im-wrapper
+          div.im-cantainer
+            div.im-btn-min(v-on:click="onMinimum")
+            // 设置
+            div.im-box(v-show="navTabSelected === 'setup'")
+              div.im-hd
+                div.im-hd_title 设置
+              div.im-bd
+                div.panel_body
+                  div.group.clickAble
+                    div.row.loginout 退出
+
+            // 组织机构
+            div.im-box(v-show="navTabSelected === 'conversation'")
+              div.im-hd
+                div.avatar_wrapper(v-on:click="onOpenUserInfo")
+                  div.avatar(v-bind:style="styleObject")
+                  div.text {{userName}}
+              div.im-bd
+                ul.group_list.member_group_list
+                  li.list_group.clearfix(v-bind:key="item.id" v-for="(item,index) in treeData" v-bind:class="{'active':item.active}")
+                    div.list_group_title.list_group_white_title.list_arrow_right(v-on:click="selectItem(item,index)")
+                      span {{item.name}}
+                      span.onlinePercent 6/34
+            // 消息列表
+            div.im-box(v-show="navTabSelected === 'contact'")
+              div.im-hd
+                div.avatar_wrapper(v-on:click="onOpenUserInfo")
+                  div.avatar(v-bind:style="styleObject")
+                  div.text {{userName}}
+              div.im-bd
+                ul.user-list(id="user-list-session")
+                  li.user-list_item
+                    div.user_avatar_wrapper
+                      img.avatar(src="/static/images/im/user-1.png")
+                    div.user-list_item_main
+                      p.member_nick user
+                      p.member_msg.text_ellipsis 消息
+                    div.time 16:25
+                  li.user-list_item
+                    div.user_avatar_wrapper
+                      img.avatar(src="/static/images/im/user-2.png")
+                    div.user-list_item_main
+                      p.member_nick 用户2
+                      p.member_msg.text_ellipsis 《参加全国大学生竞赛》
+                    div.time 16:25
+                  li.user-list_item
+                    div.user_avatar_wrapper
+                      img.avatar(src="/static/images/im/sys-message.png")
+                    div.user-list_item_main
+                      p.member_nick 实时消息
+                      p.member_msg.text_ellipsis 参加今天的下午5点会
+                    div.time 16:25
+                  li.user-list_item
+                    div.user_avatar_wrapper
+                      img.avatar(src="/static/images/im/user-file.png")
+                    div.user-list_item_main
+                      p.member_nick 审批文件
+                      p.member_msg.text_ellipsis 《参加全国大学生竞赛》
+                    div.time 16:25
+          div.panel_footer
+            div.nav_tab
+              ul.nav_tab_head
+                li.contact(v-on:click="onNavTabClick('contact')" v-bind:class="{'selected':navTabSelected === 'contact'}")
+                  div.icon
+                li.conversation(v-on:click="onNavTabClick('conversation')" v-bind:class="{'selected':navTabSelected === 'conversation'}")
+                  div.icon
+                li.plugin(v-on:click="onNavTabClick('plugin')" v-bind:class="{'selected':navTabSelected === 'plugin'}")
+                  div.icon
+                li.setup(v-on:click="onNavTabClick('setup')" v-bind:class="{'selected':navTabSelected === 'setup'}")
+                  div.icon
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
@@ -92,6 +113,7 @@
   export default {
     data() {
       return {
+        isMini: false,
         isShowSideBar: false,
         userName: '',
         treeData: [],
@@ -104,6 +126,13 @@
       this.getData()
     },
     methods: {
+      onRestorem() {
+        this.isMini = false
+      },
+      onMinimum() {
+        console.log('最小化')
+        this.isMini = true
+      },
       decode(s) {
         if (s) {
           return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'))
@@ -142,6 +171,9 @@
       }
     },
     computed: {
+      bindCls() {
+        return (this.isMini ? 'mini' : '')
+      },
       styleObject() {
         let style = {}
         if (this.icon) {
@@ -156,6 +188,53 @@
 </script>
 <style scoped lang="stylus" type="text/stylus">
   @import "../../assets/stylus/panel-base.styl"
+  .im-main
+    position absolute
+    width 288px
+    top 5%
+    height 80%
+    left 50%
+    margin-left -666px
+    /*transition all .5s*/
+
+    &.mini
+      animation f1 .3s linear
+      animation-fill-mode forwards
+
+    .im2
+      /*height 100%*/
+      padding 15px
+      text-align center
+      box-sizing border-box
+      background-color #ae935c
+      .im-btn-restore
+        position absolute
+        top 0
+        right 0
+        width 26px
+        height 26px
+        background url("./icon-min.png") #ae935c 50% 50% no-repeat
+        cursor pointer
+        transition background-color .5s
+        border-radius 0 0 0 10px
+        &:hover
+          background-color #7d5f21
+          border-radius 0
+
+      .user_info
+        .avatar
+          width 58px
+          height 58px
+          border-radius 50%
+          overflow hidden
+          background url(user-3.png) 50% 50% no-repeat
+          background-size cover
+          border 1px solid #ffffeb
+        .user_name
+          font-size 14px
+          color #ffffff
+          margin-top 8px
+
   .im
     height 100%
     .im-cantainer
@@ -166,6 +245,19 @@
       width 100%
       background-color #ffffeb
       border-radius 4px 4px 0 0
+      .im-btn-min
+        position absolute
+        top 0
+        right 0
+        width 26px
+        height 26px
+        background url("./icon-min.png") #ae935c 50% 50% no-repeat
+        border-radius 0 4px
+        cursor pointer
+        transition background-color .5s
+        &:hover
+          background-color #7d5f21
+
       .im-box
         height 100%
         display flex
@@ -176,6 +268,11 @@
           background-color #ae935c
           display flex
           border-radius $borderRadius $borderRadius 0 0
+          .im-hd_title
+            line-height 55px
+            text-align center
+            flex 1
+            color #ffffff
         .im-bd
           width 100%
           overflow auto
@@ -299,12 +396,16 @@
         color #ffffff
 
     .side_bar
-      width 260px
+      position absolute
+      top 0
+      left 0
+      width 90%
       height 100%
       overflow hidden
       background url("./side_bar-bg.png") 0 0 repeat
       border-radius $borderRadius 0 0 $borderRadius
       transition transform .5s
+
       &.show
         transform translate3d(-100%, 0, 0)
       .side_bar_close
@@ -450,4 +551,103 @@
           font-size 12px
           float right
           line-height 20px
+    /* 设置 */
+    .group
+      padding: 10px;
+      & > .row
+        border-left: 1px solid #AFC8E2;
+        border-right: 1px solid #AFC8E2;
+        border-bottom: 1px solid #AFC8E2;
+        padding: 10px;
+        background: #fff
+        &:first-child
+          border-top: 1px solid #AFC8E2;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px
+        &:last-child
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px
+        .cloumn
+          float: left
+          .avatar
+            position: relative;
+            margin: 8px !important;
+            width 40px
+            height: 40px;
+        .profile_title_setting
+          padding-top: 5px;
+          padding-left: 5px;
+          width: 62%;
+          float: left;
+          .profile_name
+            font-size: 1.4em;
+            line-height: 1.4em;
+          .text_ellipsis
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          .profile_account
+            color: #666;
+            font-size: .9em;
+    .label
+      color: #666;
+      float: left;
+      width: 80px;
+    .more_icon
+      float: right;
+      width: 16px;
+      height: 16px;
+      background: url(http://w.qq.com/css/image/open_arrow.png) no-repeat center;
+      background-size: 100% 100%;
+      margin-left: 10px
+    .active
+      .more_icon
+        background: url(http://w.qq.com/css/image/open_arrow_fire.png) no-repeat center !important;
+        background-size: 100% 100% !important
+
+    .profile_signature
+      line-height: 22px;
+      overflow: hidden;
+
+    .loginout
+      background: #f74634 !important;
+      background: -moz-linear-gradient(top, #f74634, #ce2715) !important;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f74634), to(#ce2715)) !important;
+      background: -webkit-linear-gradient(#f74634, #ce2715) !important;
+      background: -ms-linear-gradient(#f74634, #ce2715) !important;
+      background: -o-linear-gradient(#f74634, #ce2715) !important;
+      background: linear-gradient(#f74634, #ce2715) !important;
+      text-shadow: 0 0 10px #969696;
+      color: #fff;
+      text-align: center
+
+  /*ima2*/
+  /*ima*/
+  /*.mini-enter-active,*/
+  /*.mini-leave-active*/
+
+  /*.min-enter,*/
+  /*.min-leave-active*/
+  .ima-enter-active
+    transition all .1s
+
+  .ima-leave-active
+    transition all .1s .1s
+
+  .ima-enter,
+  .ima-leave-active
+    opacity 0
+
+  @keyframes f1
+    60%
+      left 0
+      top 0
+      margin-left 0
+      width 288px
+    100%
+      left 0
+      top 0
+      margin-left 0
+      width 90px
+
 </style>

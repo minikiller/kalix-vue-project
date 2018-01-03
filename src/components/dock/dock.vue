@@ -26,7 +26,9 @@
       this.initMenu()
     },
     mounted() {
-      this.init()
+      setTimeout(() => {
+        this.init()
+      }, 20)
     },
     methods: {
       init() {
@@ -124,6 +126,7 @@
     bottom 0
     left 50%
     height 65px
+    z-index: 4000;
     transform translate3d(-50%, 0, 0)
     .dock-bg
       position absolute

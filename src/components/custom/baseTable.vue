@@ -22,7 +22,7 @@
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-bd
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-          el-table(:data="tableData"  style="width:100%"
+          el-table(:data="tableData"  style="width:100%;background-color: transparent;"
           v-bind:row-class-name="tableRowClassName"
           v-loading.body="loading" fit
           v-bind:height="tableHeight"
@@ -230,6 +230,9 @@
       }
     },
     methods: {
+      open() {
+        console.log('OPEN BaseTable!')
+      },
       closeBaseTable() {
         // 关闭窗体
         EventBus.$emit('ON_CLOSE_BASETABLE')

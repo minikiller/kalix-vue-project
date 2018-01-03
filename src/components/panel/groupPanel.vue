@@ -1,17 +1,18 @@
 <template lang="pug">
-  div.panel.group-panel(v-if="isVisible" v-bind:class="cls")
-    panel-header
-      template(slot="right")
-        panel-header-button(type="close" v-on:click="close")
-    div.group-title {{groupData.text}}
-    div.group-body.scrollbar
-      ul.items
-        li.item(v-for="item in treeData" v-bind:key="item.id")
-          div.title
-            i.icon(v-bind:class="setCls(item.iconCls)")
-            div.text {{item.text}}
-          div.cells
-            div.cell(v-for="cell in item.children" v-bind:key="cell.id" v-on:click="selectCell(item,cell)") {{cell.text}}
+  transition(v-bind:name="animationName")
+    div.panel.group-panel(v-if="isVisible" ref="groupPanel")
+      panel-header
+        template(slot="right")
+          panel-header-button(type="close" v-on:click="close")
+      div.group-title {{groupData.text}}
+      div.group-body.scrollbar
+        ul.items
+          li.item(v-for="item in treeData" v-bind:key="item.id")
+            div.title
+              i.icon(v-bind:class="setCls(item.iconCls)")
+              div.text {{item.text}}
+            div.cells
+              div.cell(v-for="cell in item.children" v-bind:key="cell.id" v-on:click="selectCell(item,cell)") {{cell.text}}
 </template>
 <script type="text/ecmascript-6">
   import PanelHeader from './panelHeader.vue'
@@ -24,6 +25,7 @@
   export default {
     data() {
       return {
+        animationName: 'in',
         isVisible: false,
         isMin: false,
         groupTitle: '',
@@ -37,26 +39,45 @@
       scrollbars.forEach(item => {
         Scrollbar.init(item)
       })
+      // this.$refs.groupPanel.addEventListene('transitionend', (ev) => {
+      //   console.log('transitionend')
+      // })
     },
     methods: {
       open(item) {
+        let delayed = 0
+        let groupPanel = document.getElementsByClassName('group-panel')
+        if (groupPanel.length) {
+          delayed = 50
+        }
         console.log('%citem', 'color:#550000', item)
-        this.isVisible = true
         this.groupData = item
         this.initData()
         setTimeout(() => {
-          this.cls = 'open'
-        }, 20)
+          this.isVisible = true
+        }, delayed)
+        // setTimeout(() => {
+        //   this.cls = 'open'
+        //   console.log('groupPanel', this.$refs.groupPanel)
+        //   // this.$refs.groupPanel.addEventListener('transitionend', (ev) => {
+        //   //   this.cls = ''
+        //   // })
+        // }, 20)
       },
       close() {
+        this.isVisible = false
         this.cls = 'close'
-        setTimeout(() => {
-          this.isVisible = false
-          this.cls = ''
-        }, 500)
+        // setTimeout(() => {
+        //   this.cls = ''
+        //   this.isVisible = false
+        // }, 500)
       },
       min() {
-        this.cls = 'min'
+        this.close()
+        // this.cls = 'min'
+        // this.$refs.groupPanel.addEventListener('transitionend', (ev) => {
+        //   this.cls = ''
+        // })
       },
       initData() {
         let treeListData = {}
@@ -112,22 +133,25 @@
   @import "../../assets/stylus/panel-base.styl"
   .group-panel
     position: absolute;
-    top: 5%;
+    bottom: 15%;
     height: 80%;
-    left: 50%;
-    margin-left: -358px
-    opacity 0
+    right: 50%;
+    margin-right -646px
+    opacity 1
     width 1004px !important
     overflow: hidden;
     background-color rgba(254, 254, 240, 0.94)
     border-radius $borderRadius
-    transition all .5s
-    &.open
-      opacity 1
+    /*transform translate3d(0, 150%, 0)*/
+    /*&.open
+      transition all .5s
+      transition-delay .5s
+      transform translate3d(0, 0, 0)
     &.close,
     &.min
-      opacity 0
+      transition all .5s
       transform scale(.5)
+      opacity 0*/
     .panel_header
       background-color transparent
     .group-title
@@ -196,6 +220,38 @@
               cursor pointer
               font-size 14px
               line-height 24px
+
+  .in-enter-active
+    animation turn-in .5s
+
+  /*transform-style preserve-3d
+  transform-origin center top*/
+
+  .in-leave-active
+    transform-origin bottom right
+    animation turn-out 1s
+
+  /*    transform-style preserve-3d*/
+
+  @keyframes turn-in
+    0%
+      transform scale(.2, 1) translate3d(0, 100%, 0)
+    50%
+      transform scale(.2, 1) translate3d(0, 0, 0)
+    100%
+      transform scale(1, 1) translate3d(0, 0, 0)
+
+  @keyframes turn-out
+    50%, 70%
+      right 15px
+      bottom 15px
+      margin-right 0
+      transform scale(.2)
+    100%
+      right 15px
+      bottom 15px
+      margin-right 0
+      transform scale(.2) translate3d(105%, 0, 0)
 
   /* 翻板 */
   .turn-enter-active,

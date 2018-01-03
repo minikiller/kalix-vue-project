@@ -12,12 +12,12 @@
       div.wallpaper-ctrl
         span.wallpaperImg.pre(v-on:click="onChangeBackgroundImg(false)" title="点击切换背景图片")
         span.wallpaperImg.next(v-on:click="onChangeBackgroundImg(true)" title="点击切换背景图片")
-      kalix-im
+    kalix-im
     kalix-dock(v-on:onClickMac="onClickMac")
     component(v-bind:is="item.view" v-bind:ref="key" v-if="plankList"
     v-for="(item,key) in plankList"
     v-bind:key="item.title")
-    component(:is="which_to_show")
+    component(:is="which_to_show" ref="bizTable")
 </template>
 
 <script type="text/ecmascript-6">
@@ -144,11 +144,15 @@
         let fun = this.$route.params.fun // 功能名称
         if (fun !== undefined) {
           this.which_to_show = _import(`${app}/${fun.toLowerCase()}/${fun.toLowerCase()}`)
+          // setTimeout(() => {
+          //   console.log('bizTable', this.$refs.bizTable)
+          //   this.$refs.bizTable.open()
+          // }, 20)
         } else {
           this.which_to_show = (content[fun]) ? fun : ''
         }
-        console.log('%capp', 'color:#550000', app)
-        console.log('%cfun', 'color:#550000', fun)
+        // console.log('%capp', 'color:#550000', app)
+        // console.log('%cfun', 'color:#550000', fun)
         // this.initTheme()
       },
       changeTheme(value) {
@@ -186,6 +190,10 @@
 <style lang="stylus">
   @import "./home.styl"
   @import "~@/assets/stylus/theme/theme.styl"
+  .home
+    position relative
+    overflow hidden
+
   .imin
     position absolute
     width 288px

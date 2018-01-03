@@ -27,6 +27,7 @@
   import {mapMutations} from 'vuex'
   import {Cache, Message, Eventbus} from 'kalix-base'
   import Login from 'api/login'
+  import {logoutURL} from 'config/global.toml'
 
   export default {
     data() {
@@ -52,6 +53,8 @@
       }
     },
     activated() {
+      Cache.clear()
+      this.axios.get(logoutURL, {}).then(response => {})
       this.loginForm = {name: '', pass: ''}
       console.log('Eventbus', Eventbus)
 //      EventBus.$on('ElFormItem.validateField', () => {
