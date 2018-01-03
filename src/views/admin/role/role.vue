@@ -74,7 +74,7 @@
             })
             that.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-              that.$refs.kalixDialog.open('添加用户', row)
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', false, row)
             }, 20)
             break
         }
