@@ -32,7 +32,7 @@
                   td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
                     div(v-if="column.type === 'action'")
                       template(v-for="action in column.actions")
-                        el-button(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
+                        el-button.base-teble-operation(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
                     input(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
                     div(v-else)
                       label(v-on:click="toggle(index,item)" v-if="!column.type")
@@ -613,7 +613,6 @@
   .autoTbale {
     overflow: auto;
   }
-
   table {
     width: 100%;
     border-spacing: 0;
@@ -634,6 +633,18 @@
     font-size: 14px;
     line-height: 23px;
   }
+
+  .table > tbody > tr > td .base-teble-operation
+  .operation-btn
+    font-size 13px
+    cursor pointer
+    color #dd9e4a
+    & + .operation-btn
+      margin-left 8px
+      .kailx-ms-tree-space {
+        display inline-block
+        width 1em
+      }
 
   .table > tbody > tr .focus {
     background-color: #eee;
