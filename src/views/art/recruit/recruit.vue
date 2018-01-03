@@ -29,6 +29,11 @@
           sourceField: 'companyNature'
         }, {
           cacheKey: 'ART-DICT-KEY',
+          type: '省份',
+          targetField: 'regionName',
+          sourceField: 'region'
+        }, {
+          cacheKey: 'ART-DICT-KEY',
           type: '工作类型',
           targetField: 'jobTypeName',
           sourceField: 'jobType'
@@ -40,10 +45,10 @@
           {prop: 'companyNatureName', label: '企业性质'},
           {prop: 'companyEmail', label: '企业邮箱'},
           {prop: 'companyPhone', label: '企业固定电话'},
-          {prop: 'publishDate', label: '发布时间'},
-          {prop: 'region', label: '工作地区'},
+          {prop: 'publishDate', label: '发布时间', width: '160'},
+          {prop: 'regionName', label: '工作省份'},
           {prop: 'city', label: '工作城市'},
-          {prop: 'position', label: '职位描述'},
+          {prop: 'position', label: '岗位名称'},
           {prop: 'jobTypeName', label: '工作类型'}
         ],
         bizDialog: [

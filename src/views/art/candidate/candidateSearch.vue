@@ -15,8 +15,8 @@
     data() {
       return {
         searchFields: [
-          {label: '更新时间', prop: 'updateDateBegin', type: 'date', field: 'updateDate:begin:gt'},
-          {label: '-', prop: 'updateDateEnd', type: 'date', field: 'updateDate:end:lt'}
+          {label: '创建时间', prop: 'creationDateBegin', type: 'date', field: 'creationDate:begin:gt'},
+          {label: '-', prop: 'creationDateEnd', type: 'date', field: 'creationDate:end:lt'}
         ]
       }
     },
