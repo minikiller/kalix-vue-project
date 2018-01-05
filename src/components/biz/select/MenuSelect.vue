@@ -1,13 +1,9 @@
 <template lang="pug">
   el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-bind:disabled="disabled" v-on:input="change($event)" style="width:100%;")
-    el-option(v-for="item in options"
-    v-bind:key="item[id]"
-    v-bind:label="item[label]"
-    v-bind:value="item[id]")
+    el-option(v-for="item in options" v-bind:key="item[id]" v-bind:label="item[label]" v-bind:value="item[id]")
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
-  import Message from 'common/message'
 
   export default {
     props: {
@@ -16,9 +12,6 @@
       },
       placeholder: {
         type: String, default: ''
-      },
-      warnMsg: {
-        type: String, default: '数据获得失败!'
       },
       value: null,
       appName: {
@@ -43,22 +36,30 @@
     mounted() {
       this.initOptions()
     },
+    watch: {
+      value(newValue, oldValue) {
+        this.currentValue = newValue
+//        this.$emit('input', newValue)
+        this.initOptions()
+      },
+      requestUrl(newValue) {
+        this.initOptions()
+      }
+    },
     methods: {
       initOptions() {
+        if (!this.requestUrl) {
+          return
+        }
         const DictKey = `${this.appName.toUpperCase()}-KEY`
         if (!Cache.get(DictKey)) {
-//          console.log('this.requestUrl 111:')
           this.$http
             .get(this.requestUrl, {
               params: {page: 1, start: 0, limit: 20}
             })
             .then(res => {
-              this.options = res.data
-              if (res.data.totalCount === 0) {
-                Message.warning(this.warnMsg)
-              }
-              if (res.data.data) {
-                this.options = res.data.data
+              if (res.data) {
+                this.options = this.dealWithOptions(res.data)
               }
               Cache.save(DictKey, JSON.stringify(this.options))
             })
@@ -66,18 +67,26 @@
           this.options = JSON.parse(Cache.get(DictKey))
         }
       },
+      dealWithOptions(array) {
+        let rtn = []
+        if (array && array.length > 0) {
+          for (let i = 0; i < array.length; i++) {
+            if (array[i].children && array[i].children.length > 0) {
+              for (let j = 0; j < array[i].children.length; j++) {
+                rtn.push(array[i].children[j])
+              }
+            }
+          }
+        }
+        return rtn
+      },
       change(value) {
         this.$emit('input', value)
         let item = this.options.find(e => {
           return e.id === value
         })
         this.$emit('selectChange', item)
-      }
-    },
-    watch: {
-      value(newValue, oldValue) {
-        this.currentValue = newValue
-//        this.$emit('input', newValue)
+        console.log('newValue====:', item)
       }
     }
   }
