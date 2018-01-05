@@ -176,9 +176,10 @@
         this.id = row.id
         if (this.id) {
           this.detailTargetURL = StudentURL + '/' + this.id + '/scores'
-          if (this.$refs.scoreTable) {
-            this.$refs.scoreTable.getData()
-          }
+          // 不需要手动调用，基类里监视了detailTargetURL，自动触发请求数据
+//          if (this.$refs.scoreTable) {
+//            this.$refs.scoreTable.getData()
+//          }
         }
       }
     }
