@@ -79,6 +79,8 @@
       submitComplete() { // 提交完成后执行
         if (this.submitAfter && typeof (this.submitAfter) === 'function') {
           this.submitAfter(this)
+        } else {
+          this.onCancelClick()
         }
       },
       submitAction() {  // 提交
