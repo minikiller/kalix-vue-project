@@ -1,20 +1,23 @@
 <template lang="pug">
-  kalix-search(title="数据权限查询" v-bind:searchFields="searchFields")
+  Kalix-Search(:searchFields="searchFields" title="应用查询")
 </template>
+
 <script type="text/ecmascript-6">
   import BaseSearch from '@/components/custom/baseSearch.vue'
   export default {
+    components: {
+      KalixSearch: BaseSearch
+    },
     data() {
       return {
         searchFields: [
-          {label: '数据权限', prop: 'type', type: 'dict', appName: 'admin', dictType: '数据权限'}
+          {label: '应用名称', prop: 'name'}
         ]
       }
-    },
-    components: {
-      KalixSearch: BaseSearch
     }
   }
 </script>
+
 <style scoped lang="stylus" type="text/stylus">
+
 </style>
