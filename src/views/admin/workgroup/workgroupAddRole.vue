@@ -1,6 +1,6 @@
 <template lang="pug">
   kalix-dialog.user-add(
-  bizKey="role"
+  bizKey="workgroup"
   ref="kalixBizDialog"
   v-bind:form-model.sync="formModel"
   v-bind:visible="centerDialogVisible"
@@ -18,7 +18,7 @@
 <script>
   import Dialog from '@/components/custom/baseDialog.vue'
   import FormModel from './model'
-  import {usersURL} from 'views/admin/config.toml'
+  import {rolesURL} from 'views/admin/config.toml'
   import EventBus from 'common/eventbus'
   import Message from 'common/message'
   export default {
@@ -32,8 +32,8 @@
         centerDialogVisible: false,
         dialogTitle: '',
         userChecked: [],
-        usersURL: usersURL,
-        targetURL: 'camel/rest/roles'
+        usersURL: rolesURL,
+        targetURL: 'camel/rest/workgroups'
       }
     },
     created() {
@@ -49,7 +49,7 @@
     methods: {
       getData() {
         console.log('userIds333333', this.userIds)
-        this.axios.get(usersURL, {}).then(response => {
+        this.axios.get(rolesURL, {}).then(response => {
           this.userList = response.data.data
           for (let i = 0; i < this.userList.length; i++) {
             this.dataList.push({
@@ -71,7 +71,6 @@
         })
       },
       submitCustom(baseDialog) {
-        console.log(' this.userIds+++++++', this.userIds)
         this.userIds = this.userIds.join(',')
         this.ids[1] = this.userIds
         this.axios.request({
@@ -95,10 +94,6 @@
       handleChange(value, direction, movedKeys) {
         if (direction === 'right') {
           this.userIds = this.userIds.concat(movedKeys)
-//          this.userIds = this.userIds + ','
-//          for (let i = 0; i < movedKeys.length; i++) {
-//            this.userIds = this.userIds + movedKeys[i] + ','
-//          }
         } else if (direction === 'left') {
           let tempId = []
           let m = 0
@@ -150,3 +145,5 @@
     padding: 6px 5px;
 
 </style>
+
+
