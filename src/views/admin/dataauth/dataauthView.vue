@@ -1,31 +1,31 @@
 <template lang="pug">
-  kalix-dialog.dataauth-view(bizKey="dataauth"
-  ref="kalixBizDialog" v-bind:form-model.sync="formModel" isView)
-   div.el-form(slot="dialogFormSlot")
-      el-form-item(label="数据权限" prop="type"  label-width="140px")
-        el-input(v-model="formModel.type" v-bind:readonly="readonly")
-      el-form-item(label="应用名称" prop="appid"  label-width="140px")
-        el-input(v-model="formModel.appid" v-bind:readonly="readonly")
-      el-form-item(label="菜单名称" prop="menuId" label-width="140px")
-        el-input(v-model="formModel.menuId" readonly)
-      el-form-item(label="菜单名称" prop="menuid"  label-width="140px")
-        el-input(v-model="formModel.menuid" v-bind:readonly="readonly")
+  kalix-dialog.dataauth-view(bizKey="dataauth" ref="kalixBizDialog" v-bind:form-model.sync="formModel" isView)
+    div.el-form(slot="dialogFormSlot")
+      el-form-item(label="应用名称" prop="appName" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.appName" readonly)
+      el-form-item(label="菜单名称" prop="menuName" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.menuName" readonly)
+      el-form-item(label="数据权限" prop="type" v-bind:label-width="labelWidth")
+        kalix-dict-select(v-model="formModel.type" appName="admin" dictType="数据权限" disabled)
+      el-form-item(label="备注" prop="remark" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.remark" type="textarea" readonly)
 </template>
 
 <script type="text/ecmascript-6">
-  import Dialog from '@/components/custom/baseDialog.vue'
   import FormModel from './model'
+  import Dialog from '@/components/custom/baseDialog.vue'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
+
   export default {
     data() {
       return {
         formModel: Object.assign({}, FormModel),
-        readonly: true
+        labelWidth: '140px'
       }
     },
-    created() {
-    },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      KalixDictSelect: BaseDictSelect
     },
     methods: {}
   }

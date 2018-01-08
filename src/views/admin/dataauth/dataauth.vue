@@ -25,10 +25,11 @@
         btnList: ToolButtonList,
         targetURL: dataauthURL,
         tableFields: [
-          {prop: 'typeDict', label: '数据权限'},
           {prop: 'appName', label: '应用名称'},
-          {prop: 'action', label: '操作方式'},
-          {prop: 'actor', label: '操作者'}
+          {prop: 'menuName', label: '菜单名称'},
+          {prop: 'typeDict', label: '数据权限'},
+          {prop: 'creationDate', label: '创建时间'},
+          {prop: 'updateDate', label: '更新时间'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'AdminDataAuthView'},

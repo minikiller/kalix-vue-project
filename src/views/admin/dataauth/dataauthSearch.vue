@@ -7,7 +7,7 @@
     data() {
       return {
         searchFields: [
-          {label: '数据权限名称', prop: 'type'}
+          {label: '数据权限', prop: 'type', type: 'dict', appName: 'admin', dictType: '数据权限'}
         ]
       }
     },
