@@ -1,6 +1,6 @@
 <template lang="pug">
   kalix-dialog.user-add(
-  bizKey="role"
+  bizKey="workgroup"
   ref="kalixBizDialog"
   v-bind:form-model.sync="formModel"
   v-bind:visible="centerDialogVisible"
@@ -33,7 +33,7 @@
         dialogTitle: '',
         userChecked: [],
         usersURL: usersURL,
-        targetURL: 'camel/rest/roles'
+        targetURL: 'camel/rest/workgroups'
       }
     },
     created() {
@@ -71,7 +71,6 @@
         })
       },
       submitCustom(baseDialog) {
-        console.log(' this.userIds+++++++', this.userIds)
         this.userIds = this.userIds.join(',')
         this.ids[1] = this.userIds
         this.axios.request({
@@ -95,10 +94,6 @@
       handleChange(value, direction, movedKeys) {
         if (direction === 'right') {
           this.userIds = this.userIds.concat(movedKeys)
-//          this.userIds = this.userIds + ','
-//          for (let i = 0; i < movedKeys.length; i++) {
-//            this.userIds = this.userIds + movedKeys[i] + ','
-//          }
         } else if (direction === 'left') {
           let tempId = []
           let m = 0

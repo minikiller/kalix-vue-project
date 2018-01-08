@@ -2,15 +2,17 @@
   keep-alive
     base-table(bizKey="workgroup" title='工作组列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
+    v-bind:customTableTool="customTableTool"
     v-bind:formModel.sync="formModel" v-bind:formRules="formRules" v-bind:bizDialog="bizDialog"
     bizSearch="AdminWorkGroupSearch"  v-bind:btnList="btnList")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {workgroupURL, workGroupBtnPermissionPrefix, ToolButtonList, WorkGroupComponent} from '../config.toml'
+  import {workgroupURL, workGroupBtnPermissionPrefix, WorkGroupComponent} from '../config.toml'
   import EventBus from 'common/eventbus'
   import {registerComponent} from '@/api/register'
+  import {workgroupBtnList} from '../workgroup/index'
 
   // 注册全局组件
   registerComponent(WorkGroupComponent)
@@ -18,7 +20,6 @@
   export default {
     data() {
       return {
-        btnList: ToolButtonList,
         buttonPermissionPrefix: workGroupBtnPermissionPrefix,
         targetURL: workgroupURL,
         tableFields: [
@@ -31,7 +32,9 @@
         bizDialog: [
           {id: 'view', dialog: 'AdminWorkGroupView'},
           {id: 'add', dialog: 'AdminWorkGroupAdd'},
-          {id: 'edit', dialog: 'AdminWorkGroupAdd'}
+          {id: 'edit', dialog: 'AdminWorkGroupAdd'},
+          {id: 'addUser', dialog: 'AdminWorkGroupAddUser'},
+          {id: 'addRole', dialog: 'AdminWorkGroupAddRole'}
         ],
         formModel: {
           name: '',
@@ -46,13 +49,40 @@
           name: [
             {required: true, message: '请输入工作组名称', trigger: 'blur'}
           ]
-        }
+        },
+        btnList: workgroupBtnList
       }
     },
     methods: {
       changeFormModel(model) {
         console.log('changeFormModel', model)
         this.formModel = model
+      },
+      customTableTool(row, btnId, that) {
+        switch (btnId) {
+          case 'addRole' : { // 增加角色
+            that.whichBizDialog = ''
+            let dig =
+              that.bizDialog.filter((item) => {
+                return item.id === 'addRole'
+              })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('', false, row)
+            }, 20)
+            break
+          }
+          case 'addUser':   // 添加用户
+            that.whichBizDialog = ''
+            let dig = that.bizDialog.filter((item) => {
+              return item.id === 'addUser'
+            })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', false, row)
+            }, 20)
+            break
+        }
       }
     },
     components: {
