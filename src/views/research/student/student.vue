@@ -4,14 +4,15 @@
 开发日期：2018年01月02日
 -->
 <template lang="pug">
-  keep-alive
-    div(style="position: absolute;width: 100%;height: 100%;overflow: auto;")
-      div(style="height:500px;position:relative")
+  div(style="position: absolute;width: 100%;height: 100%;overflow: auto;")
+    div(style="height:500px;position:relative")
+      keep-alive
         base-table(bizKey="researchStudent" title='学生信息列表' v-bind:targetURL="targetURL"
         v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields" bizSearch="ResearchStudentSearch"
         v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList" v-bind:customTableTool="customTableTool"
         v-bind:dictDefine="dictDefine" v-on:onTableRowClick="onTableRowClick")
-      div(style="height:500px;position:relative")
+    div(style="height:500px;position:relative")
+      keep-alive
         base-table(bizKey="researchScore" title='学生成绩列表' v-bind:targetURL="detailTargetURL"
         v-bind:bizDialog="detailBizDialog" v-bind:tableFields="detailTableFields" v-bind:btnList="detailBtnList"
         v-bind:toolbarBtnList="detailToolbarBtnList" v-bind:customToolBar="detailCustomToolBar" v-bind:customTableTool="detailCustomTableTool"
@@ -86,7 +87,7 @@
       customTableTool(row, btnId, that) {
         switch (btnId) {
           case 'newEdit' : { // 新编辑
-            this.onNewEdit()
+            this.onNewEdit(row, that)
             break
           }
         }
@@ -176,9 +177,10 @@
         this.id = row.id
         if (this.id) {
           this.detailTargetURL = StudentURL + '/' + this.id + '/scores'
-          if (this.$refs.scoreTable) {
-            this.$refs.scoreTable.getData()
-          }
+          // 不需要手动调用，基类里监视了detailTargetURL，自动触发请求数据
+//          if (this.$refs.scoreTable) {
+//            this.$refs.scoreTable.getData()
+//          }
         }
       }
     }

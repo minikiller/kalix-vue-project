@@ -1,10 +1,18 @@
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="role" ref="kalixBizDialog"  v-bind:targetURL="usersURL" v-bind:form-model="formModel")
-    div.el-form(slot="dialogFormSlot" style="{width:100%}")
-      transfer(v-bind:form-model="formModel" style="{width:100%}")
-    div.dialog-footer(slot="footer")
-      el-button(v-on:click="onCancelClick") 取 消
-      el-button(type="primary" v-on:click="onSubmitClick") 提 交
+  kalix-dialog.user-add(
+  bizKey="role"
+  ref="kalixBizDialog"
+  v-bind:form-model.sync="formModel"
+  v-bind:visible="centerDialogVisible"
+  v-bind:submitCustom="submitCustom")
+    div.el-form(
+    slot="dialogFormSlot"
+    style="{width:100%}")
+      el-transfer.kalix-transfer(v-model="userChecked" style="width:100%" filterable
+      v-bind:titles="['可选项', '已选项']"
+      v-bind:footer-format="{noChecked: '${total}', hasChecked: '${checked}/${total}'}"
+      v-bind:data="dataList"
+      v-on:change="handleChange")
 </template>
 
 <script>
@@ -12,30 +20,33 @@
   import FormModel from './model'
   import {usersURL} from 'views/admin/config.toml'
   import EventBus from 'common/eventbus'
-  import Transfer from '@/components/biz/userselect/baseTransfer.vue'
-
+  import Message from 'common/message'
   export default {
     data() {
       return {
         userList: [],
         formModel: Object.assign({}, FormModel),
         dataList: [],
+        userIds: [],
         ids: [],
         centerDialogVisible: false,
         dialogTitle: '',
-        usersURL: usersURL
+        userChecked: [],
+        usersURL: usersURL,
+        targetURL: 'camel/rest/roles'
       }
     },
     created() {
       // 如果有传入 defaultIds
+      this.getData()
+      console.log('this.userChecked:', this.userChecked)
       console.log('如果有传入 defaultIds')
     },
     mounted() {
       console.log('如果有传入 mounted')
     },
     components: {
-      KalixDialog: Dialog,
-      Transfer: Transfer
+      KalixDialog: Dialog
     },
     methods: {
       getData() {
@@ -47,31 +58,45 @@
               label: this.userList[i].name
             })
           }
-          console.log('this.dataList', this.dataList)
+          this.ids[0] = this.formModel.id.toString()
+          console.log('this.ids[0]', this.ids[0])
+          this.getCheckedUsers()
         })
       },
-      open(_title, row) {
-        this.centerDialogVisible = true
-        this.dialogTitle = _title
-        this.getData()
-        this.ids[0] = row.id
+      getCheckedUsers() {
+        let userCheckedUrl = this.targetURL + '/' + this.ids[0] + '/users/ids'
+        console.log('userCheckedUrl', userCheckedUrl)
+        this.axios.get(userCheckedUrl, {}).then(response => {
+          if (response.data && response.data.length) {
+            this.userChecked = response.data
+          }
+        })
+      },
+      submitCustom(baseDialog) {
+        this.userIds = this.userIds.substring(0, this.userIds.length - 1)
+        this.ids[1] = this.userIds
+        this.axios.request({
+          method: 'POST',
+          url: `${this.targetURL}/${this.formModel.id}/users`,
+          data: this.ids,
+          params: {}
+        }).then(response => {
+          if (response.data.success) {
+            Message.success(response.data.msg)
+            baseDialog.visible = false
+            baseDialog.$refs.dialogForm.resetFields()
+            baseDialog.submitComplete()
+          } else {
+            Message.error(response.data.msg)
+            baseDialog.submitComplete()
+          }
+        })
+        console.log('this.ids', this.ids)
       },
       handleChange(value, direction, movedKeys) {
-        let userIds = ''
-        for (let i = 0; i < movedKeys.length - 1; i++) {
-          userIds = userIds + movedKeys[i] + ','
+        for (let i = 0; i < movedKeys.length; i++) {
+          this.userIds = this.userIds + movedKeys[i] + ','
         }
-        userIds = userIds + movedKeys[movedKeys.length - 1]
-        this.ids[1] = userIds
-      },
-      onSubmitClick() {
-        this.axios.post('/dataauths/' + this.ids[0] + '/users', {ids: this.ids})
-          .then(function (response) {
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
       },
       close() {
         this.onCancelClick()
@@ -90,9 +115,19 @@
   }
 </script>
 
-<style scoped>
-  .transfer-footer {
+<style lang="stylus">
+  .kalix-transfer
+    text-align center
+    .el-checkbox
+      display block
+      text-align left
+      & + .el-checkbox
+        margin-left 0
+    .el-transfer-panel__filter
+      width auto !important
+
+  .transfer-footer
     margin-left: 20px;
     padding: 6px 5px;
-  }
+
 </style>

@@ -419,6 +419,9 @@
         this.getData()
       },
       getData() {
+        if (!this.targetURL) {
+          return
+        }
         let that = this
         console.log('baseTable', this.targetURL)
         this.loading = true

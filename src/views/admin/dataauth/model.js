@@ -8,6 +8,8 @@ const FormModel = {
   appId: '',
   appName: '',
   menuId: '',
-  menuName: ''
+  menuName: '',
+  creationDate: '',
+  updateDate: ''
 }
 export default FormModel
