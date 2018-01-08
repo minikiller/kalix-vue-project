@@ -51,10 +51,10 @@
       return {
         isShowToolBar: false,  // 不显示工具栏
         toolbarBtnList: [{id: 'add', isShow: false},
-          {id: 'customBtn1', icon: 'icon-edit', title: '自定义按钮 1', isShow: true},
-          {id: 'customBtn2', icon: 'icon-edit', title: '自定义按钮 2', isShow: true},
-          {id: 'customBtn3', icon: 'icon-edit', title: '自定义按钮 3', isShow: true},
-          {id: 'customBtn4', icon: 'icon-edit', title: '自定义按钮 4', isShow: true}],
+          {id: 'customBtn1', icon: 'icon-edit', title: '自定义按钮 1', isShow: false},
+          {id: 'customBtn2', icon: 'icon-edit', title: '自定义按钮 2', isShow: false},
+          {id: 'customBtn3', icon: 'icon-edit', title: '自定义按钮 3', isShow: false},
+          {id: 'customBtn4', icon: 'icon-edit', title: '自定义按钮 4', isShow: false}],
         bizKey: 'taskComplete',
         btnList: [{
           id: 'viewTask',
