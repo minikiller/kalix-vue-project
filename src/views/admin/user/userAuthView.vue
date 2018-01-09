@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(title='权限查看' bizKey="user" ref="kalixBizDialog" v-bind:formModel.sync="formModel" isView)
-    div.el-form(slot="dialogFormSlot")
+    div.el-form(slot="dialogFormSlot" style="max-height:550px;overflow:auto;")
       el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
       show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
       empty-text="当前用户暂无权限信息!" ref="baseTree")
