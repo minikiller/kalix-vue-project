@@ -58,6 +58,4 @@
     &::-webkit-scrollbar-thumb
       border-radius: 4px;
       background-color: #999999;
-
-
 </style>

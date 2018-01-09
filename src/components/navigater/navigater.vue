@@ -36,10 +36,12 @@
 </template>
 
 <script type="text/ecmascript-6">
+  // eslint-disable-next-line
   import Vue from 'vue'
   import Cache from 'common/cache'
+  // eslint-disable-next-line
   import {cacheTime, systemApplicationsBaseURL} from 'config/global.toml'
-  import EventBus from 'common/eventbus'
+  // import EventBus from 'common/eventbus'
 
   export default {
     props: {
@@ -55,18 +57,29 @@
         activeName: '1',
         obj: {'name': 'aa'},
         treeData: [],
-        clickedNode: null
+        clickedNode: null,
+        flag: true
       }
     },
     activated() {
-      EventBus.$on('toolListDataComplete', this.fetchData)
+      // EventBus.$on('toolListDataComplete', this.fetchData)
     },
     mounted() {
       this.fetchData()
     },
-    watch: {'$route': 'fetchData'},
+    watch: {
+      '$route'(to, from) {
+        console.log('$route to:', to)
+        console.log('$route from:', from)
+        if (to.path !== '/' && to.path !== '/login') {
+          console.log('$route this.fetchData()!!!!')
+          this.fetchData()
+        }
+      }
+    },
     methods: {
       fetchData(appId) {
+        console.log('this.$route:', this.$route.params.app)
         if (this.$route.name === 'login') {
           return
         }
@@ -90,26 +103,30 @@
           this.setItemShow()
         } else {
           const data = {_dc: cd, node: 'root'}
-          Vue.axios({
-            url: systemApplicationsBaseURL + this.currApp,
-            method: 'get',
+          if (this.flag) {
+            this.flag = false
+            Vue.axios({
+              url: systemApplicationsBaseURL + this.currApp,
+              method: 'get',
 //            headers: {'AccessToken': accessToken, JSESSIONID: userToken},
-            params: data
-          }).then(response => {
-            let nowDate = new Date()
-            if (response.data && response.data.code !== 401) {
-              this.treeData = response.data
-              if (this.treeData.length) {
-                this.treeData.forEach(function (e, i) {
-                  Vue.set(e, 'isShow', false)
-                })
-                treeListData[this.currApp] = this.treeData
-                treeListData.createDate = nowDate.getTime()
-                this.setItemShow()
-                Cache.save('treeListData', JSON.stringify(treeListData))
+              params: data
+            }).then(response => {
+              this.flag = true
+              let nowDate = new Date()
+              if (response.data && response.data.code !== 401) {
+                this.treeData = response.data
+                if (this.treeData.length) {
+                  this.treeData.forEach(function (e, i) {
+                    Vue.set(e, 'isShow', false)
+                  })
+                  treeListData[this.currApp] = this.treeData
+                  treeListData.createDate = nowDate.getTime()
+                  this.setItemShow()
+                  Cache.save('treeListData', JSON.stringify(treeListData))
+                }
               }
-            }
-          })
+            })
+          }
         }
       },
       setItemShow() {
