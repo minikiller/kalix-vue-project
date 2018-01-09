@@ -69,10 +69,7 @@
     },
     watch: {
       '$route'(to, from) {
-        console.log('$route to:', to)
-        console.log('$route from:', from)
         if (to.path !== '/' && to.path !== '/login') {
-          console.log('$route this.fetchData()!!!!')
           this.fetchData()
         }
       }
