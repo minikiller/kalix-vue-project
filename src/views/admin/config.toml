@@ -76,7 +76,8 @@ AdminCacheKey = "ADMIN-DICT-KEY"
   isPermission = true
 [[ToolButtonList]]
   id = "addUser"
-  title = "添加用户"
+  title = "用户"
+  toolTipTitle = "添加用户"
   isShow = true
   isPermission = true
 
