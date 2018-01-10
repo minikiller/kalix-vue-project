@@ -251,9 +251,6 @@ DocumentURL  = "camel/rest/documents"
   path = "oa/document/documentView"
   name = "OaDocumentView"
 [[DocumentComponent]]
-  path = "oa/document/documentAdd"
-  name = "OaDocumentAdd"
-[[DocumentComponent]]
   path = "oa/document/documentSearch"
   name = "OaDocumentSearch"
 
@@ -341,5 +338,17 @@ DocumentURL  = "camel/rest/documents"
 [[DetailToolButtonList]]
   id = "delete"
   title = "删除"
+  isShow = true
+  isPermission = true
+
+# table-document(文号管理) 的按钮定义
+[[DocumentToolButtonList]]
+  id = "view"
+  title = "查看"
+  isShow = true
+  isPermission = true
+[[DocumentToolButtonList]]
+  id = "abolish"
+  title = "废除"
   isShow = true
   isPermission = true
