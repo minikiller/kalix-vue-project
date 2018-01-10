@@ -7,6 +7,7 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="document" title='文号列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
+    v-bind:dictDefine="dictDefine"
     v-bind:bizDialog="bizDialog" bizSearch="OaDocumentSearch" v-bind:btnList="btnList"
     v-bind:toolbarBtnList="toolbarBtnList" v-bind:customTableTool="customTableTool")
 </template>
