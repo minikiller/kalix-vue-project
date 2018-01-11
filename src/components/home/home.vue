@@ -12,12 +12,12 @@
       div.wallpaper-ctrl
         span.wallpaperImg.pre(v-on:click="onChangeBackgroundImg(false)" title="点击切换背景图片")
         span.wallpaperImg.next(v-on:click="onChangeBackgroundImg(true)" title="点击切换背景图片")
-    kalix-im
+    kalix-im(v-bind:showState="imState")
     kalix-dock(v-on:onClickMac="onClickMac")
     component(v-bind:is="item.view" v-bind:ref="key" v-if="plankList"
     v-for="(item,key) in plankList"
     v-bind:key="item.title")
-    component(:is="which_to_show" ref="bizTable")
+    component(v-bind:is="which_to_show" ref="bizTable")
 </template>
 
 <script type="text/ecmascript-6">
@@ -29,6 +29,7 @@
   import EventBus from 'common/eventbus'
   import GroupPanel from '@/components/panel/groupPanel.vue'
   import TablePanel from '@/components/panel/tablePanel.vue'
+  import ImState from '../im/imState'
 
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
@@ -45,7 +46,8 @@
         isSmall: false,
         which_to_show: 'Welcome',
         themeValue: null,
-        plankList: {}
+        plankList: {},
+        imState: ImState.original
       }
     },
     mounted() {
@@ -55,6 +57,10 @@
     activated() {
       EventBus.$on('ON_CLOSE_BASETABLE', this.onCloseBaseTable)
       EventBus.$on('ON_CLICK_GROUP_CELL', this.onClickGroupCell)
+      EventBus.$on('Kalix_Logout', () => {
+        this.plankList = {}
+        this.activePlank = ''
+      })
     },
     methods: {
       onFullScreent() {
@@ -99,8 +105,19 @@
           this.$refs[this.activePlank][0].min()
         }
       },
+      /**
+       * 点击 Duck 图标
+       * @param item
+       */
       onClickMac(item) {
-        // console.log('onClickMac', item)
+        // 修改 im 组件状态
+        this.imState = ImState.hidden
+        // console.log('[onClickMac] ========== BEGIN')
+        // console.log('[onClickMac] item:', item)
+        // console.log('[onClickMac] this.activePlank:', this.activePlank)
+        // console.log('[onClickMac] this:', this)
+        // console.log('[onClickMac] ========== END')
+        this.which_to_show = ''
         if (this.$refs[this.activePlank] && this.activePlank !== item.id) {
           this.$refs[this.activePlank][0].min()
         }

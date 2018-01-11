@@ -135,8 +135,8 @@
     position: absolute;
     bottom: 15%;
     height: 80%;
-    right: 50%;
-    margin-right -646px
+    left 50%
+    margin-left -502px
     opacity 1
     width 1004px !important
     overflow: hidden;
@@ -220,6 +220,8 @@
               cursor pointer
               font-size 14px
               line-height 24px
+              &:hover
+                text-decoration underline
 
   .in-enter-active
     animation turn-in .5s
@@ -251,7 +253,7 @@
       right 15px
       bottom 15px
       margin-right 0
-      transform scale(.2) translate3d(105%, 0, 0)
+      transform scale(.2) translate3d(500%, 0, 0)
 
   /* 翻板 */
   .turn-enter-active,

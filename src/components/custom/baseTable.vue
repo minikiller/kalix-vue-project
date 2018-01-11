@@ -11,6 +11,7 @@
         i(v-bind:class="iconCls")
         | {{title}}
       div.btn-wrapper
+        panel-header-button(type="max" v-on:click="closeBaseTable")
         panel-header-button(type="close" v-on:click="closeBaseTable")
     keep-alive
       component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch"
@@ -543,11 +544,11 @@
   @import "~@/assets/stylus/baseTable"
   .kalix-article
     position absolute
-    width 1024px
+    width 937px
     height 80%
     left 50%
     top 5%
-    margin-left -358px
+    margin-left -314px
     border-radius 4px
     overflow hidden
     display flex

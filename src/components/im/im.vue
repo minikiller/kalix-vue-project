@@ -44,7 +44,7 @@
               div.im-bd
                 div.panel_body
                   div.group.clickAble
-                    div.row.loginout 退出
+                    div.row.loginout(v-on:click="logout") 退出
 
             // 组织机构
             div.im-box(v-show="navTabSelected === 'conversation'")
@@ -109,8 +109,16 @@
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
   import Cookie from 'js-cookie'
+  import {logoutURL} from 'config/global.toml'
+  import EventBus from 'common/eventbus'
+  import ImState from './imState'
 
   export default {
+    props: {
+      showState: {
+        default: ImState.original
+      }
+    },
     data() {
       return {
         isMini: false,
@@ -120,12 +128,20 @@
         navTabSelected: 'contact'
       }
     },
-    created() {
+    activated() {
       this.userName = Cache.get('user_name')
       this.icon = this.decode(Cookie.get('currentUserIcon')) === 'null' ? '' : this.decode(Cookie.get('currentUserIcon'))
       this.getData()
     },
     methods: {
+      logout() {
+        this.axios.get(logoutURL, {}).then(response => {
+          Cache.clear()
+          EventBus.$emit('Kalix_Logout')
+          this.navTabSelected = 'contact'
+          this.$router.push({path: '/login'})
+        })
+      },
       onRestorem() {
         this.isMini = false
       },
@@ -146,6 +162,10 @@
       onNavTabClick(value) {
         this.navTabSelected = value
       },
+      /**
+       * 获取组织机构
+       *
+       */
       getData() {
         let url = '/camel/rest/orgs?node=root'
         this.axios.request({
@@ -172,6 +192,10 @@
     },
     computed: {
       bindCls() {
+        switch (this.showState) {
+          case ImState.original:
+            break
+        }
         return (this.isMini ? 'mini' : '')
       },
       styleObject() {
@@ -194,13 +218,14 @@
     top 5%
     height 80%
     left 50%
-    margin-left -666px
-    /*transition all .5s*/
-
+    margin-left -504px
     &.mini
       animation f1 .3s linear
       animation-fill-mode forwards
-
+    &.move
+      margin-left -605px
+    &.hide
+      opacity 0
     .im2
       /*height 100%*/
       padding 15px
@@ -268,6 +293,9 @@
           background-color #ae935c
           display flex
           border-radius $borderRadius $borderRadius 0 0
+          border 1px solid #a8925f
+          border-bottom 1px solid #cbbb7a
+          box-sizing border-box
           .im-hd_title
             line-height 55px
             text-align center
@@ -294,7 +322,7 @@
       width 100%
       bottom 0
       left 0
-      border 1px solid #cbbb7a
+      border 1px solid #e6dbb1
       background url("./nav_tab_item_bg.png") 50% 0 repeat-x
       border-radius: 0 0 $borderRadius $borderRadius
       .nav_tab

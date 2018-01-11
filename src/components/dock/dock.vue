@@ -22,7 +22,7 @@
         menuList: []
       }
     },
-    created() {
+    activated() {
       this.initMenu()
     },
     mounted() {
