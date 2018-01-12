@@ -24,13 +24,15 @@ const roleBtnList = [
   },
   {
     id: 'addUser',
-    title: '添加用户',
+    title: '用户',
+    toolTipTitle: '添加用户',
     isShow: true,   // 是否显示
     isPermission: true  // 是否进行权限认证
   },
   {
     id: 'auth',
-    title: '权限分配',
+    title: '权限',
+    toolTipTitle: '权限分配',
     isShow: true,   // 是否显示
     isPermission: true  // 是否进行权限认证
   }

@@ -62,7 +62,7 @@
         })
       },
       getCheckedUsers() {
-        let userCheckedUrl = this.targetURL + '/' + this.ids[0] + '/users/ids'
+        let userCheckedUrl = this.targetURL + '/' + this.ids[0] + '/roles/ids'
         this.axios.get(userCheckedUrl, {}).then(response => {
           if (response.data && response.data.length) {
             this.userChecked = response.data
@@ -75,7 +75,7 @@
         this.ids[1] = this.userIds
         this.axios.request({
           method: 'POST',
-          url: `${this.targetURL}/${this.formModel.id}/users`,
+          url: `${this.targetURL}/${this.formModel.id}/roles`,
           data: this.ids,
           params: {}
         }).then(response => {
