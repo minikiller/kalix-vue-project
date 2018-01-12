@@ -5,15 +5,15 @@
 -->
 <template lang="pug">
   div.rhf-container
-    div.rhf-tt
+    div.rhf-tt {{formModel.docCaption}}
     div.rhf-hd
       div.fl.number 吉动院字〔2017〕X号
       div.fr.issuer 签发人：
         span.issuer-name 郑立国
     div.rhf-bd(ref="rhfDd")
       div.rhf-article()
-        div.title {{formModel.name}}
-        div.content {{formModel.content}}
+        div.title {{formModel.title}}
+        div.content {{formModel.docContent}}
       div.rhf-ft(ref="rhfFt")
         div.rhf-aside
           div 吉林动画学院
@@ -56,7 +56,7 @@
     .rhf-tt
       position relative
       z-index 1
-      font-size 65px
+      font-size 60px
       color #ff0000
       text-align center
       font-family '宋体'
