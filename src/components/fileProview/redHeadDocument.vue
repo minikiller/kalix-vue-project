@@ -93,7 +93,7 @@
     .rhf-article
       font-size 16px
       line-height 2em
-      padding 1.5em 16px
+      padding 2em 16px
       font-family '宋体'
       .title
         margin 0 auto 30px
