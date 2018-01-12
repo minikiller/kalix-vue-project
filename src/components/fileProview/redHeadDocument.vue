@@ -5,11 +5,12 @@
 -->
 <template lang="pug">
   div.rhf-container
-    div.rhf-tt {{formModel.docCaption}}
+    div.rhf-tt {{formModel.title}}
     div.rhf-hd
-      div.fl.number 吉动院字〔2017〕X号
-      div.fr.issuer 签发人：
-        span.issuer-name 郑立国
+      div.rhf-hd_wrapper
+        div.fl.number 吉动院字〔2017〕X号
+        div.fr.issuer 签发人：
+          span.issuer-name 郑立国
     div.rhf-bd(ref="rhfDd")
       div.rhf-article()
         div.title {{formModel.title}}
@@ -42,8 +43,12 @@
   }
 </script>
 <style scoped lang="stylus" type="text/stylus">
-  .rhf-container
+  mainContainer()
     width 790px
+    margin 0 auto
+
+  .rhf-container
+    width 1000px
     margin 0 auto
     font-family '仿宋'
     position relative
@@ -62,15 +67,18 @@
       font-family '宋体'
       line-height 3em
       min-height 195px
+      padding-top 20px
 
     .rhf-hd
+      mainContainer()
       position relative
       z-index 1
-      border-bottom 2px solid #ff0000
       font-size 16px
-      padding 0 1em
       line-height 2
-      overflow hidden
+      .rhf-hd_wrapper
+        padding 0 1em
+        border-bottom 2px solid #ff0000
+        overflow hidden
       .issuer-name
         font-family '楷体'
 
@@ -81,8 +89,9 @@
       width 100%
       min-height 100%
       box-sizing border-box
-      padding-top 229px
+      padding-top 249px
       padding-bottom 191px
+      border 1px solid #cccccc
 
     .rhf-ft
       position absolute
@@ -91,11 +100,13 @@
       left 0
 
     .rhf-article
+      mainContainer()
       font-size 16px
       line-height 2em
       padding 2em 16px
       font-family '宋体'
       overflow hidden
+      box-sizing border-box
       .title
         margin 0 auto 30px
         font-size 25px
@@ -106,12 +117,15 @@
         margin 0 auro
         line-height 35px
     .rhf-aside
+      mainContainer()
+      box-sizing border-box
       text-align right
       font-size 16px
       line-height 2
       padding 1.5em 1em
 
     .rhf-footnote
+      mainContainer()
       border-top 2px solid #000000
       border-bottom 2px solid #000000
       margin-bottom 2.5em
