@@ -7,7 +7,7 @@
   keep-alive
     base-table(bizKey="hardwareinfo" title='硬件信息比对日志列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
      v-bind:bizSearch="'MonitorHardwareLogSearch'" v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList"
-     v-bind:bizDialog="bizDialog")
+     v-bind:bizDialog="bizDialog" v-bind:customToolBar="customToolBar")
       template(slot="tableColumnSlot")
         el-table-column(prop="mac" label="MAC地址" width="280" align="center")
         el-table-column(prop="ip" label="IP地址" width="280" align="center")
@@ -31,7 +31,8 @@
       return {
         btnList: LogToolbarList,
         toolbarBtnList: [
-          {id: 'add', isShow: false}
+          {id: 'add', isShow: false},
+          {id: 'customBtn1', icon: 'icon-edit', title: '邮箱配置', isShow: true}
         ],
         targetURL: HardwareLogURL,
         tableFields: [
@@ -41,7 +42,8 @@
           {prop: 'comparison', label: '比对结果'}
         ],
         bizDialog: [
-          {id: 'view', dialog: 'MonitorHardwareLogView'}
+          {id: 'view', dialog: 'MonitorHardwareLogView'},
+          {id: 'customBtn1', dialog: 'MonitorHardwareLogMail'}
         ]
       }
     },
@@ -49,6 +51,12 @@
       BaseTable
     },
     created() {
+      const that = this
+      this.customToolbarClickEvents = {
+        customBtn1() {
+          that.customEventBtn1()
+        }
+      }
     },
     activated() {
       console.log('c%' + this.bizKey + ' student  is activated', 'color:#ff00fe')
@@ -57,6 +65,23 @@
       console.log(this.bizKey + '  is deactivated')
     },
     methods: {
+      customToolBar(btnId, baseTable) {
+        switch (btnId) {
+          case 'customBtn1':
+            let that = baseTable
+            let dig =
+              baseTable.bizDialog.filter((item) => {
+                return item.id === 'customBtn1'
+              })
+            baseTable.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+//              this.$emit('update:formModel', row)
+//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('邮箱配置', false, {})
+            }, 20)
+            break
+        }
+      }
     }
   }
 </script>
