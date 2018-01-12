@@ -62,6 +62,7 @@ const workflowBtnList = [
     title: '进度',
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
+    toolTipTitle: '查看流程进度',
     cond: startedCond
   },
   {
@@ -69,6 +70,7 @@ const workflowBtnList = [
     title: '启动',
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
+    toolTipTitle: '启动流程',
     cond: unstartCond
   },
   {
@@ -76,6 +78,7 @@ const workflowBtnList = [
     title: '附件',
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
+    toolTipTitle: '附件查看',
     cond: unstartCond
   }
 ]
