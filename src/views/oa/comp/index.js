@@ -80,27 +80,35 @@ const workflowBtnList = [
   }
 ]
 
+const startFun = (row, btnId, requestUrl, that) => {
+  that.$confirm('流程启动后业务数据将无法修改！确定要启动吗?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    return Vue.axios.request({
+      method: 'GET',
+      url: requestUrl + row.id
+    })
+  }).then((res) => {
+    Message.processResult(res)
+    EventBus.$emit(ON_REFRESH_DATA)
+  })
+}
+
+const progressFun = (row, btnId, requestUrl, that) => {
+  EventBus.$emit('processTask' + '-' + ON_INIT_DIALOG_DATA, row)
+  that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+}
+
 const customTableTool = (row, btnId, requestUrl, that) => {
   switch (btnId) {
     case 'start': { // 流程启动
-      that.$confirm('流程启动后业务数据将无法修改！确定要启动吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        return Vue.axios.request({
-          method: 'GET',
-          url: requestUrl + row.id
-        })
-      }).then((res) => {
-        Message.processResult(res)
-        EventBus.$emit(ON_REFRESH_DATA)
-      })
+      this.startFun(row, btnId, requestUrl, that)
       break
     }
     case 'progress' : {
-      EventBus.$emit('processTask' + '-' + ON_INIT_DIALOG_DATA, row)
-      that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+      this.progressFun(row, btnId, requestUrl, that)
       break
     }
   }
@@ -140,4 +148,4 @@ const uneditableWorkflowBtnList = [
   }
 ]
 
-export {registerComp, workflowBtnList, customTableTool, uneditableWorkflowBtnList}
+export {registerComp, workflowBtnList, customTableTool, uneditableWorkflowBtnList, progressFun, startFun}
