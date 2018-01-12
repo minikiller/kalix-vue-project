@@ -66,6 +66,7 @@ MeetingroomURL  = "camel/rest/meetingrooms"
 RedheadApplyURL  = "camel/rest/redheadapplys"
 RedheadApplyStartURL  = "/camel/rest/redheadapplys/workflow/startProcess?id="
 DocumentURL  = "camel/rest/documents"
+DocumentAbolishURL = "camel/rest/documents/abolish?id="
 
 # 需要自动注册成全局的Meetingroom组件
 [[OaMeetingroomComponent]]
@@ -338,17 +339,5 @@ DocumentURL  = "camel/rest/documents"
 [[DetailToolButtonList]]
   id = "delete"
   title = "删除"
-  isShow = true
-  isPermission = true
-
-# table-document(文号管理) 的按钮定义
-[[DocumentToolButtonList]]
-  id = "view"
-  title = "查看"
-  isShow = true
-  isPermission = true
-[[DocumentToolButtonList]]
-  id = "abolish"
-  title = "废除"
   isShow = true
   isPermission = true

@@ -33,10 +33,14 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {DocumentURL, DocumentComponent, DocumentToolButtonList} from '../config.toml'
+  import {DocumentURL, DocumentComponent, RedheadApplyURL, DocumentAbolishURL} from '../config.toml'
+  import {DocumentToolButtonList} from '../document/index'
   import {registerComponent} from '@/api/register'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import Message from 'common/message'
+  import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
+  import EventBus from 'common/eventbus'
 
   // 注册全局组件
   registerComponent(DocumentComponent)
@@ -69,7 +73,9 @@
 //        ],
         bizDialog: [
           {id: 'view', dialog: 'OaDocumentView'}
-        ]
+        ],
+        redheadApplyURL: RedheadApplyURL,
+        documentAbolishURL: DocumentAbolishURL
       }
     },
     components: {
@@ -84,26 +90,27 @@
         switch (btnId) {
           // 废除文号
           case 'abolish': {
-            let warnInfo = '确定要废除该文号吗？'
-            table.$confirm(warnInfo, '警告', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-//              return this.axios.request({
-//                method: 'PUT',
-//                url: this.targetURL + '/' + row.id,
-//                params: {},
-//                data: {
-//                  id: row.id,
-//                  available: (row.available === 1 ? 0 : 1)
-//                }
-//              })
-//            }).then((res) => {
-//              console.log(res)
-//              Message.processResult(res)
-//              EventBus.$emit(ON_REFRESH_DATA)
-              alert('废除操作')
+            this.axios.request({
+              method: 'GET',
+              url: this.redheadApplyURL + '/' + row.redheadId,
+              params: {}
+            }).then((res) => {
+              let docStatus = res.data.docStatus
+              let warnInfo = '使用该文号的文件状态为[' + docStatus + '],确定要废除该文号吗?'
+              table.$confirm(warnInfo, '警告', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.axios.request({
+                  method: 'GET',
+                  url: this.documentAbolishURL + row.id,
+                  params: {}
+                }).then((res) => {
+                  Message.processResult(res)
+                  EventBus.$emit(ON_REFRESH_DATA)
+                })
+              })
             })
             break
           }
