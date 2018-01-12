@@ -213,6 +213,9 @@ DocumentAbolishURL = "camel/rest/documents/abolish?id="
 [[RedheadApplyComponent]]
   path = "oa/redheadapply/redheadApplySearch"
   name = "OaRedheadApplySearch"
+[[RedheadApplyComponent]]
+  path = "oa/redheadapply/redheadPreview"
+  name = "OaRedheadPreview"
 
 # 需要自动注册成全局的Candidate(应聘人员管理)组件
 [[CandidateComponent]]

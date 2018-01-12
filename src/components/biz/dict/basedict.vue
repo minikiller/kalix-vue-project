@@ -30,7 +30,7 @@
         tableFields: [
           {prop: 'type', label: '类型'},
           {prop: 'label', label: '签名'},
-//          {prop: 'value', label: '数值'},
+          {prop: 'value', label: '数值'},
           {prop: 'description', label: '备注'},
           {prop: 'createBy', label: '创建人'},
           {prop: 'creationDate', label: '创建日期'}

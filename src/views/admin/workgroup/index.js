@@ -24,13 +24,15 @@ const workgroupBtnList = [
   },
   {
     id: 'addUser',
-    title: '添加用户',
+    title: '用户',
+    toolTipTitle: '添加用户',
     isShow: true,   // 是否显示
     isPermission: true  // 是否进行权限认证
   },
   {
     id: 'addRole',
-    title: '添加角色',
+    title: '添加',
+    toolTipTitle: '添加角色',
     isShow: true,   // 是否显示
     isPermission: true  // 是否进行权限认证
   }
