@@ -95,6 +95,7 @@
       line-height 2em
       padding 2em 16px
       font-family '宋体'
+      overflow hidden
       .title
         margin 0 auto 30px
         font-size 25px
