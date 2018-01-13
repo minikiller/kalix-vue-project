@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 102603 */
-  src: url('//at.alicdn.com/t/font_102603_gy7p8za5nfa5g66r.eot');
-  src: url('//at.alicdn.com/t/font_102603_gy7p8za5nfa5g66r.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_102603_gy7p8za5nfa5g66r.woff') format('woff'),
-  url('//at.alicdn.com/t/font_102603_gy7p8za5nfa5g66r.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_102603_gy7p8za5nfa5g66r.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.eot');
+  src: url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -524,10 +524,12 @@
 
 /*art*/
 .icon-art:before{content: "\e681";}
-.icon-art-candidate:before{content: "\e683";}
-.icon-art-recruit:before{content: "\e682";}
-.icon-art-function:before{content: "\e686";}
-.icon-art-major:before{content: "\e685";}
+.icon-art-recruit:before{content: "\e693";}
+.icon-art-recruit-candidate:before{content: "\e683";}
+.icon-art-recruit-recruit:before{content: "\e682";}
+.icon-art-system-company:before{content: "\e68d";}
+.icon-art-system-function:before{content: "\e686";}
+.icon-art-system-major:before{content: "\e685";}
 
 /*hardware*/
 .icon-hardware:before{content: "\e6c3";}

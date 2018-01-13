@@ -23,7 +23,9 @@
           v-bind:row-class-name="tableRowClassName"
           v-loading.body="loading" fit
           v-bind:height="tableHeight"
+          highlight-current-row
           v-on:selection-change="onTableSelectionChange"
+          v-on:row-click="onTableRowClick"
           header-cell-class-name="base-table-th"
           cell-class-name="base-table-cell")
             //table的字段
@@ -246,6 +248,9 @@
       onTableSelectionChange(val) {
         this.deleteList = val
       },
+      onTableRowClick(row, event, column) {
+        this.$emit('onTableRowClick', row, event, column)
+      },
       setDictDefine(_data) { // 处理数据字典
         this.dictDefine.forEach((item) => {
           //  获取 对应的键值对 对象
@@ -414,6 +419,9 @@
         this.getData()
       },
       getData() {
+        if (!this.targetURL) {
+          return
+        }
         let that = this
         console.log('baseTable', this.targetURL)
         this.loading = true
@@ -494,6 +502,9 @@
         if (this.$refs.kalixTableContainer && this.$refs.kalixTableContainer.clientHeight) {
           this.tableHeight = this.$refs.kalixTableContainer.clientHeight
         }
+      },
+      clearData() {
+        this.tableData = []
       }
     },
     components: {

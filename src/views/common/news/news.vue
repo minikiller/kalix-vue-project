@@ -8,7 +8,8 @@
   keep-alive
     base-table(bizKey="news" title='新闻列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
     v-bind:bizDialog="bizDialog"
-    bizSearch="CommonNewsSearch" v-bind:btnList="btnList")
+    bizSearch="CommonNewsSearch" v-bind:btnList="btnList"
+    v-bind:customTableTool="customTableTool")
 </template>
 
 <script type="text/ecmascript-6">
@@ -33,13 +34,32 @@
         bizDialog: [
           {id: 'view', dialog: 'CommonNewsView'},
           {id: 'edit', dialog: 'CommonNewsAdd'},
-          {id: 'add', dialog: 'CommonNewsAdd'}
+          {id: 'add', dialog: 'CommonNewsAdd'},
+          {id: 'preview', dialog: 'CommonNotePreview'}
         ]
       }
     },
     created() {
     },
-    methods: {},
+    methods: {
+      customTableTool(row, btnId, that) {
+        switch (btnId) {
+          case 'preview': { // 启用/停用
+            console.log('开始预览咯！！！')
+            that.whichBizDialog = ''
+            let dig =
+              that.bizDialog.filter((item) => {
+                return item.id === 'preview'
+              })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.open(row)
+            }, 20)
+            break
+          }
+        }
+      }
+    },
     components: {
       BaseTable
     }

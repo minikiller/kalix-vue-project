@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-on:input="change($event)")
+  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-bind:disabled="disabled" v-on:input="change($event)" style="width:100%;")
     el-option(v-for="item in options"
     v-bind:key="item[id]"
     v-bind:label="item[label]"
@@ -29,6 +29,9 @@
       },
       id: {
         default: 'id'
+      },
+      disabled: {
+        type: Boolean, default: false
       }
     },
     data() {
@@ -43,7 +46,7 @@
     methods: {
       initOptions() {
         const DictKey = `${this.appName.toUpperCase()}-KEY`
-        if (Cache.get(DictKey) !== undefined) {
+        if (!Cache.get(DictKey)) {
 //          console.log('this.requestUrl 111:')
           this.$http
             .get(this.requestUrl, {
@@ -69,12 +72,10 @@
           return e.id === value
         })
         this.$emit('selectChange', item)
-        console.log('newValue:', item)
       }
     },
     watch: {
       value(newValue, oldValue) {
-        console.log('newValue:', newValue)
         this.currentValue = newValue
 //        this.$emit('input', newValue)
       }
