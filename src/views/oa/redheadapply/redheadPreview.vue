@@ -19,9 +19,6 @@
         formModel: Object.assign({}, {})
       }
     },
-    mounted() {
-      this.$refs.previewWrapper.style.height = (window.innerHeight - 100) + 'px'
-    },
     methods: {
       close() {
         this.visible = false
@@ -31,6 +28,12 @@
         if (row) {
           this.formModel = row
         }
+        this._setStyle()
+      },
+      _setStyle() {
+        setTimeout(() => {
+          this.$refs.previewWrapper.style.height = (window.innerHeight - 100) + 'px'
+        }, 20)
       }
     },
     components: {
