@@ -42,12 +42,11 @@
       this.$refs.rhfDd.style.paddingBottom = this.$refs.rhfFt.offsetHeight + 'px'
     },
     data() {
-      return {
-        filters: {
-          formatLocalDate(val) {
-            return formatDate(val, 'yyyy年MM月dd日')
-          }
-        }
+      return {}
+    },
+    filters: {
+      formatLocalDate(val) {
+        return formatDate(new Date(val), 'yyyy年MM月dd日')
       }
     }
   }
