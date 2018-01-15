@@ -45,17 +45,8 @@
         data: {
         }
       }).then(response => {
-       // response = response.body
         if (response.data) {
-          this.items = JSON.parse(response.data.msg)
-//          for (let i = 0; i < obj.length; i++) {
-//            this.items.push(obj[i])
-//          }
-
-          console.log('---------------->', this.items)
-//          console.log(obj[0].address)
-//          console.log(obj[0].mail)
-        //  this.items.push
+          this.items = response.data.data
         } else {
          // Message.success('重置失败')
         }
