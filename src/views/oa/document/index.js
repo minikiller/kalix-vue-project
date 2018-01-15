@@ -4,7 +4,7 @@
  * @returns {boolean}
  */
 const startCond = (scope) => {
-  return scope.row.status === '使用中'
+  return scope.row.status === '已废除'
 }
 
 /**
