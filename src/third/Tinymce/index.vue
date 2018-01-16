@@ -79,7 +79,7 @@ export default {
         imagetools_cors_hosts: ['wpimg.wallstcn.com', 'wallstreetcn.com'],
         imagetools_toolbar: 'watermark',
         default_link_target: '_blank',
-        font_formats: 'Andale Mono=andale mono,times;\u5b8b\u4f53=\u5b8b\u4f53;',
+        font_formats: '微软雅黑=\'微软雅黑\';宋体=\'宋体\';黑体=\'黑体\';仿宋=\'仿宋\';楷体=\'楷体\';隶书=\'隶书\';幼圆=\'幼圆\';Arial=\'Arial\';',
         link_title: false,
         init_instance_callback: editor => {
           if (_this.value) {
