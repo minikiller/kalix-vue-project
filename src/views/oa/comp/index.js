@@ -62,6 +62,7 @@ const workflowBtnList = [
     title: '进度',
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
+    toolTipTitle: '查看流程进度',
     cond: startedCond
   },
   {
@@ -69,6 +70,7 @@ const workflowBtnList = [
     title: '启动',
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
+    toolTipTitle: '启动流程',
     cond: unstartCond
   },
   {
@@ -76,31 +78,40 @@ const workflowBtnList = [
     title: '附件',
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
+    toolTipTitle: '附件查看',
     cond: unstartCond
   }
 ]
 
+const startFun = (row, btnId, requestUrl, that) => {
+  that.$confirm('流程启动后业务数据将无法修改！确定要启动吗?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    return Vue.axios.request({
+      method: 'GET',
+      url: requestUrl + row.id
+    })
+  }).then((res) => {
+    Message.processResult(res)
+    EventBus.$emit(ON_REFRESH_DATA)
+  })
+}
+
+const progressFun = (row, btnId, requestUrl, that) => {
+  EventBus.$emit('processTask' + '-' + ON_INIT_DIALOG_DATA, row)
+  that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+}
+
 const customTableTool = (row, btnId, requestUrl, that) => {
   switch (btnId) {
     case 'start': { // 流程启动
-      that.$confirm('流程启动后业务数据将无法修改！确定要启动吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        return Vue.axios.request({
-          method: 'GET',
-          url: requestUrl + row.id
-        })
-      }).then((res) => {
-        Message.processResult(res)
-        EventBus.$emit(ON_REFRESH_DATA)
-      })
+      this.startFun(row, btnId, requestUrl, that)
       break
     }
     case 'progress' : {
-      EventBus.$emit('processTask' + '-' + ON_INIT_DIALOG_DATA, row)
-      that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看')
+      this.progressFun(row, btnId, requestUrl, that)
       break
     }
   }
@@ -140,4 +151,4 @@ const uneditableWorkflowBtnList = [
   }
 ]
 
-export {registerComp, workflowBtnList, customTableTool, uneditableWorkflowBtnList}
+export {registerComp, workflowBtnList, customTableTool, uneditableWorkflowBtnList, progressFun, startFun}

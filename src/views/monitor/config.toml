@@ -6,6 +6,8 @@ MonitorDictsTypesListURL = "/camel/rest/monitor/dicts/types/list"
 HardwareInfoURL = "/camel/rest/hardwareInfos"
 restHardwareInfoURL = "/camel/rest/restHardwareinfos"
 HardwareLogURL= "/camel/rest/hardwarelogs"
+HardwareLogMailURL= "/camel/rest/restHardwareMails"
+HardwareLogConfigureMailURL="camel/rest/configureHardwareMails"
 SignupURL = "/camel/rest/signups"
 signupBtnPermissionPrefix = "research:researchCompetitionModule:competitionSigninMenu:"
 competitBtnPermissionPrefix = "research:researchCompetitionModule:competitionInfoMenu:"
@@ -29,6 +31,9 @@ MonitorCacheKey = "MONITOR-DICT-KEY"
  [[HardwarelogComponent]]
    path = "monitor/hardwarelog/hardwarelogView"
    name = "MonitorHardwareLogView"
+ [[HardwarelogComponent]]
+   path = "monitor/hardwarelog/hardwarelogMail"
+   name = "MonitorHardwareLogMail"
 
 
 

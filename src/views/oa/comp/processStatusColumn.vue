@@ -14,17 +14,19 @@
     filters: {
       statusFilter(status) {
         const statusMap = {
-          0: 'danger',
-          1: 'warning',
-          2: 'success'
+          0: 'warning',
+          1: 'info',
+          2: 'success',
+          3: 'danger'
         }
         return statusMap[status]
       },
       dictFilter(value) {
         const valueMap = {
-          2: '已结束',
+          0: '未申请',
           1: '处理中',
-          0: '未申请'
+          2: '已结束',
+          3: '已中止'
         }
         return valueMap[value]
       }

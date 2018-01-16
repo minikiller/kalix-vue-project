@@ -1,9 +1,9 @@
 
 /**
- * 角色操作按钮定义
+ * 工作组操作按钮定义
  * @type {[null,null,null,null,null]}
  */
-const roleBtnList = [
+const workgroupBtnList = [
   {
     id: 'view',
     title: '查看',
@@ -30,12 +30,12 @@ const roleBtnList = [
     isPermission: true  // 是否进行权限认证
   },
   {
-    id: 'auth',
-    title: '权限',
-    toolTipTitle: '权限分配',
+    id: 'addRole',
+    title: '添加',
+    toolTipTitle: '添加角色',
     isShow: true,   // 是否显示
     isPermission: true  // 是否进行权限认证
   }
 ]
 
-export {roleBtnList}
+export {workgroupBtnList}

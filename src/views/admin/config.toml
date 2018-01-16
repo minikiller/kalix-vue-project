@@ -76,7 +76,8 @@ AdminCacheKey = "ADMIN-DICT-KEY"
   isPermission = true
 [[ToolButtonList]]
   id = "addUser"
-  title = "添加用户"
+  title = "用户"
+  toolTipTitle = "添加用户"
   isShow = true
   isPermission = true
 
@@ -89,6 +90,12 @@ AdminCacheKey = "ADMIN-DICT-KEY"
 [[WorkGroupComponent]]
  path = "admin/workgroup/workgroupSearch"
  name = "AdminWorkGroupSearch"
+[[WorkGroupComponent]]
+ path = "admin/workgroup/workgroupAddUser"
+ name = "AdminWorkGroupAddUser"
+[[WorkGroupComponent]]
+ path = "admin/workgroup/workgroupAddRole"
+ name = "AdminWorkGroupAddRole"
 
 [[UserComponent]]
  path = "admin/user/userView"

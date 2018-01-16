@@ -66,6 +66,7 @@ MeetingroomURL  = "camel/rest/meetingrooms"
 RedheadApplyURL  = "camel/rest/redheadapplys"
 RedheadApplyStartURL  = "/camel/rest/redheadapplys/workflow/startProcess?id="
 DocumentURL  = "camel/rest/documents"
+DocumentAbolishURL = "camel/rest/documents/abolish?id="
 
 # 需要自动注册成全局的Meetingroom组件
 [[OaMeetingroomComponent]]
@@ -212,6 +213,9 @@ DocumentURL  = "camel/rest/documents"
 [[RedheadApplyComponent]]
   path = "oa/redheadapply/redheadApplySearch"
   name = "OaRedheadApplySearch"
+[[RedheadApplyComponent]]
+  path = "oa/redheadapply/redheadPreview"
+  name = "OaRedheadPreview"
 
 # 需要自动注册成全局的Candidate(应聘人员管理)组件
 [[CandidateComponent]]
@@ -250,9 +254,6 @@ DocumentURL  = "camel/rest/documents"
 [[DocumentComponent]]
   path = "oa/document/documentView"
   name = "OaDocumentView"
-[[DocumentComponent]]
-  path = "oa/document/documentAdd"
-  name = "OaDocumentAdd"
 [[DocumentComponent]]
   path = "oa/document/documentSearch"
   name = "OaDocumentSearch"

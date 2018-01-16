@@ -68,6 +68,7 @@
             method: 'get',
             params: data
           }).then(response => {
+            console.log('%c ==== Group Panel ==== ', 'color:#440000')
             let nowDate = new Date()
             if (response.data && response.data.code !== 401) {
               this.treeData = response.data
