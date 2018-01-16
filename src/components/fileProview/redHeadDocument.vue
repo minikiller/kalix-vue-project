@@ -14,7 +14,7 @@
     div.rhf-bd(ref="rhfDd")
       div.rhf-article()
         div.title {{formModel.title}}
-        div.content(v-html="formModel.docContent")
+        div.content.rhf-article-doc(v-html="formModel.docContent" data-content)
       div.rhf-ft(ref="rhfFt")
         div.rhf-aside
           div 吉林动画学院
@@ -51,6 +51,21 @@
     }
   }
 </script>
+<style lang="stylus" type="text/stylus">
+  .rhf-article-doc[data-content]
+    b, strong
+      font-weight inherit
+      font-weight bolder
+
+    blockquote
+      position relative
+      font-size 16px
+      letter-spacing 1px
+      line-height 28px
+      margin-bottom 40px
+      padding 20px
+      background #f0f2f5
+</style>
 <style scoped lang="stylus" type="text/stylus">
   mainContainer()
     width 790px
