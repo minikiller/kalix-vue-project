@@ -7,6 +7,7 @@ import VueShow from 'views/demo/highcharts/vue-chart.vue'
 import Login from '@/components/login/login'
 import Cache from 'common/cache'
 import Home from '@/components/home/home'
+import Tinymce from 'views/demo/tinymce/tinymce'
 // import QrcodeLogin from 'views/demo/qrcodelogin'
 // 二维码登录
 import ComQrcode from 'views/qrcode/comQrcode'
@@ -25,6 +26,11 @@ const router = new Router({
       path: '/demo',
       name: 'demo',
       component: Hello
+    },
+    {
+      path: '/demo/tiny',
+      name: 'tiny',
+      component: Tinymce
     },
     {
       path: '/qrcode/comqrcode',
