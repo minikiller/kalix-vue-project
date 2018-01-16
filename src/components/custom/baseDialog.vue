@@ -76,9 +76,13 @@
       }
     },
     methods: {
-      submitComplete() { // 提交完成后执行
+      submitComplete(_flag) { // 提交完成后执行
         if (this.submitAfter && typeof (this.submitAfter) === 'function') {
           this.submitAfter(this)
+        } else {
+          if (_flag !== false) {
+            this.onCancelClick()
+          }
         }
       },
       submitAction() {  // 提交
@@ -113,7 +117,7 @@
             })
           } else {
             Message.error('请检查输入项！')
-            this.submitComplete()
+            this.submitComplete(false)
             return false
           }
         })

@@ -3,8 +3,17 @@
  * @param scope
  * @returns {boolean}
  */
-const startCond = (scope) => {
-  return scope.row.status === '已废除'
+const abolishCond = (scope) => {
+  return scope.row.status === '使用中'
+}
+
+/**
+ * 发文判断条件
+ * @param scope
+ * @returns {boolean}
+ */
+const publishCond = (scope) => {
+  return (scope.row.status === '使用中' && scope.row.docStatus === '审批通过')
 }
 
 /**
@@ -19,11 +28,18 @@ const DocumentToolButtonList = [
     isPermission: true  // 是否进行权限认证
   },
   {
+    id: 'publish',
+    title: '发文',
+    isShow: true,   // 是否显示
+    isPermission: true,  // 是否进行权限认证
+    cond: publishCond
+  },
+  {
     id: 'abolish',
     title: '废除',
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
-    cond: startCond
+    cond: abolishCond
   }
 ]
 

@@ -10,6 +10,7 @@ const FormModel = {
   title: '',                  // 文题
   docUrl: '',                 // 发文地址
   docContent: '',             // 文档内容
+  docStatus: '',              // 文档状态
   creationDate: null,         // 创建时间
   updateDate: null            // 更新时间
 }

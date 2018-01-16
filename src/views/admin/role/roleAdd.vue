@@ -4,7 +4,7 @@
       el-form-item(label="所属应用" prop="app" v-bind:rules="rules.app" v-bind:label-width="labelWidth")
         kalix-select(placeholder="请选择应用" style="width:100%" appName="applications"
         v-bind:requestUrl="requestUrl" label="text" v-model="formModel.app" v-on:selectChange="selectChange")
-      el-form-item(label="角色名称" prop="name" v-bind:label-width="labelWidth")
+      el-form-item(label="角色名称" prop="name" v-bind:rules="rules.name" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.name")
       el-form-item(label="备注" prop="remark" v-bind:label-width="labelWidth")
         el-input(type="textarea" v-bind:rows="2" v-model="formModel.remark")
