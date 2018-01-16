@@ -14,7 +14,7 @@
     div.rhf-bd(ref="rhfDd")
       div.rhf-article()
         div.title {{formModel.title}}
-        div.content {{formModel.docContent}}
+        div.content(v-html="formModel.docContent")
       div.rhf-ft(ref="rhfFt")
         div.rhf-aside
           div 吉林动画学院
