@@ -106,6 +106,7 @@
           id: 'preview',
           title: '预览',
           isShow: true,   // 是否显示
+          toolTipTitle: '红头文件预览',
           isPermission: true  // 是否进行权限认证
         })
       }

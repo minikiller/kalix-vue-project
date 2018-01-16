@@ -8,7 +8,7 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {appsURL, appsStartURL, appsStopURL, applicationBtnPermissionPrefix, ApplicationComponent} from '../config.toml'
+  import {applicationsURL, appsStartURL, appsStopURL, applicationBtnPermissionPrefix, ApplicationComponent} from '../config.toml'
   import {applicationBtnList} from '../application/index'
   import {registerComponent} from '@/api/register'
   // import Message from 'common/message'
@@ -25,7 +25,7 @@
       return {
         btnList: applicationBtnList,
         buttonPermissionPrefix: applicationBtnPermissionPrefix,
-        targetURL: appsURL,
+        targetURL: applicationsURL,
         startURL: appsStartURL,
         stopURL: appsStopURL,
         toolbarBtnList: [

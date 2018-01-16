@@ -1,12 +1,11 @@
 <template lang="pug">
   el-dialog.dialog-form(v-bind:visible="visible"
-  top="5vh"
-  width="1000px"
+  fullscreen
   custom-class="previewDialog"
   v-bind:before-close="close"
   v-bind:close-on-click-modal="false"
   v-bind:append-to-body="true")
-    div.preview-wrapper
+    div.preview-wrapper(ref="previewWrapper")
       red-head-document(v-bind:formModel="formModel")
 </template>
 <script type="text/ecmascript-6">
@@ -20,8 +19,6 @@
         formModel: Object.assign({}, {})
       }
     },
-    mounted() {
-    },
     methods: {
       close() {
         this.visible = false
@@ -31,6 +28,12 @@
         if (row) {
           this.formModel = row
         }
+        this._setStyle()
+      },
+      _setStyle() {
+        setTimeout(() => {
+          this.$refs.previewWrapper.style.height = (window.innerHeight - 100) + 'px'
+        }, 20)
       }
     },
     components: {
@@ -44,7 +47,7 @@
     .el-dialog__header
       padding 0
     .el-dialog__body
-      padding 4px
+      padding 50px 4px
 </style>
 <style scoped lang="stylus" type="text/stylus">
   .preview-wrapper

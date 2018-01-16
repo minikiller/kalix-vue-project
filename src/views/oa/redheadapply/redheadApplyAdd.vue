@@ -21,6 +21,8 @@
           <!--kalix-dict-select(v-model="formModel.docType" appName="oa" dictType="文号类型")-->
       el-form-item.s-flex_item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")
         el-input(v-model="formModel.docContent" type="textarea")
+      el-form-item.s-flex_item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")
+        tinymce(v-model="formModel.docContent")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="打印人" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.printer")
@@ -39,7 +41,7 @@
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import FormModel from './model'
-
+  import Tinymce from '@/third/Tinymce'
   export default {
     watch: {
       formModel: {
@@ -143,7 +145,8 @@
     components: {
       KalixOrgSelect: UserOrgSelect,
       KalixDictSelect: BaseDictSelect,
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      Tinymce
     }
   }
 </script>
