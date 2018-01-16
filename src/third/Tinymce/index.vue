@@ -1,18 +1,17 @@
-<template>
-  <div class="tinymce-container editor-container">
-    <textarea class="tinymce-textarea" :id="tinymceId"></textarea>
-    <div class="editor-custom-btn-container">
-     <editorImage  color="#20a0ff" class="editor-upload-btn" @successCBK="imageSuccessCBK"></editorImage>
-      </div>
-  </div>
+<template lang="pug">
+  div.tinymce-container.editor-container
+    textarea.tinymce-textarea(v-bind:id="tinymceId")
+    <!--<div class="editor-custom-btn-container">-->
+     <!--<editorImage  color="#20a0ff" class="editor-upload-btn" @successCBK="imageSuccessCBK"></editorImage>-->
+      <!--</div>-->
 </template>
 
 <script>
-import editorImage from './components/editorImage'
+// import editorImage from './components/editorImage'
 
 export default {
   name: 'tinymce',
-  components: { editorImage },
+  // components: { editorImage },
   props: {
     id: {
       type: String
@@ -90,7 +89,8 @@ export default {
             this.hasChange = true
             this.$emit('input', editor.getContent({ format: 'raw' }))
           })
-        }
+        },
+        language: 'zh_CN'
         // 整合七牛上传
         // images_dataimg_filter(img) {
         //   setTimeout(() => {
