@@ -14,29 +14,23 @@
         kalix-biz-no-column(title="文号")  // 业务编号
         el-table-column(prop="docTypeName" label="文号类型" align="center" width="120")
         el-table-column(prop="year" label="年份" align="center" width="100")
-        el-table-column(prop="status" label="文号状态" align="center" width="100")
-          template(slot-scope="scope")
-            template(v-if="scope.row.status === '使用中'")
-              el-tag(type="success") {{ scope.row.status }}
-            template(v-else-if="scope.row.status === '已撤回'")
-              el-tag(type="warning") {{ scope.row.status }}
-            template(v-else-if="scope.row.status === '已废除'")
-              el-tag(type="danger") {{ scope.row.status }}
-            template(v-else)
-              el-tag {{ scope.row.status }}
+        kalix-status-column
+        el-table-column(prop="title" label="文题" align="center" width="300")
+        kalix-doc-status-column
         el-table-column(prop="docDate" label="发文时间" align="center" width="220")
         el-table-column(prop="docDept" label="发文部门" align="center" width="220")
-        el-table-column(prop="title" label="文题" align="center" width="300")
         kalix-date-column(prop="creationDate" label="创建时间")
         kalix-date-column(prop="updateDate" label="更新时间")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {DocumentURL, DocumentComponent, RedheadApplyURL, DocumentAbolishURL} from '../config.toml'
+  import {DocumentURL, DocumentComponent, RedheadApplyURL, DocumentAbolishURL, DocumentPublishURL} from '../config.toml'
   import {DocumentToolButtonList} from '../document/index'
   import {registerComponent} from '@/api/register'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
+  import StatusColumn from '@/views/oa/comp/statusColumn.vue'
+  import DocStatusColumn from '@/views/oa/comp/docStatusColumn.vue'
   import DateColumn from 'views/oa/comp/dateColumn'
   import Message from 'common/message'
   import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
@@ -75,12 +69,15 @@
           {id: 'view', dialog: 'OaDocumentView'}
         ],
         redheadApplyURL: RedheadApplyURL,
-        documentAbolishURL: DocumentAbolishURL
+        documentAbolishURL: DocumentAbolishURL,
+        documentPublishURL: DocumentPublishURL
       }
     },
     components: {
       BaseTable,
       KalixBizNoColumn: BizNoColumn,
+      KalixStatusColumn: StatusColumn,
+      KalixDocStatusColumn: DocStatusColumn,
       KalixDateColumn: DateColumn
     },
     created() {
@@ -110,6 +107,25 @@
                   Message.processResult(res)
                   EventBus.$emit(ON_REFRESH_DATA)
                 })
+              })
+            })
+            break
+          }
+          // 发文
+          case 'publish': {
+            let warnInfo = '确定要发文吗?'
+            table.$confirm(warnInfo, '警告', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.axios.request({
+                method: 'GET',
+                url: this.documentPublishURL + row.id,
+                params: {}
+              }).then((res) => {
+                Message.processResult(res)
+                EventBus.$emit(ON_REFRESH_DATA)
               })
             })
             break
