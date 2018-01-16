@@ -24,7 +24,7 @@ export default {
       type: Array,
       required: false,
       default() {
-        return ['removeformat undo redo |  bullist numlist | outdent indent | forecolor | fullscreen code', 'bold italic blockquote | h2 p  media link | alignleft aligncenter alignright']
+        return ['removeformat undo redo |  bullist numlist | outdent indent | fontselect | fontsizeselect | backcolor forecolor | fullscreen code', 'bold italic blockquote | h2 p  media link | alignleft aligncenter alignright']
       }
     },
     menubar: {
@@ -79,6 +79,7 @@ export default {
         imagetools_cors_hosts: ['wpimg.wallstcn.com', 'wallstreetcn.com'],
         imagetools_toolbar: 'watermark',
         default_link_target: '_blank',
+        font_formats: 'Andale Mono=andale mono,times;\u5b8b\u4f53=\u5b8b\u4f53;',
         link_title: false,
         init_instance_callback: editor => {
           if (_this.value) {
