@@ -14,19 +14,11 @@
         kalix-biz-no-column(title="文号")  // 业务编号
         el-table-column(prop="docTypeName" label="文号类型" align="center" width="120")
         el-table-column(prop="year" label="年份" align="center" width="100")
-        el-table-column(prop="status" label="文号状态" align="center" width="100")
-          template(slot-scope="scope")
-            template(v-if="scope.row.status === '使用中'")
-              el-tag(type="success") {{ scope.row.status }}
-            template(v-else-if="scope.row.status === '已撤回'")
-              el-tag(type="warning") {{ scope.row.status }}
-            template(v-else-if="scope.row.status === '已废除'")
-              el-tag(type="danger") {{ scope.row.status }}
-            template(v-else)
-              el-tag {{ scope.row.status }}
+        kalix-status-column
+        el-table-column(prop="title" label="文题" align="center" width="300")
+        kalix-doc-status-column
         el-table-column(prop="docDate" label="发文时间" align="center" width="220")
         el-table-column(prop="docDept" label="发文部门" align="center" width="220")
-        el-table-column(prop="title" label="文题" align="center" width="300")
         kalix-date-column(prop="creationDate" label="创建时间")
         kalix-date-column(prop="updateDate" label="更新时间")
 </template>
@@ -37,6 +29,8 @@
   import {DocumentToolButtonList} from '../document/index'
   import {registerComponent} from '@/api/register'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
+  import StatusColumn from '@/views/oa/comp/statusColumn.vue'
+  import DocStatusColumn from '@/views/oa/comp/docStatusColumn.vue'
   import DateColumn from 'views/oa/comp/dateColumn'
   import Message from 'common/message'
   import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
@@ -72,7 +66,8 @@
 //          {prop: 'updateDate', label: '更新时间', width: '160'}
 //        ],
         bizDialog: [
-          {id: 'view', dialog: 'OaDocumentView'}
+          {id: 'view', dialog: 'OaDocumentView'},
+          {id: 'publish', dialog: 'OaDocumentPublish'}
         ],
         redheadApplyURL: RedheadApplyURL,
         documentAbolishURL: DocumentAbolishURL
@@ -81,6 +76,8 @@
     components: {
       BaseTable,
       KalixBizNoColumn: BizNoColumn,
+      KalixStatusColumn: StatusColumn,
+      KalixDocStatusColumn: DocStatusColumn,
       KalixDateColumn: DateColumn
     },
     created() {
@@ -90,31 +87,51 @@
         switch (btnId) {
           // 废除文号
           case 'abolish': {
-            this.axios.request({
-              method: 'GET',
-              url: this.redheadApplyURL + '/' + row.redheadId,
-              params: {}
-            }).then((res) => {
-              let docStatus = res.data.docStatus
-              let warnInfo = '使用该文号的文件状态为[' + docStatus + '],确定要废除该文号吗?'
-              table.$confirm(warnInfo, '警告', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                this.axios.request({
-                  method: 'GET',
-                  url: this.documentAbolishURL + row.id,
-                  params: {}
-                }).then((res) => {
-                  Message.processResult(res)
-                  EventBus.$emit(ON_REFRESH_DATA)
-                })
-              })
-            })
+            this.onAbolish(row, table)
+            break
+          }
+          // 发文
+          case 'publish': {
+            this.onPublish(row, table)
             break
           }
         }
+      },
+      // 废除文号
+      onAbolish(row, table) {
+        this.axios.request({
+          method: 'GET',
+          url: this.redheadApplyURL + '/' + row.redheadId,
+          params: {}
+        }).then((res) => {
+          let docStatus = res.data.docStatus
+          let warnInfo = '使用该文号的文件状态为[' + docStatus + '],确定要废除该文号吗?'
+          table.$confirm(warnInfo, '警告', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.axios.request({
+              method: 'GET',
+              url: this.documentAbolishURL + row.id,
+              params: {}
+            }).then((res) => {
+              Message.processResult(res)
+              EventBus.$emit(ON_REFRESH_DATA)
+            })
+          })
+        })
+      },
+      // 发文
+      onPublish(row, table) {
+        let dig =
+          table.bizDialog.filter((item) => {
+            return item.id === 'publish'
+          })
+        table.whichBizDialog = dig[0].dialog
+        setTimeout(() => {
+          table.$refs.kalixDialog.$refs.kalixBizDialog.open('发文', true, row)
+        }, 20)
       }
     }
   }

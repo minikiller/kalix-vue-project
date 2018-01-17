@@ -65,6 +65,8 @@
       margin-bottom 40px
       padding 20px
       background #f0f2f5
+    em
+      font-style italic
 </style>
 <style scoped lang="stylus" type="text/stylus">
   mainContainer()
