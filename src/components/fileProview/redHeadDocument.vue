@@ -5,20 +5,20 @@
 -->
 <template lang="pug">
   div.rhf-container
-    div.rhf-tt {{formModel.title}}
+    div.rhf-tt {{formModel.docCaption}}
     div.rhf-hd
       div.rhf-hd_wrapper
-        div.fl.number 吉动院字〔2017〕X号
+        div.fl.number {{formModel.businessNo}}
         div.fr.issuer 签发人：
           span.issuer-name 郑立国
     div.rhf-bd(ref="rhfDd")
       div.rhf-article()
         div.title {{formModel.title}}
-        div.content {{formModel.docContent}}
+        div.content.rhf-article-doc(v-html="formModel.docContent" data-content)
       div.rhf-ft(ref="rhfFt")
         div.rhf-aside
           div 吉林动画学院
-          div 2017年X月Ｘ日
+          div {{formModel.creationDate | formatLocalDate}}
         div.rhf-footnote
           div.rhf-footnote_cell
             div.fl 抄送：学校领导，学校各单位、部门。
@@ -28,6 +28,7 @@
 </template>
 <script type="text/ecmascript-6">
   import FormModel from './redHeadDocumentModel'
+  import {formatDate} from 'common/typeFormat'
 
   export default {
     props: {
@@ -39,9 +40,34 @@
     mounted() {
       // 重置文档内容区底部距离
       this.$refs.rhfDd.style.paddingBottom = this.$refs.rhfFt.offsetHeight + 'px'
+    },
+    data() {
+      return {}
+    },
+    filters: {
+      formatLocalDate(val) {
+        return formatDate(new Date(val), 'yyyy年MM月dd日')
+      }
     }
   }
 </script>
+<style lang="stylus" type="text/stylus">
+  .rhf-article-doc[data-content]
+    b, strong
+      font-weight inherit
+      font-weight bolder
+
+    blockquote
+      position relative
+      font-size 16px
+      letter-spacing 1px
+      line-height 28px
+      margin-bottom 40px
+      padding 20px
+      background #f0f2f5
+    em
+      font-style italic
+</style>
 <style scoped lang="stylus" type="text/stylus">
   mainContainer()
     width 790px

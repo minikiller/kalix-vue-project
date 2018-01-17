@@ -13,10 +13,11 @@
   v-bind:submitCustom="submitCustom"
   )
     div.el-form(slot="dialogFormSlot" style="max-height:550px;overflow:auto;")
-      el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
-      show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
-      empty-text="数据加载中!" ref="baseTree"
-      v-on:check-change="checkChange")
+      div(style="border: 1px solid #d0d0d0;")
+        el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
+        show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
+        empty-text="数据加载中!" ref="baseTree"
+        v-on:check-change="checkChange")
 </template>
 
 <script type="text/ecmascript-6">
@@ -102,19 +103,16 @@
       },
       // 封装数据格式
       getIds(array) {
-        console.log('666666666666', array)
         if (array && array.length > 0) {
           for (let i = 0; i < array.length; i++) {
             if (array[i].children) {
               // array[i].disabled = true
-              console.log(array[i].parentId)
               if (array[i].parentId === -1 && array[i].checked) {
                 this.funIds.push('app:' + array[i].id)
               }
               if (array[i].children.length === 0) {
                 // delete array[i].children
                 if (array[i].checked) {
-                  console.log(array[i].parentId)
                   if (array[i].parentId === '-1') {
                     this.funIds.push('app:' + array[i].id)
                   } else {
@@ -132,9 +130,6 @@
         }
       },
       checkChange(a, b, c) {
-        console.log('111111', a)
-        console.log('222222', b)
-        console.log('333333', c)
         if (b) {
           a.checked = true
         } else if (c) {
@@ -155,8 +150,6 @@
         this.funIds.push('fun:root')
         this.getIds(this.treeData)
         this.ids.push(this.funIds.join(','))
-        console.log('mmmmmmmmmmmmmmmnnnnnnnnnnnn', this.treeData)
-        console.log('bbbbbbbbbbbbbbqqqqqqqqqqqqq', this.ids)
         baseDialog.$refs.dialogForm.validate((valid) => {
           if (valid) {
             this.axios.request({

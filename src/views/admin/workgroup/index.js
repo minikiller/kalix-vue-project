@@ -31,7 +31,7 @@ const workgroupBtnList = [
   },
   {
     id: 'addRole',
-    title: '添加',
+    title: '角色',
     toolTipTitle: '添加角色',
     isShow: true,   // 是否显示
     isPermission: true  // 是否进行权限认证

@@ -65,8 +65,12 @@ MeetingroomURL  = "camel/rest/meetingrooms"
 # 红头文件申请
 RedheadApplyURL  = "camel/rest/redheadapplys"
 RedheadApplyStartURL  = "/camel/rest/redheadapplys/workflow/startProcess?id="
+# 文号管理
 DocumentURL  = "camel/rest/documents"
+# 文号管理-废除文号
 DocumentAbolishURL = "camel/rest/documents/abolish?id="
+# 文号管理-发文
+DocumentPublishURL = "camel/rest/documents/publish?id="
 
 # 需要自动注册成全局的Meetingroom组件
 [[OaMeetingroomComponent]]
@@ -257,6 +261,9 @@ DocumentAbolishURL = "camel/rest/documents/abolish?id="
 [[DocumentComponent]]
   path = "oa/document/documentSearch"
   name = "OaDocumentSearch"
+[[DocumentComponent]]
+  path = "oa/document/documentPublish"
+  name = "OaDocumentPublish"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
