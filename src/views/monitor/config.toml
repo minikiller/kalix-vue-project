@@ -4,10 +4,11 @@ MonitorDictsURL = "/camel/rest/monitor/dicts"
 MonitorDictsTypesListURL = "/camel/rest/monitor/dicts/types/list"
 
 HardwareInfoURL = "/camel/rest/hardwareInfos"
-restHardwareInfoURL = "/camel/rest/restHardwareinfos"
+restHardwareInfoURL = "/camel/rest/resetHardwareinfos"
 HardwareLogURL= "/camel/rest/hardwarelogs"
-HardwareLogMailURL= "/camel/rest/restHardwareMails"
+HardwareLogMailURL= "/camel/rest/resetHardwareMails"
 HardwareLogConfigureMailURL="camel/rest/configureHardwareMails"
+
 SignupURL = "/camel/rest/signups"
 signupBtnPermissionPrefix = "research:researchCompetitionModule:competitionSigninMenu:"
 competitBtnPermissionPrefix = "research:researchCompetitionModule:competitionInfoMenu:"
@@ -31,9 +32,9 @@ MonitorCacheKey = "MONITOR-DICT-KEY"
  [[HardwarelogComponent]]
    path = "monitor/hardwarelog/hardwarelogView"
    name = "MonitorHardwareLogView"
- [[HardwarelogComponent]]
-   path = "monitor/hardwarelog/hardwarelogMail"
-   name = "MonitorHardwareLogMail"
+ [[HardwareconfigComponent]]
+   path = "monitor/configure/configureView"
+   name = "MonitorHardwareConfiguer"
 
 
 
@@ -51,7 +52,11 @@ MonitorCacheKey = "MONITOR-DICT-KEY"
   isShow = true    # 是否显示
   isPermission = true   # 是否进行权限认证
 
-
+[[ConfigToolbarList]]
+  id = "edit"
+  title = "编辑"
+  isShow = false
+  isPermission = true
 
 [[LogToolbarList]]
   id = "view"
