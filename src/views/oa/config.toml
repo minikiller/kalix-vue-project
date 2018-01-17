@@ -261,6 +261,9 @@ DocumentPublishURL = "camel/rest/documents/publish?id="
 [[DocumentComponent]]
   path = "oa/document/documentSearch"
   name = "OaDocumentSearch"
+[[DocumentComponent]]
+  path = "oa/document/documentPublish"
+  name = "OaDocumentPublish"
 
 # workflow 的全局注册组件
 [[OaWorkflowComponent]]
