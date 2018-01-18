@@ -7,7 +7,8 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {dataauthURL, ToolButtonList, DataAuthComponent, AdminCacheKey} from '../config.toml'
+  import dataauthBtnList from '../dataauth/index'
+  import {dataauthURL, DataAuthComponent, AdminCacheKey} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
@@ -22,7 +23,7 @@
           targetField: 'typeDict',
           sourceField: 'type'
         }],
-        btnList: ToolButtonList,
+        btnList: dataauthBtnList,
         targetURL: dataauthURL,
         tableFields: [
           {prop: 'appName', label: '应用名称'},
@@ -34,21 +35,21 @@
         bizDialog: [
           {id: 'view', dialog: 'AdminDataAuthView'},
           {id: 'add', dialog: 'AdminDataAuthAdd'},
-          {id: 'edit', dialog: 'AdminDataAuthAdd'},
-          {id: 'addUser', dialog: 'AdminDataAuthAddUser'}
+          {id: 'edit', dialog: 'AdminDataAuthAdd'}
+  //      {id: 'addUser', dialog: 'AdminDataAuthAddUser'}
         ]
       }
     },
     methods: {
       customTableTool(row, btnId, table) {
-        if (btnId === 'addUser') {
-//          this.$refs.myDialog.open()
-          table.whichBizDialog = 'AdminDataAuthAddUser'
-          setTimeout(() => {
-            table.$refs.kalixDialog.open('添加用户', row)
-          }, 200)
-//          table.$refs.myDialog.openDialog('', {})
-        }
+//     if (btnId === 'addUser') {
+//        this.$refs.myDialog.open()
+//        table.whichBizDialog = 'AdminDataAuthAddUser'
+//        setTimeout(() => {
+//          table.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', false, row)
+//        }, 200)
+//        table.$refs.myDialog.openDialog('', {})
+//      }
       }
     },
     components: {

@@ -22,7 +22,7 @@
         el-input(v-bind:value="formModel.applyDate" readonly)
     div
       el-form-item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.docContent")
+        div(v-html="formModel.docContent")
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="部门负责人签字" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.depUser" readonly)
