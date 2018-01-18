@@ -12,7 +12,7 @@
       div.wallpaper-ctrl
         span.wallpaperImg.pre(v-on:click="onChangeBackgroundImg(false)" title="点击切换背景图片")
         span.wallpaperImg.next(v-on:click="onChangeBackgroundImg(true)" title="点击切换背景图片")
-    kalix-im(v-bind:showState="imState")
+    kalix-im(ref="kalixIm")
     kalix-dock(v-on:onClickMac="onClickMac")
     component(v-bind:is="item.view" v-bind:ref="key" v-if="plankList"
     v-for="(item,key) in plankList"
@@ -28,7 +28,6 @@
   import Cache from '@/common/cache.js'
   import EventBus from 'common/eventbus'
   import GroupPanel from '@/components/panel/groupPanel.vue'
-  import TablePanel from '@/components/panel/tablePanel.vue'
   import ImState from '../im/imState'
 
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
@@ -57,12 +56,16 @@
     activated() {
       EventBus.$on('ON_CLOSE_BASETABLE', this.onCloseBaseTable)
       EventBus.$on('ON_CLICK_GROUP_CELL', this.onClickGroupCell)
+      EventBus.$on('ON_GROUP_PANEL_CLOSE', this.onGroupPanelClose)
       EventBus.$on('Kalix_Logout', () => {
         this.plankList = {}
         this.activePlank = ''
       })
     },
     methods: {
+      onGroupPanelClose() {
+        this.$refs.kalixIm.original()
+      },
       onFullScreent() {
         this.isFullScreen = !this.isFullScreen
         this.isFullScreen ? this._requestFullScreen() : this._exitFullscreen()
@@ -99,28 +102,25 @@
       onCloseBaseTable() {
         this.$router.push({path: '/'})
         this.which_to_show = ''
+        this.$refs.kalixIm.original()
       },
       onClickGroupCell(item) {
         if (this.$refs[this.activePlank]) {
           this.$refs[this.activePlank][0].min()
         }
+        this.$refs.kalixIm.moveLeft()
       },
       /**
        * 点击 Duck 图标
        * @param item
        */
       onClickMac(item) {
-        // 修改 im 组件状态
-        this.imState = ImState.hidden
-        // console.log('[onClickMac] ========== BEGIN')
-        // console.log('[onClickMac] item:', item)
-        // console.log('[onClickMac] this.activePlank:', this.activePlank)
-        // console.log('[onClickMac] this:', this)
-        // console.log('[onClickMac] ========== END')
         this.which_to_show = ''
         if (this.$refs[this.activePlank] && this.activePlank !== item.id) {
           this.$refs[this.activePlank][0].min()
         }
+        // 修改 im 组件状态
+        this.$refs.kalixIm.hidden()
         this.activePlank = item.id
         if (!this.plankList[item.id]) {
           this.$set(this.plankList, item.id, {
@@ -193,7 +193,6 @@
       KalixIm,
       KalixDock,
       GroupPanel,
-      TablePanel,
       KalixNav:
       Navigater,
       Welcome:

@@ -10,42 +10,13 @@
     transition(name="ima")
       div.im(v-if="!isMini")
         // 侧栏
-        div.side_bar(v-bind:class="{'show':isShowSideBar}")
-          div.tool-btn.close.side_bar_close
-          div.user_info
-            div.avatar_wrapper
-              div.avatar(v-bind:style="styleObject")
-            div.user_name {{userName}}
-            div.user_org 动画研究院
-          ul.side_list
-            li.side_list_item.selected
-              i.icon(style="background-image: url(/static/images/im/icon-1.png)")
-              | 首页
-            li.side_list_item
-              i.icon(style="background-image: url(/static/images/im/icon-2.png)")
-              | 历史纪录
-            li.side_list_item
-              i.icon(style="background-image: url(/static/images/im/icon-3.png)")
-              | 个人设置
-            li.side_list_item
-              i.icon(style="background-image: url(/static/images/im/icon-4.png)")
-              | 收藏
-            li.side_list_item
-              i.icon(style="background-image: url(/static/images/im/icon-5.png)")
-              | 编辑
+        kalix-side-bar(v-bind:isShow="isShowSideBar" v-bind:user="user")
         // 主内容区
         div.im-wrapper
           div.im-cantainer
             div.im-btn-min(v-on:click="onMinimum")
             // 设置
-            div.im-box(v-show="navTabSelected === 'setup'")
-              div.im-hd
-                div.im-hd_title 设置
-              div.im-bd
-                div.panel_body
-                  div.group.clickAble
-                    div.row.loginout(v-on:click="logout") 退出
-
+            kalix-oeration(v-show="navTabSelected === 'setup'")
             // 组织机构
             div.im-box(v-show="navTabSelected === 'conversation'")
               div.im-hd
@@ -109,45 +80,40 @@
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
   import Cookie from 'js-cookie'
-  import {logoutURL} from 'config/global.toml'
-  import EventBus from 'common/eventbus'
   import ImState from './imState'
+  import KalixSideBar from './sideBar'
+  import KalixMessageList from './messageList'
+  import KalixOeration from './operation'
 
   export default {
-    props: {
-      showState: {
-        default: ImState.original
-      }
-    },
     data() {
       return {
         isMini: false,
         isShowSideBar: false,
         userName: '',
         treeData: [],
-        navTabSelected: 'contact'
+        navTabSelected: 'contact',
+        showState: ImState.original,
+        user: {
+          userName: ''
+        }
       }
     },
     activated() {
-      this.userName = Cache.get('user_name')
+      this.navTabSelected = 'contact'
+      this.user.userName = Cache.get('user_name')
       this.icon = this.decode(Cookie.get('currentUserIcon')) === 'null' ? '' : this.decode(Cookie.get('currentUserIcon'))
       this.getData()
     },
     methods: {
-      logout() {
-        this.axios.get(logoutURL, {}).then(response => {
-          Cache.clear()
-          EventBus.$emit('Kalix_Logout')
-          this.navTabSelected = 'contact'
-          this.$router.push({path: '/login'})
-        })
-      },
       onRestorem() {
         this.isMini = false
+        this.original()
       },
       onMinimum() {
         console.log('最小化')
         this.isMini = true
+        this.mini()
       },
       decode(s) {
         if (s) {
@@ -188,15 +154,40 @@
             this.analyze(item)
           })
         }
+      },
+      original() {
+        this.showState = ImState.original
+      },
+      moveLeft() {
+        this.showState = ImState.moveLeft
+      },
+      hidden() {
+        this.showState = ImState.hidden
+      },
+      mini() {
+        this.showState = ImState.mini
       }
     },
     computed: {
       bindCls() {
+        console.log('%cthis.showState', 'color:#009999', this.showState)
+        let cls = ''
         switch (this.showState) {
           case ImState.original:
+            cls = ''
+            break
+          case ImState.moveLeft:
+            cls = 'move-left'
+            break
+          case ImState.hidden:
+            cls = 'hide'
+            break
+          case ImState.mini:
+            cls = 'mini'
             break
         }
-        return (this.isMini ? 'mini' : '')
+        // return (this.isMini ? 'mini' : '')
+        return cls
       },
       styleObject() {
         let style = {}
@@ -207,6 +198,16 @@
         }
         return style
       }
+    },
+    watch: {
+      showState(oldValue, newValue) {
+        console.log('%cnewValue', 'color:#003399', newValue)
+      }
+    },
+    components: {
+      KalixSideBar,
+      KalixMessageList,
+      KalixOeration
     }
   }
 </script>
@@ -222,7 +223,7 @@
     &.mini
       animation f1 .3s linear
       animation-fill-mode forwards
-    &.move
+    &.move-left
       margin-left -605px
     &.hide
       opacity 0
@@ -423,75 +424,6 @@
         font-size 14px
         color #ffffff
 
-    .side_bar
-      position absolute
-      top 0
-      left 0
-      width 90%
-      height 100%
-      overflow hidden
-      background url("./side_bar-bg.png") 0 0 repeat
-      border-radius $borderRadius 0 0 $borderRadius
-      transition transform .5s
-
-      &.show
-        transform translate3d(-100%, 0, 0)
-      .side_bar_close
-        position absolute
-        top 0px
-        left 0px
-        border-radius-bottomright 0
-      .user_info
-        text-align center
-        padding 21px 0 13px
-        .avatar_wrapper
-          display inline-block
-          border 1px solid #fefeea
-          border-radius 50%
-          padding 13px
-          .avatar
-            width 81px
-            height 81px
-            border 0
-            margin 0
-        .user_name,
-        .user_org
-          font-size 14px
-          line-height 14px
-        .user_name
-          margin-top 11px
-          font-weight bold
-          color #ffffff
-        .user_org
-          margin-top 5px
-          color #c5ac71
-      .side_list
-        border solid #625833
-        border-width 1px 0
-        .side_list_item
-          height 53px
-          line-height 53px
-          border-top 1px solid #625833
-          padding 0 21px
-          font-size 14px
-          color #cec9c8
-          cursor pointer
-          &:first-chile
-            border none
-          .icon
-            display inline-block
-            width 28px
-            height 28px
-            border-radius 50%
-            margin 13px 15px 0 0
-            background #48372f 50% 50% no-repeat
-            float left
-          &.selected
-            color #ffe1dd
-            background-color rgba(197, 172, 113, 0.29)
-            .icon
-              background-color #937d67
-
     /* 用户列表 */
     .user-list
       .user-list_item
@@ -580,43 +512,6 @@
           float right
           line-height 20px
     /* 设置 */
-    .group
-      padding: 10px;
-      & > .row
-        border-left: 1px solid #AFC8E2;
-        border-right: 1px solid #AFC8E2;
-        border-bottom: 1px solid #AFC8E2;
-        padding: 10px;
-        background: #fff
-        &:first-child
-          border-top: 1px solid #AFC8E2;
-          border-top-left-radius: 5px;
-          border-top-right-radius: 5px
-        &:last-child
-          border-bottom-left-radius: 5px;
-          border-bottom-right-radius: 5px
-        .cloumn
-          float: left
-          .avatar
-            position: relative;
-            margin: 8px !important;
-            width 40px
-            height: 40px;
-        .profile_title_setting
-          padding-top: 5px;
-          padding-left: 5px;
-          width: 62%;
-          float: left;
-          .profile_name
-            font-size: 1.4em;
-            line-height: 1.4em;
-          .text_ellipsis
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          .profile_account
-            color: #666;
-            font-size: .9em;
     .label
       color: #666;
       float: left;
@@ -636,18 +531,6 @@
     .profile_signature
       line-height: 22px;
       overflow: hidden;
-
-    .loginout
-      background: #f74634 !important;
-      background: -moz-linear-gradient(top, #f74634, #ce2715) !important;
-      background: -webkit-gradient(linear, left top, left bottom, from(#f74634), to(#ce2715)) !important;
-      background: -webkit-linear-gradient(#f74634, #ce2715) !important;
-      background: -ms-linear-gradient(#f74634, #ce2715) !important;
-      background: -o-linear-gradient(#f74634, #ce2715) !important;
-      background: linear-gradient(#f74634, #ce2715) !important;
-      text-shadow: 0 0 10px #969696;
-      color: #fff;
-      text-align: center
 
   /*ima2*/
   /*ima*/

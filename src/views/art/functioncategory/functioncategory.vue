@@ -5,18 +5,21 @@
 -->
 
 <template lang="pug">
-  keep-alive
-    Kalix-tree-grid(
-    v-bind:columns='columns'
-    v-bind:targetURL="targetURL"
-    title="职能类别列表"
-    bizSearch="FunctionCategorySearch"
-    v-bind:btnList="btnList"
-    v-bind:bizDialog="bizDialog"
-    v-bind:formModel="formModel")
+  kalix-comm-panel(title="职能类别列表")
+    template(slot="panleSlot")
+      keep-alive
+        Kalix-tree-grid(
+        v-bind:columns='columns'
+        v-bind:targetURL="targetURL"
+        title="职能类别列表"
+        bizSearch="FunctionCategorySearch"
+        v-bind:btnList="btnList"
+        v-bind:bizDialog="bizDialog"
+        v-bind:formModel="formModel")
 </template>
 
 <script type="text/ecmascript-6">
+  import KalixCommPanel from '@/components/panel/commPanel.vue'
   import FormModel from './model'
   import TreeGrid from '@/components/custom/treeGrid'
   import {registerComponent} from '@/api/register'
@@ -86,7 +89,8 @@
     },
     methods: {},
     components: {
-      KalixTreeGrid: TreeGrid
+      KalixTreeGrid: TreeGrid,
+      KalixCommPanel
 //      KalixUserAdd: UserAdd
     }
   }

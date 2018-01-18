@@ -50,7 +50,6 @@
         if (groupPanel.length) {
           delayed = 50
         }
-        console.log('%citem', 'color:#550000', item)
         this.groupData = item
         this.initData()
         setTimeout(() => {
@@ -67,6 +66,8 @@
       close() {
         this.isVisible = false
         this.cls = 'close'
+        // 广播 Panel 被关闭事件
+        EventBus.$emit('ON_GROUP_PANEL_CLOSE')
         // setTimeout(() => {
         //   this.cls = ''
         //   this.isVisible = false
@@ -84,10 +85,8 @@
         let d = new Date()
         let cd = d.getTime()
         if (Cache.get('treeListData')) {
-          console.log('%cYES', 'color:00ff00')
           treeListData = JSON.parse(Cache.get('treeListData'))
         }
-        console.log('%c ===== treeListData', 'color:#990000', treeListData)
         if (treeListData.createDate && (treeListData.createDate - cd) < cacheTime && treeListData[this.groupData.id]) {
           this.treeData = treeListData[this.groupData.id]
         } else {
@@ -113,6 +112,11 @@
       setCls(cls) {
         return `${cls} cell_${Math.floor(Math.random() * 5)}`
       },
+      /**
+       * 打开模块
+       * @param parent
+       * @param self
+       */
       selectCell(parent, self) {
         EventBus.$emit('ON_CLICK_GROUP_CELL', {parent, self})
         this.$router.push({path: `/${parent.applicationId}/${self.routeId.split('/').pop()}`})

@@ -4,12 +4,9 @@
 开发日期：2017年9月13日
 -->
 <template lang="pug">
-  div.kalix-article
-    div.kalix-search
-      div.kalix-search-hd
-        i.iconfont.icon-query
-        | 查询
-      div.kalix-search-bd
+  kalix-comm-panel(title="统计信息")
+    div.kalix-article(slot="panleSlot")
+      div.kalix-search
         el-form.search-container(ref="searchForm" v-bind:inline="true")
           slot(name="searchFormSlot")
             el-form-item(label="开始时间")
@@ -26,28 +23,27 @@
             el-select(v-model="view" v-on:change="selectOnChange" style="margin-left:8px;")
               el-option(value="1" label="饼状图")
               el-option(value="2" label="柱状图")
-    div.kalix-wrapper(style="top:120px")
-      div.kalix-wrapper-hd
-        i.iconfont.icon-query
-        | {{showTitle}}
-      div.kalix-wrapper-bd
-        div.kalix-table-container
-          vue-highcharts(v-show="isPie" v-bind:options="optionsPie" ref="chartsPie" v-bind:Highcharts="Highcharts")
-          vue-highcharts(v-show="isColumn" v-bind:options="optionsColumn" ref="chartsColumn" v-bind:Highcharts="Highcharts")
+      div.kalix-wrapper
+        div.kalix-wrapper-bd
+          div.kalix-table-container
+            vue-highcharts(v-show="isPie" v-bind:options="optionsPie" ref="chartsPie" v-bind:Highcharts="Highcharts")
+            vue-highcharts(v-show="isColumn" v-bind:options="optionsColumn" ref="chartsColumn" v-bind:Highcharts="Highcharts")
 </template>
 <script>
+  import KalixCommPanel from '@/components/panel/commPanel.vue'
   import VueHighcharts from 'vue2-highcharts'
   import HighCharts from 'highcharts'
   import HighCharts3d from 'highcharts/highcharts-3d'
   import pieOptions from './pie-options'
   import columnOptions from './column-options'
-  import { StatisticsPieURL } from '../config.toml'
+  import {StatisticsPieURL} from '../config.toml'
 
   HighCharts3d(HighCharts)
 
   export default {
     components: {
-      VueHighcharts
+      VueHighcharts,
+      KalixCommPanel
     },
     data() {
       return {
@@ -84,7 +80,11 @@
         this.beginDate_end = val
       },
       onQuery() {
-        let queryStr = {'compStartTime:begin:gt': this.beginDate_begin, 'compEndTime:end:lt': this.endDate_end, 'statisticsType': 0}
+        let queryStr = {
+          'compStartTime:begin:gt': this.beginDate_begin,
+          'compEndTime:end:lt': this.endDate_end,
+          'statisticsType': 0
+        }
         let jsonParam =
           {
             params: {jsonStr: JSON.stringify(queryStr)}
@@ -147,17 +147,14 @@
 <style lang='stylus' type='text/stylus'>
   @import "~@/assets/stylus/color.styl"
   @import "~@/assets/stylus/baseTable"
+  .kalix-article
+    height 100%
+    display flex
+    flex-direction column
+
   .kalix-search
     margin 5px
-    border 1px solid border-color_1
-    .kalix-search-hd
-      background-color #5fa2dd
-      color txt-color_1
-      line-height 44px
-      padding 0 15px
-      text-align left
     .kalix-search-bd
-      border-top 1px solid border-color_1
       font-size 0
       padding 5px 15px
       text-align left
@@ -167,4 +164,25 @@
     .el-button
       .iconfont
         font-size 14px
+
+  .kalix-wrapper
+    position relative
+    height 100%
+    top 0
+    left 0
+    right 0
+    bottom 0
+    display flex
+    flex-direction column
+    background-color transparent
+    .kalix-wrapper-bd
+      height 100%
+      position relative
+      display flex
+      flex-direction column
+      .kalix-table-container
+        position relative
+        top 0
+        bottom 0
+        height 100%
 </style>

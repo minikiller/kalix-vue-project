@@ -214,9 +214,10 @@
   @import "~@/assets/stylus/color.styl"
   @import "~@/assets/stylus/kalix-color.styl"
   .kalix-search
+    position relative
     margin 0px
     border-radius 4px 4px 0 0
-    background-color: rgba(254,254,240,0.94);
+    background-color: rgba(254,254,240,0);
     .kalix-search-hd
       background-color #ae935c
       color $plank-title-color
@@ -224,9 +225,7 @@
       padding 0 15px
       text-align left
     .kalix-search-bd
-      border-top 1px solid border-color_1
       font-size 0
-      padding 8px 12px
       text-align left
       .search-container
         display flex

@@ -1,50 +1,48 @@
 <template lang="pug">
-  div.kalix-article
-    keep-alive
-      component(
-      v-bind:is="bizSearch"
-      ref="bizSearchRef"
-      v-if="bizSearch"
-      v-on:onSearchBtnClick="onSearchClick")
-    div.kalix-wrapper(v-bind:style="setWrapperStyle")
-      div.kalix-wrapper-hd
-        i(v-bind:class="iconCls")
-        | {{title}}
-      div.kalix-wrapper-bd
-        kalix-tool-bar(v-if="isShowToolBar"
-        v-bind:toolbarBtnList="toolbarBtnList"
-        v-on:onToolBarClick="onToolBarClick")
-        div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle" style="overflow-y:auto;")
-          div.autoTbale(v-bind:style="{width:tableWidth}")
-            table.table.table-bordered(id="hl-tree-table")
-              thead
-                tr
-                  th(v-for="(column,index) in cloneColumns")
-                    i(v-if="column.type === 'hidden'" type="hidden" v-bind:style="{width:0}")
-                    label(v-else) {{ renderHeader(column, index) }}
-                      span.ivu-table-sort(v-if="column.sortable")
-                        i(v-bind:class="{on: column._sortType === 'asc'}"
-                        v-on:click.native="handleSort(index, 'asc')" title="上箭头")
-                        i(v-bind:class="{on: column._sortType === 'desc'}"
-                        v-on:click.native="handleSort(index, 'desc')" title="下箭头")
-              tbody
-                tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent,'active':item.id === checkId}" v-on:click="toSelect(item)")
-                  td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
-                    div(v-if="column.type === 'action'")
-                      template(v-for="action in column.actions")
-                        el-button(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
-                    input(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
-                    div(v-else)
-                      label(v-on:click="toggle(index,item)" v-if="!column.type")
-                        span(v-if='snum==2')
-                          i(v-html='item.spaceHtml')
-                          i.el-icon(v-if="item.children&&item.children.length>0"
-                          v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded}")
-                          i(v-else class="kailx-ms-tree-space")
-                        | {{renderBody(item, column)}}
-      component(:is="whichBizDialog" ref="kalixDialog"
-      v-bind:formModel="formModel"
-      v-bind:formRules="formRules")
+  div.tree-grid
+    div.kalix-article
+      keep-alive
+        component(
+        v-bind:is="bizSearch"
+        ref="bizSearchRef"
+        v-if="bizSearch"
+        v-on:onSearchBtnClick="onSearchClick")
+      kalix-tool-bar(v-if="isShowToolBar"
+      v-bind:toolbarBtnList="toolbarBtnList"
+      v-on:onToolBarClick="onToolBarClick")
+      div.kalix-wrapper(v-bind:style="setWrapperStyle")
+        div.kalix-wrapper-bd
+          div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle" style="overflow-y:auto;")
+            div.autoTbale(v-bind:style="{width:tableWidth}")
+              table.table.table-bordered(id="hl-tree-table")
+                thead
+                  tr
+                    th(v-for="(column,index) in cloneColumns")
+                      i(v-if="column.type === 'hidden'" type="hidden" v-bind:style="{width:0}")
+                      label(v-else) {{ renderHeader(column, index) }}
+                        span.ivu-table-sort(v-if="column.sortable")
+                          i(v-bind:class="{on: column._sortType === 'asc'}"
+                          v-on:click.native="handleSort(index, 'asc')" title="上箭头")
+                          i(v-bind:class="{on: column._sortType === 'desc'}"
+                          v-on:click.native="handleSort(index, 'desc')" title="下箭头")
+                tbody
+                  tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent,'active':item.id === checkId}" v-on:click="toSelect(item)")
+                    td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
+                      div(v-if="column.type === 'action'")
+                        template(v-for="action in column.actions")
+                          el-button(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
+                      input(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
+                      div(v-else)
+                        label(v-on:click="toggle(index,item)" v-if="!column.type")
+                          span(v-if='snum==2')
+                            i(v-html='item.spaceHtml')
+                            i.el-icon(v-if="item.children&&item.children.length>0"
+                            v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded}")
+                            i(v-else class="kailx-ms-tree-space")
+                          | {{renderBody(item, column)}}
+        component(:is="whichBizDialog" ref="kalixDialog"
+        v-bind:formModel="formModel"
+        v-bind:formRules="formRules")
 </template>
 <script>
   import Cache from 'common/cache'
@@ -57,6 +55,7 @@
     ON_SEARCH_BUTTON_CLICK,
     ON_REFRESH_DATA
   } from './event.toml'
+
   export default {
     name: 'treeGrid',
     props: {
@@ -609,6 +608,46 @@
 </style>
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
+  .tree-grid
+    padding 10px
+    height 100%
+    display flex
+    overflow hidden
+    flex 1
+
+  .kalix-article
+    position relative
+    height 100%
+    padding 0
+    display flex
+    flex-direction column
+    .kalix-base-tool-bar
+      position absolute
+      top 0px
+      right 0px
+    .kalix-wrapper
+      position relative
+      flex 1
+      top 0
+      left 0
+      right 0
+      bottom 0
+      background-color transparent
+      overflow auto
+      .kalix-wrapper-bd
+        height 100%
+        display flex
+        flex-direction column
+        .kalix-table-container
+          position relative
+          flex 1
+          top 0
+          bottom 0
+          margin 10px 0 0
+        .kalix-table-pagination
+          position relative
+        .no-list
+          background-color #fefeef
 
   .autoTbale {
     overflow: auto;
@@ -681,7 +720,7 @@
   }
 
   #hl-tree-table > tbody > .child-tr {
-    background-color: #fff;
+    background-color: transparent;
   }
 
   label {

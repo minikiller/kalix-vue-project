@@ -1,21 +1,22 @@
 <template lang="pug">
-  div.mainwork
-    el-row(:gutter="20")
-      el-col(:span="8" v-for="item in workList" v-bind:key="item.id")
-        el-card(class="box-card")
-          div(slot="header" class="clearfix")
-            span.icon-wrapper
-              i.x-title-icon.x-title-icon-default-framed(v-bind:class="item.icon")
-            span(style="line-height: 36px;") {{item.name}}
-          div.mainwork-item-wrapper
-            div(class="s-flex text mainwork-item" v-if="item.details" v-for="itemDetails in item.details")
-              div.s-flex_item
-                div.details-name {{itemDetails.name}}
-                div.details-description {{itemDetails.description}}
-              div(v-if="itemDetails.name!=='暂无数据'")
-                el-button(type="text" v-on:click="onViewClick(itemDetails.name,itemDetails.processId)") 查看
-                el-button(type="text" v-on:click="onApplyClick(itemDetails.key)") 申请
-    process-definition-view(ref="kalixDialog")
+  kalix-comm-panel(title="流程申请")
+    div.mainwork(slot="panleSlot")
+      el-row(:gutter="20")
+        el-col(:span="8" v-for="item in workList" v-bind:key="item.id")
+          el-card(class="box-card")
+            div(slot="header" class="clearfix")
+              span.icon-wrapper
+                i.x-title-icon.x-title-icon-default-framed(v-bind:class="item.icon")
+              span(style="line-height: 36px;") {{item.name}}
+            div.mainwork-item-wrapper
+              div(class="s-flex text mainwork-item" v-if="item.details" v-for="itemDetails in item.details")
+                div.s-flex_item
+                  div.details-name {{itemDetails.name}}
+                  div.details-description {{itemDetails.description}}
+                div(v-if="itemDetails.name!=='暂无数据'")
+                  el-button(type="text" v-on:click="onViewClick(itemDetails.name,itemDetails.processId)") 查看
+                  el-button(type="text" v-on:click="onApplyClick(itemDetails.key)") 申请
+      process-definition-view(ref="kalixDialog")
 </template>
 
 <script type="text/ecmascript-6">
@@ -23,6 +24,7 @@
   import {ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
   import EventBus from 'common/eventbus'
   import ProcessDefinitionView from '@/views/oa/comp/processDefinitionView'
+  import KalixCommPanel from '@/components/panel/commPanel.vue'
 
   let _data = {
     page: 1,
@@ -75,7 +77,8 @@
       }
     },
     components: {
-      ProcessDefinitionView
+      ProcessDefinitionView,
+      KalixCommPanel
     }
   }
 </script>

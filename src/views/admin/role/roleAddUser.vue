@@ -1,5 +1,6 @@
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="role" ref="kalixBizDialog"  v-bind:targetURL="usersURL" v-bind:form-model="formModel")
+  kalix-dialog.user-add(bizKey="role" ref="kalixBizDialog"
+  v-bind:targetURL="usersURL" v-bind:form-model="formModel")
     div.el-form(slot="dialogFormSlot" style="{width:100%}")
       transfer(v-bind:form-model="formModel" style="{width:100%}")
     div.dialog-footer(slot="footer")

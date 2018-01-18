@@ -5,26 +5,28 @@
 -->
 
 <template lang="pug">
-  div.kalix-article
-    keep-alive
-      el-row.duty-row(:gutter="0")
-        el-col.duty-col(:span="8" style="padding:8px 0 8px 8px;")
-          kalix-org-tree(v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId" v-on:nodeClick="onOrgTreeClick")
-        el-col.duty-col(:span="16")
-          kalix-base-table.duty-wrapper(ref="kalixBaseTable"
-          bizKey="majorCourse" title='专业课程列表' v-bind:targetURL="targetURL"
-          v-bind:bizDialog="bizDialog" bizSearch="MajorCourseSearch" v-bind:btnList="btnList"
-          v-bind:isFixedColumn="isFixedColumn" v-bind:customRender="customRender" v-bind:dialogOptions="dialogOptions")
-            template(slot="tableColumnSlot")
-              el-table-column(prop="name"  label="课程名称")
-              el-table-column(prop="comment" label="课程描述")
-              el-table-column(prop="orgNameCol" label="专业")
-              el-table-column(prop="createBy" label="创建人")
-              kalix-date-column(prop="creationDate" label="创建日期")
+  kalix-comm-panel(title="专业课程列表")
+    template(slot="panleSlot")
+      keep-alive
+        div.duty-row
+          div.duty-tree
+            kalix-org-tree(v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId" v-on:nodeClick="onOrgTreeClick")
+          div.duty-col
+            kalix-base-table-original.duty-wrapper(ref="kalixBaseTable"
+            bizKey="majorCourse" title='专业课程列表' v-bind:targetURL="targetURL"
+            v-bind:bizDialog="bizDialog" bizSearch="MajorCourseSearch" v-bind:btnList="btnList"
+            v-bind:isFixedColumn="isFixedColumn" v-bind:customRender="customRender" v-bind:dialogOptions="dialogOptions")
+              template(slot="tableColumnSlot")
+                el-table-column(prop="name"  label="课程名称")
+                el-table-column(prop="comment" label="课程描述")
+                el-table-column(prop="orgNameCol" label="专业")
+                el-table-column(prop="createBy" label="创建人")
+                kalix-date-column(prop="creationDate" label="创建日期")
 </template>
 
 <script>
-  import BaseTable from '@/components/custom/baseTable'
+  import KalixCommPanel from '@/components/panel/commPanel.vue'
+  import BaseTableOriginal from '@/components/custom/baseTableOriginal'
   import {MajorCourseComponent, ToolButtonList} from '../config.toml'
   import {orgURL, TeachingUnitOrgID} from '@/config/global.toml'
   import {registerComponent} from '@/api/register'
@@ -52,9 +54,10 @@
       }
     },
     components: {
-      KalixBaseTable: BaseTable,
+      KalixBaseTableOriginal: BaseTableOriginal,
       KalixOrgTree: OrgTree,
-      KalixDateColumn: DateColumn
+      KalixDateColumn: DateColumn,
+      KalixCommPanel
     },
     mounted() {
     },
@@ -81,84 +84,22 @@
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
   @import "~@/assets/stylus/color.styl"
-  .kalix-search
-    position relative
-    margin 5px
-    border 1px solid border-color_1
-    box-sizing border-box
-    .kalix-search-hd
-      background-color #5fa2dd
-      color txt-color_1
-      line-height 44px
-      padding 0 15px
-      text-align left
-    .kalix-search-bd
-      position absolute
-      border-top 1px solid border-color_1
-      font-size 0
-      padding 5px 15px
-      text-align left
-      top 44px
-      left 0
-      bottom: 0;
-      width: 100%;
-      box-sizing: border-box;
-      .search-container
-        display flex
-      .kalix-tree-wrapper
-        position: absolute;
-        top 60px
-        right 10px
-        bottom 10px
-        left 10px
-        padding-right 16px
-        box-sizing border-box
-        overflow auto
-
-    .el-button
-      .iconfont
-        font-size 14px
 
   .kalix-article
-    position relative
     height 100%
-    overflow hidden
-    box-sizing border-box
-    .kalix-search,
-    .kalix-wrapper
-      height 100%
-      margin 0
-      box-sizing border-box
-    .kalix-search
-      margin-top 0 !important
-    .kalix-wrapper
-      margin-bottom 0 !important
-      position relative
-      top 0
-      .kalix-wrapper-hd
-        height 44px
-      .kalix-wrapper-bd
-        position absolute
-        top 44px
-        bottom 0
-        left 0
-        width 100%
-        box-sizing border-box
-        padding 12px
-        .kalix-table-container
-          position relative
-          top 0
-          height 100%
-          margin 0
 
   .duty-row
     height 100%
-    .duty-col
-      height 100%
+    display flex
+    padding 5px
+    .duty-tree
+      padding 5px
+      width 280px
       box-sizing border-box
+    .duty-col
+      padding 5px
+      flex 1
+      box-sizing border-box
+      overflow hidden
 
-  .duty-wrapper
-    margin -10px 0
-    .kalix-wrapper
-      bottom 0 !important
 </style>

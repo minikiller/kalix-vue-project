@@ -22,20 +22,19 @@
         menuList: []
       }
     },
-    activated() {
+    created() {
       this.initMenu()
     },
     mounted() {
       setTimeout(() => {
+        // console.log('%cSetTimeout', 'color:#dd00ff')
         this.init()
-      }, 20)
+      }, 200)
     },
     methods: {
       init() {
         let $lis = $('#macAvatars > .dock-mac_avatar')
         let $wrapper = $('#kalixHome')
-        console.log('$lis', $lis)
-        console.log('$wrapper', $wrapper)
 
         $wrapper.mousemove(e => {
           let hs = []

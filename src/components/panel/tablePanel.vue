@@ -1,9 +1,47 @@
 <template lang="pug">
-  div.panel.group-panel(v-if="isVisible" v-bind:class="cls")
-    div panel
+  div.panel(v-bind:class="cls")
+    panel-header
+      template(slot="title")
+        div {{title}}
+      template(slot="right")
+        panel-header-button(type="close" v-on:click="close")
+    div.panel-body
+      div.article
+        el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
+          slot(name="panleSlot")
+      div.aside
+        el-button(v-on:click="onCancelClick") 取消
+        el-button(v-on:click="onSubmitClick") 确定
 </template>
 <script type="text/ecmascript-6">
+  import EventBus from 'common/eventbus'
+  import {ON_REFRESH_DATA} from '../custom/event.toml'
+  import Message from 'common/message'
+  import PanelHeader from './panelHeader.vue'
+  import panelHeaderButton from './panelHeaderButton.vue'
+
   export default {
+    props: {
+      title: {
+        default: ''
+      },
+      formModel: { // dialog中的form的数据模型，由父组件传递
+        type: Object,
+        required: true
+      },
+      rules: {  // form的校验规则
+        type: Object
+//        required: true
+      },
+      targetURL: {  // 业务数据提交的url,包括add，delete，update
+        type: String
+//        required: true
+      },
+      isEdit: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
         isVisible: false,
@@ -11,10 +49,81 @@
         groupTitle: '',
         treeData: [],
         groupData: {},
-        cls: ''
+        cls: '',
+        submitBefore: {  // 提交前执行  submitBefore(baseDialog,function Submit)
+          type: Function
+        },
+        submitAfter: {  // 提交后执行  submitBefore(baseDialog)
+          type: Function
+        },
+        submitCustom: {  // 自定义提交事件  submitBefore(baseDialog)
+          type: Function
+        }
       }
     },
     methods: {
+      submitComplete() { // 提交完成后执行
+        if (this.submitAfter && typeof (this.submitAfter) === 'function') {
+          this.submitAfter(this)
+        }
+      },
+      submitAction() {  // 提交
+        this.$refs.dialogForm.validate((valid) => {
+          console.log('valid', valid)
+          if (valid) {
+            this.$http.request({
+              method: this.isEdit ? 'PUT' : 'POST',
+              url: this.isEdit ? `${this.targetURL}/${this.formModel.id}` : this.targetURL,
+              data: this.formModel,
+              params: {}
+            }).then(response => {
+              if (response.data.success) {
+                Message.success(response.data.msg)
+                this.visible = false
+                this.$refs.dialogForm.resetFields()
+                this.submitComplete()
+                // 关闭对话框
+//                this.close()
+                // 清空form
+//                this.$parent.resetDialogForm()
+//                this.$emit('resetDialogForm')
+              } else {
+                Message.error(response.data.msg)
+                this.submitComplete()
+              }
+              // 刷新列表
+              EventBus.$emit(ON_REFRESH_DATA)
+              this._afterDialogClose()
+              console.log('[kalix] dialog submit button clicked !')
+              this.visible = false
+            })
+          } else {
+            Message.error('请检查输入项！')
+            this.submitComplete()
+            return false
+          }
+        })
+      },
+      onCancelClick() {
+        console.log('dialog cancel button clicked !')
+        this.visible = false
+        if (!this.isView) {
+          this.$refs.dialogForm.resetFields()
+        }
+//        this.$emit('update:formModel', JSON.parse(this.tempFormModel))
+        this._afterDialogClose()
+      },
+      onSubmitClick() {
+        if (this.submitCustom && typeof (this.submitCustom) === 'function') {
+          this.submitCustom(this)
+        } else if (this.submitBefore && typeof (this.submitBefore) === 'function') {
+          this.submitBefore(this, () => {
+            this.submitAction()
+          })
+        } else {
+          this.submitAction()
+        }
+      },
       open(item) {
         this.isVisible = true
         this.groupData = item
@@ -22,23 +131,33 @@
           this.cls = 'open'
         }, 20)
         console.log('TablePanel OPEN')
+      },
+      close() {
+        // 关闭窗体
+        EventBus.$emit('ON_CLOSE_BASETABLE')
       }
+    },
+    components: {
+      PanelHeader,
+      panelHeaderButton
     }
   }
 </script>
 <style scoped lang="stylus" type="text/stylus">
   @import "../../assets/stylus/panel-base.styl"
-  .group-panel
+  .panel
     position: absolute;
     top: 5%;
     height: 80%;
     left: 50%;
     margin-left: -195px;
-    opacity 0
-    width 1004px !important
+    width 700px !important
     overflow: hidden;
+    z-index 99
     background-color rgba(254, 254, 240, 0.94)
     border-radius $borderRadius
+    display flex
+    flex-flow column
     transition all .5s
     &.open
       opacity 1
@@ -46,74 +165,25 @@
     &.min
       opacity 0
       transform scale(.5)
-    .panel_header
-      background-color transparent
     .group-title
       text-align center
       font-size 18px
       margin 0 54px
       line-height 53px
       border-bottom 4px solid #686868
-    .group-body
-      position absolute
-      padding 0 54px
-      top 157px
-      left 0
-      bottom 56px
+    .panel-body
+      flex 1
+      padding 27px 54px
       width 100%
       box-sizing border-box
       overflow hidden
-      .items
-        padding 0
-        .item
-          display flex
-          align-items flex-start
-          & + .item
-            margin-top 17px
-          .title
-            text-align center
-            font-size 0
-            margin-right 23px
-            .icon
-              display inline-block
-              width 72px
-              height 72px
-              line-height 72px
-              font-size 40px
-              color #fff
-              border-radius 20px
-              &.cell_0
-                background-color #178a3a
-              &.cell_1
-                background-color #ccadfb
-              &.cell_2
-                background-color #fe82b4
-              &.cell_3
-                background-color #94dffe
-              &.cell_4
-                background-color #f7bb25
-            .text
-              margin-top 9px
-              font-size 14px
-              line-height 14px
-              color #1e1e1d
-          .cells
-            padding 14px 30px
-            min-height 61px
-            flex 1
-            font-size 0
-            margin-top 4px
-            background-color #f3f3f3
-            border 1px solid #e1e1e1
-            border-radius 11px
-            box-sizing border-box
-            .cell
-              margin 4px 20px
-              display inline-block
-              color #1e1e1d
-              cursor pointer
-              font-size 14px
-              line-height 24px
+      display flex
+      flex-flow column
+      .article
+        flex 1
+        overflow auto
+      .aside
+        text-align right
 
   /* 翻板 */
   .turn-enter-active,

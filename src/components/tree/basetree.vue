@@ -34,7 +34,7 @@
         default: -1
       }
     },
-    data () {
+    data() {
       return {
         filterText: '',
         treeData: [],
@@ -44,17 +44,17 @@
         }
       }
     },
-    mounted () {
+    mounted() {
       this.fentch()
     },
     watch: {
-      filterText (val) {
+      filterText(val) {
         this.$refs.baseTree.filter(val)
       }
     },
     methods: {
       // 初始化
-      fentch () {
+      fentch() {
         this.getData()
       },
       // 获取数据
@@ -85,14 +85,14 @@
           })
         })
       },
-      filterNode (value, data) {
+      filterNode(value, data) {
         if (!value) {
           return true
         } else {
           return data.name.indexOf(value) !== -1
         }
       },
-      handleNodeClick (data) {
+      handleNodeClick(data) {
         this.$emit('nodeClick', data)
       }
     }
@@ -102,82 +102,54 @@
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
   @import "~@/assets/stylus/color.styl"
-  .kalix-select-dutys
-    .kalix-search
-      position relative
-      margin 5px
-      border 1px solid border-color_1
+  .kalix-search
+    position relative
+    border 1px solid border-color_1
+    box-sizing border-box
+    display flex
+    flex-flow column
+    height 100%
+    overflow auto
+    .kalix-search-hd
+      color txt-color_1
+      line-height 44px
+      padding 0 15px
+      text-align left
+    .kalix-search-bd
+      border-top 1px solid border-color_1
+      font-size 0
+      padding 5px 15px
+      text-align left
+      width 100%
       box-sizing border-box
-      .kalix-search-hd
-        background-color #5fa2dd
-        color txt-color_1
-        line-height 44px
-        padding 0 15px
-        text-align left
-      .kalix-search-bd
-        position absolute
-        border-top 1px solid border-color_1
-        font-size 0
-        padding 5px 15px
-        text-align left
-        top 44px
-        left 0
-        bottom: 0;
-        width: 100%;
+      flex 1
+      display flex
+      flex-flow column
+      .kalix-search-input
+        border-radius: 4px;
         box-sizing: border-box;
-        .kalix-search-input
-          border: 1px solid #b4bccc;
-          border-radius: 4px;
-          box-sizing: border-box;
-          overflow: hidden;
-        .search-container
-          display flex
-        .kalix-tree-wrapper
-          position: absolute;
-          top 60px
-          right 10px
-          bottom 10px
-          left 10px
-          padding-right 16px
-          box-sizing border-box
-          overflow auto
-
-      .el-button
-        .iconfont
-          font-size 14px
-
-    .kalix-article
-      position: relative;
-      height 500px
-      margin: -30px 0;
-      .kalix-search,
-      .kalix-wrapper
-        height 100%
-        margin 0
+        overflow: hidden;
+      .search-container
+        display flex
+      .kalix-tree-wrapper
+        flex 1
+        padding-right 16px
         box-sizing border-box
-      .kalix-wrapper
-        position relative
-        top 0
-        .kalix-wrapper-hd
-          height 44px
-        .kalix-wrapper-bd
-          position absolute
-          top 44px
-          bottom 0
-          left 0
-          width 100%
-          box-sizing border-box
-          padding 12px
-          .kalix-table-container
-            position relative
-            top 0
-            height 100%
-            margin 0
+        overflow auto
+        margin-right -15px
+        margin-top 10px
 
-    .duty-row
-      height 100%
-      .duty-col
-        height 100%
-        padding 5px;
-        box-sizing border-box
+      .filter-tree
+        background-color transparent
+    .el-button
+      .iconfont
+        font-size 14px
+
+  .kalix-tree-wrapper
+    .filter-tree
+      background-color transparent
+      .el-tree--highlight-current
+        .el-tree-node.is-current
+          & > .el-tree-node__content
+            background-color transparent
 </style>

@@ -1,8 +1,10 @@
 <template lang="pug">
-  div(id="chart-container")
+  kalix-comm-panel(title="组织机构图")
+    div(id="chart-container" slot="panleSlot")
 </template>
 
 <script type="text/ecmascript-6">
+  import KalixCommPanel from '@/components/panel/commPanel.vue'
   import OrgChart from '@/third/orgchart/orgchart.js'
   import '@/third/orgchart/orgchart.css'
 
@@ -36,6 +38,9 @@
           })
         })
       }
+    },
+    components: {
+      KalixCommPanel
     }
   }
 </script>

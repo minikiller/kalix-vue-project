@@ -9,7 +9,7 @@
       i.tit_icon.iconfont.icon-organization
       | {{treeTitle}}
     div.kalix-search-bd
-      el-input.kalix-search-input(placeholder="输入关键字进行过滤" v-model="filterText")
+      el-input(placeholder="输入关键字进行过滤" v-model="filterText")
       div.kalix-tree-wrapper
         el-tree.filter-tree(v-bind:data="treeData"
         v-bind:props="defaultProps" accordion
@@ -114,50 +114,50 @@
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
   @import "~@/assets/stylus/color.styl"
-  .kalix-select-dutys
-    .kalix-search
-      position relative
-      margin 5px
-      border 1px solid border-color_1
+  .kalix-search
+    position relative
+    border 1px solid border-color_1
+    box-sizing border-box
+    display flex
+    flex-flow column
+    height 100%
+    overflow auto
+    .kalix-search-hd
+      color txt-color_1
+      line-height 44px
+      padding 0 15px
+      text-align left
+    .kalix-search-bd
+      border-top 1px solid border-color_1
+      font-size 0
+      padding 5px 15px
+      text-align left
+      width 100%
       box-sizing border-box
-      .kalix-search-hd
-        background-color #5fa2dd
-        color txt-color_1
-        line-height 44px
-        padding 0 15px
-        text-align left
-      .kalix-search-bd
-        position absolute
-        border-top 1px solid border-color_1
-        font-size 0
-        padding 5px 15px
-        text-align left
-        top 44px
-        left 0
-        bottom: 0;
-        width: 100%;
+      flex 1
+      display flex
+      flex-flow column
+      .kalix-search-input
+        border-radius: 4px;
         box-sizing: border-box;
-        .kalix-search-input
-          border: 1px solid #b4bccc;
-          border-radius: 4px;
-          box-sizing: border-box;
-          overflow: hidden;
-        .search-container
-          display flex
-        .kalix-tree-wrapper
-          position: absolute;
-          top 60px
-          right 10px
-          bottom 10px
-          left 10px
-          padding-right 16px
-          box-sizing border-box
-          overflow auto
+        overflow: hidden;
+      .search-container
+        display flex
+      .kalix-tree-wrapper
+        flex 1
+        padding-right 16px
+        box-sizing border-box
+        overflow auto
+        margin-right -15px
+        margin-top 10px
 
-      .el-button
-        .iconfont
-          font-size 14px
+      .filter-tree
+        background-color transparent
+    .el-button
+      .iconfont
+        font-size 14px
 
+  /*
     .kalix-article
       position: relative;
       height 500px
@@ -191,5 +191,14 @@
       .duty-col
         height 100%
         padding 5px;
-        box-sizing border-box
+        box-sizing border-box*/
+</style>
+
+<style lang="stylus" type="text/stylus">
+  .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content
+    background-color transparent
+    font-weight 700
+
+  .el-tree-node:focus > .el-tree-node__content, .el-tree-node__content:hover
+    background-color transparent
 </style>
