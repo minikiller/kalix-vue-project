@@ -23,6 +23,7 @@
             kalix-query-date-picker(v-else-if="item.type==='year'" v-model="form[item.prop]" type="year")
             kalix-query-datetime-picker(v-else-if="item.type==='datetime'" v-model="form[item.prop]")
             kalix-dict-select(v-else-if="item.type==='dict'" v-bind:appName="item.appName" v-bind:dictType="item.dictType" v-model="form[item.prop]")
+            Kalix-map-select(v-else-if="item.type==='map'" v-bind:appName="item.appName" v-bind:selectUrl="item.selectUrl" v-model="form[item.prop]" v-on:input="getSelectValue")
             el-input(v-else v-model="form[item.prop]")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
@@ -41,6 +42,7 @@
   import QueryDatepicker from 'components/biz/date/datepicker'
   import QueryDatetimepicker from 'components/biz/date/datetimepicker'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import BaseMapSelect from '@/components/custom/baseMapSelect'
 
   export default {
     activated() {
@@ -201,12 +203,16 @@
           return true
         }
         return false
+      },
+      getSelectValue(val) {
+        this.$emit('selectVal', val)
       }
     },
     components: {
       KalixQueryDatePicker: QueryDatepicker,
       KalixQueryDatetimePicker: QueryDatetimepicker,
-      KalixDictSelect: BaseDictSelect
+      KalixDictSelect: BaseDictSelect,
+      KalixMapSelect: BaseMapSelect
     },
     computed: {},
     watch: {}

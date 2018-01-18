@@ -8,6 +8,7 @@ WorkflowSuspendURL = "/camel/rest/workflow/suspend?key="
 WorkflowActivateURL = "/camel/rest/workflow/activate?key="
 WorkflowMainWorkURL = "/camel/rest/categorys/getAll"
 WorkflowHistoryURL = "/camel/rest/workflow/historys"
+WorkflowAllDefineURL = "/camel/rest/workflow/defines" # add by yangz 获取工作流定义的所有名字
 MyInvolvedURL = "/camel/rest/workflow/myInvolvedHistory"
 MyHistoryURL = "/camel/rest/workflow/myHistory"
 TaskURL = "/camel/rest/workflow/tasks"
@@ -67,7 +68,7 @@ RedheadApplyURL  = "camel/rest/redheadapplys"
 RedheadApplyStartURL  = "/camel/rest/redheadapplys/workflow/startProcess?id="
 DocumentURL  = "camel/rest/documents"
 DocumentAbolishURL = "camel/rest/documents/abolish?id="
-
+RedheadStatisticUrl = "camel/rest/redheadapplys/statistic"
 # 需要自动注册成全局的Meetingroom组件
 [[OaMeetingroomComponent]]
   path = "oa/meetingroom/meetingroomView"
@@ -344,3 +345,6 @@ DocumentAbolishURL = "camel/rest/documents/abolish?id="
   title = "删除"
   isShow = true
   isPermission = true
+[[StatisticsComponent]]
+  path = "oa/statistics/statisticsSearch"
+  name = "OaStatisticSearch"
