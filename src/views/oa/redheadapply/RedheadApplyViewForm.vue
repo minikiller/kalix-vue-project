@@ -12,16 +12,17 @@
         el-input(v-model="formModel.title")
       el-form-item.s-flex_item.kalix-form-table-td(label="文号" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.businessNo")
-    div.s-flex
-      el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
+    div
+      el-form-item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.orgName" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="文号类型" v-bind:label-width="labelWidth")
         el-input(v-bind:value="formModel.docType|getDictName('OA','文号类型')" readonly)
       el-form-item.s-flex_item.kalix-form-table-td(label="申请日期" v-bind:label-width="labelWidth")
         el-input(v-bind:value="formModel.applyDate" readonly)
-    el-form-item(label="发文内容" v-bind:label-width="labelWidth")
-      el-input(v-model="formModel.docContent")
+    div
+      el-form-item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth")
+        div(v-html="formModel.docContent")
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="部门负责人签字" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.depUser" readonly)
@@ -32,8 +33,8 @@
         el-input(v-model="formModel.managerUser"  readonly)
       el-form-item.s-flex_item.kalix-form-table-td(label="董事长签字" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.chairmanUser" readonly)
-    div.s-flex
-      el-form-item.s-flex_item.kalix-form-table-td(label="经办人" v-bind:label-width="labelWidth")
+    div
+      el-form-item.kalix-form-table-td(label="经办人" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.createBy" readonly)
 </template>
 
@@ -48,11 +49,9 @@
       return {
         targetURL: '',
         readonly: true,
-        meetingTypeName: ''
+        meetingTypeName: '',
+        labelWidth: '140px'
       }
-    },
-    created() {
-      this.labelWidth = '110px'
     },
     components: {
       KalixDialog: Dialog
