@@ -19,20 +19,20 @@
         el-form-item.s-flex_item(label="文号类型" v-bind:label-width="labelWidth"  prop="docAssort" v-bind:rules="rules.docAssort")
           el-cascader(expand-trigger="hover"    v-bind:options="options"    v-model="formModel.docAssort" v-bind:show-all-levels="false" v-on:change="onChange")
           <!--kalix-dict-select(v-model="formModel.docType" appName="oa" dictType="文号类型")-->
-      el-form-item.s-flex_item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")
-        el-input(v-model="formModel.docContent" type="textarea")
+      <!--el-form-item.s-flex_item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")-->
+        <!--el-input(v-model="formModel.docContent" type="textarea")-->
       el-form-item.s-flex_item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")
         tinymce(v-model="formModel.docContent")
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="打印人" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.printer")
-        el-form-item.s-flex_item.kalix-form-table-td(label="校对人" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.checker")
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="页数" v-bind:label-width="labelWidth")
-          el-input-number(v-model="formModel.page" v-bind:min="1" v-bind:max="20" style="width:100%")
-        el-form-item.s-flex_item.kalix-form-table-td(label="份数" v-bind:label-width="labelWidth")
-          el-input-number(v-model="formModel.number" v-bind:min="1" v-bind:max="100" style="width:100%")
+      <!--div.s-flex-->
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="打印人" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.printer")-->
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="校对人" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.checker")-->
+      <!--div.s-flex-->
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="页数" v-bind:label-width="labelWidth")-->
+          <!--el-input-number(v-model="formModel.page" v-bind:min="1" v-bind:max="20" style="width:100%")-->
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="份数" v-bind:label-width="labelWidth")-->
+          <!--el-input-number(v-model="formModel.number" v-bind:min="1" v-bind:max="100" style="width:100%")-->
 </template>
 
 <script type="text/ecmascript-6">
