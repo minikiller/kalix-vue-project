@@ -9,7 +9,7 @@
     el-dialog.dialog-form(v-bind:visible="visible"
     v-bind:show-close="false"
     v-bind:close-on-click-modal="false"
-    width="664px"
+    v-bind:width="width"
     v-bind:append-to-body="true")
       div.dialog-title(slot="title") {{dialogTitle}}
       div.dialog-body
@@ -46,6 +46,9 @@
       size: {
         type: String,
         default: 'small'
+      },
+      width: {
+        default: '664px'
       },
       bizKey: String,
       formModel: { // dialog中的form的数据模型，由父组件传递
@@ -209,6 +212,7 @@
   .down-in-enter, .down-in-leave-active
     opacity 0
     transform scale(0.8)
+
   .dialog-title
     position relative
     text-align center
@@ -223,6 +227,7 @@
 
   .dialog-body
     padding 0 38px
+
   .dialog-footer
     background-color aqua
     margin -10px -15px -15px

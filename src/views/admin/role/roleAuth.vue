@@ -12,11 +12,12 @@
   v-bind:targetURL="targetURL"
   v-bind:submitCustom="submitCustom"
   )
-    div.el-form(slot="dialogFormSlot")
-      el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
-      show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
-      empty-text="当前用户暂无权限信息!" ref="baseTree"
-      v-on:check-change="checkChange")
+    div.el-form(slot="dialogFormSlot" style="max-height:550px;overflow:auto;")
+      div(style="border: 1px solid #d0d0d0;")
+        el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
+        show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
+        empty-text="数据加载中!" ref="baseTree"
+        v-on:check-change="checkChange")
 </template>
 
 <script type="text/ecmascript-6">
@@ -41,7 +42,8 @@
         checkedKeys: [],
         ids: [],
         funIds: [],
-        targetURL: rolesURL
+        targetURL: rolesURL,
+        contentMessage: ''
       }
     },
     components: {
@@ -105,14 +107,12 @@
           for (let i = 0; i < array.length; i++) {
             if (array[i].children) {
               // array[i].disabled = true
-              console.log(array[i].parentId)
               if (array[i].parentId === -1 && array[i].checked) {
                 this.funIds.push('app:' + array[i].id)
               }
               if (array[i].children.length === 0) {
                 // delete array[i].children
                 if (array[i].checked) {
-                  console.log(array[i].parentId)
                   if (array[i].parentId === '-1') {
                     this.funIds.push('app:' + array[i].id)
                   } else {
@@ -120,6 +120,9 @@
                   }
                 }
               } else {
+                if (array[i].checked) {
+                  this.funIds.push('fun:' + array[i].id)
+                }
                 this.getIds(array[i].children)
               }
             }
@@ -128,6 +131,8 @@
       },
       checkChange(a, b, c) {
         if (b) {
+          a.checked = true
+        } else if (c) {
           a.checked = true
         } else {
           a.checked = false

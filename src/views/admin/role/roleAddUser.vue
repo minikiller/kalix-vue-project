@@ -1,78 +1,75 @@
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="role" ref="kalixBizDialog"
-  v-bind:targetURL="usersURL" v-bind:form-model="formModel")
-    div.el-form(slot="dialogFormSlot" style="{width:100%}")
-      transfer(v-bind:form-model="formModel" style="{width:100%}")
-    div.dialog-footer(slot="footer")
-      el-button(v-on:click="onCancelClick") 取 消
-      el-button(type="primary" v-on:click="onSubmitClick") 提 交
+  kalix-dialog.user-add(
+  bizKey="role"
+  ref="kalixBizDialog"
+  width="700px"
+  v-bind:form-model.sync="formModel"
+  v-bind:visible="centerDialogVisible"
+  v-bind:submitCustom="submitCustom")
+    div.el-form(
+    slot="dialogFormSlot"
+    style="{width:100%}")
+      kalix-transfer.userAdd(v-if="formModel.id>0"
+      ref="kalixTransfer"
+      v-bind:targetURL="targetURL"
+      v-bind:sourceURL="sourceURL"
+      v-bind:targetID="formModel.id"
+      v-bind:sourceType="sourceType"
+      )
 </template>
 
 <script>
   import Dialog from '@/components/custom/baseDialog.vue'
   import FormModel from './model'
   import {usersURL} from 'views/admin/config.toml'
+  import Transfer from '@/components/biz/select/baseTransfer.vue'
+  import Message from 'common/message'
   import EventBus from 'common/eventbus'
-  import Transfer from '@/components/biz/userselect/baseTransfer.vue'
 
   export default {
     data() {
       return {
-        userList: [],
         formModel: Object.assign({}, FormModel),
-        dataList: [],
+        userIds: [],
         ids: [],
         centerDialogVisible: false,
-        dialogTitle: '',
-        usersURL: usersURL
+        sourceURL: usersURL,
+        targetURL: 'camel/rest/roles',
+        targetID: -1,
+        sourceType: 'users'
       }
     },
     created() {
-      // 如果有传入 defaultIds
-      console.log('如果有传入 defaultIds')
     },
     mounted() {
-      console.log('如果有传入 mounted')
     },
     components: {
       KalixDialog: Dialog,
-      Transfer: Transfer
+      KalixTransfer: Transfer
     },
     methods: {
-      getData() {
-        this.axios.get(usersURL, {}).then(response => {
-          this.userList = response.data.data
-          for (let i = 0; i < this.userList.length; i++) {
-            this.dataList.push({
-              key: this.userList[i].id,
-              label: this.userList[i].name
-            })
+//     baseDialog 提交按钮调用的方法
+      submitCustom(baseDialog) {
+        this.userIds = this.$refs.kalixTransfer.userIds.join(',')
+        this.ids[0] = this.formModel.id
+        this.ids[1] = this.userIds
+        this.axios.request({
+          method: 'POST',
+          url: `${this.targetURL}/${this.formModel.id.toString()}/users`,
+          data: this.ids,
+          params: {}
+        }).then(response => {
+          if (response.data.success) {
+            Message.success(response.data.msg)
+            baseDialog.visible = false
+            baseDialog.$refs.dialogForm.resetFields()
+            baseDialog.submitComplete()
+          } else {
+            Message.error(response.data.msg)
+            baseDialog.submitComplete()
           }
-          console.log('this.dataList', this.dataList)
         })
-      },
-      open(_title, row) {
-        this.centerDialogVisible = true
-        this.dialogTitle = _title
-        this.getData()
-        this.ids[0] = row.id
-      },
-      handleChange(value, direction, movedKeys) {
-        let userIds = ''
-        for (let i = 0; i < movedKeys.length - 1; i++) {
-          userIds = userIds + movedKeys[i] + ','
-        }
-        userIds = userIds + movedKeys[movedKeys.length - 1]
-        this.ids[1] = userIds
-      },
-      onSubmitClick() {
-        this.axios.post('/dataauths/' + this.ids[0] + '/users', {ids: this.ids})
-          .then(function (response) {
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+        console.log('this.ids', this.ids)
       },
       close() {
         this.onCancelClick()
@@ -91,9 +88,6 @@
   }
 </script>
 
-<style scoped>
-  .transfer-footer {
-    margin-left: 20px;
-    padding: 6px 5px;
-  }
+<style lang="stylus">
+
 </style>

@@ -5,10 +5,12 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(title='权限查看' bizKey="user" ref="kalixBizDialog" v-bind:formModel.sync="formModel" isView)
-    div.el-form(slot="dialogFormSlot")
-      el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
-      show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
-      empty-text="当前用户暂无权限信息!" ref="baseTree")
+    div.el-form(slot="dialogFormSlot" style="max-height:550px;overflow:auto;")
+      div(style="border: 1px solid #d0d0d0;")
+        el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
+        show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
+        v-bind:empty-text="emptyContent"
+        ref="baseTree")
 </template>
 
 <script type="text/ecmascript-6">
@@ -21,6 +23,7 @@
         formModel: Object.assign({}, FormModel),
         treeDataURL: '/camel/rest/users',
         treeData: [],
+        emptyContent: '数据加载中！',
         defaultProps: {
           children: 'children',
           label: 'name'
@@ -59,6 +62,7 @@
           if (res.data.children) {
             this.treeData = res.data.children
             // 获取选中节点, 并设置所有节点disable=true
+            this.emptyContent = '当前用户没有被授权！'
             this.getCheckedKeys(this.treeData)
           }
         })

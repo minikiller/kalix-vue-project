@@ -8,6 +8,9 @@ rolesURL = "/camel/rest/roles"
 dutyURL = "/camel/rest/dutys"
 orgURL = "/camel/rest/orgs"
 appsURL = "/camel/rest/system/applications"
+applicationsURL = "/camel/rest/applications/extend/config" #系统应用
+appsStartURL = "/camel/rest/osgi/bundle/start" #系统应用-启动
+appsStopURL = "/camel/rest/osgi/bundle/stop" #系统应用-停止
 workgroupURL = "/camel/rest/workgroups"
 dataauthURL = "/camel/rest/dataauths"
 addusersURL = "/camel/rest//dataauths/[id]/users"
@@ -73,7 +76,8 @@ AdminCacheKey = "ADMIN-DICT-KEY"
   isPermission = true
 [[ToolButtonList]]
   id = "addUser"
-  title = "添加用户"
+  title = "用户"
+  toolTipTitle = "添加用户"
   isShow = true
   isPermission = true
 
@@ -86,6 +90,12 @@ AdminCacheKey = "ADMIN-DICT-KEY"
 [[WorkGroupComponent]]
  path = "admin/workgroup/workgroupSearch"
  name = "AdminWorkGroupSearch"
+[[WorkGroupComponent]]
+ path = "admin/workgroup/workgroupAddUser"
+ name = "AdminWorkGroupAddUser"
+[[WorkGroupComponent]]
+ path = "admin/workgroup/workgroupAddRole"
+ name = "AdminWorkGroupAddRole"
 
 [[UserComponent]]
  path = "admin/user/userView"
@@ -105,6 +115,13 @@ AdminCacheKey = "ADMIN-DICT-KEY"
 [[UserComponent]]
  path = "admin/user/userAuthView"
  name = "AdminUserAuthView"
+
+[[ApplicationComponent]]
+ path = "admin/application/applicationSearch"
+ name = "AdminApplicationSearch"
+[[ApplicationComponent]]
+ path = "admin/application/applicationView"
+ name = "AdminApplicationView"
 
 [[DataAuthComponent]]
  path = "admin/dataauth/dataauthView"
@@ -157,7 +174,7 @@ AdminCacheKey = "ADMIN-DICT-KEY"
    path = "admin/role/roleAdd"
    name = "AdminRoleEdit"
   [[RoleComponent]]
-   path = "admin/role/roleAddUser1"
+   path = "admin/role/roleAddUser"
    name = "AdminRoleAddUser"
    [[RoleComponent]]
    path = "admin/role/roleAuth"

@@ -38,6 +38,7 @@
           })
         }
       }
+
       var validatePassword = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'))
