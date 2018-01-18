@@ -22,6 +22,7 @@
   import Vue from 'vue'
   import {HardwareLogMailURL, HardwareLogConfigureMailURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
+  import { Message } from 'element-ui'
   // import qs from 'qs'
   export default {
     data() {
@@ -78,13 +79,14 @@
                 baseDialog.visible = false
                 baseDialog.$refs.dialogForm.resetFields()
                 baseDialog.submitComplete()
+                Message.success('保存成功')
                 // 关闭对话框
                 baseDialog.close()
                 // 清空form
                 //   baseDialog.$parent. .resetDialogForm()
                 //   baseDialog.$emit('resetDialogForm')
               } else {
-                //  Message.error(response.data.msg)
+                Message.error('保存失败')
                 baseDialog.submitComplete()
               }
               // 刷新列表
