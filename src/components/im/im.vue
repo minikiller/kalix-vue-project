@@ -99,6 +99,13 @@
         }
       }
     },
+    mounted() {
+      console.log('%c [mounted] ', 'color:#FFFFFF;background:#ae935c')
+      console.log('%c [mounted] this.$route', 'color:#FFFFFF;background:#ae935c', this.$route)
+      if (this.$route.name !== 'home') {
+        this.moveLeft()
+      }
+    },
     activated() {
       this.navTabSelected = 'contact'
       this.user.userName = Cache.get('user_name')
