@@ -6,26 +6,58 @@
 <template lang="pug">
   kalix-dialog.user-add(bizKey="document" ref="kalixBizDialog" v-bind:form-model.sync="formModel"
   v-bind:targetURL="targetURL" v-bind:submitCustom="submitCustom")
-    div.el-form.kalix-form-table(slot="dialogFormSlot")
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="打印人" prop="printer" v-bind:rules="rules.printer" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.printer")
-        el-form-item.s-flex_item.kalix-form-table-td(label="校对" prop="checker" v-bind:rules="rules.checker" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.checker")
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="页数" prop="page" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.page")
-        el-form-item.s-flex_item.kalix-form-table-td(label="份数" prop="copy" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.copy")
-      div
-        el-form-item.kalix-form-table-td(label="抄送" prop="other" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.other")
+    template(slot="dialogFormSlot")
+      div.el-form.kalix-form-table
+        div.table-title 文号信息
+        div
+          el-form-item.kalix-form-table-td(label="文号" prop="businessNo" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.businessNo" readonly)
+        div.s-flex
+          el-form-item.s-flex_item.kalix-form-table-td(label="文号类型" prop="docType" v-bind:label-width="labelWidth")
+            kalix-dict-select(v-model="formModel.docType" appName="oa" dictType="文号类型" disabled)
+          el-form-item.s-flex_item.kalix-form-table-td(label="年份" prop="year" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.year" readonly)
+        div.s-flex
+          el-form-item.s-flex_item.kalix-form-table-td(label="文号状态" prop="status" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.status" readonly)
+          el-form-item.s-flex_item.kalix-form-table-td(label="编号" prop="number" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.number" readonly)
+        div.s-flex
+          el-form-item.s-flex_item.kalix-form-table-td(label="创建时间" prop="creationDate" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.creationDate" readonly)
+          el-form-item.s-flex_item.kalix-form-table-td(label="更新时间" prop="updateDate" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.updateDate" readonly)
+      div.el-form.kalix-form-table
+        div.table-title 文件信息
+      kalix-redhead-apply-view-form(v-bind:formModel.sync="redheadapplyFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.redheadId")
+      div.el-form.kalix-form-table
+        div.table-title 发文信息
+        div
+          el-form-item.kalix-form-table-td(label="发文部门" prop="docDeptId" v-bind:rules="rules.docDeptId" v-bind:label-width="labelWidth")
+            kalix-org-select(v-model="formModel.docDeptId" v-on:selectChange="onOrgIdChange")
+        div.s-flex
+          el-form-item.s-flex_item.kalix-form-table-td(label="打印人" prop="printer" v-bind:rules="rules.printer" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.printer")
+          el-form-item.s-flex_item.kalix-form-table-td(label="校对人" prop="checker" v-bind:rules="rules.checker" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.checker")
+        div.s-flex
+          el-form-item.s-flex_item.kalix-form-table-td(label="页数" prop="page" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.page")
+          el-form-item.s-flex_item.kalix-form-table-td(label="份数" prop="copy" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.copy")
+        div
+          el-form-item.kalix-form-table-td(label="抄送" prop="other" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.other")
 </template>
 
 <script>
   import FormModel from './model'
   import {DocumentPublishURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
+  import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import UserOrgSelect from '@/components/biz/select/UserOrgSelect'
+  import redheadapplyFormModel from '../redheadapply/model'
+  import RedheadApplyViewForm from '../redheadapply/RedheadApplyViewForm.vue'
   import Message from 'common/message'
   import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
   import EventBus from 'common/eventbus'
@@ -35,15 +67,20 @@
       return {
         formModel: Object.assign({}, FormModel),
         rules: {
+          docDeptId: [{type: 'number', required: true, message: '请选择发文部门', trigger: 'change'}],
           printer: [{required: true, message: '请输入打印人', trigger: 'blur'}],
-          checker: [{required: true, message: '请输入校对', trigger: 'blur'}]
+          checker: [{required: true, message: '请输入校对人', trigger: 'blur'}]
         },
         targetURL: DocumentPublishURL,
+        redheadapplyFormModel: Object.assign({}, redheadapplyFormModel),
         labelWidth: '140px'
       }
     },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      KalixDictSelect: BaseDictSelect,
+      KalixOrgSelect: UserOrgSelect,
+      KalixRedheadApplyViewForm: RedheadApplyViewForm
     },
     methods: {
       submitCustom (dialog) {
@@ -61,6 +98,9 @@
             dialog._afterDialogClose()
           })
         }
+      },
+      onOrgIdChange(item) {
+        this.formModel.docDept = item.name
       }
     }
   }
