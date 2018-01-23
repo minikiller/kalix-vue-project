@@ -68,6 +68,8 @@ RedheadApplyURL  = "camel/rest/redheadapplys"
 RedheadApplyStartURL  = "/camel/rest/redheadapplys/workflow/startProcess?id="
 # 文号管理
 DocumentURL  = "camel/rest/documents"
+# 文号管理-撤回文号
+DocumentRevokeURL = "camel/rest/documents/revoke?id="
 # 文号管理-废除文号
 DocumentAbolishURL = "camel/rest/documents/abolish?id="
 # 文号管理-发文

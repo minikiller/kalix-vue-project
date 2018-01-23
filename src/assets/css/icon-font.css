@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 102603 */
-  src: url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.eot');
-  src: url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_102603_muigu1b26e0zfr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_102603_cap4gw8cyxjbrzfr.eot');
+  src: url('//at.alicdn.com/t/font_102603_cap4gw8cyxjbrzfr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_102603_cap4gw8cyxjbrzfr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_102603_cap4gw8cyxjbrzfr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_102603_cap4gw8cyxjbrzfr.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -536,6 +536,7 @@
 .icon-hardware-info:before{content: "\e688";}
 .icon-hardware-history:before{content: "\e689";}
 .icon-hardware-count:before{content: "\e68a";}
+.icon-hardware-system:before{content: "\e6a9";}
 
 /*week、redhead、document*/
 .icon-week:before{content: "\e68c";}
