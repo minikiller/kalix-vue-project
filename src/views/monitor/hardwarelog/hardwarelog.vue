@@ -32,7 +32,7 @@
         btnList: LogToolbarList,
         toolbarBtnList: [
           {id: 'add', isShow: false},
-          {id: 'customBtn1', icon: 'icon-edit', title: '邮箱配置', isShow: true}
+          {id: 'customBtn1', icon: 'icon-edit', title: '邮箱配置', isShow: false}
         ],
         targetURL: HardwareLogURL,
         tableFields: [

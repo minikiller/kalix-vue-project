@@ -15,7 +15,7 @@
     data() {
       return {
         searchFields: [
-          {label: '硬件名称', prop: 'name'}
+          {label: 'MAC地址', prop: 'mac'}
         ]
       }
     },

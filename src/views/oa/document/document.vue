@@ -25,7 +25,7 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {DocumentURL, DocumentComponent, RedheadApplyURL, DocumentAbolishURL} from '../config.toml'
+  import {DocumentURL, DocumentComponent, RedheadApplyURL, DocumentRevokeURL, DocumentAbolishURL} from '../config.toml'
   import {DocumentToolButtonList} from '../document/index'
   import {registerComponent} from '@/api/register'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
@@ -70,6 +70,7 @@
           {id: 'publish', dialog: 'OaDocumentPublish'}
         ],
         redheadApplyURL: RedheadApplyURL,
+        documentRevokeURL: DocumentRevokeURL,
         documentAbolishURL: DocumentAbolishURL
       }
     },
@@ -85,6 +86,11 @@
     methods: {
       customTableTool(row, btnId, table) {
         switch (btnId) {
+          // 撤回文号
+          case 'revoke': {
+            this.onRevoke(row, table)
+            break
+          }
           // 废除文号
           case 'abolish': {
             this.onAbolish(row, table)
@@ -96,6 +102,31 @@
             break
           }
         }
+      },
+      // 撤回文号
+      onRevoke(row, table) {
+        this.axios.request({
+          method: 'GET',
+          url: this.redheadApplyURL + '/' + row.redheadId,
+          params: {}
+        }).then((res) => {
+          let docStatus = res.data.docStatus
+          let warnInfo = '使用该文号的文件状态为[' + docStatus + '],确定要撤回该文号吗?'
+          table.$confirm(warnInfo, '警告', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.axios.request({
+              method: 'GET',
+              url: this.documentRevokeURL + row.id,
+              params: {}
+            }).then((res) => {
+              Message.processResult(res)
+              EventBus.$emit(ON_REFRESH_DATA)
+            })
+          })
+        })
       },
       // 废除文号
       onAbolish(row, table) {
