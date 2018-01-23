@@ -46,7 +46,7 @@
             el-input(v-model="formModel.updateDate" readonly)
       div.el-form.kalix-form-table
         div.table-title 文件信息
-      kalix-redhead-apply-view-form(v-bind:form-model="formModel")
+      kalix-redhead-apply-view-form(v-bind:formModel.sync="redheadapplyFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.redheadId")
 </template>
 
 <script type="text/ecmascript-6">
@@ -54,11 +54,13 @@
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import RedheadApplyViewForm from '../redheadapply/RedheadApplyViewForm.vue'
+  import redheadapplyFormModel from '../redheadapply/model'
 
   export default {
     data() {
       return {
         formModel: Object.assign({}, FormModel),
+        redheadapplyFormModel: Object.assign({}, redheadapplyFormModel),
         labelWidth: '140px'
       }
     },

@@ -5,6 +5,7 @@ const FormModel = {
   businessNo: '',             // 文号
   status: '',                 // 文号状态
   docDate: null,              // 发文时间
+  docDeptId: null,            // 发文部门id(临时字段)
   docDept: '',                // 发文部门
   printer: '',                // 打印人
   checker: '',                // 校对

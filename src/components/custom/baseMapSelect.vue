@@ -9,7 +9,7 @@
     v-bind:placeholder='placeholder' v-bind:multiple="multiple"  style="width:100%;" ref="mapSelect")
       el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
   div(v-else)
-    el-select(v-model='currentValue' v-on:input="change($event)" v-bind:disabled="disabled"
+    el-select(v-model='currentValue' v-bind:prop="prop" v-bind:stopChange="stopChange" v-on:input="change($event)" v-bind:disabled="disabled"
     v-bind:placeholder='placeholder' v-bind:multiple="multiple"  style="width:100%;" ref="mapSelect")
       el-option(v-for="item in items" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
 </template>
@@ -24,8 +24,10 @@
         default: '请选择'
       },
       appName: {  // 应用名称
-        type: String,
-        required: true
+        type: String
+      },
+      prop: {  // search中定义的prop属性
+        type: String
       },
       disabled: Boolean, // 是否禁止
       value: null,
@@ -34,18 +36,24 @@
         default: false
       },
       selectUrl: {
-        type: String,
-        required: true
+        type: String
       },
       paramStr: {
         type: String
+      },
+      selectedOptions: {
+        type: Array
+      },
+      stopChange: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
       return {
         items: [],
-        currentValue: this.value,
-        selectedOptions: []
+        currentValue: this.value
+        // selectedOptions: []
       }
     },
     mounted() {
@@ -53,24 +61,31 @@
     },
     methods: {
       change: function (val) {
-        this.$emit('input', val)
+        this.$emit('getProp', this.prop)
+        if (this.stopChange === false) {
+          this.$emit('input', val)
+        }
       },
       getDict() {
-        this.name = this.appName.toUpperCase()
-        if (this.name) {
-          const MapKey = `${this.name.toUpperCase()}-MAP-KEY`
-          if (!Cache.get(MapKey)) {
-            this.axios.get(this.selectUrl, {
-              params: this.paramStr
-            }).then(response => {
-              if (response.data) {
-                Cache.save(MapKey, JSON.stringify(response.data.data))
-                this.initItems(response.data.data)
-              }
-            })
-          } else {
-            this.visibleChange()
+        if (this.selectUrl) {
+          this.name = this.appName.toUpperCase()
+          if (this.name) {
+            const MapKey = `${this.name.toUpperCase()}-MAP-KEY`
+            if (!Cache.get(MapKey)) {
+              this.axios.get(this.selectUrl, {
+                params: this.paramStr
+              }).then(response => {
+                if (response.data) {
+                  Cache.save(MapKey, JSON.stringify(response.data.data))
+                  this.initItems(response.data.data)
+                }
+              })
+            } else {
+              this.visibleChange()
+            }
           }
+        } else {
+          this.items = this.selectedOptions
         }
       },
       visibleChange() {
