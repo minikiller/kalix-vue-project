@@ -23,7 +23,8 @@
             kalix-query-date-picker(v-else-if="item.type==='year'" v-model="form[item.prop]" type="year")
             kalix-query-datetime-picker(v-else-if="item.type==='datetime'" v-model="form[item.prop]")
             kalix-dict-select(v-else-if="item.type==='dict'" v-bind:appName="item.appName" v-bind:dictType="item.dictType" v-model="form[item.prop]")
-            Kalix-map-select(v-else-if="item.type==='map'" v-bind:appName="item.appName" v-bind:selectUrl="item.selectUrl" v-model="form[item.prop]" v-on:input="getSelectValue")
+            Kalix-map-select(v-else-if="item.type==='map'" v-bind:appName="item.appName" v-bind:prop="item.prop" v-bind:selectUrl="item.selectUrl" v-model="form[item.prop]"
+              v-bind:selectedOptions="item.options" v-on:getProp="getProp" v-on:input="getSelectValue" v-bind:stopChange="item.stopChange")
             el-input(v-else v-model="form[item.prop]")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
@@ -101,7 +102,11 @@
         } else {
           this.searchFields.forEach(item => {
             this.bindFormDataType(item)
-            this.$set(this.form, item.prop, null)
+            if (item.defaultVal) {
+              this.$set(this.form, item.prop, item.defaultVal)
+            } else {
+              this.$set(this.form, item.prop, null)
+            }
           })
         }
       },
@@ -203,6 +208,9 @@
           return true
         }
         return false
+      },
+      getProp(val) {
+        this.$emit('getProp', val)
       },
       getSelectValue(val) {
         this.$emit('selectVal', val)
