@@ -2,7 +2,7 @@
   div.kalix-article
     keep-alive
       component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch"
-      v-on:onSearchBtnClick="onSearchClick" v-on:selectVal="selectVal")
+      v-on:onSearchBtnClick="onSearchClick" v-on:getProp="getProp" v-on:selectVal="selectVal")
     div.kalix-wrapper(v-bind:style="setWrapperStyle()")
       div.kalix-wrapper-hd
         i(v-bind:class="iconCls")
@@ -109,12 +109,9 @@
             jsonStr: this.jsonStr
           }
           _data = Object.assign(_data, this.searchParam)
-          // console.log('this.appendCondition-------------', this.appendCondition)
           if (this.appendCondition && _data.jsonStr.length > 0) {
-            // console.log('_data.jsonStr', _data.jsonStr)
             _data.jsonStr = _data.jsonStr.substring(0, _data.jsonStr.length - 1) + ',' + this.appendCondition + '}'
           }
-          console.log('_data', _data)
           this.$http.get(this.chartTargetUrl, {
             params: _data
           }).then(response => {
@@ -130,6 +127,9 @@
       },
       selectVal(val) {
         this.$emit('selectVal', val)
+      },
+      getProp(val) {
+        this.$emit('getProp', val)
       }
     },
     watch: {

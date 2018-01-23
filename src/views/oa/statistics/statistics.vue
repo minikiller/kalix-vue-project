@@ -8,7 +8,7 @@
     keep-alive
       base-chart(bizKey="statistic1" title="统计图表" v-bind:autoload="false"
       v-bind:chartTargetUrl="targetUrl" width="100%" height="400px"
-      bizSearch="OaStatisticSearch" v-on:selectVal="makeUrl" v-bind:appendCondition="[chartTitleStr,workflowStatus]")
+      bizSearch="OaStatisticSearch" v-on:selectVal="makeUrl" v-on:getProp="getProp" v-bind:appendCondition="[chartTitleStr,workflowStatus]")
 </template>
 
 <script type="text/ecmascript-6">
@@ -21,6 +21,7 @@
   export default {
     data() {
       return {
+        prop: undefined,
         path: undefined,
         option: undefined,
         workflowStatus: undefined
@@ -83,6 +84,9 @@
           let path = val.toLowerCase()
           this.path = path
         }
+      },
+      getProp(val) {
+        this.prop = val
       },
       getWorkflowStatus() {
         let data_ = JSON.parse(Cache.get('OA-DICT-KEY'))
