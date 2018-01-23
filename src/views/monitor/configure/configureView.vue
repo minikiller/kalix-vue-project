@@ -13,15 +13,15 @@
             el-form-item.s-flex_item(v-bind:label="data.name" label-width="120px")
               el-input(v-bind:type="data.type" v-bind:id="data.id" v-bind:placeholder="data.desc" v-model="formModel[key].value")
             div.popover
-              el-popover(ref="popover1" placement="top-start" v-bind:title="data.desc" width="200" trigger="hover")
-                i(style="margin-right: 10px;" class="el-icon-question" slot="reference")
-
+              base-help(v-bind:ref="popover1" v-bind:placement="placement" v-bind:classname="classname" v-bind:title="data.desc" v-bind:width="200" v-bind:trigger="trigger")
 </template>
 <script type="text/ecmascript-6">
   import FormModel from './model'
   import Vue from 'vue'
   import {HardwareLogMailURL, HardwareLogConfigureMailURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
+  import Help from '@/components/custom/baseHelp.vue'
+  import { Message } from 'element-ui'
   // import qs from 'qs'
   export default {
     data() {
@@ -29,11 +29,15 @@
         targetRestURL: HardwareLogMailURL,
         targetURL: HardwareLogConfigureMailURL,
         formModel: Object.assign({}, FormModel),
-        items: {}
+        items: {},
+        classname: 'el-icon-question',
+        placement: 'top-start',
+        trigger: 'hover'
       }
     },
     components: {
-      KalixDialog: Dialog
+      KalixDialog: Dialog,
+      baseHelp: Help
     },
     created() {
       console.log('this.formModel : ', this.formModel['mail'].value)
@@ -78,13 +82,14 @@
                 baseDialog.visible = false
                 baseDialog.$refs.dialogForm.resetFields()
                 baseDialog.submitComplete()
+                Message.success('保存成功')
                 // 关闭对话框
                 baseDialog.close()
                 // 清空form
                 //   baseDialog.$parent. .resetDialogForm()
                 //   baseDialog.$emit('resetDialogForm')
               } else {
-                //  Message.error(response.data.msg)
+                Message.error('保存失败')
                 baseDialog.submitComplete()
               }
               // 刷新列表

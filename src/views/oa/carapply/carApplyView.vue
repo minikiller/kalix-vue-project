@@ -6,8 +6,7 @@
 
 <template lang="pug">
   kalix-dialog.user-add(bizKey="carapply" ref="kalixBizDialog" v-bind:formModel.sync="formModel" isView)
-    div.el-form.kalix-form-table(slot="dialogFormSlot")
-      kalix-car-apply-view-form(v-bind:formModel="formModel")
+    kalix-car-apply-view-form(v-bind:formModel="formModel" slot="dialogFormSlot")
 </template>
 
 <script type="text/ecmascript-6">

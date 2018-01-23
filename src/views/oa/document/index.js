@@ -1,10 +1,19 @@
 /**
+ * 文号撤回判断条件
+ * @param scope
+ * @returns {boolean}
+ */
+const revokeCond = (scope) => {
+  return (scope.row.status === '使用中' && !(scope.row.docStatus === '已发文'))
+}
+
+/**
  * 文号废除判断条件
  * @param scope
  * @returns {boolean}
  */
 const abolishCond = (scope) => {
-  return scope.row.status === '使用中'
+  return (scope.row.status === '使用中' && scope.row.docStatus === '已发文')
 }
 
 /**
@@ -28,11 +37,11 @@ const DocumentToolButtonList = [
     isPermission: true  // 是否进行权限认证
   },
   {
-    id: 'publish',
-    title: '发文',
+    id: 'revoke',
+    title: '撤回',
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
-    cond: publishCond
+    cond: revokeCond
   },
   {
     id: 'abolish',
@@ -40,6 +49,13 @@ const DocumentToolButtonList = [
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
     cond: abolishCond
+  },
+  {
+    id: 'publish',
+    title: '发文',
+    isShow: true,   // 是否显示
+    isPermission: true,  // 是否进行权限认证
+    cond: publishCond
   }
 ]
 

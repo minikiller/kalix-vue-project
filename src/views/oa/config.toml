@@ -8,6 +8,7 @@ WorkflowSuspendURL = "/camel/rest/workflow/suspend?key="
 WorkflowActivateURL = "/camel/rest/workflow/activate?key="
 WorkflowMainWorkURL = "/camel/rest/categorys/getAll"
 WorkflowHistoryURL = "/camel/rest/workflow/historys"
+WorkflowAllDefineURL = "/camel/rest/workflow/defines" # add by yangz 获取工作流定义的所有名字
 MyInvolvedURL = "/camel/rest/workflow/myInvolvedHistory"
 MyHistoryURL = "/camel/rest/workflow/myHistory"
 TaskURL = "/camel/rest/workflow/tasks"
@@ -67,6 +68,8 @@ RedheadApplyURL  = "camel/rest/redheadapplys"
 RedheadApplyStartURL  = "/camel/rest/redheadapplys/workflow/startProcess?id="
 # 文号管理
 DocumentURL  = "camel/rest/documents"
+# 文号管理-撤回文号
+DocumentRevokeURL = "camel/rest/documents/revoke?id="
 # 文号管理-废除文号
 DocumentAbolishURL = "camel/rest/documents/abolish?id="
 # 文号管理-发文
@@ -351,3 +354,6 @@ DocumentPublishURL = "camel/rest/documents/publish?id="
   title = "删除"
   isShow = true
   isPermission = true
+[[StatisticsComponent]]
+  path = "oa/statistics/statisticsSearch"
+  name = "OaStatisticSearch"

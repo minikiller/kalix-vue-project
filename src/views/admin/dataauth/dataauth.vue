@@ -7,7 +7,7 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import dataauthBtnList from '../dataauth/index'
+  import {dataauthBtnList} from '../dataauth/index'
   import {dataauthURL, DataAuthComponent, AdminCacheKey} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
