@@ -61,8 +61,8 @@
     width 90%
     height 100%
     overflow hidden
+    border-radius 4px 0 0 4px
     background url("./side_bar-bg.png") 0 0 repeat
-    border-radius $borderRadius 0 0 $borderRadius
     transition transform .5s
 
     &.show

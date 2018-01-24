@@ -6,11 +6,7 @@
       div.panel_body
         div.group
           div.row.clearfix
-            div.cloumn
-              img.avatar(src="./g.jpg")
-            div.cloumn.profile_title_setting
-              div.text_ellipsis.profile_name.row (●—●)
-              div.row.profile_account 11991762
+            user-avatar(v-bind:user="user" cls="operation")
         div.group.clickAble
           div.row(v-on:click="onUpdateUserInfo") 修改个人信息
             span.more_icon
@@ -24,8 +20,19 @@
   import Cache from 'common/cache'
   import EventBus from 'common/eventbus'
   import {logoutURL} from 'config/global.toml'
+  import UserAvatar from './userAvatar'
 
   export default {
+    props: {
+      user: {
+        type: Object,
+        default: () => {
+          return {
+            userName: ''
+          }
+        }
+      }
+    },
     methods: {
       logout() {
         this.axios.get(logoutURL, {}).then(response => {
@@ -47,6 +54,9 @@
       onUpdateUserInfo() {
         this.$router.push({path: '/admin/updateinfo'})
       }
+    },
+    components: {
+      UserAvatar
     }
   }
 </script>
@@ -102,26 +112,6 @@
           border-bottom-right-radius: 5px
         .cloumn
           float: left
-          .avatar
-            position: relative;
-            margin: 8px !important;
-            width 40px
-            height: 40px;
-      .profile_title_setting
-        padding-top: 5px;
-        padding-left: 5px;
-        width: 62%;
-        float: left;
-        .profile_name
-          font-size: 1.4em;
-          line-height: 1.4em;
-        .text_ellipsis
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        .profile_account
-          color: #666;
-          font-size: .9em;
       .profile_signature
         line-height: 22px;
         overflow: hidden;

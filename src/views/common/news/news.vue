@@ -28,7 +28,8 @@
           {prop: 'title', label: '标题'},
           {prop: 'content', label: '内容'},
           {prop: 'publishPeople', label: '发布人'},
-          {prop: 'publishDate', label: '发布时间'}
+          {prop: 'publishDate', label: '发布时间'},
+          {prop: 'id', label: 'id'}
         ],
         bizDialog: [
           {id: 'view', dialog: 'CommonNewsView'},

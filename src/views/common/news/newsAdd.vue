@@ -9,6 +9,7 @@
   ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
   )
     div.el-form(slot="dialogFormSlot")
+      div id:{{formModel.id}}
       el-form-item(label="标题" prop="title" v-bind:rules="rules.title")
         el-input(v-model="formModel.title")
       el-form-item(label="内容" prop="content" v-bind:rules="rules.content")

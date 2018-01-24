@@ -6,7 +6,7 @@
         div.user_info
           div.avatar_wrapper
             div.avatar(v-bind:style="styleObject")
-          div.user_name {{userName}}
+          div.user_name {{user.userName}}
     transition(name="ima")
       div.im(v-if="!isMini")
         // 侧栏
@@ -16,13 +16,13 @@
           div.im-cantainer
             div.im-btn-min(v-on:click="onMinimum")
             // 设置
-            kalix-oeration(v-show="navTabSelected === 'setup'")
+            kalix-operation(v-show="navTabSelected === 'setup'" v-bind:user="user")
             // 组织机构
             div.im-box(v-show="navTabSelected === 'conversation'")
               div.im-hd
                 div.avatar_wrapper(v-on:click="onOpenUserInfo")
                   div.avatar(v-bind:style="styleObject")
-                  div.text {{userName}}
+                  div.text {{user.userName}}
               div.im-bd
                 ul.group_list.member_group_list
                   li.list_group.clearfix(v-bind:key="item.id" v-for="(item,index) in treeData" v-bind:class="{'active':item.active}")
@@ -30,41 +30,7 @@
                       span {{item.name}}
                       span.onlinePercent 6/34
             // 消息列表
-            div.im-box(v-show="navTabSelected === 'contact'")
-              div.im-hd
-                div.avatar_wrapper(v-on:click="onOpenUserInfo")
-                  div.avatar(v-bind:style="styleObject")
-                  div.text {{userName}}
-              div.im-bd
-                ul.user-list(id="user-list-session")
-                  li.user-list_item
-                    div.user_avatar_wrapper
-                      img.avatar(src="/static/images/im/user-1.png")
-                    div.user-list_item_main
-                      p.member_nick user
-                      p.member_msg.text_ellipsis 消息
-                    div.time 16:25
-                  li.user-list_item
-                    div.user_avatar_wrapper
-                      img.avatar(src="/static/images/im/user-2.png")
-                    div.user-list_item_main
-                      p.member_nick 用户2
-                      p.member_msg.text_ellipsis 《参加全国大学生竞赛》
-                    div.time 16:25
-                  li.user-list_item
-                    div.user_avatar_wrapper
-                      img.avatar(src="/static/images/im/sys-message.png")
-                    div.user-list_item_main
-                      p.member_nick 实时消息
-                      p.member_msg.text_ellipsis 参加今天的下午5点会
-                    div.time 16:25
-                  li.user-list_item
-                    div.user_avatar_wrapper
-                      img.avatar(src="/static/images/im/user-file.png")
-                    div.user-list_item_main
-                      p.member_nick 审批文件
-                      p.member_msg.text_ellipsis 《参加全国大学生竞赛》
-                    div.time 16:25
+            message-list(v-show="navTabSelected === 'contact'" v-bind:user="user")
           div.panel_footer
             div.nav_tab
               ul.nav_tab_head
@@ -82,8 +48,9 @@
   import Cookie from 'js-cookie'
   import ImState from './imState'
   import KalixSideBar from './sideBar'
-  import KalixMessageList from './messageList'
-  import KalixOeration from './operation'
+  import MessageList from './messageList'
+  import KalixOperation from './operation'
+  import UserAvatar from './userAvatar'
 
   export default {
     data() {
@@ -109,7 +76,7 @@
     activated() {
       this.navTabSelected = 'contact'
       this.user.userName = Cache.get('user_name')
-      this.icon = this.decode(Cookie.get('currentUserIcon')) === 'null' ? '' : this.decode(Cookie.get('currentUserIcon'))
+      this.user.avatar = this.decode(Cookie.get('currentUserIcon')) === 'null' ? '' : this.decode(Cookie.get('currentUserIcon'))
       this.getData()
     },
     methods: {
@@ -198,9 +165,9 @@
       },
       styleObject() {
         let style = {}
-        if (this.icon) {
+        if (this.user.avatar) {
           style = {
-            backgroundImage: `url('${this.icon}')`
+            backgroundImage: `url('${this.user.avatar}')`
           }
         }
         return style
@@ -213,8 +180,9 @@
     },
     components: {
       KalixSideBar,
-      KalixMessageList,
-      KalixOeration
+      MessageList,
+      KalixOperation,
+      UserAvatar
     }
   }
 </script>
@@ -295,20 +263,6 @@
         height 100%
         display flex
         flex-direction column
-        .im-hd
-          width 100%
-          height 55px
-          background-color #ae935c
-          display flex
-          border-radius $borderRadius $borderRadius 0 0
-          border 1px solid #a8925f
-          border-bottom 1px solid #cbbb7a
-          box-sizing border-box
-          .im-hd_title
-            line-height 55px
-            text-align center
-            flex 1
-            color #ffffff
         .im-bd
           width 100%
           overflow auto
@@ -431,70 +385,6 @@
         font-size 14px
         color #ffffff
 
-    /* 用户列表 */
-    .user-list
-      .user-list_item
-        height 70px
-        width 100%
-        padding 0 20px
-        background url("./user-item-bg.png") 50% 0 repeat-x
-        border-bottom 1px solid #f0ebca
-        box-sizing border-box
-        cursor pointer
-        &.selected
-          background-image url("./user-item-bg.png")
-        .user_avatar_wrapper
-          display inline-block
-          margin-right 8px
-          margin-top 15px
-          position relative
-          float left
-          .avatar
-            width 40px
-            height 40px
-            border-radius 50%
-            border 1px solid #dddddd
-          .badge
-            position absolute
-            display inline-block
-            top -6px
-            right -2px
-            width 14px
-            height 14px
-            font-size 12px
-            color #ffffff
-            text-align center
-            line-height 14px
-            border-radius 50%
-            border 1px solid #fff
-            background-color #ff3b2f
-            .badge-text
-              transform scale(0.8333)
-        .user-list_item_main
-          display inline-block
-          float left
-          margin 0
-          margin-top 15px
-          width 134px
-          .member_nick
-            height: 16px;
-            line-height: 16px;
-            overflow: hidden;
-            margin-top 6px;
-          .member_msg
-            font-size: 12px;
-            line-height 14px
-            color: #898a93;
-            margin-top 2px
-            text_ellipsis()
-
-        .time
-          display inline-block
-          float right
-          margin-top 21px
-          margin-left 8px
-          font-size 14px;
-          color #bcbdc0
     .list_group
       cursor: pointer
       &:first-child
