@@ -7,7 +7,7 @@
   div(id="charts")
     keep-alive
       base-chart(bizKey="statistic1" title="统计图表" v-bind:autoload="false"
-      v-bind:chartTargetUrl="targetUrl" width="100%" height="400px"
+      v-bind:chartTargetUrl="targetUrl" width="100%" height="500px"
       bizSearch="OaStatisticSearch" v-on:selectVal="makeUrl" v-on:getProp="getProp" v-bind:appendCondition="[chartTitleStr,workflowStatus]")
 </template>
 
