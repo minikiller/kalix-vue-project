@@ -49,7 +49,6 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import FormModel from './model'
   import Tinymce from '@/third/Tinymce'
-  import VueTinymce from 'vue-tinymce'
 
   export default {
     watch: {
@@ -180,8 +179,7 @@
       KalixOrgSelect: UserOrgSelect,
       KalixDictSelect: BaseDictSelect,
       KalixDialog: Dialog,
-      Tinymce,
-      VueTinymce
+      Tinymce
     }
   }
 </script>
