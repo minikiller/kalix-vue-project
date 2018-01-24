@@ -148,8 +148,8 @@ AdminCacheKey = "ADMIN-DICT-KEY"
 
 
  [[OrgComponent]]
-  path = "admin/org/orgView"
-  name = "AdminOrgView"
+  path = "admin/org/orgAddUser"
+  name = "AdminOrgAddUser"
  [[OrgComponent]]
   path = "admin/org/orgEdit"
   name = "AdminOrgEdit"
