@@ -44,9 +44,18 @@
 
 <script type="text/ecmascript-6">
   import DateTimePicker from '@/components/biz/date/datetimepicker.vue'
+  import {RedheadApplyURL} from '../config.toml'
+  import Vue from 'vue'
 
   export default {
-    props: ['formModel'],
+    props: {
+      formModel: {},
+      isRequest: {
+        type: Boolean,
+        default: false
+      },
+      bizId: null
+    },
     data() {
       return {
         labelWidth: '140px'
@@ -55,6 +64,35 @@
     components: {
       KalixDateTimePicker: DateTimePicker
     },
-    methods: {}
+    mounted() {
+      if (this.isRequest) {
+        this.getBizData()
+      }
+    },
+    watch: {
+      bizId(newVal) {
+        if (this.isRequest) {
+          this.getBizData()
+        }
+      }
+    },
+    methods: {
+      // 获取业务数据
+      getBizData() {
+        if (this.bizId) {
+          let bizDataUrl = RedheadApplyURL + '/' + this.bizId
+          let params = {
+            params: {}
+          }
+          Vue.axios.get(bizDataUrl, params).then((response) => {
+            if (response.data.success === undefined) {
+              if (response.data) {
+                this.$emit('update:formModel', response.data) // 设置sync才有效
+              }
+            }
+          })
+        }
+      }
+    }
   }
 </script>
