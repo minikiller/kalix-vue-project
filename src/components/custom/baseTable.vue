@@ -41,9 +41,15 @@
                   template(slot-scope="scope")
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
               //  table的工具按钮
-            slot(name="tableToolSlot")
-              kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick"
-              v-bind:isFixedColumn="isFixedColumn")
+              el-table-column(label="操作" align="center"
+              fixed="right"
+              v-bind:fixed="isFiex"
+              v-bind:width="columnWidth"
+              class-name="base-teble-operation")
+                template(slot-scope="scope")
+                  slot(name="tableToolSlot" slot-scope="scope")
+                    kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick"
+                    v-bind:scope="scope")
           div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
         div.kalix-table-pagination.s-flex
@@ -513,6 +519,18 @@
       KalixDialog: Dialog
     },
     computed: {
+      columnWidth() {
+        let width = 65
+        let len = this.btnList.length
+        let btnWidth = 34
+        if (len > 1) {
+          width += btnWidth * (len - 1)
+        }
+        return width
+      },
+      isFiex() {
+        return this.isFixedColumn ? 'right' : this.isFixedColumn
+      },
       rowNo() {
         return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
       },

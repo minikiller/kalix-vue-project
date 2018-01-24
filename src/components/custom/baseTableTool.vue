@@ -5,23 +5,9 @@
 -->
 
 <template lang="pug">
-  el-table-column(label="操作" v-bind:width="columnWidth" align="center"
-  v-bind:fixed="isFiex"
-  class-name="base-teble-operation")
-    template(slot-scope="scope")
-      template(v-for="btn in btnList")
-        template(v-if="btn.isShow")
-          template(v-if="btn.titleCompute")
-            el-tooltip(v-if="btn.toolTipTitle" v-bind:content="btn.toolTipTitle" placement="top")
-              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
-            el-tooltip(v-else v-bind:content="btn.titleCompute(scope)" placement="top")
-              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
-          template(v-else)
-              el-tooltip(v-if="btn.toolTipTitle" v-bind:content="btn.toolTipTitle" placement="top")
-                span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
-              el-tooltip(v-else v-bind:content="btn.title" placement="top")
-                span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
-
+  div
+    el-tooltip(v-for="btn in btnList" v-bind:key="btn.id" v-bind:content="toolTipContent(btn)" placement="top")
+      span.operation-btn(type="text" size="small" v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)") {{buttonTitle(btn)}}
 </template>
 
 <script type="text/ecmascript-6">
@@ -29,9 +15,8 @@
 
   export default {
     props: {
-      isFixedColumn: {
-        type: Boolean,
-        default: false
+      scope: {
+        type: Object
       },
       btnList: {  // 工具按钮的列表
         type: Array,
@@ -50,22 +35,15 @@
     data() {
       return {}
     },
-    computed: {
-      columnWidth() {
-        let width = 65
-        let len = this.btnList.length
-        let btnWidth = 34
-        if (len > 1) {
-          width += btnWidth * (len - 1)
-        }
-        return width
-      },
-      isFiex() {
-        return this.isFixedColumn ? 'right' : this.isFixedColumn
-      }
-    },
     methods: {
+      buttonTitle(btn) {
+        return (btn.titleCompute) ? btn.titleCompute(this.scope) : btn.title
+      },
+      toolTipContent(btn) {
+        return (btn.toolTipTitle) ? btn.toolTipTitle : (btn.titleCompute) ? btn.titleCompute(this.scope) : btn.title
+      },
       toggle(row, btnId) { // toolbar click event
+        console.log('%c [BaseTable] toggle ', 'color:#fff;background:#458B00', row.id, btnId)
         this.$emit(ON_TABLE_TOOLBAR_CLICK, row, btnId)
       }
     }
