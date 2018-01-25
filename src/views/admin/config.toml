@@ -14,6 +14,7 @@ appsStopURL = "/camel/rest/osgi/bundle/stop" #系统应用-停止
 workgroupURL = "/camel/rest/workgroups"
 dataauthURL = "/camel/rest/dataauths"
 addusersURL = "/camel/rest//dataauths/[id]/users"
+functionMenuURL = "camel/rest/applications/extend/tree" # 功能管理菜单
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 roleBtnPermissionPrefix = "admin:permissionModule:roleMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
