@@ -12,12 +12,11 @@
   v-bind:targetURL="targetURL"
   v-bind:submitCustom="submitCustom"
   )
-    div.el-form(slot="dialogFormSlot" style="max-height:550px;overflow:auto;")
-      div(style="border: 1px solid #d0d0d0;")
-        el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
-        show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
-        empty-text="数据加载中!" ref="baseTree"
-        v-on:check-change="checkChange")
+    div.el-form(slot="dialogFormSlot" style="max-height:550px;min-height:550px;overflow:auto;border: 1px solid #d0d0d0;margin:-30px 0 -20px")
+      el-tree.filter-tree(v-bind:data="treeData" v-bind:props="defaultProps" node-key="id" highlight-current
+      show-checkbox v-bind:default-checked-keys="checkedKeys" default-expand-all
+      empty-text="数据加载中!" ref="baseTree"
+      v-on:check-change="checkChange")
 </template>
 
 <script type="text/ecmascript-6">
