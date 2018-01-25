@@ -123,6 +123,7 @@
         })
       },
       onCancelClick() {
+        this.$emit('KalixDialogClose')
         console.log('dialog cancel button clicked !')
         this.visible = false
         if (!this.isView) {
@@ -165,6 +166,7 @@
         console.log('open formModel', this.formModel)
         console.log('open row', row)
 
+        this.$emit('KalixDialogOpen')
 //        this.$emit('update:formModel', row)
       },
       initData(row) {
