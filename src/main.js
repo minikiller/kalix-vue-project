@@ -13,7 +13,9 @@ import store from './store'
 import {GlobalComponent, GlobalFilter} from 'config/global.toml'
 import './element-ui'
 import KalixBase from 'kalix-base'
+// import VueMce from 'vue-mce'
 
+// Vue.use(VueMce)
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)

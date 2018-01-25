@@ -1,13 +1,18 @@
 <template lang="pug">
-  div.tinymce-container.editor-container
-    textarea.tinymce-textarea(v-bind:id="tinymceId")
-    <!--<div class="editor-custom-btn-container">-->
-    <!--<editorImage  color="#20a0ff" class="editor-upload-btn" @successCBK="imageSuccessCBK"></editorImage>-->
-    <!--</div>-->
+  div
+    div tinymceId:{{tinymceId}}
+    div.tinymce-container.editor-container
+      textarea.tinymce-textarea(v-bind:id="tinymceId")
+      <!--<div class="editor-custom-btn-container">-->
+      <!--<editorImage  color="#20a0ff" class="editor-upload-btn" @successCBK="imageSuccessCBK"></editorImage>-->
+      <!--</div>-->
 </template>
 
 <script>
   // import editorImage from './components/editorImage'
+  const INIT = 0
+  const INPUT = 1
+  const CHANGED = 2
 
   export default {
     name: 'tinymce',
@@ -38,6 +43,7 @@
     },
     data() {
       return {
+        status: INIT,
         hasChange: false,
         hasInit: false,
         tinymceId: this.id || 'vue-tinymce-' + +new Date()
@@ -45,22 +51,37 @@
     },
     watch: {
       value(val) {
-        if (!this.hasChange && this.hasInit) {
-          this.$nextTick(() => window.tinymce.get(this.tinymceId).setContent(val))
+        console.log('tiny mce is hasChange ' + this.hasChange)
+        console.log('tiny mce is hasInit ' + this.hasInit)
+        console.log('tiny mce is tinymceId ' + this.tinymceId)
+        if (this.status === CHANGED) {
+          /* eslint-disable no-return-assign */
+          return this.status = INPUT
         }
+        //
+        this.$nextTick(() => window.tinymce.get(this.tinymceId) && window.tinymce.get(this.tinymceId).setContent(val))
+        console.log('tiny mce is tinymceId =====  ' + val)
+        // if (!this.hasChange && this.hasInit) {
+        //   console.log('tiny mce is changed')
+        //   this.$nextTick(() => window.tinymce.get(this.tinymceId).setContent(val))
+        // }
       }
     },
     mounted() {
-      this.initTinymce()
+      console.log('tiny mce is mounted')
+      // this.initTinymce()
     },
     activated() {
+      console.log('tiny mce is activated')
       this.initTinymce()
     },
     deactivated() {
+      console.log('tiny mce is deactivated')
       this.destroyTinymce()
     },
     methods: {
       initTinymce() {
+        console.log('%c tiny mce is initTinymce', 'color:#FFF;background:#505')
         const _this = this
         window.tinymce.init({
           selector: `#${this.tinymceId}`,
@@ -88,6 +109,9 @@
             _this.hasInit = true
             editor.on('NodeChange Change KeyUp', () => {
               this.hasChange = true
+              // this.$emit('input', editor.getContent({format: 'raw'}))
+            })
+            editor.on('blur', () => {
               this.$emit('input', editor.getContent({format: 'raw'}))
             })
           },
@@ -98,42 +122,10 @@
             })
           },
           language: 'zh_CN'
-          // 整合七牛上传
-          // images_dataimg_filter(img) {
-          //   setTimeout(() => {
-          //     const $image = $(img);
-          //     $image.removeAttr('width');
-          //     $image.removeAttr('height');
-          //     if ($image[0].height && $image[0].width) {
-          //       $image.attr('data-wscntype', 'image');
-          //       $image.attr('data-wscnh', $image[0].height);
-          //       $image.attr('data-wscnw', $image[0].width);
-          //       $image.addClass('wscnph');
-          //     }
-          //   }, 0);
-          //   return img
-          // },
-          // images_upload_handler(blobInfo, success, failure, progress) {
-          //   progress(0);
-          //   const token = _this.$store.getters.token;
-          //   getToken(token).then(response => {
-          //     const url = response.data.qiniu_url;
-          //     const formData = new FormData();
-          //     formData.append('token', response.data.qiniu_token);
-          //     formData.append('key', response.data.qiniu_key);
-          //     formData.append('file', blobInfo.blob(), url);
-          //     upload(formData).then(() => {
-          //       success(url);
-          //       progress(100);
-          //     })
-          //   }).catch(err => {
-          //     failure('出现未知问题，刷新页面，或者联系程序员')
-          //     console.log(err);
-          //   });
-          // },
         })
       },
       destroyTinymce() {
+        console.log('%c tiny mce is destroyTinymce', 'color:#FFF;background:#050')
         if (window.tinymce.get(this.tinymceId)) {
           window.tinymce.get(this.tinymceId).destroy()
         }
