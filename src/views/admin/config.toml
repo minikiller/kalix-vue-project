@@ -35,6 +35,12 @@ AdminCacheKey = "ADMIN-DICT-KEY"
   title = "删除"
   isShow = true
   isPermission = true
+[[DutyButtonList]]
+  id = "addUser"
+  title = "添加"
+  toolTipTitle= "添加用户"
+  isShow = true
+  isPermission = true
 
 [[OrgToolbarList]]
   id = "view"
@@ -145,7 +151,9 @@ AdminCacheKey = "ADMIN-DICT-KEY"
  [[DutyComponent]]
   path = "admin/duty/dutySearch"
   name = "AdminDutySearch"
-
+ [[DutyComponent]]
+  path = "admin/duty/dutyAddUser"
+  name = "AdminDutyAddUser"
 
  [[OrgComponent]]
   path = "admin/org/orgAddUser"
