@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    div tinymceId:{{tinymceId}}
+    <!--div tinymceId:{{tinymceId}}-->
     div.tinymce-container.editor-container
       textarea.tinymce-textarea(v-bind:id="tinymceId")
       <!--<div class="editor-custom-btn-container">-->
