@@ -13,12 +13,13 @@ import store from './store'
 import {GlobalComponent, GlobalFilter} from 'config/global.toml'
 import './element-ui'
 import KalixBase from 'kalix-base'
+import MyConsole from 'common/MyConsole'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 Vue.use(KalixBase)
-
+Vue.use(MyConsole)
 // for (const item of GlobalComponent) {
 //   console.log(item.name, item.path)
 //   var com = require(`${item.path}`)

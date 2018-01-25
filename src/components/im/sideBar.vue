@@ -5,42 +5,36 @@
 -->
 <template lang="pug">
   div.side_bar(v-bind:class="{'show':isShow}")
-    div.tool-btn.close.side_bar_close
-    div.user_info
-      div.avatar_wrapper
-        div.avatar(v-bind:style="styleObject")
-      div.user_name {{user.userName}}
-      div.user_org 动画研究院
-    ul.side_list
-      li.side_list_item.selected
-        i.icon(style="background-image: url(/static/images/im/icon-1.png)")
-        | 首页
-      li.side_list_item
-        i.icon(style="background-image: url(/static/images/im/icon-2.png)")
-        | 历史纪录
-      li.side_list_item
-        i.icon(style="background-image: url(/static/images/im/icon-3.png)")
-        | 个人设置
-      li.side_list_item
-        i.icon(style="background-image: url(/static/images/im/icon-4.png)")
-        | 收藏
-      li.side_list_item
-        i.icon(style="background-image: url(/static/images/im/icon-5.png)")
-        | 编辑
+    div.side_bar_close(v-on:click="close")
+    user-avatar(cls="info")
+    div.side_list
+      side-bar-list-item(v-for="item in items" v-bind:item="item" v-bind:key="item.text")
 </template>
 <script type="text/ecmascript-6">
+  import UserAvatar from './userAvatar'
+  import SideBarListItem from './sideBarListItem'
+  import EventBus from 'common/eventbus'
+
   export default {
-    props: {
-      isShow: {
-        type: Boolean
-      },
-      user: {
-        default: () => {
-          return {}
-        }
+    data() {
+      return {
+        isShow: false,
+        items: [
+          {text: '首页', isSelect: true, icon: 'item_home'},
+          {text: '历史纪录', isSelect: false, icon: 'item_history'},
+          {text: '个人设置', isSelect: false, icon: 'item_setup'},
+          {text: '收藏', isSelect: false, icon: 'item_collect'},
+          {text: '编辑', isSelect: false, icon: 'item_edit'}
+        ]
       }
     },
+    activated() {
+      EventBus.$on('UserAvatarClick', this.userAvatarClick)
+    },
     methods: {
+      userAvatarClick() {
+        this.show()
+      },
       styleObject() {
         let style = {}
         if (this.icon) {
@@ -49,7 +43,17 @@
           }
         }
         return style
+      },
+      close() {
+        this.isShow = false
+      },
+      show() {
+        this.isShow = true
       }
+    },
+    components: {
+      UserAvatar,
+      SideBarListItem
     }
   }
 </script>
@@ -64,63 +68,21 @@
     border-radius 4px 0 0 4px
     background url("./side_bar-bg.png") 0 0 repeat
     transition transform .5s
-
     &.show
       transform translate3d(-100%, 0, 0)
     .side_bar_close
+      width 26px
+      height 26px
       position absolute
       top 0px
       left 0px
-      border-radius-bottomright 0
-    .user_info
-      text-align center
-      padding 21px 0 13px
-      .avatar_wrapper
-        display inline-block
-        border 1px solid #fefeea
-        border-radius 50%
-        padding 13px
-        .avatar
-          width 81px
-          height 81px
-          border 0
-          margin 0
-      .user_name,
-      .user_org
-        font-size 14px
-        line-height 14px
-      .user_name
-        margin-top 11px
-        font-weight bold
-        color #ffffff
-      .user_org
-        margin-top 5px
-        color #c5ac71
+      border-radius 4px 0 0 0
+      background 50% 50% no-repeat url("./icon-close.png")
+      cursor pointer
+      transition background-color 0.2s
+      &:hover
+        background-color #7b6a48
     .side_list
       border solid #625833
       border-width 1px 0
-      .side_list_item
-        height 53px
-        line-height 53px
-        border-top 1px solid #625833
-        padding 0 21px
-        font-size 14px
-        color #cec9c8
-        cursor pointer
-        &:first-chile
-          border none
-        .icon
-          display inline-block
-          width 28px
-          height 28px
-          border-radius 50%
-          margin 13px 15px 0 0
-          background #48372f 50% 50% no-repeat
-          float left
-        &.selected
-          color #ffe1dd
-          background-color rgba(197, 172, 113, 0.29)
-          .icon
-            background-color #937d67
-
 </style>
