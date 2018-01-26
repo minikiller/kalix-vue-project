@@ -14,9 +14,9 @@
         kalix-biz-no-column(title="文号")  // 业务编号
         el-table-column(prop="docTypeName" label="文号类型" align="center" width="120")
         el-table-column(prop="year" label="年份" align="center" width="100")
-        kalix-status-column
+        kalix-status-column  // 文号状态
         el-table-column(prop="title" label="文题" align="center" width="300")
-        kalix-doc-status-column
+        kalix-doc-status-column  // 文件状态
         el-table-column(prop="docDate" label="发文时间" align="center" width="220")
         el-table-column(prop="docDept" label="发文部门" align="center" width="220")
         kalix-date-column(prop="creationDate" label="创建时间")

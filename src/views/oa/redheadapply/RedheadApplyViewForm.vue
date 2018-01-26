@@ -30,6 +30,10 @@
     div
       el-form-item.kalix-form-table-td(label="发文内容" prop="docContent" v-bind:label-width="labelWidth")
         div(v-html="formModel.docContent")
+    div
+      el-form-item.kalix-form-table-td(label="审批选项" prop="needHeader" v-bind:label-width="labelWidth")
+        div(style="text-align:center")
+          el-switch(v-model="formModel.needHeader" active-text="需要校领导审批" inactive-text="不需要校领导审批" disabled)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="部门负责人签字" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.depUser" readonly)
