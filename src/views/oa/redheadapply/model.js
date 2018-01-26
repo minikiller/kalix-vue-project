@@ -18,6 +18,7 @@ const FormModel = {
   depUser: '',       // 部门负责人
   schoolUser: '',    // 校务部签字
   managerUser: '',   // 校级领导
+  needHeader: true,   // 是否需要校级领导
   chairmanUser: ''   // 董事长审核
 }
 

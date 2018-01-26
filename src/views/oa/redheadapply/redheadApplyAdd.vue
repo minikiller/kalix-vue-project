@@ -24,6 +24,9 @@
         <!--el-input(v-model="formModel.docContent" type="textarea")-->
       el-form-item.s-flex_item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")
         tinymce(v-model="formModel.docContent" ref="editor")
+      el-form-item.s-flex_item.kalix-form-table-td(label="审批选项" v-bind:label-width="labelWidth")
+        el-switch(v-model="formModel.needHeader"  active-text="需要校领导审批" inactive-text="不需要校领导审批")
+  </el-switch>
     <!--div.s-flex-->
     <!--el-form-item.s-flex_item.kalix-form-table-td(label="打印人" v-bind:label-width="labelWidth")-->
     <!--el-input(v-model="formModel.printer")-->
