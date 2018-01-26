@@ -114,6 +114,12 @@
             editor.on('blur', () => {
               this.$emit('input', editor.getContent({format: 'raw'}))
             })
+            editor.on('focus', () => {
+              setTimeout(() => {
+                editor.execCommand('fontName', false, '微软雅黑')
+                editor.execCommand('fontSize', false, '18pt')
+              }, 20)
+            })
           },
           setup: function (ed) { // 设置默认字体和字号
             ed.on('init', function () {

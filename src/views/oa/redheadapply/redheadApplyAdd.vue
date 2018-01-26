@@ -5,13 +5,13 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(
-  bizKey="sealApply"
+  bizKey="redheadApply"
   ref="kalixBizDialog" v-bind:formModel.sync="formModel"
   v-bind:targetURL="targetURL"
   v-on:KalixDialogOpen="kalixDialogOpen"
   v-on:KalixDialogClose="kalixDialogClose")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
-      div.table-title 吉林动画学院红头文件申请表-id {{formModel.id}}
+      div.table-title 吉林动画学院红头文件申请表
       el-form-item(label="名称" v-bind:label-width="labelWidth" prop="title" v-bind:rules="rules.title")
         el-input(v-model="formModel.title")
       div.s-flex
