@@ -26,7 +26,7 @@
           el-table-column(prop="docCaption" label="文号标题" align="center" width="100")
           el-table-column(prop="docTypeName" label="文号类型" align="center" width="220")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
-          el-table-column(prop="docStatus" label="文档状态" align="center" width="220")
+          kalix-doc-status-column  // 文件状态
           kalix-date-column(prop="creationDate" label="创建时间")
           kalix-date-column(prop="applyDate" label="申请时间")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
@@ -50,6 +50,7 @@
   import ProcessStatusColumn from '@/views/oa/comp/processStatusColumn.vue'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import DocStatusColumn from '@/views/oa/comp/docStatusColumn.vue'
 
   registerComponent(RedheadApplyComponent)
   export default {
@@ -149,7 +150,8 @@
       KalixTaskView: TaskView,
       KalixProcessStatusColumn: ProcessStatusColumn, // 工作流状态列
       KalixBizNoColumn: BizNoColumn,
-      KalixDateColumn: DateColumn
+      KalixDateColumn: DateColumn,
+      KalixDocStatusColumn: DocStatusColumn
     }
   }
 </script>
