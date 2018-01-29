@@ -5,23 +5,19 @@
 -->
 
 <template lang="pug">
-  el-table-column(label="操作" v-bind:width="columnWidth" align="center"
-  v-bind:fixed="isFiex"
-  class-name="base-teble-operation")
-    template(slot-scope="scope")
-      template(v-for="btn in btnList")
-        template(v-if="btn.isShow")
-          template(v-if="btn.titleCompute")
+  div
+    template(v-for="btn in btnList")
+      template(v-if="btn.isShow")
+        template(v-if="btn.titleCompute")
+          el-tooltip(v-if="btn.toolTipTitle" v-bind:content="btn.toolTipTitle" placement="top")
+            span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
+          el-tooltip(v-else v-bind:content="btn.titleCompute(scope)" placement="top")
+            span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
+        template(v-else)
             el-tooltip(v-if="btn.toolTipTitle" v-bind:content="btn.toolTipTitle" placement="top")
-              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
-            el-tooltip(v-else v-bind:content="btn.titleCompute(scope)" placement="top")
-              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
-          template(v-else)
-              el-tooltip(v-if="btn.toolTipTitle" v-bind:content="btn.toolTipTitle" placement="top")
-                span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
-              el-tooltip(v-else v-bind:content="btn.title" placement="top")
-                span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
-
+              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
+            el-tooltip(v-else v-bind:content="btn.title" placement="top")
+              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
 </template>
 
 <script type="text/ecmascript-6">
@@ -29,6 +25,9 @@
 
   export default {
     props: {
+      scope: {
+        type: Object
+      },
       isFixedColumn: {
         type: Boolean,
         default: false
@@ -45,7 +44,7 @@
       }
     },
     created() {
-      console.log(`[kalix] table tool button is `, this.btnList)
+      // console.log(`[kalix] table tool button is `, this.btnList)
     },
     data() {
       return {}

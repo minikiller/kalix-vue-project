@@ -59,6 +59,7 @@
     },
     methods: {
       selectChange(item) {
+        this.formModel.menuId = ''
         if (item.id) {
           this.menuURL = appsURL + '/' + item.id
           this.menuAppName = item.id + '-menus'

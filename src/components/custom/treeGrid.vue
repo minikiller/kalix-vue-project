@@ -32,7 +32,10 @@
                   td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
                     div(v-if="column.type === 'action'")
                       template(v-for="action in column.actions")
-                        el-button.base-teble-operation(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
+                        el-tooltip(v-if="action.toolTipTitle" v-bind:content="action.toolTipTitle" placement="top")
+                          el-button.base-teble-operation(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
+                        el-tooltip(v-else v-bind:content="action.text" placement="top")
+                          el-button.base-teble-operation(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
                     input(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
                     div(v-else)
                       label(v-on:click="toggle(index,item)" v-if="!column.type")
@@ -236,6 +239,9 @@
           case 'refresh':
             this.onRefreshClick()
             break
+          case 'addUser':
+            this.onAddUserClick()
+            break
           default:
             this.customToolBar(btnId, this)
             break
@@ -283,6 +289,10 @@
           }
         }
         return 0
+      },
+      // 添加用户方法
+      onAddUserClick() {
+
       },
       // 设置td宽度,td的align
       tdStyle(column) {

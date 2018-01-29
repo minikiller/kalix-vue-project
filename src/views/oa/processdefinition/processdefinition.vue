@@ -5,25 +5,28 @@
 -->
 
 <template lang='pug'>
-  keep-alive
-    base-table(:isShowToolBar='isShowToolBar' bizKey='processDefinition' title='流程定义列表'
-    v-bind:targetURL='targetURL'
-    v-bind:formModel.sync='formModel'
-    v-bind:bizDialog='bizDialog'
-    v-bind:customRender='customRender'
-    bizSearch='ProcessDefinitionSearch'
-    v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
-      template(slot="tableColumnSlot")
-        el-table-column(prop="id" label="流程定义编号" width="280" align="center")
-        el-table-column(prop="name" label="流程定义名称" width="280" align="center")
-          template(slot-scope="scope")
-            el-tag {{ scope.row.name }}
-        el-table-column(prop="key" label="关键字" align="center")
-        el-table-column(prop="description" label="描述" align="center")
-        el-table-column(prop="version" label="版本" align="center")
-        el-table-column(prop="status" label="状态" align="center")
-          template(slot-scope="scope")
-            el-tag(:type="scope.row.suspensionStateTransfer | statusFilter") {{scope.row.suspensionStateTransfer }}
+  div
+    keep-alive
+      base-table(v-bind:isShowToolBar='isShowToolBar' bizKey='processDefinition' title='流程定义列表'
+      v-bind:targetURL='targetURL'
+      v-bind:formModel.sync='formModel'
+      v-bind:bizDialog='bizDialog'
+      v-bind:toolbarBtnList="toolbarBtnList"
+      v-bind:customRender='customRender'
+      bizSearch='ProcessDefinitionSearch'
+      v-bind:btnList='btnList' v-bind:customTableTool='customTableTool')
+        template(slot="tableColumnSlot")
+          el-table-column(prop="id" label="流程定义编号" width="280" align="center")
+          el-table-column(prop="name" label="流程定义名称" width="280" align="center")
+            template(slot-scope="scope")
+              el-tag {{ scope.row.name }}
+          el-table-column(prop="key" label="关键字" align="center")
+          el-table-column(prop="description" label="描述" align="center")
+          el-table-column(prop="version" label="版本" align="center")
+          el-table-column(prop="status" label="状态" align="center")
+            template(slot-scope="scope")
+              el-tag(:type="scope.row.suspensionStateTransfer | statusFilter") {{scope.row.suspensionStateTransfer }}
+    process-definition-view(ref="kalixDialog")
 </template>
 
 <script type='text/ecmascript-6'>
@@ -34,7 +37,8 @@
   import Message from 'common/message'
   import BaseTableTool from '@/components/custom/baseTableTool'
   import EventBus from 'common/eventbus'
-  import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
+  import {ON_REFRESH_DATA, ON_INIT_DIALOG_DATA} from '@/components/custom/event.toml'
+  import ProcessDefinitionView from '@/views/oa/comp/processDefinitionView'
 
   Vue.component('ProcessDefinitionSearch', require('./processDefinitionSearch').default)
 
@@ -57,8 +61,9 @@
     data() {
       return {
         isShowToolBar: false,  // 不显示工具栏
+        toolbarBtnList: [{id: 'add', isShow: false}],
         btnList: [{
-          id: 'view',
+          id: 'processView',
           title: '查看',
           isShow: true
         }, {
@@ -79,7 +84,7 @@
           {prop: 'suspensionStateTransfer', label: '状态'}
         ],
         bizDialog: [
-          {id: 'view', dialog: 'OaProcessDefinitionView'},
+          {id: 'processView', dialog: ''},
           {id: 'suspend', dialog: ''}
         ],
         formModel:
@@ -101,6 +106,11 @@
       },
       customTableTool(row, btnId) {
         switch (btnId) {
+          case 'processView': { // 待办功能，未实行
+            EventBus.$emit('processDefinition' + '-' + ON_INIT_DIALOG_DATA, row)
+            this.$refs.kalixDialog.$refs.kalixBizDialog.open(row)
+            break
+          }
           case 'suspend': {
             this.$confirm('确定要执行该操作吗?', '提示', {
               confirmButtonText: '确定',
@@ -127,7 +137,8 @@
     },
     components: {
       BaseTable,
-      KalixTableTool: BaseTableTool
+      KalixTableTool: BaseTableTool,
+      ProcessDefinitionView
 //      KalixUserAdd: UserAdd
     }
   }

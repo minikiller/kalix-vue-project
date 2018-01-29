@@ -24,17 +24,17 @@
   import Message from 'common/message'
   import Vue from 'vue'
   import EventBus from 'common/eventbus'
-  import {ON_REFRESH_DATA} from './event.toml'
+  import {ON_REFRESH_DATA, ON_INIT_DIALOG_DATA} from './event.toml'
 
   export default {
-//    activated() {
-//      console.log('base dialog ' + this.bizKey + '  is activated')
-//      EventBus.$on(ON_INIT_DIALOG_DATA, this.initData)
-//    },
-//    deactivated() {
-//      console.log('base dialog ' + this.bizKey + '  is deactivated')
-//      EventBus.$off(ON_INIT_DIALOG_DATA)
-//    },
+    activated() {
+      console.log('base dialog ' + this.bizKey + '  is activated')
+      EventBus.$on(ON_INIT_DIALOG_DATA, this.initData)
+    },
+    deactivated() {
+      console.log('base dialog ' + this.bizKey + '  is deactivated')
+      EventBus.$off(ON_INIT_DIALOG_DATA)
+    },
     props: {
       size: {
         type: String,
@@ -123,6 +123,7 @@
         })
       },
       onCancelClick() {
+        this.$emit('KalixDialogClose')
         console.log('dialog cancel button clicked !')
         this.visible = false
         if (!this.isView) {
@@ -165,6 +166,7 @@
         console.log('open formModel', this.formModel)
         console.log('open row', row)
 
+        this.$emit('KalixDialogOpen')
 //        this.$emit('update:formModel', row)
       },
       initData(row) {
