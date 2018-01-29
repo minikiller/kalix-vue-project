@@ -20,6 +20,17 @@ roleBtnPermissionPrefix = "admin:permissionModule:roleMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
 dataAuthBtnPermissionPrefix = "admin:permissionModule:dataAuthMenu:"
 AdminCacheKey = "ADMIN-DICT-KEY"
+#配置管理
+configAdminURL= "/camel/rest/resetConfigDBs"
+ConfigAdminSaveURL="camel/rest/saveConfigDBs"
+[[AdminConfiguerComponent]]
+path = "admin/config/configureView"
+name = "AdminConfiguer"
+[[ConfigToolbarList]]
+  id = "edit"
+  title = "编辑"
+  isShow = false
+  isPermission = true
 
 [[DutyButtonList]]
   id = "view"
