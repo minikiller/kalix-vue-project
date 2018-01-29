@@ -195,6 +195,7 @@
               } else {
                 Message.error(response.data.msg)
               }
+              EventBus.$emit(ON_REFRESH_DATA)
             })
           } else {
             Message.error('请检查输入项！')
