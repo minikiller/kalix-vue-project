@@ -14,7 +14,7 @@
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar(v-if="isShowToolBar"
+        kalix-tool-bar(v-if="isShowToolBarB"
         v-bind:toolbarBtnList="toolbarBtnList"
         v-on:onToolBarClick="onToolBarClick"
         v-on:onCheckBtnList="onCheckBtnList")
@@ -206,7 +206,7 @@
         },
         tableHeight: 0, //  列表组件高度
         searchParam: {}, //  列表查询条件
-        _isShowToolBar: true
+        isShowToolBarB: true
       }
     },
     created() {
@@ -242,7 +242,7 @@
     },
     methods: {
       onCheckBtnList(flag) {
-        this._isShowToolBar = this.isShowToolBar !== null ? this.isShowToolBar : flag
+        this.isShowToolBarB = this.isShowToolBar !== null ? this.isShowToolBar : flag
       },
       onToolBarClick(btnId) {
         // baseToolBar 回调事件
@@ -542,7 +542,7 @@
         return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
       },
       tableContainerStyle() {
-        return {'top': (!this._isShowToolBar ? '56px' : '')}
+        return {'top': (this.isShowToolBarB ? '102px' : '56px')}
       },
       pageCount() {
         return Math.floor((this.pager.totalCount + this.pager.limit - 1) / this.pager.limit)
