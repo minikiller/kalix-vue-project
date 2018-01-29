@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-popover(v-bind:ref="popover" v-bind:placement="top-start" v-bind:title="title" v-bind:width="width" v-bind:trigger="trigger")
+  el-popover(v-bind:ref="popover"  v-bind:placement="placement" v-bind:title="title" v-bind:width="width" v-bind:trigger="trigger")
     i(style="margin-right: 10px;" v-bind:class="classname" slot="reference")
 </template>
 <script type="text/ecmascript-6">
