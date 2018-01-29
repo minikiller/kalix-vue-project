@@ -23,11 +23,13 @@
           kalix-dict-select(v-model="formModel.docType" appName="oa" dictType="文号类型")
       <!--el-form-item.s-flex_item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")-->
         <!--el-input(v-model="formModel.docContent" type="textarea")-->
-      el-form-item.s-flex_item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")
-        tinymce(v-model="formModel.docContent" ref="editor")
-      el-form-item.s-flex_item.kalix-form-table-td(label="审批选项" v-bind:label-width="labelWidth")
-        div(style="text-align:center")
-          el-switch(v-model="formModel.needHeader" active-text="需要校领导审批" inactive-text="不需要校领导审批")
+      div
+        el-form-item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")
+          tinymce(v-model="formModel.docContent" ref="editor")
+      div
+        el-form-item.kalix-form-table-td(label="审批选项" v-bind:label-width="labelWidth")
+          div(style="text-align:center")
+            el-switch(v-model="formModel.needHeader" active-text="需要校领导审批" inactive-text="不需要校领导审批")
   </el-switch>
     <!--div.s-flex-->
     <!--el-form-item.s-flex_item.kalix-form-table-td(label="打印人" v-bind:label-width="labelWidth")-->
@@ -51,12 +53,12 @@
 
   export default {
     watch: {
-      formModel: {
-        handler: function (val, oldVal) {
-          console.log('===== handler is ', this.formModel)
-        },
-        deep: true
-      },
+//      formModel: {
+//        handler: function (val, oldVal) {
+//          console.log('===== handler is ', this.formModel)
+//        },
+//        deep: true
+//      },
 //      'formModel.docType': function (val, oldVal) {
 //        if (this.$refs.kalixBizDialog.isEdit) {
 //          if (val > 1) {
@@ -70,13 +72,13 @@
 //      'formModel.docAssort': function (val, oldVal) {
 //        console.log('this.formModel.docType is ', this.formModel.docType)
 //      },
-      'formModel.docContent': function (val, oldVal) {
-        console.log('this.formModel.docContent is ', this.formModel.docContent)
-        console.log('--- this.$refs.editor ', this.$refs.editor)
-        // if (this.$refs.editor.$data.status === 2) {
-        //   this.$refs.editor.setContent(val)
-        // }
-      }
+//      'formModel.docContent': function (val, oldVal) {
+//        console.log('this.formModel.docContent is ', this.formModel.docContent)
+//        console.log('--- this.$refs.editor ', this.$refs.editor)
+//        // if (this.$refs.editor.$data.status === 2) {
+//        //   this.$refs.editor.setContent(val)
+//        // }
+//      }
     },
     created() {
     },
