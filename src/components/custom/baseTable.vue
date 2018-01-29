@@ -175,6 +175,10 @@
         default: () => {
           return {}
         }
+      },
+      isShowToolBar: {  // 是否显示工具栏
+        type: Boolean,
+        default: null
       }
     },
     watch: {
@@ -199,7 +203,7 @@
         },
         tableHeight: 0, //  列表组件高度
         searchParam: {}, //  列表查询条件
-        isShowToolBar: true // 是否显示工具栏
+        _isShowToolBar: true
       }
     },
     created() {
@@ -235,7 +239,7 @@
     },
     methods: {
       onCheckBtnList(flag) {
-        this.isShowToolBar = flag
+        this._isShowToolBar = this.isShowToolBar !== null ? this.isShowToolBar : flag
       },
       onToolBarClick(btnId) {
         // baseToolBar 回调事件
@@ -535,7 +539,7 @@
         return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
       },
       tableContainerStyle() {
-        return {'top': (!this.isShowToolBar ? '56px' : '')}
+        return {'top': (!this._isShowToolBar ? '56px' : '')}
       },
       pageCount() {
         return Math.floor((this.pager.totalCount + this.pager.limit - 1) / this.pager.limit)
