@@ -41,7 +41,7 @@
                   template(slot-scope="scope")
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
               //  table的工具按钮
-              el-table-column(label="操作" align="center"
+              el-table-column(v-if="btnList.length" label="操作" align="center"
               fixed="right"
               v-bind:fixed="isFiex"
               v-bind:width="columnWidth"
@@ -149,7 +149,10 @@
       },
       btnList: {   //  table中按钮数组
         type: Array,
-        required: true
+        required: false,
+        default: () => {
+          return []
+        }
       },
       dictDefine: {  // 数据字典定义
         type: Array
