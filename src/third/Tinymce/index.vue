@@ -69,7 +69,7 @@
     },
     mounted() {
       console.log('tiny mce is mounted')
-      // this.initTinymce()
+      this.initTinymce()
     },
     activated() {
       console.log('tiny mce is activated')

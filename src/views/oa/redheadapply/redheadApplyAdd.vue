@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(
-  bizKey="sealApply"
+  bizKey="redheadApply"
   ref="kalixBizDialog" v-bind:formModel.sync="formModel"
   v-bind:targetURL="targetURL"
   v-on:KalixDialogOpen="kalixDialogOpen"
