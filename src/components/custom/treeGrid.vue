@@ -54,10 +54,10 @@
                     input(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
                     div(v-else)
                       label(v-on:click="toggle(index,item)" v-if="!column.type")
-                        span(v-if='snum==2')
+                        span.tree-icon(v-if='snum==2')
                           i(v-html='item.spaceHtml')
                           i.el-icon(v-if="item.children&&item.children.length>0"
-                          v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded}")
+                          v-bind:class="{'el-icon-plus':!item.expanded,'el-icon-minus':item.expanded}")
                           i(v-else class="kailx-ms-tree-space")
                         | {{renderBody(item, column)}}
       component(:is="whichBizDialog" ref="kalixDialog"
@@ -698,10 +698,16 @@
 </style>
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
+  .tree-icon
+    margin-right 8px
+    color #dd9e4a
+    font-weight bold
+    cursor pointer
 
   .autoTbale {
     overflow: auto;
   }
+
   table {
     width: 100%;
     border-spacing: 0;
@@ -777,7 +783,8 @@
   }
 
   #hl-tree-table > tbody > tr.active {
-    background-color #ffefbb
+    /*background-color #ffefbb*/
+    background-color rgba(255, 239, 187, 0.21)
   }
 
   #hl-tree-table > tbody > .child-tr {
