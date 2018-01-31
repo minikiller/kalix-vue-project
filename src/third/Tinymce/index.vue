@@ -102,6 +102,7 @@
           default_link_target: '_blank',
           font_formats: '微软雅黑=\'微软雅黑\';宋体=\'宋体\';黑体=\'黑体\';仿宋=\'仿宋\';楷体=\'楷体\';隶书=\'隶书\';幼圆=\'幼圆\';Arial=\'Arial\';',
           link_title: false,
+          statusbar: false,
           init_instance_callback: editor => {
             if (_this.value) {
               editor.setContent(_this.value)
@@ -164,7 +165,6 @@
     visibility: hidden;
     z-index: -1;
   }
-
   .editor-custom-btn-container {
     position: absolute;
     right: 15px;
