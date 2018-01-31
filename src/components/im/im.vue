@@ -44,13 +44,11 @@
       }
     },
     mounted() {
-      this.$myConsoleLog('IM', 'mounted', '#008B45')
       if (this.$route.name !== 'home') {
         this.moveLeft()
       }
     },
     activated() {
-      this.$myConsoleLog('IM', 'activated', '#000080')
       this.footerBars = [
         {type: 'contact', isSelect: true},
         {type: 'conversation', isSelect: false},
