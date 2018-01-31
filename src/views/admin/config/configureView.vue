@@ -13,12 +13,12 @@
             el-form-item.s-flex_item(v-bind:label="data.name" label-width="120px")
               el-input(v-bind:type="data.type" v-bind:id="data.id" v-bind:placeholder="data.desc" v-model="formModel[key].value")
             div.popover
-              base-help(v-bind:ref="popover" v-bind:placement="placement" v-bind:classname="classname" v-bind:title="data.desc"  v-bind:trigger="trigger")
+              base-help(v-bind:popover="popover" v-bind:placement="placement" v-bind:classname="classname" v-bind:title="data.desc"  v-bind:trigger="trigger")
 </template>
 <script type="text/ecmascript-6">
   import FormModel from './model'
   import Vue from 'vue'
-  import {HardwareLogMailURL, HardwareLogConfigureMailURL} from '../config.toml'
+  import {configAdminURL, ConfigAdminSaveURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
   import Help from '@/components/custom/baseHelp.vue'
   import { Message } from 'element-ui'
@@ -26,13 +26,14 @@
   export default {
     data() {
       return {
-        targetRestURL: HardwareLogMailURL,
-        targetURL: HardwareLogConfigureMailURL,
+        targetRestURL: configAdminURL,
+        targetURL: ConfigAdminSaveURL,
         formModel: Object.assign({}, FormModel),
         items: {},
         classname: 'el-icon-question',
         placement: 'top-start',
-        trigger: 'hover'
+        trigger: 'hover',
+        popover: 'popover'
       }
     },
     components: {
@@ -40,7 +41,7 @@
       baseHelp: Help
     },
     created() {
-      console.log('this.formModel : ', this.formModel['mail'].value)
+      console.log('this.formModel : ', this.formModel['DB_NAME'].value)
     },
     mounted() {
       this.axios.request({

@@ -7,7 +7,7 @@
   div
     keep-alive
       base-table(title='红头文件申请列表'
-      bizKey="sealApply"
+      bizKey="redheadApply"
       v-bind:targetURL='targetURL'
       v-bind:bizDialog='bizDialog'
       bizSearch='OaRedheadApplySearch'
@@ -26,7 +26,7 @@
           el-table-column(prop="docCaption" label="文号标题" align="center" width="100")
           el-table-column(prop="docTypeName" label="文号类型" align="center" width="220")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
-          el-table-column(prop="docStatus" label="文档状态" align="center" width="220")
+          kalix-doc-status-column  // 文件状态
           kalix-date-column(prop="creationDate" label="创建时间")
           kalix-date-column(prop="applyDate" label="申请时间")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
@@ -50,6 +50,7 @@
   import ProcessStatusColumn from '@/views/oa/comp/processStatusColumn.vue'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import DocStatusColumn from '@/views/oa/comp/docStatusColumn.vue'
 
   registerComponent(RedheadApplyComponent)
   export default {
@@ -79,25 +80,7 @@
           {id: 'add', dialog: 'OaRedheadApplyAdd'},
           {id: 'progress', dialog: 'OaTaskView'},
           {id: 'preview', dialog: 'OaRedheadPreview'}
-        ],
-        formModel: {
-          title: '吉林动画学院红头文件申请表',
-          orgId: '',
-          orgName: '',
-          creationDate: '',
-          usageCount: '',
-          sealType: '',
-          sealTypeName: '',
-          createBy: '',
-          auditResult: '',
-          currentNode: '',
-          departmentHead: '', // 部门负责人
-          tableFormField: '', // 分公司负责人
-          counsel: '', // 法律顾问
-          generalManager: '', // 总经理
-          sealAdministrator: '', // 发文专管员
-          remark: '' // 发文专管员
-        }
+        ]
       }
     },
     mounted() {
@@ -149,7 +132,8 @@
       KalixTaskView: TaskView,
       KalixProcessStatusColumn: ProcessStatusColumn, // 工作流状态列
       KalixBizNoColumn: BizNoColumn,
-      KalixDateColumn: DateColumn
+      KalixDateColumn: DateColumn,
+      KalixDocStatusColumn: DocStatusColumn
     }
   }
 </script>

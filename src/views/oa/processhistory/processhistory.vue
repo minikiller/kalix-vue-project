@@ -11,6 +11,7 @@
       v-bind:targetURL="targetURL"
       v-bind:formModel.sync="formModel"
       v-bind:bizDialog="bizDialog"
+      v-bind:toolbarBtnList="toolbarBtnList"
       bizSearch="OaProcessHistorySearch"
       v-bind:tableRowClassName="tableRowClassName"
       v-bind:customTableTool='customTableTool'
@@ -49,6 +50,7 @@
       return {
         isApproveShow: false,
         isShowToolBar: false,  // 不显示工具栏
+        toolbarBtnList: [{id: 'add', isShow: false}],
         btnList: WorkflowButtonList,
         targetURL: WorkflowHistoryURL,
         bizDialog: [

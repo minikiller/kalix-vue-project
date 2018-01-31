@@ -14,7 +14,7 @@
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar(v-if="isShowToolBar"
+        kalix-tool-bar(v-if="isShowToolBarB"
         v-bind:toolbarBtnList="toolbarBtnList"
         v-on:onToolBarClick="onToolBarClick"
         v-on:onCheckBtnList="onCheckBtnList")
@@ -41,7 +41,7 @@
                   template(slot-scope="scope")
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
               //  table的工具按钮
-              el-table-column(label="操作" align="center"
+              el-table-column(v-if="btnList.length" label="操作" align="center"
               fixed="right"
               v-bind:fixed="isFiex"
               v-bind:width="columnWidth"
@@ -149,7 +149,10 @@
       },
       btnList: {   //  table中按钮数组
         type: Array,
-        required: true
+        required: false,
+        default: () => {
+          return []
+        }
       },
       dictDefine: {  // 数据字典定义
         type: Array
@@ -175,6 +178,10 @@
         default: () => {
           return {}
         }
+      },
+      isShowToolBar: {  // 是否显示工具栏
+        type: Boolean,
+        default: null
       }
     },
     watch: {
@@ -199,7 +206,7 @@
         },
         tableHeight: 0, //  列表组件高度
         searchParam: {}, //  列表查询条件
-        isShowToolBar: true // 是否显示工具栏
+        isShowToolBarB: true
       }
     },
     created() {
@@ -235,7 +242,7 @@
     },
     methods: {
       onCheckBtnList(flag) {
-        this.isShowToolBar = flag
+        this.isShowToolBarB = this.isShowToolBar !== null ? this.isShowToolBar : flag
       },
       onToolBarClick(btnId) {
         // baseToolBar 回调事件
@@ -535,7 +542,7 @@
         return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
       },
       tableContainerStyle() {
-        return {'top': (!this.isShowToolBar ? '56px' : '')}
+        return {'top': (this.isShowToolBarB ? '102px' : '56px')}
       },
       pageCount() {
         return Math.floor((this.pager.totalCount + this.pager.limit - 1) / this.pager.limit)

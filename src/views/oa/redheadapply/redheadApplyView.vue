@@ -5,7 +5,7 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="sealApply" v-bind:formModel.sync="formModel" ref="kalixBizDialog" isView)
+  kalix-dialog.user-add(bizKey="redheadApply" v-bind:formModel.sync="formModel" ref="kalixBizDialog" isView)
     kalix-redhead-apply-view-form(v-bind:form-model="formModel" slot="dialogFormSlot")
 </template>
 

@@ -7,8 +7,7 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {dataauthBtnList} from '../dataauth/index'
-  import {dataauthURL, DataAuthComponent, AdminCacheKey} from '../config.toml'
+  import {dataauthURL, DataAuthToolButtonList, DataAuthComponent, AdminCacheKey} from '../config.toml'
   import {registerComponent} from '@/api/register'
 
   // 注册全局组件
@@ -23,7 +22,7 @@
           targetField: 'typeDict',
           sourceField: 'type'
         }],
-        btnList: dataauthBtnList,
+        btnList: DataAuthToolButtonList,
         targetURL: dataauthURL,
         tableFields: [
           {prop: 'appName', label: '应用名称'},
