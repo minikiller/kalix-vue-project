@@ -1,5 +1,7 @@
-<!--/camel/rest/functions/application/1
-i.tit_icon.iconfont.icon-admin-->
+<!--
+左侧菜单组件，点击菜单时传递菜单节点对象
+add by yangz
+-->
 <template lang="pug">
   div.kalix-article
     div.kalix-wrapper
