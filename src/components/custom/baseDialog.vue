@@ -153,8 +153,9 @@
         this.privateTitle = _title
         this.visible = true
         this.isEdit = isEdit
-        let beforeFormModel = JSON.parse(JSON.stringify(this.formModel))
-        console.log(`open before formModel :`, beforeFormModel)
+        // 树表结构json解析会报错,后面没有用到这个解析,注释掉
+        // let beforeFormModel = JSON.parse(JSON.stringify(this.formModel))
+        // console.log(`open before formModel :`, beforeFormModel)
         if (row) {
           this.$emit('update:formModel', row)  // 设置sync才有效
 //          Object.assign(this.formModel, row)

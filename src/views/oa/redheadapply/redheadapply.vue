@@ -7,7 +7,7 @@
   div
     keep-alive
       base-table(title='红头文件申请列表'
-      bizKey="sealApply"
+      bizKey="redheadApply"
       v-bind:targetURL='targetURL'
       v-bind:bizDialog='bizDialog'
       bizSearch='OaRedheadApplySearch'

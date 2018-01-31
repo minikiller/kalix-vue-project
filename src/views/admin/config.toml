@@ -15,6 +15,8 @@ workgroupURL = "/camel/rest/workgroups"
 dataauthURL = "/camel/rest/dataauths"
 addusersURL = "/camel/rest//dataauths/[id]/users"
 functionMenuURL = "camel/rest/applications/extend/tree" # 功能管理菜单
+functionItemBaseURL = "/camel/rest/functions/application/" # 功能管理点击菜单节点
+functionURL = "/camel/rest/functions" # 功能管理树表
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 roleBtnPermissionPrefix = "admin:permissionModule:roleMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
@@ -230,3 +232,9 @@ name = "AdminConfiguer"
   [[DataAuthComponent]]
    path = "admin/dataauth/dataauthAddUser"
    name = "AdminDataAuthAddUser"
+[[FunctionComponent]]
+ path = "admin/function/functionAdd"
+ name = "AdminFunctionAdd"
+[[FunctionComponent]]
+ path = "admin/function/functionEdit"
+ name = "AdminFunctionEdit"
