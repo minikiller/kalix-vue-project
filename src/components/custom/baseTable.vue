@@ -182,6 +182,10 @@
       isShowToolBar: {  // 是否显示工具栏
         type: Boolean,
         default: null
+      },
+      noSearchParam: {
+        type: Boolean,
+        default: false
       }
     },
     watch: {
@@ -280,8 +284,18 @@
       },
       onSearchClick(_searchParam) { // 查询按钮点击事件
         console.log('[kalix] base table search clicked')
-        this.searchParam = _searchParam
-        this.refresh()
+        // 兼容多个baseTable同时使用情况，用bizKey区分具体查询
+        if (_searchParam.bizKey) {
+          this.searchParam = _searchParam.searchObj
+          if (_searchParam.bizKey === this.bizKey) {
+            this.refresh()
+          }
+        } else {
+          this.searchParam = _searchParam
+          this.refresh()
+        }
+        // 添加点击查询按钮之后的外部事件处理
+        this.$emit('afterSearch', this.bizKey)
       },
       onAddClick() {
         // 添加按钮点击事件
@@ -436,7 +450,7 @@
           return
         }
         let that = this
-        console.log('baseTable', this.targetURL)
+        console.log('baseTable-----------', this.targetURL)
         this.loading = true
         setTimeout(_ => {
           let _data = {
@@ -445,7 +459,9 @@
             start: this.pager.start,
             limit: this.pager.limit
           }
-          _data = Object.assign(_data, this.searchParam)
+          if (this.noSearchParam === false) {
+            _data = Object.assign(_data, this.searchParam)
+          }
           this.$http.get(this.targetURL, {
             params: _data
           }).then(response => {
