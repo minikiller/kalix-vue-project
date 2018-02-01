@@ -10,14 +10,14 @@
       template(v-if="btn.isShow")
         template(v-if="btn.titleCompute")
           el-tooltip(v-if="btn.toolTipTitle" v-bind:content="btn.toolTipTitle" placement="top")
-            span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
+            span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click.stop="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
           el-tooltip(v-else v-bind:content="btn.titleCompute(scope)" placement="top")
-            span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
+            span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click.stop="toggle(scope.row,btn.id)") {{btn.titleCompute(scope)}}
         template(v-else)
             el-tooltip(v-if="btn.toolTipTitle" v-bind:content="btn.toolTipTitle" placement="top")
-              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
+              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click.stop="toggle(scope.row,btn.id)") {{btn.title}}
             el-tooltip(v-else v-bind:content="btn.title" placement="top")
-              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
+              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click.stop="toggle(scope.row,btn.id)") {{btn.title}}
 </template>
 
 <script type="text/ecmascript-6">
