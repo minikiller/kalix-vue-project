@@ -41,7 +41,7 @@
                   template(slot-scope="scope")
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
               //  table的工具按钮
-              el-table-column(v-if="btnList.length" label="操作" align="center"
+              el-table-column(v-if="isShowOperate" label="操作" align="center"
               fixed="right"
               v-bind:fixed="isFiex"
               v-bind:width="columnWidth"
@@ -542,6 +542,15 @@
       KalixDialog: Dialog
     },
     computed: {
+      isShowOperate() {
+        if (!this.btnList || !this.btnList.length) {
+          return false
+        }
+        let items = this.btnList.filter(e => {
+          return e.isShow
+        })
+        return items.length
+      },
       columnWidth() {
         let width = 65
         let len = this.btnList.length
