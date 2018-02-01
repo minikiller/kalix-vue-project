@@ -25,7 +25,14 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {DocumentURL, DocumentComponent, RedheadApplyURL, DocumentRevokeURL, DocumentAbolishURL} from '../config.toml'
+  import {
+    DocumentURL,
+    DocumentComponent,
+    RedheadApplyURL,
+    DocumentRevokeURL,
+    DocumentAbolishURL,
+    RedheadApplyComponent
+  } from '../config.toml'
   import {DocumentToolButtonList} from '../document/index'
   import {registerComponent} from '@/api/register'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
@@ -35,9 +42,13 @@
   import Message from 'common/message'
   import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
   import EventBus from 'common/eventbus'
+  import {baseURL} from 'config/global.toml'
+  import redheadapplyFormModel from '../redheadapply/model'
+  import {DictKeyValueObject} from 'common/keyValueObject'
 
   // 注册全局组件
   registerComponent(DocumentComponent)
+  registerComponent(RedheadApplyComponent)
 
   export default {
     data() {
@@ -67,11 +78,13 @@
 //        ],
         bizDialog: [
           {id: 'view', dialog: 'OaDocumentView'},
-          {id: 'publish', dialog: 'OaDocumentPublish'}
+          {id: 'publish', dialog: 'OaDocumentPublish'},
+          {id: 'preview', dialog: 'OaRedheadPreview'}
         ],
         redheadApplyURL: RedheadApplyURL,
         documentRevokeURL: DocumentRevokeURL,
-        documentAbolishURL: DocumentAbolishURL
+        documentAbolishURL: DocumentAbolishURL,
+        redheadapplyFormModel: Object.assign({}, redheadapplyFormModel)
       }
     },
     components: {
@@ -99,6 +112,16 @@
           // 发文
           case 'publish': {
             this.onPublish(row, table)
+            break
+          }
+          // 预览
+          case 'preview': {
+            this.onPreview(row, table)
+            break
+          }
+          // 下载转成word
+          case 'download': {
+            this.onDownload(row, table)
             break
           }
         }
@@ -163,6 +186,41 @@
         setTimeout(() => {
           table.$refs.kalixDialog.$refs.kalixBizDialog.open('发文', true, row)
         }, 20)
+      },
+      // 预览
+      onPreview(row, table) {
+//        if (row.redheadId && (row.status === '使用中') && (row.docStatus === '审批通过'))
+        if (row.redheadId) {
+          let url = RedheadApplyURL + '/' + row.redheadId
+          this.axios.request({
+            method: 'GET',
+            url: url,
+            params: {}
+          }).then(res => {
+            if (res.data.success === undefined) {
+              if (res.data) {
+                this.redheadapplyFormModel = res.data
+                // 处理红头文件标题
+                let _keyObj = DictKeyValueObject('OA-DICT-KEY', '文号标题')
+                this.redheadapplyFormModel.docCaption = _keyObj[this.redheadapplyFormModel.docType]
+                let dig =
+                  table.bizDialog.filter((item) => {
+                    return item.id === 'preview'
+                  })
+                table.whichBizDialog = dig[0].dialog
+                setTimeout(() => {
+                  table.$refs.kalixDialog.open(this.redheadapplyFormModel)
+                }, 20)
+              }
+            }
+          })
+        } else {
+          Message.warning('文号未关联红头文件,无法进行预览!')
+        }
+      },
+      // 下载转成word
+      onDownload(row, table) {
+        window.open(baseURL + '/camel/servlet/download?redheadid=' + row.redheadId)
       }
     }
   }

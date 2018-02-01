@@ -56,6 +56,20 @@ const DocumentToolButtonList = [
     isShow: true,   // 是否显示
     isPermission: true,  // 是否进行权限认证
     cond: publishCond
+  },
+  {
+    id: 'preview',
+    title: '预览',
+    isShow: true,   // 是否显示
+    isPermission: true  // 是否进行权限认证
+    // cond: publishCond
+  },
+  {
+    id: 'download',
+    title: '下载',
+    isShow: true,   // 是否显示
+    isPermission: true,  // 是否进行权限认证
+    cond: abolishCond
   }
 ]
 
