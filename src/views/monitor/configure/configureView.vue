@@ -13,7 +13,7 @@
             el-form-item.s-flex_item(v-bind:label="data.name" label-width="120px")
               el-input(v-bind:type="data.type" v-bind:id="data.id" v-bind:placeholder="data.desc" v-model="formModel[key].value")
             div.popover
-              base-help(v-bind:ref="popover" v-bind:placement="placement" v-bind:classname="classname" v-bind:title="data.desc"  v-bind:trigger="trigger")
+              base-help(v-bind:popover="popover" v-bind:placement="placement" v-bind:classname="classname" v-bind:title="data.desc"  v-bind:trigger="trigger")
 </template>
 <script type="text/ecmascript-6">
   import FormModel from './model'
@@ -32,7 +32,8 @@
         items: {},
         classname: 'el-icon-question',
         placement: 'top-start',
-        trigger: 'hover'
+        trigger: 'hover',
+        popover: 'popover'
       }
     },
     components: {

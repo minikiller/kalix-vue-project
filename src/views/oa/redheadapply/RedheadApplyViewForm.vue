@@ -29,7 +29,7 @@
         el-input(v-model="formModel.createBy" readonly)
     div
       el-form-item.kalix-form-table-td(label="发文内容" prop="docContent" v-bind:label-width="labelWidth")
-        div(v-html="formModel.docContent")
+        div.doc-content(v-html="formModel.docContent")
     div
       el-form-item.kalix-form-table-td(label="审批选项" prop="needHeader" v-bind:label-width="labelWidth")
         div(style="text-align:center")
@@ -100,3 +100,8 @@
     }
   }
 </script>
+<style scoped lang="stylus" type="text/stylus">
+  .doc-content
+    max-height 500px
+    overflow auto
+</style>
