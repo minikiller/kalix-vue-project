@@ -15,11 +15,18 @@
           a(v-bind:href="this.value") {{this.fileName}}
         template(v-else) 空
     template(v-else)
-      el-upload(v-bind:class="{'avatar-uploader':isImage,'upload-demo':!isImage}" v-bind:action="action" v-bind:headers="headers"
-      v-bind:multiple="false" v-bind:show-file-list="true" v-bind:file-list="fileList"
-      v-bind:on-change="handleChange" v-bind:before-upload="handleBeforeUpload"
-      v-bind:on-success="handleSuccess" v-bind:on-error="handleError"
-      v-bind:on-preview="handlePreview" v-bind:on-remove="handleRemove")
+      el-upload(v-bind:class="{'avatar-uploader':isImage,'upload-demo':!isImage}"
+        v-bind:action="action"
+        v-bind:headers="headers"
+        v-bind:multiple="false"
+        v-bind:show-file-list="true"
+        v-bind:file-list="fileList"
+        v-bind:on-change="handleChange"
+        v-bind:before-upload="handleBeforeUpload"
+        v-bind:on-success="handleSuccess"
+        v-bind:on-error="handleError"
+        v-bind:on-preview="handlePreview"
+        v-bind:on-remove="handleRemove")
         template(v-if="isImage")
           img.avatar(v-if="imageUrl" v-bind:src="imageUrl")
           i.el-icon-plus.avatar-uploader-icon(v-else)
@@ -56,12 +63,15 @@
         imageUrl: ''
       }
     },
-    mounted () {
-      this.fentch()
+    mounted() {
+      setTimeout(() => {
+        this.fentch()
+      }, 20)
     },
     methods: {
       // 组件初始化
-      fentch () {
+      fentch() {
+        this.$myConsoleLog(' [BaseUpload fentch] this.value', this.value, '#008B8B')
         if (this.value != null && this.value !== '') {
           let pathParts = this.value.split('/')
           // let fileName = pathParts[pathParts.length - 1]

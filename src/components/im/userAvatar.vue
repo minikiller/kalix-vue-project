@@ -1,8 +1,9 @@
 <template lang="pug">
-  div.user-avatar(v-on:click="click" v-bind:class="cls")
-    div.avatar(v-bind:style="styleObject")
-    div.user-name {{user.userName}}
-    div.user-org 动画研究院
+  keep-alive
+    div.user-avatar(v-on:click="click" v-bind:class="cls")
+      div.avatar(v-bind:style="styleObject")
+      div.user-name {{user.userName}}
+      div.user-org 动画研究院
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
@@ -32,15 +33,6 @@
         this.user.userName = Cache.get('user_name')
         this.user.avatar = this.decode(Cookie.get('currentUserIcon')) === 'null' ? '' : this.decode(Cookie.get('currentUserIcon'))
       },
-      styleObject() {
-        let style = {}
-        if (this.user.avatar) {
-          style = {
-            backgroundImage: `url('${this.user.avatar}')`
-          }
-        }
-        return style
-      },
       click() {
         EventBus.$emit('UserAvatarClick')
       },
@@ -49,6 +41,20 @@
           return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'))
         }
         return 'null'
+      }
+    },
+    activated() {
+      this.getUser()
+    },
+    computed: {
+      styleObject() {
+        let style = {}
+        if (this.user.avatar) {
+          style = {
+            backgroundImage: `url('${this.user.avatar}')`
+          }
+        }
+        return style
       }
     }
   }

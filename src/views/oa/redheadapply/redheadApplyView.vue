@@ -5,37 +5,24 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="sealApply"
-  v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
-  ref="kalixBizDialog"
-  v-bind:isView="readonly"
-  )
-    div.el-form.kalix-form-table(slot="dialogFormSlot")
-      kalix-redhead-apply-view-form(v-bind:form-model="formModel")
+  kalix-dialog.user-add(bizKey="redheadApply" v-bind:formModel.sync="formModel" ref="kalixBizDialog" isView)
+    kalix-redhead-apply-view-form(v-bind:form-model="formModel" slot="dialogFormSlot")
 </template>
 
 <script type="text/ecmascript-6">
-  import Dialog from '@/components/custom/baseDialog.vue'
-  import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import RedheadApplyViewForm from './RedheadApplyViewForm'
   import FormModel from './model'
-  //  import {usersURL} from 'views/admin/config.toml'
+  import Dialog from '@/components/custom/baseDialog.vue'
+  import RedheadApplyViewForm from './RedheadApplyViewForm'
 
   export default {
     data() {
       return {
         formModel: Object.assign({}, FormModel),
-        targetURL: '',
-        readonly: true
+        labelWidth: '110px'
       }
-    },
-    created() {
-      this.labelWidth = '110px'
-//      this.getMeetingTypeName()
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
       KalixRedheadApplyViewForm: RedheadApplyViewForm
     },
     methods: {

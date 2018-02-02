@@ -23,8 +23,8 @@
       border-bottom 1px solid #cbbb7a
       box-sizing border-box
     .im-bd
-      height 100%
       display flex
+      flex 1
       flex-direction column
       overflow auto
       box-sizing border-box

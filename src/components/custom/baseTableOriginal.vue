@@ -516,9 +516,13 @@
         return {}
       },
       _getTableHeight() {
-        const searchHeight = 40
-        const pagerHeight = 38
-        this.tableHeight = this.$refs.kalixArticle.clientHeight - (searchHeight + pagerHeight + 20)
+        this.$nextTick(() => {
+          if (this.$refs.kalixArticle && this.$refs.kalixArticle.clientHeight) {
+            const searchHeight = 40
+            const pagerHeight = 38
+            this.tableHeight = this.$refs.kalixArticle.clientHeight - (searchHeight + pagerHeight + 20)
+          }
+        })
       },
       clearData() {
         this.tableData = []

@@ -30,6 +30,7 @@
     v-bind:deleteAllUrl="deleteAllUrl"
     v-bind:customToolbarClickEvents="customToolbarClickEvents"
     )
+      slot(name="tableColumnSlot" slot="tableColumnSlot")
 </template>
 
 <script type="text/ecmascript-6">

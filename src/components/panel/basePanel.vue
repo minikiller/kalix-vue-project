@@ -1,10 +1,11 @@
 <template lang="pug">
-  div.panel
+  div.panel(v-bind:class="cls")
     panel-header
       template(slot="title")
         div {{title}}
       template(slot="right")
-        panel-header-button(type="max" v-on:click="closeBaseTable")
+        panel-header-button(v-if="cls === 'max'" type="min" v-on:click="minBaseTable")
+        panel-header-button(v-else type="max" v-on:click="maxBaseTable")
         panel-header-button(type="close" v-on:click="closeBaseTable")
     div.panel-body
       slot(name="panleSlot")
@@ -27,6 +28,14 @@
       }
     },
     methods: {
+      setCls(clsName = '') {
+      },
+      minBaseTable() {
+        this.cls = ''
+      },
+      maxBaseTable() {
+        this.cls = 'max'
+      },
       closeBaseTable() {
         // 关闭窗体
         EventBus.$emit('ON_CLOSE_BASETABLE')
@@ -60,6 +69,12 @@
     &.min
       opacity 0
       transform scale(.5)
+    &.max
+      top 0
+      left 0
+      width 100%
+      height 100%
+      margin 0
     .group-title
       text-align center
       font-size 18px

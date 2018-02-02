@@ -6,7 +6,7 @@
     div.update-info(slot="panleSlot")
       el-form-item(label="用户类型" prop="userType" v-bind:rules="rules.userType" v-bind:label-width="labelWidth")
         kalix-dict-select(v-model="formModel.userType" appName="admin" dictType="用户类型" v-on:input="change($event)" style="width:100%")
-      el-form-item(label="头像" prop="icon" v-bind:label-width="labelWidth")
+      el-form-item(v-if="showIcon" label="头像" prop="icon" v-bind:label-width="labelWidth")
         kalix-upload(v-model="formModel.icon" v-bind:isImage="true" style="width:100%")
       el-form-item(label="登录名" prop="loginName" v-bind:rules="rules.loginName" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.loginName")
@@ -81,7 +81,8 @@
           ],
           phone: [{required: true, message: '请输入固定电话', trigger: 'blur'}]
         },
-        labelWidth: '140px'
+        labelWidth: '140px',
+        showIcon: false
       }
     },
     created() {
@@ -97,8 +98,11 @@
           params: _data
         }).then(res => {
           console.log(res)
+          this.showIcon = false
           if (res.data.data.length) {
             this.formModel = res.data.data[0]
+            this.showIcon = true
+            this.$myConsoleLog(' [UpdateInfo] this.formModel.icon ', this.formModel.icon, '#5CACEE')
           }
         })
       },

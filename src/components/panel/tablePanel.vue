@@ -135,6 +135,8 @@
       close() {
         // 关闭窗体
         EventBus.$emit('ON_CLOSE_BASETABLE')
+      },
+      _afterDialogClose() {
       }
     },
     components: {

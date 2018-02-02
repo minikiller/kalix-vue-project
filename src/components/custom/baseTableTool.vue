@@ -6,8 +6,8 @@
 
 <template lang="pug">
   div
-    el-tooltip(v-for="btn in btnList" v-bind:key="btn.id" v-bind:content="toolTipContent(btn)" placement="top")
-      span.operation-btn(type="text" size="small" v-if="btn.isShow" v-on:click="toggle(scope.row,btn.id)") {{buttonTitle(btn)}}
+    el-tooltip(v-for="btn in btnList" v-if="btn.isShow" v-bind:key="btn.id" v-bind:content="toolTipContent(btn)" placement="top")
+      span.operation-btn(type="text" v-if="btnShow(btn)" size="small" v-on:click="toggle(scope.row,btn.id)") {{buttonTitle(btn)}}
 </template>
 
 <script type="text/ecmascript-6">
@@ -36,6 +36,9 @@
       return {}
     },
     methods: {
+      btnShow(btn) {
+        return !btn.cond || btn.cond(this.scope)
+      },
       buttonTitle(btn) {
         return (btn.titleCompute) ? btn.titleCompute(this.scope) : btn.title
       },

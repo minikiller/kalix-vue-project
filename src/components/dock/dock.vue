@@ -1,13 +1,13 @@
 <template lang="pug">
-  div.dock(id="dock")
-    div.dock-bg
-    div.dock-wrapper(id="macAvatars")
-      div.dock-mac_avatar(v-for="(item,index) in menuList"
-      v-bind:class="bindCls(item.id,item.iconCls)"
-      v-on:click="selectMac(item)")
+  keep-alive
+    div.dock(id="dock")
+      div.dock-bg
+      div.dock-wrapper(id="macAvatars")
+        div.dock-mac_avatar(v-for="(item,index) in menuList"
+        v-bind:class="bindCls(item.id,item.iconCls)"
+        v-on:click="selectMac(item)")
 </template>
 <script type="text/ecmascript-6">
-  import Vue from 'vue'
   import Cache from 'common/cache'
   import {applicationURL} from 'config/global.toml'
   import {isEmptyObject} from 'common/util'
@@ -27,7 +27,6 @@
     },
     mounted() {
       setTimeout(() => {
-        // console.log('%cSetTimeout', 'color:#dd00ff')
         this.init()
       }, 200)
     },
@@ -79,12 +78,13 @@
             start: 0,
             limit: 25
           }
-          Vue.axios.get(applicationURL, {
+          this.$http.get(applicationURL, {
             params: data
           }).then(response => {
             if (response && response.data) {
               this.menuList = response.data
               toolListData = this.menuList
+              this.$myConsoleLog(' [Dock] this.menuList ', this.menuList, '#8B4513')
               Cache.save('toolListData', JSON.stringify(toolListData))
               EventBus.$emit('toolListDataComplete', toolListData[0].id)
               this.$router.push({
@@ -114,6 +114,12 @@
       selectMac(item) {
         this.$emit('onClickMac', item)
       }
+    },
+    activated() {
+      this.initMenu()
+      setTimeout(() => {
+        this.init()
+      }, 200)
     }
   }
 </script>
