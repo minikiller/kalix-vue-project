@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(bizKey="hardwarelog" ref="kalixBizDialog"
-  v-bind:submitCustom="submitCustom"  v-bind:form-model="formModel" v-bind:targetURL="targetURL")
+  v-bind:submitCustom="submitCustom"  v-bind:form-model="formModel" v-bind:targetURL="targetRestURL")
     div.el-form(slot="dialogFormSlot")
       div(class="test" v-for='(item,index) in items')
         div(v-for="(data, key) in item") {{divLoad(data,key)}}
@@ -46,8 +46,11 @@
     mounted() {
       this.axios.request({
         method: 'GET',
-        url: this.targetRestURL + '/all',
-        params: {},
+        url: this.targetURL,
+        params: {
+          AppName: 'config.monitor.config',
+          id: 'all'
+        },
         dataType: 'json',
         data: {
         }
@@ -75,7 +78,8 @@
               method: baseDialog.isEdit ? 'PUT' : 'POST',
               url: baseDialog.isEdit ? `${baseDialog.targetURL}/${this.formModel.id}` : baseDialog.targetURL,
               params: {
-                content: baseDialog.formModel
+                content: baseDialog.formModel,
+                AppName: 'config.monitor.config'
               }
             }).then(response => {
               if (response.data.success) {
