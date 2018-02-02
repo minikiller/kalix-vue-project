@@ -111,7 +111,9 @@
         let toolListData = {}
         if (Cache.get('toolListData')) {
           toolListData = JSON.parse(Cache.get('toolListData'))
-          EventBus.$emit('toolListDataComplete', toolListData[0].id)
+          if (toolListData.length && toolListData[0].id) {
+            EventBus.$emit('toolListDataComplete', toolListData[0].id)
+          }
         }
         if (!isEmptyObject(toolListData)) {
           this.menuList = toolListData
@@ -131,9 +133,11 @@
               toolListData = this.menuList
               Cache.save('toolListData', JSON.stringify(toolListData))
               // EventBus.$emit('toolListDataComplete', toolListData[0].id)
-              this.$router.push({
-                path: `/${toolListData[0].id}/`
-              })
+              if (toolListData.length && toolListData[0].id) {
+                this.$router.push({
+                  path: `/${toolListData[0].id}/`
+                })
+              }
             }
           })
         }
