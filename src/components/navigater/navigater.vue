@@ -63,11 +63,10 @@
       }
     },
     activated() {
-      this.treeData = []
+      this.fetchData()
       // EventBus.$on('toolListDataComplete', this.fetchData)
     },
     mounted() {
-      this.fetchData()
     },
     watch: {
       '$route'(to, from) {
@@ -78,6 +77,7 @@
     },
     methods: {
       fetchData(appId) {
+        this.treeData = []
         console.log('this.$route:', this.$route.params.app)
         if (this.$route.name === 'login') {
           return

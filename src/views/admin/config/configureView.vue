@@ -18,7 +18,7 @@
 <script type="text/ecmascript-6">
   import FormModel from './model'
   import Vue from 'vue'
-  import {configAdminURL, ConfigAdminSaveURL} from '../config.toml'
+  import {configAdminURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
   import Help from '@/components/custom/baseHelp.vue'
   import { Message } from 'element-ui'
@@ -27,13 +27,13 @@
     data() {
       return {
         targetRestURL: configAdminURL,
-        targetURL: ConfigAdminSaveURL,
         formModel: Object.assign({}, FormModel),
         items: {},
         classname: 'el-icon-question',
         placement: 'top-start',
         trigger: 'hover',
-        popover: 'popover'
+        popover: 'popover',
+        keyValue: 'all'
       }
     },
     components: {
@@ -44,12 +44,13 @@
       console.log('this.formModel : ', this.formModel['DB_NAME'].value)
     },
     mounted() {
+    // console.log('valid--------------->', encodeURIComponent(this.keyValue))
       this.axios.request({
         method: 'GET',
-        url: this.targetURL,
+        url: this.targetRestURL + '/' + this.keyValue,
         params: {
-          AppName: 'ConfigDb',
-          id: 'all'
+          AppName: 'ConfigDb'
+        //  key: 'all'
         },
         dataType: 'json',
         data: {

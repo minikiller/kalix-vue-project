@@ -44,12 +44,11 @@
               el-table-column(v-if="isShowOperate" label="操作" align="center"
               fixed="right"
               v-bind:fixed="isFiex"
-              v-bind:width="columnWidth"
+              v-bind:width="columnWidth(true)"
               class-name="base-teble-operation")
                 template(slot-scope="scope")
                   slot(name="tableToolSlot" slot-scope="scope")
-                    kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick"
-                    v-bind:scope="scope")
+                    kalix-table-tool(v-bind:displayStyle="2" v-bind:btnList="btnList" v-on:onTableToolBarClick="btnClick" v-bind:scope="scope")
           div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
         div.kalix-table-pagination.s-flex
@@ -392,6 +391,11 @@
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true, row)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                // 添加初始化模型赋值参数
+                // this.dialogOptions.editFormModel = row
+                if (this.dialogOptions.row) {
+                  this.dialogOptions.row = row
+                }
                 this.$refs.kalixDialog.init(this.dialogOptions)
               }
             }, 20)
@@ -417,6 +421,8 @@
             }).then(response => {
               this.getData()
               Message.success(response.data.msg)
+              // 添加删除后自定义处理事件
+              this.$emit('afterDelete')
             }).catch(() => {
             })
             break
@@ -534,6 +540,19 @@
       },
       clearData() {
         this.tableData = []
+      },
+      columnWidth(flag) {
+        let width = 65
+        if (!flag) {
+          let len = this.btnList.length
+          let btnWidth = 34
+          if (len > 1) {
+            width += btnWidth * (len - 1)
+          }
+        } else {
+          width = 85
+        }
+        return width
       }
     },
     components: {
@@ -550,15 +569,6 @@
           return e.isShow
         })
         return items.length
-      },
-      columnWidth() {
-        let width = 65
-        let len = this.btnList.length
-        let btnWidth = 34
-        if (len > 1) {
-          width += btnWidth * (len - 1)
-        }
-        return width
       },
       isFiex() {
         return this.isFixedColumn ? 'right' : this.isFixedColumn

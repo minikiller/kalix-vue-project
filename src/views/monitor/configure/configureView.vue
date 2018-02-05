@@ -18,7 +18,7 @@
 <script type="text/ecmascript-6">
   import FormModel from './model'
   import Vue from 'vue'
-  import {HardwareLogMailURL, HardwareLogConfigureMailURL} from '../config.toml'
+  import {HardwareLogMailURL} from '../config.toml'
   import Dialog from '@/components/custom/baseDialog.vue'
   import Help from '@/components/custom/baseHelp.vue'
   import { Message } from 'element-ui'
@@ -27,13 +27,13 @@
     data() {
       return {
         targetRestURL: HardwareLogMailURL,
-        targetURL: HardwareLogConfigureMailURL,
         formModel: Object.assign({}, FormModel),
         items: {},
         classname: 'el-icon-question',
         placement: 'top-start',
         trigger: 'hover',
-        popover: 'popover'
+        popover: 'popover',
+        keyValue: 'all'
       }
     },
     components: {
@@ -46,10 +46,9 @@
     mounted() {
       this.axios.request({
         method: 'GET',
-        url: this.targetURL,
+        url: this.targetRestURL + '/' + this.keyValue,
         params: {
-          AppName: 'config.monitor.config',
-          id: 'all'
+          AppName: 'config.monitor.config'
         },
         dataType: 'json',
         data: {
