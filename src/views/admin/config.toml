@@ -24,7 +24,6 @@ dataAuthBtnPermissionPrefix = "admin:permissionModule:dataAuthMenu:"
 AdminCacheKey = "ADMIN-DICT-KEY"
 #配置管理
 configAdminURL= "/camel/rest/system/config"
-ConfigAdminSaveURL="camel/rest/system/config/getInfo"
 [[AdminConfiguerComponent]]
 path = "admin/config/configureView"
 name = "AdminConfiguer"
