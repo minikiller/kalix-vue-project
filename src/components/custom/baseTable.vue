@@ -392,6 +392,11 @@
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true, row)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                // 添加初始化模型赋值参数
+                // this.dialogOptions.editFormModel = row
+                if (this.dialogOptions.row) {
+                  this.dialogOptions.row = row
+                }
                 this.$refs.kalixDialog.init(this.dialogOptions)
               }
             }, 20)
@@ -417,6 +422,8 @@
             }).then(response => {
               this.getData()
               Message.success(response.data.msg)
+              // 添加删除后自定义处理事件
+              this.$emit('afterDelete')
             }).catch(() => {
             })
             break
