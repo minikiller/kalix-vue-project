@@ -17,6 +17,8 @@ addusersURL = "/camel/rest//dataauths/[id]/users"
 functionMenuURL = "camel/rest/applications/extend/tree" # 功能管理菜单
 functionItemBaseURL = "/camel/rest/functions/application/" # 功能管理点击菜单节点
 functionURL = "/camel/rest/functions" # 功能管理树表
+templateURL = "/camel/rest/admin/templates" # 模板管理
+templateConfigURL = "/camel/rest/templateconfigs" # 模板配置管理
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 roleBtnPermissionPrefix = "admin:permissionModule:roleMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
@@ -237,3 +239,24 @@ name = "AdminConfiguer"
 [[FunctionComponent]]
  path = "admin/function/functionEdit"
  name = "AdminFunctionEdit"
+[[TemplateComponent]]
+ path = "admin/template/templateSearch"
+ name = "AdminTemplateSearch"
+[[TemplateComponent]]
+ path = "admin/template/templateAdd"
+ name = "AdminTemplateAdd"
+[[TemplateComponent]]
+ path = "admin/template/templateView"
+ name = "AdminTemplateView"
+[[TemplateComponent]]
+ path = "admin/template/templateEdit"
+ name = "AdminTemplateEdit"
+[[TemplateComponent]]
+ path = "admin/template/templateConfigAdd"
+ name = "AdminTemplateConfigAdd"
+[[TemplateComponent]]
+ path = "admin/template/templateConfigView"
+ name = "AdminTemplateConfigView"
+[[TemplateComponent]]
+ path = "admin/template/templateConfigEdit"
+ name = "AdminTemplateConfigEdit"

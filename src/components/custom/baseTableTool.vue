@@ -20,15 +20,7 @@
             el-tooltip(v-if="btn.toolTipTitle" v-bind:content="btn.toolTipTitle" placement="top")
               span.operation-btn(v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
             el-tooltip(v-else v-bind:content="btn.title" placement="top")
-              span.operation-btn(v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
-    div.kalix-base-select-button(v-if="displayStyle===2")
-      <!-- 下拉菜单-->
-      el-dropdown(v-on:command="handleCommand")
-        span.el-dropdown-link {{dropDownTitle}}
-          i.el-icon-arrow-down.el-icon--right
-        el-dropdown-menu(slot="dropdown")
-          el-dropdown-item(v-for="btn in btnList" v-bind:key="btn.id" v-if="btnShow(btn)" v-bind:command="btn.id") {{buttonTitle(btn)}}
-
+              span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
 </template>
 
 <script type="text/ecmascript-6">

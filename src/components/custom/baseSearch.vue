@@ -183,7 +183,16 @@
 //              console.log('[Search]', `{${requestDatas.join(',')}}`)
             }
             this.isSearch = true
-            EventBus.$emit(ON_SEARCH_BUTTON_CLICK, searchObj)
+            // 兼容多个basetable查询情况
+            let searchObjAll = {}
+            if (this.bizKey) {
+              searchObjAll.searchObj = searchObj
+              searchObjAll.bizKey = this.bizKey
+            } else {
+              searchObjAll = searchObj
+            }
+            // EventBus.$emit(ON_SEARCH_BUTTON_CLICK, searchObj)
+            EventBus.$emit(ON_SEARCH_BUTTON_CLICK, searchObjAll)
           } else {
             console.log('ERR')
           }
