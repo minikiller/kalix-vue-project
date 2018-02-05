@@ -220,7 +220,7 @@
       },
       // 下载转成word
       onDownload(row, table) {
-        window.open(baseURL + '/camel/servlet/download?redheadid=' + row.redheadId)
+        window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + row.redheadId + '&filetype=word')
       }
     }
   }
