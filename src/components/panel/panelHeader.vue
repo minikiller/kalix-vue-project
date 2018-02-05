@@ -34,4 +34,7 @@
       box-flex: 15;
       color #ffffff
       text_ellipsis()
+  .max
+    & > .panel_header
+      border-radius 0
 </style>

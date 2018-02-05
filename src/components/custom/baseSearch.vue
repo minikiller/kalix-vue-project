@@ -25,7 +25,7 @@
           el-button(type="primary" v-on:click="onSubmitClick")
             i.iconfont.icon-query
             | 查询
-          el-button(type="success" v-on:click="onResetClick")
+          el-button(type="reset" v-on:click="onResetClick")
             i.iconfont.icon-reset
             | 重置
 </template>
@@ -217,7 +217,7 @@
     position relative
     margin 0px
     border-radius 4px 4px 0 0
-    background-color: rgba(254,254,240,0);
+    background-color: rgba(254, 254, 240, 0);
     .kalix-search-hd
       background-color #ae935c
       color $plank-title-color
@@ -232,6 +232,20 @@
     .el-form-item
       margin-bottom 0
     .el-button
+      padding 8px 10px
       .iconfont
         font-size 14px
+      &.el-button--reset
+        color #ffffff
+        background-color #fea356
+        border-color #fea356
+        &:hover
+          background-color #f7b175
+    .search-container
+      .el-form-item__label,
+      .el-form-item__content
+        line-height 32px
+      .el-input__inner
+        height 32px
+
 </style>

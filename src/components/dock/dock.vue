@@ -1,11 +1,11 @@
 <template lang="pug">
   keep-alive
-    div.dock(id="dock")
+    div.dock(id="dock" v-bind:class="cls")
       div.dock-bg
       div.dock-wrapper(id="macAvatars")
-        div.dock-mac_avatar(v-for="(item,index) in menuList"
-        v-bind:class="bindCls(item.id,item.iconCls)"
-        v-on:click="selectMac(item)")
+        div.dock-mac_avatar(v-for="(item,index) in menuList" v-on:click="selectMac(item)")
+          div.mac(v-bind:class="bindCls(item.id,item.iconCls)")
+          div.text {{item.text}}
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
@@ -19,7 +19,8 @@
   export default {
     data() {
       return {
-        menuList: []
+        menuList: [],
+        cls: ''
       }
     },
     created() {
@@ -31,6 +32,12 @@
       }, 200)
     },
     methods: {
+      setVisible() {
+        this.cls = ''
+      },
+      setHide() {
+        this.cls = 'hide'
+      },
       init() {
         let $lis = $('#macAvatars > .dock-mac_avatar')
         let $wrapper = $('#kalixHome')
@@ -50,6 +57,9 @@
           })
           $($lis).removeClass('current prev next prev_prev next_next')
           if (minVal.val < 60) {
+            if ($('#dock').hasClass('hide')) {
+              $('#dock').addClass('visible')
+            }
             $($lis[minVal.id])
               .addClass('current')
               .prev().addClass('prev')
@@ -58,6 +68,10 @@
               .end()
               .next().addClass('next')
               .next().addClass('next_next')
+          } else {
+            if ($('#dock').hasClass('hide')) {
+              $('#dock').removeClass('visible')
+            }
           }
         })
       },
@@ -83,13 +97,16 @@
           }).then(response => {
             if (response && response.data) {
               this.menuList = response.data
+              console.log('this.menuList：', this.menuList)
               toolListData = this.menuList
               this.$myConsoleLog(' [Dock] this.menuList ', this.menuList, '#8B4513')
               Cache.save('toolListData', JSON.stringify(toolListData))
-              EventBus.$emit('toolListDataComplete', toolListData[0].id)
-              this.$router.push({
-                path: `/${toolListData[0].id}/`
-              })
+              if (toolListData.length && toolListData[0].id) {
+                EventBus.$emit('toolListDataComplete', toolListData[0].id)
+                this.$router.push({
+                  path: `/${toolListData[0].id}/`
+                })
+              }
             }
           })
         }
@@ -120,19 +137,28 @@
       setTimeout(() => {
         this.init()
       }, 200)
+      EventBus.$on('ON_ORI_BASETABLE', this.setVisible)
+      EventBus.$on('ON_MAX_BASETABLE', this.setHide)
     }
   }
 </script>
 <style scoped lang="stylus" type="text/stylus">
   @import "../../assets/stylus/panel-base.styl"
-
+  $macAvatarW = 50px
+  $macAvatarH = 70px
+  $macAvatarFontSize = 12px
   .dock
     position: absolute
     bottom 0
     left 50%
-    height 65px
+    height 80px
     z-index: 4000;
+    transition all .5s
     transform translate3d(-50%, 0, 0)
+    &.hide
+      transform translate3d(-50%, 100%, 0)
+      &.visible
+        transform translate3d(-50%, 0, 0)
     .dock-bg
       position absolute
       bottom 0
@@ -147,45 +173,60 @@
       align-items flex-end
       justify-content center
       display flex
-      height 50px
+      height 70px
       padding 8px 40px 0
       font-size 0
       .dock-mac_avatar
         margin 0 11px
         text-align: center;
         display: inline-block;
-        width: 50px;
-        height: 50px;
-        line-height 50px
-        font-size: 26px;
+        width $macAvatarW
+        height $macAvatarH
         transition: all .3s;
         box-sizing: border-box;
         cursor: pointer;
         color #ffffff
         border-radius 12px
-        text-shadow 8px 9px 13px rgba(0, 0, 0, 0.57)
+        font-size $macAvatarFontSize
+
         &.current
           macAvatarStyle(100%)
 
         &.prev,
         &.next
-          macAvatarStyle(70%)
+          macAvatarStyle(50%)
 
         &.prev_prev,
         &.next_next
-          macAvatarStyle(30%)
+          macAvatarStyle(10%)
+        .mac
+          position: relative;
+          width 100%
+          margin 0
+          &:after
+            content ''
+            display block
+            padding-top 100%
+          &:before
+            position absolute
+          &.icon-admin
+            background-color #fe82b4
+          &.icon-common-home
+            background-color #94dffe
+          &.icon-oa
+            background-color #f7bb25
+          &.icon-art
+            background-color #25f7b1
+          &.icon-schedule
+            background-color #ccadfb
+          &.icon-research
+            background-color #fc7146
 
-        &.icon-admin
-          background-color #fe82b4
-        &.icon-common-home
-          background-color #94dffe
-        &.icon-oa
-          background-color #f7bb25
-        &.icon-art
-          background-color #25f7b1
-        &.icon-schedule
-          background-color #ccadfb
-        &.icon-research
-          background-color #fc7146
-
+        .text
+          color #000000
+          overflow hidden
+          margin 4px -10px 0
+          white-space nowrap
+          text-overflow ellipsis
+          text-shadow 1px 1px 1px rgba(255, 255, 255, 0.7607843137254902)
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.im-main(v-bind:class="bindCls")
+  div.im-main(v-bind:class="bindCls" id="imMain")
     transition(name="ima2")
       div.im2(v-if="isMini")
         div.im-btn-restore(v-on:click="onRestorem")
@@ -13,7 +13,7 @@
           div.im-cantainer
             div.im-btn-min(v-on:click="onMinimum")
             // 设置
-            kalix-operation(v-show="footerBars[3].isSelect")
+            kalix-operation(v-show="footerBars[2].isSelect")
             // 组织机构
             org-list(v-show="footerBars[1].isSelect")
             // 消息列表
@@ -38,7 +38,7 @@
         footerBars: [
           {type: 'contact', isSelect: true},
           {type: 'conversation', isSelect: false},
-          {type: 'plugin', isSelect: false},
+          // {type: 'plugin', isSelect: false},
           {type: 'setup', isSelect: false}
         ]
       }
@@ -52,7 +52,7 @@
       this.footerBars = [
         {type: 'contact', isSelect: true},
         {type: 'conversation', isSelect: false},
-        {type: 'plugin', isSelect: false},
+        // {type: 'plugin', isSelect: false},
         {type: 'setup', isSelect: false}
       ]
     },

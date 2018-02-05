@@ -30,12 +30,13 @@
     & + .panel-header-button
       margin-left 10px
     &.fixed
-      background-image url("/static/images/im/icon-fixed.png")
+      background-image url("./images/icon-fixed.png")
     &.min
-      background-image url("/static/images/im/icon-min.png")
+      background-image url("./images/icon-min.png")
     &.max
-      background-image url("/static/images/im/icon-max.png")
+      background-image url("./images/icon-max.png")
     &.close
-      background-image url("/static/images/im/icon-close.png")
-
+      background-image url("./images/icon-close.png")
+    &.ori
+      background-image url("./images/icon-ori.png")
 </style>

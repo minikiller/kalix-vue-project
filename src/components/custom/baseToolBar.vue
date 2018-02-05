@@ -44,3 +44,9 @@
     }
   }
 </script>
+
+<style lang='stylus' type='text/stylus'>
+  .kalix-base-tool-bar
+    .el-button
+      padding 8px 10px
+</style>

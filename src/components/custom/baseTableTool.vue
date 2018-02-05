@@ -6,8 +6,16 @@
 
 <template lang="pug">
   div
-    el-tooltip(v-for="btn in btnList" v-if="btn.isShow" v-bind:key="btn.id" v-bind:content="toolTipContent(btn)" placement="top")
-      span.operation-btn(type="text" v-if="btnShow(btn)" size="small" v-on:click="toggle(scope.row,btn.id)") {{buttonTitle(btn)}}
+    <!-- 按钮列表-->
+    template(v-if="displayStyle === 1")
+      el-tooltip(v-for="btn in btnList" v-if="btnShow(btn)" v-bind:key="btn.id" v-bind:content="toolTipContent(btn)" placement="top")
+        span.operation-btn(type="text" size="small" v-on:click="toggle(scope.row,btn.id)") {{buttonTitle(btn)}}
+    <!-- 按钮列表-->
+    el-dropdown(v-if="displayStyle === 2" v-on:command="handleCommand")
+      span.el-dropdown-link {{dropDownTitle}}
+        i.el-icon-arrow-down.el-icon--right
+      el-dropdown-menu(slot="dropdown")
+        el-dropdown-item(v-for="btn in btnList" v-if="btnShow(btn)" v-bind:command="btn.id" v-bind:key="btn.id") {{buttonTitle(btn)}}
 </template>
 
 <script type="text/ecmascript-6">
@@ -15,6 +23,12 @@
 
   export default {
     props: {
+      displayStyle: {
+        default: 1    // 显示样式 1：按钮列表、2：下拉菜单。默认 1。
+      },
+      dropDownTitle: {
+        default: '操作'
+      },
       scope: {
         type: Object
       },
@@ -37,7 +51,7 @@
     },
     methods: {
       btnShow(btn) {
-        return !btn.cond || btn.cond(this.scope)
+        return btn.isShow && (!btn.cond || btn.cond(this.scope))
       },
       buttonTitle(btn) {
         return (btn.titleCompute) ? btn.titleCompute(this.scope) : btn.title

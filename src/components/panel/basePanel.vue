@@ -4,7 +4,7 @@
       template(slot="title")
         div {{title}}
       template(slot="right")
-        panel-header-button(v-if="cls === 'max'" type="min" v-on:click="minBaseTable")
+        panel-header-button(v-if="cls === 'max'" type="ori" v-on:click="oriBaseTable")
         panel-header-button(v-else type="max" v-on:click="maxBaseTable")
         panel-header-button(type="close" v-on:click="closeBaseTable")
     div.panel-body
@@ -30,11 +30,13 @@
     methods: {
       setCls(clsName = '') {
       },
-      minBaseTable() {
+      oriBaseTable() {
         this.cls = ''
+        EventBus.$emit('ON_ORI_BASETABLE')
       },
       maxBaseTable() {
         this.cls = 'max'
+        EventBus.$emit('ON_MAX_BASETABLE')
       },
       closeBaseTable() {
         // 关闭窗体
@@ -75,6 +77,7 @@
       width 100%
       height 100%
       margin 0
+      border-radius 0
     .group-title
       text-align center
       font-size 18px
@@ -83,7 +86,7 @@
       border-bottom 4px solid #686868
     .panel-body
       flex 1
-      padding 10px
+      padding 17px 6px
       width 100%
       box-sizing border-box
       overflow auto

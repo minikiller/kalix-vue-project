@@ -443,6 +443,7 @@
         console.log('baseTable', this.targetURL)
         this.loading = true
         setTimeout(_ => {
+          console.log('[baseTable] getData')
           let _data = {
             jsonStr: this.jsonStr,
             page: this.pager.currentPage,
@@ -453,20 +454,17 @@
           this.$http.get(this.targetURL, {
             params: _data
           }).then(response => {
+            this.pager.totalCount = response.data.totalCount
             this.tableData = response.data.data.map((item, index) => {
               item.rowNumber = index + that.rowNo
               return item
             })
-
-            if (this.dictDefine) { // 设置数据字典
-              this.setDictDefine(this.tableData)
-            }
-
             if (this.customRender) { // 对table的数据进行自定义的修饰
               this.customRender(this.tableData)
             }
-
-            this.pager.totalCount = response.data.totalCount
+            if (this.dictDefine) { // 设置数据字典
+              this.setDictDefine(this.tableData)
+            }
             this.loading = false
             document.querySelector('.el-table__body-wrapper').scrollTop = 0
             if (!this.isFixedColumn) {
@@ -564,7 +562,7 @@
     tr
       background-color #fefef0
 </style>
-<style scoped lang="stylus" type="text/stylus">
+<style lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
   .kalix-article
     position relative
@@ -598,57 +596,17 @@
         .kalix-table-pagination
           position relative
           margin-top 10px
+          .base-table-pager
+            .el-pagination
+              padding 1px 0
+              button
+                background-color transparent
+          .btn-wrapper
+            padding 0 0 0 20px
+            .el-button
+              height 30px
+              line-height 30px
+              padding 0 12px
         .no-list
           background-color #fefeef
-
-  /*.kalix-article
-    position absolute
-    width 937px
-    height 80%
-    left 50%
-    top 5%
-    margin-left -314px
-    border-radius 4px
-    overflow hidden
-    display flex
-    flex-direction column
-    padding 0
-    background-color #fefef0
-    .kalix-wrapper
-      position relative
-      flex 1
-      top 0
-      left 0
-      right 0
-      background-color transparent
-
-    .kalix-article-hd
-      background-color #ae935c
-      color $plank-title-color
-      line-height 54px
-      text-align left
-      display flex
-      justify-content center
-      align-items center
-      .main
-        margin-left 10px
-        flex 1
-      .btn-wrapper
-        display flex
-        margin-right 15px
-    .kalix-wrapper
-      overflow hidden
-      .kalix-wrapper-bd
-        height 100%
-        display flex
-        flex-direction column
-        .kalix-table-container
-          position relative
-          flex 1
-          top 0
-          bottom 0
-        .kalix-table-pagination
-          position relative
-        .no-list
-          background-color #fefeef*/
 </style>
