@@ -27,6 +27,10 @@
       el-form-item.kalix-form-table-td(label="审批选项" v-bind:label-width="labelWidth")
         div(style="text-align:center")
           el-switch(v-model="formModel.needHeader" active-text="需要校领导审批" inactive-text="不需要校领导审批")
+    template(v-if="formModel.needHeader")
+      div
+        el-form-item.kalix-form-table-td(label="校领导" prop="managerUser" v-bind:rules="rules.managerUser" v-bind:label-width="labelWidth")
+          kalix-checkbox(v-model="formModel.managerUser" v-bind:dataUrl="managerUsersURL")
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="部门负责人签字" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.depUser" readonly)
@@ -44,10 +48,12 @@
 
 <script type="text/ecmascript-6">
   import {RedheadApplyURL} from '../config.toml'
+  import {ManagerUserDutyID} from '@/config/global.toml'
   import UserOrgSelect from '@/components/biz/select/UserOrgSelect'
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import Tinymce from '@/third/Tinymce'
+  import BaseCheckbox from '@/components/custom/baseCheckbox'
 
   export default {
     props: {
@@ -57,8 +63,6 @@
       }
     },
     created() {
-      this.labelWidth = '110px'
-//      this.init(this.formModel.docType)
     },
     data() {
       return {
@@ -68,8 +72,10 @@
           orgId: [{type: 'number', required: true, message: '请选择申请部门', trigger: 'change'}],
 //          docAssort: [{required: true, message: '请选择文号类型', trigger: 'change'}],
           docType: [{type: 'number', required: true, message: '请选择文号类型', trigger: 'change'}],
-          docContent: [{required: true, message: '请输入发文内容', trigger: 'blur'}]
-        }
+          docContent: [{required: true, message: '请输入发文内容', trigger: 'blur'}],
+          managerUser: [{required: true, message: '请选择需要审批的校领导', trigger: 'blur'}]
+        },
+        managerUsersURL: '/camel/rest/dutys/' + ManagerUserDutyID + '/users/loginnames',
 //        options: [{
 //          value: '对外',
 //          label: '对外',
@@ -118,7 +124,8 @@
 //              value: '10'
 //            }
 //          ]
-//        }]
+//        }],
+        labelWidth: '110px'
       }
     },
     methods: {
@@ -159,7 +166,8 @@
       KalixOrgSelect: UserOrgSelect,
       KalixDictSelect: BaseDictSelect,
       KalixDialog: Dialog,
-      Tinymce
+      Tinymce,
+      KalixCheckbox: BaseCheckbox
     }
   }
 </script>

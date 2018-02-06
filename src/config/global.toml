@@ -25,6 +25,9 @@ couchdbDelURL = "/camel/rest/couchdb"
 orgURL = "/camel/rest/orgs"
 TeachingUnitOrgID = 22601
 userURL = "/camel/rest/users"
+# 吉林动画学院-校领导职务id
+ManagerUserDutyID = 101814
+
 # 全局table分页的配置
 [PageConfig]
   sizes = [10, 20, 30, 40]
