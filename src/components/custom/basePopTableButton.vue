@@ -38,9 +38,9 @@ pug 编译v-popover:popover 失效，因此使用html
 </template>
 
 <script type="text/ecmascript-6">
-  import EventBus from 'common/eventbus'
+  // import EventBus from 'common/eventbus'
   import {PageConfig} from 'config/global.toml'
-  import {ON_POPOVER_TABLEROW_CLICK} from './event.toml'
+  import {ON_POPOVER_CLICK} from './event.toml'
   export default {
     props: {
       buttonName: {
@@ -139,10 +139,11 @@ pug 编译v-popover:popover 失效，因此使用html
         this.getData()
       },
       onTableRowClick(row, event, column) {
-        EventBus.$emit(ON_POPOVER_TABLEROW_CLICK, row)
+        // EventBus.$emit(ON_POPOVER_CLICK, row)
+        this.$emit(ON_POPOVER_CLICK, row)
         this.visible = false
       },
-      closePopoverTable() {
+      closePopover() {
         this.visible = false
       }
     }

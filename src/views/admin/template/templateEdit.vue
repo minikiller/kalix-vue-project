@@ -12,14 +12,19 @@
         el-input(type="textarea" v-model="formModel.desc" v-bind:rows="3")
       el-form-item(label="模板内容" prop="content" v-bind:label-width="labelWidth")
         <!--el-input(type="textarea" v-model="formModel.content" v-bind:rows="3")-->
-        tinymce(v-model="formModel.content" ref="editor" v-bind:showSelfButton="true" v-bind:popTableData="popTableData" v-on:popoverTableRow="getPopoverTableRow")
+        tinymce(v-model="formModel.content" ref="editor" v-bind:showCustomButton="true"
+          bizPop = "AdminTemplatePopTable"
+          v-bind:popData="popTableData" v-bind:tinymcePlugins="tinymcePlugins"
+          v-on:popoverData="getPopoverTableRow" v-on:contentClick="onContentClick")
 </template>
 
 <script type="text/ecmascript-6">
   import FormModel from './templateModel'
   import Dialog from '@/components/custom/baseDialog.vue'
-  import {templateURL, templateConfigURL} from '../config.toml'
   import Tinymce from '@/third/Tinymce'
+  import {templateURL, templateConfigURL, TemplateEditComponent} from '../config.toml'
+  import {registerComponent} from '@/api/register'
+  registerComponent(TemplateEditComponent)
 
   export default {
     data() {
@@ -30,7 +35,8 @@
         rules: {
           name: [{required: true, message: '请输入模板名称', trigger: 'blur'}]
         },
-        targetURL: templateURL
+        targetURL: templateURL,
+        tinymcePlugins: 'advlist,autolink,code,paste,textcolor, colorpicker,fullscreen,link,lists,media,wordcount,imagetools,fullpage'
       }
     },
     computed: {
@@ -70,8 +76,15 @@
       },
       getPopoverTableRow(row) {
         let attrVal = '${' + row.fieldName + '}'
-        // this.$refs.editor.setContent(attrVal)
         this.$refs.editor.setInsertContent(attrVal)
+      },
+      onContentClick() {
+        this.$refs.editor.getKalixPop((_kalixPop) => {
+          let kalixPop = _kalixPop
+          setTimeout(() => {
+            kalixPop.$refs.kalixPopTable.closePopover()
+          }, 20)
+        })
       }
     }
   }

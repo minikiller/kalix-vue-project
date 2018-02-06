@@ -3,11 +3,13 @@
     <!--div tinymceId:{{tinymceId}}-->
     div.tinymce-container.editor-container
       textarea.tinymce-textarea(v-bind:id="tinymceId")
-      div.editor-custom-btn-container(v-if="showSelfButton")
+      div.editor-custom-btn-container(v-if="showCustomButton")
         div.editor-upload-btn
-          kalix-pop-table(v-bind:bizKey="popTableData.bizKey" v-bind:placement="popTableData.placement" v-bind:width="popTableData.width"
-            v-bind:jsonStr="popTableData.jsonStr" v-bind:trigger="popTableData.trigger" v-bind:buttonName="popTableData.buttonName"
-            v-bind:targetUrl="popTableData.targetUrl" v-bind:tableFields="popTableData.tableFields" ref="kalixPopTable")
+          component(:is="bizPop" v-on:popoverData="getPopoverData"
+            v-bind:popData="popData" ref="kalixPop")
+          <!--kalix-pop-table(v-bind:bizKey="popData.bizKey" v-bind:placement="popData.placement" v-bind:width="popData.width"-->
+            <!--v-bind:jsonStr="popData.jsonStr" v-bind:trigger="popData.trigger" v-bind:buttonName="popData.buttonName"-->
+            <!--v-bind:targetUrl="popData.targetUrl" v-bind:tableFields="popData.tableFields" ref="kalixPopTable")-->
           <!--editorImage.editor-upload-btn(color="#20a0ff" v-on:successCBK="imageSuccessCBK")-->
       <!--<div class="editor-custom-btn-container">-->
       <!--<editorImage  color="#20a0ff" class="editor-upload-btn" @successCBK="imageSuccessCBK"></editorImage>-->
@@ -16,9 +18,6 @@
 
 <script>
   // import editorImage from './components/editorImage'
-  import PopTableButton from '@/components/custom/basePopTableButton.vue'
-  import EventBus from 'common/eventbus'
-  import {ON_POPOVER_TABLEROW_CLICK} from '@/components/custom/event.toml'
   const INIT = 0
   const INPUT = 1
   const CHANGED = 2
@@ -26,10 +25,10 @@
   export default {
     name: 'tinymce',
     // components: { editorImage },
-    components: {
-      // editorImage
-      KalixPopTable: PopTableButton
-    },
+    // components: {
+    //   // editorImage
+    //   KalixPopTable: PopTableButton
+    // },
     props: {
       id: {
         type: String
@@ -53,11 +52,14 @@
         required: false,
         default: 360
       },
-      showSelfButton: {
+      showCustomButton: {
         type: Boolean,
         default: false
       },
-      popTableData: {
+      bizPop: {  //  使用的popover组件名称
+        type: String
+      },
+      popData: {
         type: Object,
         default() {
           return {
@@ -71,6 +73,10 @@
             jsonStr: ''
           }
         }
+      },
+      tinymcePlugins: {
+        type: String,
+        default: 'advlist,autolink,code,paste,textcolor, colorpicker,fullscreen,link,lists,media,wordcount, imagetools'
       }
     },
     data() {
@@ -102,7 +108,6 @@
     mounted() {
       console.log('tiny mce is mounted')
       this.initTinymce()
-      EventBus.$on(ON_POPOVER_TABLEROW_CLICK, this.onPopoverTableRowClick)
     },
     activated() {
       console.log('tiny mce is activated')
@@ -111,7 +116,6 @@
     deactivated() {
       console.log('tiny mce is deactivated')
       this.destroyTinymce()
-      EventBus.$off(ON_POPOVER_TABLEROW_CLICK)
     },
     methods: {
       initTinymce() {
@@ -124,7 +128,7 @@
           object_resizing: false,
           toolbar: this.toolbar,
           menubar: this.menubar,
-          plugins: 'advlist,autolink,code,paste,textcolor, colorpicker,fullscreen,link,lists,media,wordcount, imagetools',
+          plugins: _this.tinymcePlugins,
           end_container_on_empty_block: true,
           powerpaste_word_import: 'clean',
           code_dialog_height: 450,
@@ -157,8 +161,8 @@
             })
             editor.on('click', () => {
               // popovertable组件使用，当点击事件触发时，关闭pop弹出框
-              if (this.showSelfButton === true) {
-                this.$refs.kalixPopTable.closePopoverTable()
+              if (this.showCustomButton === true) {
+                this.$emit('contentClick')
               }
             })
           },
@@ -189,11 +193,19 @@
           window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`)
         })
       },
-      onPopoverTableRowClick(row) { // popovertable 组件行点击事件
-        this.$emit('popoverTableRow', row)
+      onPopoverClick(_data) { // popovert点击事件
+        this.$emit('popoverData', _data)
       },
       setInsertContent(value) { // tinymce组件内容在光标位置插入
         window.tinymce.get(this.tinymceId).execCommand('mceInsertContent', false, value)
+      },
+      getPopoverData(_data) {
+        this.$emit('popoverData', _data)
+      },
+      getKalixPop(callBack) {
+        setTimeout(() => {
+          callBack(this.$refs.kalixPop)
+        }, 20)
       }
     },
     destroyed() {
