@@ -29,11 +29,12 @@
       div
         el-form-item.kalix-form-table-td(label="审批选项" v-bind:label-width="labelWidth")
           div(style="text-align:center")
-            el-switch(v-model="formModel.needHeader" active-text="需要校领导审批" inactive-text="不需要校领导审批")
+            el-switch(v-model="formModel.needHeader" active-text="需要校领导审批" inactive-text="不需要校领导审批" v-on:change="switchChange")
       template(v-if="formModel.needHeader")
         div
-          el-form-item.kalix-form-table-td(label="校领导" prop="managerUser" v-bind:rules="rules.managerUser" v-bind:label-width="labelWidth")
-            kalix-checkbox(v-model="formModel.managerUser" v-bind:dataUrl="managerUsersURL")
+          el-form-item.kalix-form-table-td(label="校领导审批名单" prop="needManagerUser" v-bind:rules="rules.needManagerUser" v-bind:label-width="labelWidth")
+            kalix-checkbox(v-model="formModel.needManagerUser" v-bind:dataUrl="managerUsersURL")
+      <!--el-input(v-model="formModel.needManagerUser")-->
   <!--div.s-flex-->
   <!--el-form-item.s-flex_item.kalix-form-table-td(label="打印人" v-bind:label-width="labelWidth")-->
   <!--el-input(v-model="formModel.printer")-->
@@ -97,7 +98,7 @@
           orgId: [{type: 'number', required: true, message: '请选择申请部门', trigger: 'change'}],
           docType: [{type: 'number', required: true, message: '请选择文号类型', trigger: 'change'}],
           docContent: [{required: true, message: '请输入发文内容', trigger: 'blur'}],
-          managerUser: [{required: true, message: '请选择需要审批的校领导', trigger: 'blur'}]
+          needManagerUser: [{required: true, message: '请选择需要审批的校领导', trigger: 'blur'}]
         },
         targetURL: RedheadApplyURL,
         setting: {
@@ -155,7 +156,7 @@
 //            }
 //          ]
 //        }],
-        labelWidth: '110px'
+        labelWidth: '140px'
       }
     },
     methods: {
@@ -177,10 +178,15 @@
       },
       onOrgIdChange(item) {
         this.formModel.orgName = item.name
-      }
+      },
 //      onChange(value) {
 //        this.formModel.docType = value[1]
-//      }
+//      },
+      switchChange(newStatus) {
+        if (!newStatus) {
+          this.formModel.needManagerUser = ''
+        }
+      }
     },
     components: {
       KalixOrgSelect: UserOrgSelect,
