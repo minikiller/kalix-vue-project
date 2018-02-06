@@ -20,6 +20,7 @@ functionURL = "/camel/rest/functions" # 功能管理树表
 templateURL = "/camel/rest/admin/templates" # 模板管理
 templateConfigURL = "/camel/rest/templateconfigs" # 模板配置管理
 auditURL = "/camel/rest/audits" # 审计管理
+auditConfigURL = "/camel/rest/auditconfigs" # 审计配置管理
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 roleBtnPermissionPrefix = "admin:permissionModule:roleMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
@@ -270,3 +271,15 @@ name = "AdminConfiguer"
 [[AuditComponent]]
  path = "admin/audit/auditSearch"
  name = "AdminAuditSearch"
+[[AuditConfigComponent]]
+ path = "admin/auditconfig/auditconfigSearch"
+ name = "AdminAuditConfigSearch"
+[[AuditConfigComponent]]
+ path = "admin/auditconfig/auditconfigAdd"
+ name = "AdminAuditConfigAdd"
+[[AuditConfigComponent]]
+ path = "admin/auditconfig/auditconfigEdit"
+ name = "AdminAuditConfigEdit"
+[[AuditConfigComponent]]
+ path = "admin/auditconfig/auditconfigView"
+ name = "AdminAuditConfigView"
