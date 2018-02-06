@@ -264,3 +264,9 @@ name = "AdminConfiguer"
 [[TemplateEditComponent]]
  path = "admin/template/templatePopTable"
  name = "AdminTemplatePopTable"
+[[AuditComponent]]
+ path = "admin/audit/auditView"
+ name = "AdminAuditView"
+[[AuditComponent]]
+ path = "admin/audit/auditSearch"
+ name = "AdminAuditSearch"

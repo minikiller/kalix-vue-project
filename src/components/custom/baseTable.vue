@@ -60,7 +60,7 @@
             v-bind:current-page="pager.currentPage"
             v-bind:page-sizes="pager.pageSizes"
             v-bind:page-size="1"
-            layout="sizes, prev, next, slot, jumper,->"
+            layout="total, sizes, prev, next, slot, jumper,->"
             v-bind:total="pager.totalCount"
             prev-text="上一页"
             next-text="下一页")
@@ -248,6 +248,7 @@
         this.isShowToolBarB = this.isShowToolBar !== null ? this.isShowToolBar : flag
       },
       onToolBarClick(btnId) {
+        console.log('btnId============', btnId)
         // baseToolBar 回调事件
         switch (btnId) {
           case 'add':
@@ -255,6 +256,9 @@
             break
           case 'refresh':
             this.onRefreshClick()
+            break
+          case 'deleteChecked': // 选中行的删除
+            this.onDeleteChecked()
             break
           default:
             this.customToolBar(btnId, this)
