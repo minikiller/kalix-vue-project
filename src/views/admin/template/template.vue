@@ -11,8 +11,10 @@
           base-table(bizKey="template" title="模板列表" v-bind:targetURL="templateURL"
             v-bind:bizDialog="templateDialog" bizSearch="AdminTemplateSearch"
             v-bind:btnList="templateBtnList" v-bind:dialogOptions="dialogOptionsTemplate"
-            v-on:onTableRowClick="onTemplateRowClick" v-on:afterSearch="afterTemplateSearch" v-on:afterDelete="afterTemplateDelete"
-            ref="templateTable" )
+            v-bind:isAfterSearch="templateAfterSearch"
+            v-on:onTableRowClick="onTemplateRowClick" v-on:handleAfterSearch="afterTemplateSearch"
+            ref="templateTable")
+            <!--v-on:afterDelete="afterTemplateDelete"-->
             template(slot="tableColumnSlot")
               el-table-column(prop="name" label="模板名称" align="center")
               el-table-column(prop="desc" label="模板描述" align="center")
@@ -45,6 +47,7 @@
         },
         dialogOptions: {},
         templateURL: templateURL,
+        templateAfterSearch: true,
         templateConfigURL: templateConfigURL,
         templateConfigJsonStr: '',
         templateBtnList: templateBtnList,
@@ -63,6 +66,7 @@
     },
     mounted() {
       this.templateConfigJsonStr = `{'templateId': '-1', '%fieldName%': ''}`
+      // this.$refs.templateTable.setCurrent(tableData[0])
     },
     methods: {
       onTemplateRowClick(row, event, column) {
@@ -71,14 +75,23 @@
         }
         this.searchConfigs(row.id)
       },
-      afterTemplateSearch(val) {
-        if (val === 'template') {
-          this.searchConfigs()
+      afterTemplateSearch(bizKey, tableData) {
+        if (bizKey === 'template') {
+          if (tableData.length > 0) {
+            // this.$refs.templateTable.$refs.kalixTableContainer.setCurrentRow(tableData[0])
+            this.$nextTick(() => {
+              this.$refs.templateTable.setCurrent(tableData[0])
+            })
+            this.searchConfigs(tableData[0].id)
+            // this.onTemplateRowClick(tableData[0])
+          } else {
+            this.searchConfigs()
+          }
         }
       },
-      afterTemplateDelete() {
-        this.searchConfigs()
-      },
+      // afterTemplateDelete() {
+      //   this.searchConfigs()
+      // },
       searchConfigs(templateId) {
         if (templateId) {
           this.templateConfigJsonStr = `{'templateId': '` + templateId + `', '%fieldName%': ''}`
