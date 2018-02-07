@@ -562,15 +562,13 @@
         this.tableData = []
       },
       columnWidth(flag) {
-        let width = 65
+        let width = 90
         if (!flag) {
           let len = this.btnList.length
           let btnWidth = 34
           if (len > 1) {
             width += btnWidth * (len - 1)
           }
-        } else {
-          width = 85
         }
         return width
       }
