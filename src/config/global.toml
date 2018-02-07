@@ -26,7 +26,7 @@ orgURL = "/camel/rest/orgs"
 TeachingUnitOrgID = 22601
 userURL = "/camel/rest/users"
 # 吉林动画学院-校领导职务id
-ManagerUserDutyID = 101814
+ManagerUserDutyID = 104954
 
 # 全局table分页的配置
 [PageConfig]
