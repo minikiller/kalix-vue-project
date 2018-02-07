@@ -68,7 +68,7 @@
     data() {
       return {
         name: 'kalixHeader',
-        isPollMsg: false, // 是否进行消息轮询
+        isPollMsg: true, // 是否进行消息轮询
         userName: '',
         menuList: [],
         themeOptions: [
@@ -163,8 +163,13 @@
       pollMsg() { // 消息通知轮询
         let that = this
         that.getMsg()
-        setInterval(function () {
-          that.getMsg()
+        clearInterval(window.msgTask)
+        window.msgTask = setInterval(() => {
+          if (!Cache.get('id')) {
+            clearInterval(window.msgTask)
+          } else {
+            this.getMsg()
+          }
         }, 10000)
       },
       handleCommand(command) {
