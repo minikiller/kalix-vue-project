@@ -19,12 +19,13 @@
         v-on:onToolBarClick="onToolBarClick"
         v-on:onCheckBtnList="onCheckBtnList")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-          el-table(:data="tableData"  style="width:100%"
+          el-table(:data="tableData"  style="width:100%" ref="kalixTable"
           v-bind:row-class-name="tableRowClassName"
           v-loading.body="loading" fit
           v-bind:height="tableHeight"
           highlight-current-row
           v-on:selection-change="onTableSelectionChange"
+          v-on:current-change="handleCurrentChange"
           v-on:row-click="onTableRowClick"
           header-cell-class-name="base-table-th"
           cell-class-name="base-table-cell")
@@ -185,6 +186,10 @@
       noSearchParam: {
         type: Boolean,
         default: false
+      },
+      isAfterSearch: {
+        type: Boolean,
+        default: false
       }
     },
     watch: {
@@ -209,7 +214,8 @@
         },
         tableHeight: 0, //  列表组件高度
         searchParam: {}, //  列表查询条件
-        isShowToolBarB: true
+        isShowToolBarB: true,
+        currentRow: null
       }
     },
     created() {
@@ -248,7 +254,6 @@
         this.isShowToolBarB = this.isShowToolBar !== null ? this.isShowToolBar : flag
       },
       onToolBarClick(btnId) {
-        console.log('btnId============', btnId)
         // baseToolBar 回调事件
         switch (btnId) {
           case 'add':
@@ -267,6 +272,13 @@
       },
       onTableSelectionChange(val) {
         this.deleteList = val
+      },
+      setCurrent(row) {
+        this.$refs.kalixTable.highlightCurrentRow = true
+        this.$refs.kalixTable.setCurrentRow(row)
+      },
+      handleCurrentChange(val) {
+        this.currentRow = val
       },
       onTableRowClick(row, event, column) {
         this.$emit('onTableRowClick', row, event, column)
@@ -298,7 +310,7 @@
           this.refresh()
         }
         // 添加点击查询按钮之后的外部事件处理
-        this.$emit('afterSearch', this.bizKey)
+        // this.$emit('afterSearch', this.bizKey)
       },
       onAddClick() {
         // 添加按钮点击事件
@@ -426,7 +438,7 @@
               this.getData()
               Message.success(response.data.msg)
               // 添加删除后自定义处理事件
-              this.$emit('afterDelete')
+              // this.$emit('afterDelete')
             }).catch(() => {
             })
             break
@@ -479,6 +491,10 @@
               item.rowNumber = index + that.rowNo
               return item
             })
+            // 添加表格查询后的处理事件
+            if (this.isAfterSearch === true) {
+              this.$emit('handleAfterSearch', this.bizKey, this.tableData)
+            }
 
             if (this.dictDefine) { // 设置数据字典
               this.setDictDefine(this.tableData)
@@ -546,15 +562,13 @@
         this.tableData = []
       },
       columnWidth(flag) {
-        let width = 65
+        let width = 90
         if (!flag) {
           let len = this.btnList.length
           let btnWidth = 34
           if (len > 1) {
             width += btnWidth * (len - 1)
           }
-        } else {
-          width = 85
         }
         return width
       }

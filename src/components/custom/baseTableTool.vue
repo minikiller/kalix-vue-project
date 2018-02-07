@@ -22,8 +22,8 @@
             el-tooltip(v-else v-bind:content="btn.title" placement="top")
               span.operation-btn(v-if="!btn.cond || btn.cond(scope)" v-on:click="toggle(scope.row,btn.id)") {{btn.title}}
     <!-- 按钮列表-->
-    el-dropdown(v-if="displayStyle === 2" v-on:command="handleCommand")
-      span.el-dropdown-link {{dropDownTitle}}
+    el-dropdown(v-if="displayStyle === 2" v-on:command="handleCommand" size="medium" )
+      el-button(size="small" type="primary" plain) {{dropDownTitle}}
         i.el-icon-arrow-down.el-icon--right
       el-dropdown-menu(slot="dropdown")
         el-dropdown-item(v-for="btn in btnList" v-if="btnShow(btn)" v-bind:command="btn.id" v-bind:key="btn.id") {{buttonTitle(btn)}}
