@@ -67,8 +67,10 @@ ManagerUserDutyID = 104954
   icon = "icon-add"
   title = "添加"
   isShow = true
+  isDisable = false
 [[GlobalToolBarButtonList]]
   id = "deleteChecked"
   icon = "icon-delete"
   title = "删除选中"
   isShow = false
+  isDisable = false

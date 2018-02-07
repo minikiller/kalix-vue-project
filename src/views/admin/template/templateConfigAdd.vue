@@ -9,6 +9,8 @@
       input(v-model="formModel.templateId" type="hidden")
       el-form-item(label="属性名称" prop="fieldName" v-bind:label-width="labelWidth" v-bind:rules="rules.fieldName")
         el-input(v-model="formModel.fieldName")
+      el-form-item(label="属性值" prop="fieldValue" v-bind:label-width="labelWidth" v-bind:rules="rules.fieldValue")
+        el-input(v-model="formModel.fieldValue")
       el-form-item(label="属性描述" prop="fieldDesc" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.fieldDesc")
 </template>
@@ -24,7 +26,8 @@
         formModel: Object.assign({}, FormModel),
         labelWidth: '140px',
         rules: {
-          fieldName: [{required: true, message: '请输入属性名称', trigger: 'blur'}]
+          fieldName: [{required: true, message: '请输入属性名称', trigger: 'blur'}],
+          fieldValue: [{required: true, message: '请输入属性值', trigger: 'blur'}]
         },
         targetURL: templateConfigURL
       }

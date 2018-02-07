@@ -9,6 +9,7 @@ const FormModel = {
   // updateDate: '',
   templateId: null,
   fieldName: '',
-  fieldDesc: ''
+  fieldDesc: '',
+  fieldValue: ''
 }
 export default FormModel

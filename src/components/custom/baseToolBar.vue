@@ -7,7 +7,8 @@
 <template lang="pug">
   div.kalix-base-tool-bar
     template(v-for="btn in defaultBtnList")
-      el-button(v-if="btn.isShow" v-on:click="toggle(btn.id)" v-bind:type="btn.type||'primary'")
+      el-button(v-if="btn.isShow" v-on:click="toggle(btn.id)" v-bind:type="btn.type||'primary'"
+        v-bind:disabled="btn.isDisable")
         i.iconfont(v-bind:class="btn.icon")
         | {{btn.title}}
 </template>
@@ -21,13 +22,23 @@
     props: {
       toolbarBtnList: {
         type: Array
+      },
+      bizKey: {
+        type: String
       }
     },
     data() {
-      return {}
+      return {
+        defaultBtnList: []
+      }
     },
     created() {
       this.initToolBtnList()
+    },
+    watch: {
+      toolbarBtnList(newVal, oldVal) {
+        this.initToolBtnList()
+      }
     },
     methods: {
       initToolBtnList() {
