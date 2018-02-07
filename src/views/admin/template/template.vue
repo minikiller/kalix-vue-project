@@ -23,10 +23,12 @@
           keep-alive
             base-table(bizKey="templateConfig" title="模板属性列表" v-bind:targetURL="templateConfigURL"
               v-bind:bizDialog="templateConfigDialog" v-bind:jsonStr="templateConfigJsonStr"
+              v-bind:toolbarBtnList="templateConfigBtnList"
               v-bind:btnList="templateBtnList" v-bind:noSearchParam="true" v-bind:dialogOptions="dialogOptions"
-              ref="templateConfigTable" )
+              ref="templateConfigTable")
               template(slot="tableColumnSlot")
                 el-table-column(prop="fieldName" label="属性名" align="center")
+                el-table-column(prop="fieldValue" label="属性值" align="center")
                 el-table-column(prop="fieldDesc" label="属性描述" align="center")
 </template>
 
@@ -49,6 +51,7 @@
         templateURL: templateURL,
         templateAfterSearch: true,
         templateConfigURL: templateConfigURL,
+        templateConfigAddDisable: true,
         templateConfigJsonStr: '',
         templateBtnList: templateBtnList,
         templateDialog: [
@@ -62,6 +65,13 @@
           {id: 'edit', dialog: 'AdminTemplateConfigEdit'}
         ],
         templateId: undefined
+      }
+    },
+    computed: {
+      templateConfigBtnList() {
+        return [
+          {id: 'add', isShow: true, type: 'default', isDisable: this.templateConfigAddDisable}
+        ]
       }
     },
     mounted() {
@@ -78,20 +88,20 @@
       afterTemplateSearch(bizKey, tableData) {
         if (bizKey === 'template') {
           if (tableData.length > 0) {
-            // this.$refs.templateTable.$refs.kalixTableContainer.setCurrentRow(tableData[0])
             this.$nextTick(() => {
               this.$refs.templateTable.setCurrent(tableData[0])
             })
+            this.dialogOptions = {
+              templateId: tableData[0].id
+            }
             this.searchConfigs(tableData[0].id)
-            // this.onTemplateRowClick(tableData[0])
+            this.templateConfigAddDisable = false
           } else {
             this.searchConfigs()
+            this.templateConfigAddDisable = true
           }
         }
       },
-      // afterTemplateDelete() {
-      //   this.searchConfigs()
-      // },
       searchConfigs(templateId) {
         if (templateId) {
           this.templateConfigJsonStr = `{'templateId': '` + templateId + `', '%fieldName%': ''}`

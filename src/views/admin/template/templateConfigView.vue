@@ -8,6 +8,8 @@
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="属性名称" prop="fieldName" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.fieldName" readonly)
+      el-form-item(label="属性值" prop="fieldDesc" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.fieldValue" readonly)
       el-form-item(label="属性描述" prop="fieldDesc" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.fieldDesc" readonly)
 </template>

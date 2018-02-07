@@ -15,7 +15,7 @@
         | {{title}}
       div.kalix-wrapper-bd
         kalix-tool-bar(v-if="isShowToolBarB"
-        v-bind:toolbarBtnList="toolbarBtnList"
+        v-bind:toolbarBtnList="toolbarBtnList" v-bind:bizKey="bizKey"
         v-on:onToolBarClick="onToolBarClick"
         v-on:onCheckBtnList="onCheckBtnList")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
