@@ -2,7 +2,7 @@
  * 定义表格列上的按钮
  * add by yangz 2018-1-31
  **/
-const templateBtnList = [
+const configBtnList = [
   {
     id: 'view',
     title: '查看',
@@ -18,11 +18,5 @@ const templateBtnList = [
     title: '删除',
     isShow: true,   // 是否显示
     isPermission: true  // 是否进行权限认证
-  }, {
-    id: 'preview',
-    title: '预览',
-    isShow: true,   // 是否显示
-    toolTipTitle: '模板预览',
-    isPermission: true  // 是否进行权限认证
   }]
-export {templateBtnList}
+export {configBtnList}

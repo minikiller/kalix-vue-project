@@ -87,7 +87,7 @@ pug 编译v-popover:popover 失效，因此使用html
           totalCount: 0,
           pageSizes: PageConfig.sizes,
           currentPage: 1,
-          limit: PageConfig.limit,
+          limit: 100, // PageConfig.limit,
           start: 0
         }
       }

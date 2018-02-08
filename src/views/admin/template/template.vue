@@ -11,7 +11,7 @@
           base-table(bizKey="template" title="模板列表" v-bind:targetURL="templateURL"
             v-bind:bizDialog="templateDialog" bizSearch="AdminTemplateSearch"
             v-bind:btnList="templateBtnList" v-bind:dialogOptions="dialogOptionsTemplate"
-            v-bind:isAfterSearch="templateAfterSearch"
+            v-bind:isAfterSearch="templateAfterSearch" v-bind:customTableTool="callCustomTableTool"
             v-on:onTableRowClick="onTemplateRowClick" v-on:handleAfterSearch="afterTemplateSearch"
             ref="templateTable")
             <!--v-on:afterDelete="afterTemplateDelete"-->
@@ -24,7 +24,7 @@
             base-table(bizKey="templateConfig" title="模板属性列表" v-bind:targetURL="templateConfigURL"
               v-bind:bizDialog="templateConfigDialog" v-bind:jsonStr="templateConfigJsonStr"
               v-bind:toolbarBtnList="templateConfigBtnList"
-              v-bind:btnList="templateBtnList" v-bind:noSearchParam="true" v-bind:dialogOptions="dialogOptions"
+              v-bind:btnList="configBtnList" v-bind:noSearchParam="true" v-bind:dialogOptions="dialogOptions"
               ref="templateConfigTable")
               template(slot="tableColumnSlot")
                 el-table-column(prop="fieldName" label="属性名" align="center")
@@ -37,6 +37,7 @@
   import {templateURL, templateConfigURL, TemplateComponent} from '../config.toml'
   import {registerComponent} from '@/api/register'
   import {templateBtnList} from '../template/index'
+  import {configBtnList} from '../template/indexConfig'
   registerComponent(TemplateComponent)
   export default {
     components: {
@@ -54,10 +55,12 @@
         templateConfigAddDisable: true,
         templateConfigJsonStr: '',
         templateBtnList: templateBtnList,
+        configBtnList: configBtnList,
         templateDialog: [
           {id: 'add', dialog: 'AdminTemplateAdd'},
           {id: 'view', dialog: 'AdminTemplateView'},
-          {id: 'edit', dialog: 'AdminTemplateEdit'}
+          {id: 'edit', dialog: 'AdminTemplateEdit'},
+          {id: 'preview', dialog: 'AdminTemplatePreview'}
         ],
         templateConfigDialog: [
           {id: 'add', dialog: 'AdminTemplateConfigAdd'},
@@ -109,6 +112,22 @@
           this.templateConfigJsonStr = `{'templateId': '-1', '%fieldName%': ''}`
         }
         this.$refs.templateConfigTable.getData()
+      },
+      callCustomTableTool(row, btnId, that) {
+        switch (btnId) {
+          case 'preview': {
+            that.whichBizDialog = ''
+            let dig =
+              that.bizDialog.filter((item) => {
+                return item.id === 'preview'
+              })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.open(row)
+            }, 20)
+            break
+          }
+        }
       }
     }
   }
