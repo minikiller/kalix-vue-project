@@ -44,7 +44,7 @@
   import EventBus from 'common/eventbus'
   import {baseURL} from 'config/global.toml'
   import redheadapplyFormModel from '../redheadapply/model'
-  import {DictKeyValueObject} from 'common/keyValueObject'
+//  import {DictKeyValueObject} from 'common/keyValueObject'
 
   // 注册全局组件
   registerComponent(DocumentComponent)
@@ -78,8 +78,8 @@
 //        ],
         bizDialog: [
           {id: 'view', dialog: 'OaDocumentView'},
-          {id: 'publish', dialog: 'OaDocumentPublish'},
-          {id: 'preview', dialog: 'OaRedheadPreview'}
+          {id: 'publish', dialog: 'OaDocumentPublish'}
+//          {id: 'preview', dialog: 'OaRedheadPreview'}
         ],
         redheadApplyURL: RedheadApplyURL,
         documentRevokeURL: DocumentRevokeURL,
@@ -191,29 +191,30 @@
       onPreview(row, table) {
 //        if (row.redheadId && (row.status === '使用中') && (row.docStatus === '审批通过'))
         if (row.redheadId) {
-          let url = RedheadApplyURL + '/' + row.redheadId
-          this.axios.request({
-            method: 'GET',
-            url: url,
-            params: {}
-          }).then(res => {
-            if (res.data.success === undefined) {
-              if (res.data) {
-                this.redheadapplyFormModel = res.data
-                // 处理红头文件标题
-                let _keyObj = DictKeyValueObject('OA-DICT-KEY', '文号标题')
-                this.redheadapplyFormModel.docCaption = _keyObj[this.redheadapplyFormModel.docType]
-                let dig =
-                  table.bizDialog.filter((item) => {
-                    return item.id === 'preview'
-                  })
-                table.whichBizDialog = dig[0].dialog
-                setTimeout(() => {
-                  table.$refs.kalixDialog.open(this.redheadapplyFormModel)
-                }, 20)
-              }
-            }
-          })
+//          let url = RedheadApplyURL + '/' + row.redheadId
+//          this.axios.request({
+//            method: 'GET',
+//            url: url,
+//            params: {}
+//          }).then(res => {
+//            if (res.data.success === undefined) {
+//              if (res.data) {
+//                this.redheadapplyFormModel = res.data
+//                // 处理红头文件标题
+//                let _keyObj = DictKeyValueObject('OA-DICT-KEY', '文号标题')
+//                this.redheadapplyFormModel.docCaption = _keyObj[this.redheadapplyFormModel.docType]
+//                let dig =
+//                  table.bizDialog.filter((item) => {
+//                    return item.id === 'preview'
+//                  })
+//                table.whichBizDialog = dig[0].dialog
+//                setTimeout(() => {
+//                  table.$refs.kalixDialog.open(this.redheadapplyFormModel)
+//                }, 20)
+//              }
+//            }
+//          })
+          window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + row.redheadId + '&filetype=html')
         } else {
           Message.warning('文号未关联红头文件,无法进行预览!')
         }
