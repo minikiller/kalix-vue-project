@@ -43,6 +43,7 @@
     RedheadApplyComponent,
     RedheadApplyStartURL
   } from '../config.toml'
+  import {baseURL} from 'config/global.toml'
   import {registerComponent} from '@/api/register'
   import {workflowBtnList, registerComp, startFun, progressFun} from '@/views/oa/comp'
   import TaskView from '@/views/oa/comp/taskView'
@@ -78,8 +79,8 @@
           {id: 'view', dialog: 'OaRedheadApplyView'},
           {id: 'edit', dialog: 'OaRedheadApplyAdd'},
           {id: 'add', dialog: 'OaRedheadApplyAdd'},
-          {id: 'progress', dialog: 'OaTaskView'},
-          {id: 'preview', dialog: 'OaRedheadPreview'}
+          {id: 'progress', dialog: 'OaTaskView'}
+//          {id: 'preview', dialog: 'OaRedheadPreview'}
         ]
       }
     },
@@ -112,16 +113,17 @@
             break
           }
           case 'preview': { // 启用/停用
-            console.log('开始预览咯！！！')
-            that.whichBizDialog = ''
-            let dig =
-              that.bizDialog.filter((item) => {
-                return item.id === 'preview'
-              })
-            that.whichBizDialog = dig[0].dialog
-            setTimeout(() => {
-              that.$refs.kalixDialog.open(row)
-            }, 20)
+//            console.log('开始预览咯！！！')
+//            that.whichBizDialog = ''
+//            let dig =
+//              that.bizDialog.filter((item) => {
+//                return item.id === 'preview'
+//              })
+//            that.whichBizDialog = dig[0].dialog
+//            setTimeout(() => {
+//              that.$refs.kalixDialog.open(row)
+//            }, 20)
+            window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + row.id + '&filetype=html')
             break
           }
         }
