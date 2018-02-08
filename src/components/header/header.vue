@@ -170,7 +170,7 @@
           } else {
             this.getMsg()
           }
-        }, 10000)
+        }, 60000)
       },
       handleCommand(command) {
         switch (command) {
@@ -185,7 +185,7 @@
               params: _data
             }).then(res => {
               console.log(res)
-              if (res.data.data.length) {
+              if (res.data.data && res.data.data.length) {
                 this.$refs.userEdit.open(res.data.data[0])
               }
             })
@@ -212,19 +212,22 @@
         //  消息通知
         this.$http.get(msgCountURL).then(res => {
           //  获取消息数量
-          this.msgCount = res.data.tag
+          if (res && res.data && res.data.tag) {
+            this.msgCount = res.data.tag
+          }
         })
         this.$http.get(msgURL).then(res => {
           //  获取最新消息
-          if (res.data.tag.length > 0) {
+          if (res && res.data.tag && res.data.tag.length) {
             let msg = JSON.parse(res.data.tag)
-            this.$notify({
+            let headerNotif = this.$notify({
               title: msg.title,
               message: msg.content,
               type: 'success',
               duration: 10000,
-              onClick() {
+              onClick: () => {
                 this.$router.push({path: `/common/receiver`})
+                headerNotif.close()
               }
             })
           }
