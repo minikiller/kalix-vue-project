@@ -52,7 +52,7 @@
       content ''
       width 1px
       height 100%
-      background-image url("./nav_tab_item_border.png")
+      background-image url("images/nav_tab_item_border.png")
     &:first-child
       border-radius 0 0 0 $borderRadius
       &:before

@@ -9,7 +9,7 @@
         ul.items
           li.item(v-for="item in treeData" v-bind:key="item.id")
             div.title
-              i.icon(v-bind:class="setCls(item.iconCls)")
+              i.icon-group(v-bind:class="setCls(item.id)")
               div.text {{item.text}}
             div.cells
               div.cell(v-for="cell in item.children" v-bind:key="cell.id" v-on:click="selectCell(item,cell)") {{cell.text}}
@@ -110,7 +110,8 @@
         }
       },
       setCls(cls) {
-        return `${cls} cell_${Math.floor(Math.random() * 5)}`
+        // this.groupData icon-group
+        return `${this.groupData.id}-${cls}`
       },
       /**
        * 打开模块
@@ -137,39 +138,36 @@
   @import "../../assets/stylus/panel-base.styl"
   .group-panel
     position: absolute;
-    bottom: 15%;
-    height: 80%;
+    top 50%
     left 50%
+    height: 606px;
     margin-left -502px
+    margin-top -380px
     opacity 1
-    width 1004px !important
+    width 1005px !important
     overflow: hidden;
     background-color rgba(254, 254, 240, 0.94)
     border-radius $borderRadius
-    /*transform translate3d(0, 150%, 0)*/
-    /*&.open
-      transition all .5s
-      transition-delay .5s
-      transform translate3d(0, 0, 0)
-    &.close,
-    &.min
-      transition all .5s
-      transform scale(.5)
-      opacity 0*/
+    user-select none
     .panel_header
       background-color transparent
     .group-title
+      position relative
       text-align center
       font-size 18px
-      margin 0 54px
-      line-height 53px
-      border-bottom 4px solid #686868
+      margin -37px 60px 0
+      line-height 55px
+      &:after
+        content ''
+        display block
+        height 2px
+        background no-repeat 50% 50% url("./images/group-title-line.png")
     .group-body
       position absolute
-      padding 0 54px
-      top 157px
+      padding 0 60px
+      top 97px
       left 0
-      bottom 56px
+      bottom 40px
       width 100%
       box-sizing border-box
       overflow hidden
@@ -179,43 +177,76 @@
           display flex
           align-items flex-start
           & + .item
-            margin-top 17px
+            margin-top 20px
           .title
             text-align center
             font-size 0
             margin-right 23px
-            .icon
+            .icon-group
               display inline-block
-              width 72px
-              height 72px
-              line-height 72px
-              font-size 40px
+              width 48px
+              height 48px
+              line-height 48px
+              font-size 0
               color #fff
-              border-radius 20px
-              &.cell_0
-                background-color #178a3a
-              &.cell_1
-                background-color #ccadfb
-              &.cell_2
-                background-color #fe82b4
-              &.cell_3
-                background-color #94dffe
-              &.cell_4
-                background-color #f7bb25
+              border-radius 8px
+              background 50% 50% no-repeat
+              background-size 100% 100%
+              &.admin-permissionModule
+                background-image url("./icon/admin-permissionModule.png")
+              &.admin-constructModule
+                background-image url("./icon/admin-constructModule.png")
+              &.admin-sysModule
+                background-image url("./icon/admin-sysModule.png")
+              &.common-noticeModule
+                background-image url("./icon/common-noticeModule.png")
+              &.common-myMessageModule
+                background-image url("./icon/common-myMessageModule.png")
+              &.common-commonSystemModule
+                background-image url("./icon/common-commonSystemModule.png")
+              &.oa-workFlowBizModule
+                background-image url("./icon/oa-workFlowBizModule.png")
+              &.oa-myWorkingModule
+                background-image url("./icon/oa-myWorkingModule.png")
+              &.oa-workFlowModule
+                background-image url("./icon/oa-workFlowModule.png")
+              &.oa-oaStatisticsModule
+                background-image url("./icon/oa-oaStatisticsModule.png")
+              &.oa-oaSystemModule
+                background-image url("./icon/oa-oaSystemModule.png")
+              &.schedule-planManagerModule
+                background-image url("./icon/schedule-planManagerModule.png")
+              &.schedule-taskManagerModule
+                background-image url("./icon/schedule-taskManagerModule.png")
+              &.schedule-statisticsQueryModule
+                background-image url("./icon/schedule-statisticsQueryModule.png")
+              &.schedule-scheduleSystemModule
+                background-image url("./icon/schedule-scheduleSystemModule.png")
+              &.art-artRecruitModule
+                background-image url("./icon/art-artRecruitModule.png")
+              &.art-artSystemModule
+                background-image url("./icon/art-artSystemModule.png")
+              &.research-researchPersonModule
+                background-image url("./icon/research-researchPersonModule.png")
+              &.research-researchCompetitionModule
+                background-image url("./icon/research-researchCompetitionModule.png")
+              &.research-researchStatisticsModule
+                background-image url("./icon/research-researchStatisticsModule.png")
+              &.research-researchSystemModule
+                background-image url("./icon/research-researchSystemModule.png")
             .text
               margin-top 9px
               font-size 14px
               line-height 14px
               color #1e1e1d
           .cells
-            padding 14px 30px
-            min-height 61px
+            padding 7px 30px
+            min-height 48px
             flex 1
             font-size 0
-            margin-top 4px
-            background-color #f3f3f3
+            background-color #fefef0
             border 1px solid #e1e1e1
-            border-radius 11px
+            border-radius 8px
             box-sizing border-box
             .cell
               margin 4px 20px
@@ -230,14 +261,9 @@
   .in-enter-active
     animation turn-in .5s
 
-  /*transform-style preserve-3d
-  transform-origin center top*/
-
   .in-leave-active
     transform-origin bottom right
     animation turn-out 1s
-
-  /*    transform-style preserve-3d*/
 
   @keyframes turn-in
     0%
@@ -250,12 +276,12 @@
   @keyframes turn-out
     50%, 70%
       right 15px
-      bottom 15px
+      top 80%
       margin-right 0
       transform scale(.2)
     100%
       right 15px
-      bottom 15px
+      top 80%
       margin-right 0
       transform scale(.2) translate3d(500%, 0, 0)
 

@@ -29,13 +29,13 @@
       .list_group_body
         display block
       .title
-        background-image: url(./open_arrow_fire.png)
+        background-image: url(images/open_arrow_fire.png)
     .list_group_body
       display none
     .title
       padding .65em 28px .75em
       border-top 1px solid #ccc
-      background url(./open_arrow.png) no-repeat 12px
+      background url(images/open_arrow.png) no-repeat 12px
       background-size 14px 14px
       .online-percent
         color #808080

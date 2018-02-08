@@ -93,7 +93,7 @@
       float: right;
       width: 16px;
       height: 16px;
-      background: url(./open_arrow.png) no-repeat center;
+      background: url(images/open_arrow.png) no-repeat center;
       background-size: 100% 100%;
       margin-left: 10px
     .loginout

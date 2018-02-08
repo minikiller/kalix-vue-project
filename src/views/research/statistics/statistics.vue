@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   kalix-comm-panel(title="统计信息")
-    div.kalix-article(slot="panleSlot")
+    div.kalix-article(slot="panelSlot")
       div.kalix-search
         el-form.search-container(ref="searchForm" v-bind:inline="true")
           slot(name="searchFormSlot")

@@ -37,15 +37,15 @@
       background #48372f 50% 50% no-repeat
       float left
       &.item_home
-        background-image: url(./icon-1.png) !important
+        background-image: url(images/icon-1.png) !important
       &.item_history
-        background-image: url(./icon-2.png) !important
+        background-image: url(images/icon-2.png) !important
       &.item_setup
-        background-image: url(./icon-3.png) !important
+        background-image: url(images/icon-3.png) !important
       &.item_collect
-        background-image: url(./icon-4.png) !important
+        background-image: url(images/icon-4.png) !important
       &.item_edit
-        background-image: url(./icon-5.png) !important
+        background-image: url(images/icon-5.png) !important
     &.selected
       color #ffe1dd
       background-color rgba(197, 172, 113, 0.29)

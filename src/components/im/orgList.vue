@@ -1,25 +1,31 @@
 <template lang="pug">
   im-box
     user-avatar(slot="imHeader")
-    div.group_list(slot="imBody")
-      org-list-item(v-for="(item,index) in treeData" v-bind:key="item.id" v-bind:item="item")
+    kalix-org-tree-im(slot="imBody" v-on:orgTreeClick="onOrgTreeClick")
 </template>
 <script type="text/ecmascript-6">
   import ImBox from './imBox'
   import UserAvatar from './userAvatar'
   import OrgListItem from './orgListItem'
+  import KalixOrgTreeIm from '@/components/biz/tree/OrgTreeIm'
 
   export default {
     props: {},
     data() {
       return {
+        tData: [],
+        defaultProps: {
+          children: 'children',
+          label: 'name'
+        },
         treeData: []
       }
     },
     mounted() {
-      this.getData()
     },
     methods: {
+      onOrgTreeClick(data) {
+      },
       /**
        * 获取组织机构
        *
@@ -31,6 +37,8 @@
           url: url,
           params: {}
         }).then(res => {
+          this.tData = res.data.children
+          console.log(' ===== this.tData: ===== ', this.tData)
           this.analyze(res.data.children[0])
         })
       },
@@ -51,7 +59,8 @@
     components: {
       ImBox,
       UserAvatar,
-      OrgListItem
+      OrgListItem,
+      KalixOrgTreeIm
     }
   }
 </script>

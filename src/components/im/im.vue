@@ -1,25 +1,27 @@
 <template lang="pug">
-  div.im-main(v-bind:class="bindCls" id="imMain")
-    transition(name="ima2")
-      div.im2(v-if="isMini")
-        div.im-btn-restore(v-on:click="onRestorem")
-        user-avatar(cls="mini")
-    transition(name="ima")
-      div.im(v-if="!isMini")
-        // 侧栏
-        kalix-side-bar(ref="sideBar")
-        // 主内容区
-        div.im-wrapper
-          div.im-cantainer
-            div.im-btn-min(v-on:click="onMinimum")
-            // 设置
-            kalix-operation(v-show="footerBars[2].isSelect")
-            // 组织机构
-            org-list(v-show="footerBars[1].isSelect")
-            // 消息列表
-            message-list(v-show="footerBars[0].isSelect")
-          div.panel_footer
-            im-footer-bar(v-for='bar in footerBars' v-bind:key="bar.type" v-bind:data="bar" v-on:click="onFooterBarClick(bar)")
+  div
+    div.im-main(v-bind:class="bindCls" id="imMain")
+      transition(name="ima2")
+        div.im2(v-if="isMini")
+          div.im-btn-restore(v-on:click="onRestorem")
+          user-avatar(cls="mini")
+      transition(name="ima")
+        div.im(v-if="!isMini")
+          // 侧栏
+          kalix-side-bar(ref="sideBar")
+          // 主内容区
+          div.im-wrapper
+            div.im-cantainer
+              div.im-btn-min(v-on:click="onMinimum")
+              // 设置
+              kalix-operation(v-show="footerBars[2].isSelect")
+              // 组织机构
+              org-list(v-show="footerBars[1].isSelect")
+              // 消息列表
+              message-list(v-show="footerBars[0].isSelect")
+            div.panel_footer
+              im-footer-bar(v-for='bar in footerBars' v-bind:key="bar.type" v-bind:data="bar" v-on:click="onFooterBarClick(bar)")
+    <!-- kalix-chat-panel -->
 </template>
 <script type="text/ecmascript-6">
   import ImState from './imState'
@@ -29,6 +31,7 @@
   import UserAvatar from './userAvatar'
   import OrgList from './orgList'
   import ImFooterBar from './imFooterBar'
+  import KalixChatPanel from '@/components/panel/chatPanel'
 
   export default {
     data() {
@@ -130,7 +133,8 @@
       KalixOperation,
       UserAvatar,
       OrgList,
-      ImFooterBar
+      ImFooterBar,
+      KalixChatPanel
     }
   }
 </script>
@@ -162,7 +166,7 @@
         right 0
         width 26px
         height 26px
-        background url("./icon-min.png") #ae935c 50% 50% no-repeat
+        background url("images/icon-min.png") #ae935c 50% 50% no-repeat
         cursor pointer
         transition background-color .5s
         border-radius 0 0 0 10px
@@ -176,7 +180,7 @@
           height 58px
           border-radius 50%
           overflow hidden
-          background url(user-3.png) 50% 50% no-repeat
+          background url(images/user-3.png) 50% 50% no-repeat
           background-size cover
           border 1px solid #ffffeb
         .user_name
@@ -196,12 +200,12 @@
       border-radius 4px 4px 0 0
       .im-btn-min
         position absolute
-        top 0
-        right 0
+        top 12px
+        right 10px
         width 26px
         height 26px
-        background url("./icon-min.png") #ae935c 50% 50% no-repeat
-        border-radius 0 4px
+        background url("images/icon-min.png") #ae935c 50% 50% no-repeat
+        border-radius 4px
         cursor pointer
         transition background-color .5s
         &:hover
@@ -214,7 +218,7 @@
       bottom 0
       left 0
       border 1px solid #e6dbb1
-      background url("./nav_tab_item_bg.png") 50% 0 repeat-x
+      background url("images/nav_tab_item_bg.png") 50% 0 repeat-x
       border-radius: 0 0 $borderRadius $borderRadius
       display flex
       box-orient horizontal

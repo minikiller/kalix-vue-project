@@ -8,7 +8,7 @@
     div.panel-body
       div.article
         el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
-          slot(name="panleSlot")
+          slot(name="panelSlot")
       div.aside
         el-button(v-on:click="onCancelClick") 取消
         el-button(v-on:click="onSubmitClick") 确定

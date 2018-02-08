@@ -1,6 +1,6 @@
 <template lang="pug">
   kalix-comm-panel(title="流程申请")
-    div.mainwork(slot="panleSlot")
+    div.mainwork(slot="panelSlot")
       el-row(:gutter="20")
         el-col(:span="8" v-for="item in workList" v-bind:key="item.id")
           el-card(class="box-card")

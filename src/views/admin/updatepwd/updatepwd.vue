@@ -3,7 +3,7 @@
   v-bind:formModel="formModel"
   v-bind:targetURL="targetURL"
   v-bind:isEdit="true")
-    div.updatepwd(slot="panleSlot")
+    div.updatepwd(slot="panelSlot")
       el-form-item(label="原密码" prop="oldPassword" v-bind:rules="rules.oldPassword")
         el-input(v-model="formModel.oldPassword" type="password")
       el-form-item(label="新密码" prop="password" v-bind:rules="rules.password")

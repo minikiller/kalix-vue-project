@@ -193,12 +193,9 @@
       KalixIm,
       KalixDock,
       GroupPanel,
-      KalixNav:
-      Navigater,
-      Welcome:
-      Welcome,
-      KalixContent:
-      content // 动态显示组件
+      KalixNav: Navigater,
+      Welcome: Welcome,
+      KalixContent: content // 动态显示组件
     }
   }
 </script>

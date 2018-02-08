@@ -3,7 +3,7 @@
   v-bind:formModel="formModel"
   v-bind:targetURL="targetURL"
   v-bind:isEdit="true")
-    div.update-info(slot="panleSlot")
+    div.update-info(slot="panelSlot")
       el-form-item(label="用户类型" prop="userType" v-bind:rules="rules.userType" v-bind:label-width="labelWidth")
         kalix-dict-select(v-model="formModel.userType" appName="admin" dictType="用户类型" v-on:input="change($event)" style="width:100%")
       el-form-item(v-if="showIcon" label="头像" prop="icon" v-bind:label-width="labelWidth")

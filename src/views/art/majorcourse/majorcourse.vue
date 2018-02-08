@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-comm-panel(title="专业课程列表")
-    template(slot="panleSlot")
+    template(slot="panelSlot")
       keep-alive
         div.duty-row
           div.duty-tree

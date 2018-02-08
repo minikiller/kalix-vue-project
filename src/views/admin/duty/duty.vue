@@ -1,6 +1,6 @@
 <template lang="pug">
   kalix-comm-panel(title="职务管理")
-    template(slot="panleSlot")
+    template(slot="panelSlot")
       keep-alive
         div.duty-row
           div.duty-tree

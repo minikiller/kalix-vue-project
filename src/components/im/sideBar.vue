@@ -66,7 +66,7 @@
     height 100%
     overflow hidden
     border-radius 4px 0 0 4px
-    background url("./side_bar-bg.png") 0 0 repeat
+    background url("images/side_bar-bg.png") 0 0 repeat
     transition transform .5s
     &.show
       transform translate3d(-100%, 0, 0)
@@ -77,7 +77,7 @@
       top 0px
       left 0px
       border-radius 4px 0 0 0
-      background 50% 50% no-repeat url("./icon-close.png")
+      background 50% 50% no-repeat url("images/icon-close.png")
       cursor pointer
       transition background-color 0.2s
       &:hover

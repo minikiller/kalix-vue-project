@@ -15,6 +15,10 @@
       cls: {
         type: String,
         default: 'comm'
+      },
+      userObjB: {
+        type: Object,
+        default: null
       }
     },
     data() {
@@ -32,6 +36,10 @@
       getUser() {
         this.user.userName = Cache.get('user_name')
         this.user.avatar = this.decode(Cookie.get('currentUserIcon')) === 'null' ? '' : this.decode(Cookie.get('currentUserIcon'))
+        if (this.userObjB) {
+          this.user.avatar = this.userObjB.avatar
+          this.user.userName = this.userObjB.userName
+        }
       },
       click() {
         EventBus.$emit('UserAvatarClick')
@@ -71,7 +79,7 @@
       display block
       border-radius 50%
       overflow hidden
-      background url('./default_user.png') 50% 50% no-repeat
+      background url('images/default_user.png') 50% 50% no-repeat
       background-size cover
     .user-org
       display none

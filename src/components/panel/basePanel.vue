@@ -8,7 +8,7 @@
         panel-header-button(v-else type="max" v-on:click="maxBaseTable")
         panel-header-button(type="close" v-on:click="closeBaseTable")
     div.panel-body
-      slot(name="panleSlot")
+      slot(name="panelSlot")
 </template>
 <script type="text/ecmascript-6">
   import EventBus from 'common/eventbus'

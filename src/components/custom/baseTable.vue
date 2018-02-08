@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-base-panel(v-bind:title="title")
-    kalix-base-table-original(slot="panleSlot"
+    kalix-base-table-original(slot="panelSlot"
     v-bind:bizKey="bizKey"
     v-bind:isFixedColumn="isFixedColumn"
     v-bind:toolbarBtnList="toolbarBtnList"

@@ -139,6 +139,7 @@
         if (this.isPollMsg) {
           this.pollMsg()
         }
+        console.log('===== currentUserIcon ======', Cookie.get('currentUserIcon'))
         this.icon = this.decode(Cookie.get('currentUserIcon')) // 如果为null，则取默认的图标
         if (this.icon === 'null') {
           this.icon = ''

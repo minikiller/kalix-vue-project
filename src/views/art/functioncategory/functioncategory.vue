@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-comm-panel(title="职能类别列表")
-    template(slot="panleSlot")
+    template(slot="panelSlot")
       keep-alive
         Kalix-tree-grid(
         v-bind:columns='columns'

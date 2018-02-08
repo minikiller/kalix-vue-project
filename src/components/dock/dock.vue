@@ -4,7 +4,7 @@
       div.dock-bg
       div.dock-wrapper(id="macAvatars")
         div.dock-mac_avatar(v-for="(item,index) in menuList" v-on:click="selectMac(item)")
-          div.mac(v-bind:class="bindCls(item.id,item.iconCls)")
+          div.mac(v-bind:class="bindCls(item.id)")
           div.text {{item.text}}
 </template>
 <script type="text/ecmascript-6">
@@ -126,7 +126,7 @@
         return 'null'
       },
       bindCls(i, cls) {
-        return cls + ' ' + i
+        return 'mac-' + i
       },
       selectMac(item) {
         this.$emit('onClickMac', item)
@@ -151,10 +151,11 @@
     position: absolute
     bottom 0
     left 50%
-    height 80px
+    height 82px
     z-index: 4000;
     transition all .5s
     transform translate3d(-50%, 0, 0)
+    user-select none
     &.hide
       transform translate3d(-50%, 100%, 0)
       &.visible
@@ -164,20 +165,21 @@
       bottom 0
       left 0
       width 100%
-      height 65px
+      height 82px
       color: #fff;
-      background: url("./dock_bg.png") 50% 0 repeat-x;
+      background: url("./icon/dock_bg.png") 50% 0 repeat-x;
       border-radius 4px 4px 0 0
+      background-size 100% 100%
     .dock-wrapper
       position relative
       align-items flex-end
       justify-content center
       display flex
       height 70px
-      padding 8px 40px 0
+      padding 8px 40px 4px
       font-size 0
       .dock-mac_avatar
-        margin 0 11px
+        margin 0 20px
         text-align: center;
         display: inline-block;
         width $macAvatarW
@@ -190,7 +192,7 @@
         font-size $macAvatarFontSize
 
         &.current
-          macAvatarStyle(100%)
+          macAvatarStyle(120%)
 
         &.prev,
         &.next
@@ -203,30 +205,32 @@
           position: relative;
           width 100%
           margin 0
+          background no-repeat 50% 50%
+          background-size cover
           &:after
             content ''
             display block
             padding-top 100%
           &:before
             position absolute
-          &.icon-admin
-            background-color #fe82b4
-          &.icon-common-home
-            background-color #94dffe
-          &.icon-oa
-            background-color #f7bb25
-          &.icon-art
-            background-color #25f7b1
-          &.icon-schedule
-            background-color #ccadfb
-          &.icon-research
-            background-color #fc7146
+          &.mac-admin
+            background-image: url('./icon/icon-mac-admin.png')
+          &.mac-common
+            background-image: url('./icon/icon-mac-common-home.png')
+          &.mac-oa
+            background-image: url('./icon/icon-mac-oa.png')
+          &.mac-art
+            background-image: url('./icon/icon-mac-art.png')
+          &.mac-schedule
+            background-image: url('./icon/icon-mac-schedule.png')
+          &.mac-research
+            background-image: url('./icon/icon-mac-research.png')
 
         .text
-          color #000000
+          color #3b3b3b
           overflow hidden
-          margin 4px -10px 0
+          margin 7px -20px 0
           white-space nowrap
           text-overflow ellipsis
-          text-shadow 1px 1px 1px rgba(255, 255, 255, 0.7607843137254902)
+          line-height 1
 </style>

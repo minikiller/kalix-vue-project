@@ -1,6 +1,6 @@
 <template lang="pug">
   kalix-comm-panel(title="组织机构图")
-    div(id="chart-container" slot="panleSlot")
+    div(id="chart-container" slot="panelSlot")
 </template>
 
 <script type="text/ecmascript-6">

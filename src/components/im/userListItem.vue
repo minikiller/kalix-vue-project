@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.user-list_item
+  div.user-list_item(v-on:dblclick="onDbClock")
     div.user_avatar_wrapper
       div.avatar(v-bind:style="styleObject()")
     div.user-list_item_main
@@ -15,6 +15,9 @@
       }
     },
     methods: {
+      onDbClock() {
+        this.$myConsoleLog('[onDbClock] item', this.item, '#B03060')
+      },
       styleObject() {
         let style = {}
         if (this.item.avatar) {
@@ -36,12 +39,12 @@
     height 70px
     width 100%
     padding 0 20px
-    background url("./user-item-bg.png") 50% 0 repeat-x
+    background url("images/user-item-bg.png") 50% 0 repeat-x
     border-bottom 1px solid #f0ebca
     box-sizing border-box
     cursor pointer
     &.selected
-      background-image url("./user-item-bg.png")
+      background-image url("images/user-item-bg.png")
     .user_avatar_wrapper
       display inline-block
       margin-right 8px
