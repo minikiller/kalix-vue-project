@@ -15,16 +15,17 @@
         | {{title}}
       div.kalix-wrapper-bd
         kalix-tool-bar(v-if="isShowToolBarB"
-        v-bind:toolbarBtnList="toolbarBtnList"
+        v-bind:toolbarBtnList="toolbarBtnList" v-bind:bizKey="bizKey"
         v-on:onToolBarClick="onToolBarClick"
         v-on:onCheckBtnList="onCheckBtnList")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-          el-table(:data="tableData"  style="width:100%"
+          el-table(:data="tableData"  style="width:100%" ref="kalixTable"
           v-bind:row-class-name="tableRowClassName"
           v-loading.body="loading" fit
           v-bind:height="tableHeight"
           highlight-current-row
           v-on:selection-change="onTableSelectionChange"
+          v-on:current-change="handleCurrentChange"
           v-on:row-click="onTableRowClick"
           header-cell-class-name="base-table-th"
           cell-class-name="base-table-cell")
@@ -44,12 +45,11 @@
               el-table-column(v-if="isShowOperate" label="操作" align="center"
               fixed="right"
               v-bind:fixed="isFiex"
-              v-bind:width="columnWidth"
+              v-bind:width="columnWidth(true)"
               class-name="base-teble-operation")
                 template(slot-scope="scope")
                   slot(name="tableToolSlot" slot-scope="scope")
-                    kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick"
-                    v-bind:scope="scope")
+                    kalix-table-tool(v-bind:displayStyle="2" v-bind:btnList="btnList" v-on:onTableToolBarClick="btnClick" v-bind:scope="scope")
           div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
         div.kalix-table-pagination.s-flex
@@ -61,7 +61,7 @@
             v-bind:current-page="pager.currentPage"
             v-bind:page-sizes="pager.pageSizes"
             v-bind:page-size="1"
-            layout="sizes, prev, next, slot, jumper,->"
+            layout="total, sizes, prev, next, slot, jumper,->"
             v-bind:total="pager.totalCount"
             prev-text="上一页"
             next-text="下一页")
@@ -182,6 +182,14 @@
       isShowToolBar: {  // 是否显示工具栏
         type: Boolean,
         default: null
+      },
+      noSearchParam: {
+        type: Boolean,
+        default: false
+      },
+      isAfterSearch: {
+        type: Boolean,
+        default: false
       }
     },
     watch: {
@@ -206,7 +214,8 @@
         },
         tableHeight: 0, //  列表组件高度
         searchParam: {}, //  列表查询条件
-        isShowToolBarB: true
+        isShowToolBarB: true,
+        currentRow: null
       }
     },
     created() {
@@ -253,6 +262,9 @@
           case 'refresh':
             this.onRefreshClick()
             break
+          case 'deleteChecked': // 选中行的删除
+            this.onDeleteChecked()
+            break
           default:
             this.customToolBar(btnId, this)
             break
@@ -260,6 +272,13 @@
       },
       onTableSelectionChange(val) {
         this.deleteList = val
+      },
+      setCurrent(row) {
+        this.$refs.kalixTable.highlightCurrentRow = true
+        this.$refs.kalixTable.setCurrentRow(row)
+      },
+      handleCurrentChange(val) {
+        this.currentRow = val
       },
       onTableRowClick(row, event, column) {
         this.$emit('onTableRowClick', row, event, column)
@@ -280,8 +299,18 @@
       },
       onSearchClick(_searchParam) { // 查询按钮点击事件
         console.log('[kalix] base table search clicked')
-        this.searchParam = _searchParam
-        this.refresh()
+        // 兼容多个baseTable同时使用情况，用bizKey区分具体查询
+        if (_searchParam.bizKey) {
+          this.searchParam = _searchParam.searchObj
+          if (_searchParam.bizKey === this.bizKey) {
+            this.refresh()
+          }
+        } else {
+          this.searchParam = _searchParam
+          this.refresh()
+        }
+        // 添加点击查询按钮之后的外部事件处理
+        // this.$emit('afterSearch', this.bizKey)
       },
       onAddClick() {
         // 添加按钮点击事件
@@ -378,6 +407,11 @@
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true, row)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                // 添加初始化模型赋值参数
+                // this.dialogOptions.editFormModel = row
+                if (this.dialogOptions.row) {
+                  this.dialogOptions.row = row
+                }
                 this.$refs.kalixDialog.init(this.dialogOptions)
               }
             }, 20)
@@ -403,6 +437,8 @@
             }).then(response => {
               this.getData()
               Message.success(response.data.msg)
+              // 添加删除后自定义处理事件
+              // this.$emit('afterDelete')
             }).catch(() => {
             })
             break
@@ -436,7 +472,7 @@
           return
         }
         let that = this
-        console.log('baseTable', this.targetURL)
+        console.log('baseTable-----------', this.targetURL)
         this.loading = true
         setTimeout(_ => {
           let _data = {
@@ -445,7 +481,9 @@
             start: this.pager.start,
             limit: this.pager.limit
           }
-          _data = Object.assign(_data, this.searchParam)
+          if (this.noSearchParam === false) {
+            _data = Object.assign(_data, this.searchParam)
+          }
           this.$http.get(this.targetURL, {
             params: _data
           }).then(response => {
@@ -453,6 +491,10 @@
               item.rowNumber = index + that.rowNo
               return item
             })
+            // 添加表格查询后的处理事件
+            if (this.isAfterSearch === true) {
+              this.$emit('handleAfterSearch', this.bizKey, this.tableData)
+            }
 
             if (this.dictDefine) { // 设置数据字典
               this.setDictDefine(this.tableData)
@@ -518,6 +560,17 @@
       },
       clearData() {
         this.tableData = []
+      },
+      columnWidth(flag) {
+        let width = 90
+        if (!flag) {
+          let len = this.btnList.length
+          let btnWidth = 34
+          if (len > 1) {
+            width += btnWidth * (len - 1)
+          }
+        }
+        return width
       }
     },
     components: {
@@ -534,15 +587,6 @@
           return e.isShow
         })
         return items.length
-      },
-      columnWidth() {
-        let width = 65
-        let len = this.btnList.length
-        let btnWidth = 34
-        if (len > 1) {
-          width += btnWidth * (len - 1)
-        }
-        return width
       },
       isFiex() {
         return this.isFixedColumn ? 'right' : this.isFixedColumn

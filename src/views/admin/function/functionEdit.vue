@@ -71,7 +71,7 @@
           this.tempChildren = baseDialog.formModel.children
           baseDialog.formModel.children = undefined
         }
-        console.log('baseDialog==============', baseDialog)
+        // console.log('baseDialog==============', baseDialog)
         callBack()
       },
       submitAfter(baseDialog, callBack) {

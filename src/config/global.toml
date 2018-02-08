@@ -25,6 +25,9 @@ couchdbDelURL = "/camel/rest/couchdb"
 orgURL = "/camel/rest/orgs"
 TeachingUnitOrgID = 22601
 userURL = "/camel/rest/users"
+# 吉林动画学院-校领导职务id
+ManagerUserDutyID = 104954
+
 # 全局table分页的配置
 [PageConfig]
   sizes = [10, 20, 30, 40]
@@ -64,8 +67,10 @@ userURL = "/camel/rest/users"
   icon = "icon-add"
   title = "添加"
   isShow = true
+  isDisable = false
 [[GlobalToolBarButtonList]]
   id = "deleteChecked"
   icon = "icon-delete"
   title = "删除选中"
   isShow = false
+  isDisable = false

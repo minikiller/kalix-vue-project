@@ -17,14 +17,17 @@ addusersURL = "/camel/rest//dataauths/[id]/users"
 functionMenuURL = "camel/rest/applications/extend/tree" # 功能管理菜单
 functionItemBaseURL = "/camel/rest/functions/application/" # 功能管理点击菜单节点
 functionURL = "/camel/rest/functions" # 功能管理树表
+templateURL = "/camel/rest/admin/templates" # 模板管理
+templateConfigURL = "/camel/rest/templateconfigs" # 模板配置管理
+auditURL = "/camel/rest/audits" # 审计管理
+auditConfigURL = "/camel/rest/auditconfigs" # 审计配置管理
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
 roleBtnPermissionPrefix = "admin:permissionModule:roleMenu:"
 workGroupBtnPermissionPrefix = "admin:permissionModule:workGroupMenu:"
 dataAuthBtnPermissionPrefix = "admin:permissionModule:dataAuthMenu:"
 AdminCacheKey = "ADMIN-DICT-KEY"
 #配置管理
-configAdminURL= "/camel/rest/resetConfigDBs"
-ConfigAdminSaveURL="camel/rest/saveConfigDBs"
+configAdminURL= "/camel/rest/system/config"
 [[AdminConfiguerComponent]]
 path = "admin/config/configureView"
 name = "AdminConfiguer"
@@ -238,3 +241,45 @@ name = "AdminConfiguer"
 [[FunctionComponent]]
  path = "admin/function/functionEdit"
  name = "AdminFunctionEdit"
+[[TemplateComponent]]
+ path = "admin/template/templateSearch"
+ name = "AdminTemplateSearch"
+[[TemplateComponent]]
+ path = "admin/template/templateAdd"
+ name = "AdminTemplateAdd"
+[[TemplateComponent]]
+ path = "admin/template/templateView"
+ name = "AdminTemplateView"
+[[TemplateComponent]]
+ path = "admin/template/templateEdit"
+ name = "AdminTemplateEdit"
+[[TemplateComponent]]
+ path = "admin/template/templateConfigAdd"
+ name = "AdminTemplateConfigAdd"
+[[TemplateComponent]]
+ path = "admin/template/templateConfigView"
+ name = "AdminTemplateConfigView"
+[[TemplateComponent]]
+ path = "admin/template/templateConfigEdit"
+ name = "AdminTemplateConfigEdit"
+[[TemplateEditComponent]]
+ path = "admin/template/templatePopTable"
+ name = "AdminTemplatePopTable"
+[[AuditComponent]]
+ path = "admin/audit/auditView"
+ name = "AdminAuditView"
+[[AuditComponent]]
+ path = "admin/audit/auditSearch"
+ name = "AdminAuditSearch"
+[[AuditConfigComponent]]
+ path = "admin/auditconfig/auditconfigSearch"
+ name = "AdminAuditConfigSearch"
+[[AuditConfigComponent]]
+ path = "admin/auditconfig/auditconfigAdd"
+ name = "AdminAuditConfigAdd"
+[[AuditConfigComponent]]
+ path = "admin/auditconfig/auditconfigEdit"
+ name = "AdminAuditConfigEdit"
+[[AuditConfigComponent]]
+ path = "admin/auditconfig/auditconfigView"
+ name = "AdminAuditConfigView"

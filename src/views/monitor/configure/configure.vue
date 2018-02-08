@@ -6,7 +6,7 @@
 <template lang="pug">
   keep-alive
     base-table(bizKey="hardwareconfigure" title='系统配置列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
-     v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList"
+     v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList" v-bind:jsonStr="appName"
      v-bind:bizDialog="bizDialog" v-bind:customToolBar="customToolBar")
       template(slot="tableColumnSlot")
             el-table-column(prop="type" label="类型" width="280" align="center")
@@ -39,6 +39,7 @@
           {prop: 'value', label: '数值'}
         ],
         items: {},
+        appName: 'config.monitor.config',
         bizDialog: [
           {id: 'customBtn1', dialog: 'MonitorHardwareConfiguer'}
         ]
@@ -59,7 +60,9 @@
       this.axios.request({
         method: 'GET',
         url: this.targetURL,
-        params: {},
+        params: {
+          jsonStr: 'config.monitor.config'
+        },
         dataType: 'json',
         data: {
         }

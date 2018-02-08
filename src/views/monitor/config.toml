@@ -6,8 +6,8 @@ MonitorDictsTypesListURL = "/camel/rest/monitor/dicts/types/list"
 HardwareInfoURL = "/camel/rest/hardwareInfos"
 restHardwareInfoURL = "/camel/rest/resetHardwareinfos"
 HardwareLogURL= "/camel/rest/hardwarelogs"
-HardwareLogMailURL= "/camel/rest/resetHardwareMails"
-HardwareLogConfigureMailURL="camel/rest/configureHardwareMails"
+HardwareLogMailURL= "/camel/rest/system/config"
+HardwareLogConfigureMailURL="camel/rest/system/config/getInfo"
 
 SignupURL = "/camel/rest/signups"
 signupBtnPermissionPrefix = "research:researchCompetitionModule:competitionSigninMenu:"
@@ -65,3 +65,6 @@ MonitorCacheKey = "MONITOR-DICT-KEY"
   type = "success"
   isShow = true    # 是否显示
   isPermission = true   # 是否进行权限认证
+[[StatisticsComponent]]
+  path = "monitor/statistics/statisticsSearch"
+  name = "OaStatisticSearch"

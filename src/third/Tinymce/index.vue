@@ -3,6 +3,14 @@
     <!--div tinymceId:{{tinymceId}}-->
     div.tinymce-container.editor-container
       textarea.tinymce-textarea(v-bind:id="tinymceId")
+      div.editor-custom-btn-container(v-if="showCustomButton")
+        div.editor-upload-btn
+          component(:is="bizPop" v-on:popoverData="getPopoverData"
+            v-bind:popData="popData" ref="kalixPop")
+          <!--kalix-pop-table(v-bind:bizKey="popData.bizKey" v-bind:placement="popData.placement" v-bind:width="popData.width"-->
+            <!--v-bind:jsonStr="popData.jsonStr" v-bind:trigger="popData.trigger" v-bind:buttonName="popData.buttonName"-->
+            <!--v-bind:targetUrl="popData.targetUrl" v-bind:tableFields="popData.tableFields" ref="kalixPopTable")-->
+          <!--editorImage.editor-upload-btn(color="#20a0ff" v-on:successCBK="imageSuccessCBK")-->
       <!--<div class="editor-custom-btn-container">-->
       <!--<editorImage  color="#20a0ff" class="editor-upload-btn" @successCBK="imageSuccessCBK"></editorImage>-->
       <!--</div>-->
@@ -17,6 +25,10 @@
   export default {
     name: 'tinymce',
     // components: { editorImage },
+    // components: {
+    //   // editorImage
+    //   KalixPopTable: PopTableButton
+    // },
     props: {
       id: {
         type: String
@@ -39,6 +51,32 @@
         type: Number,
         required: false,
         default: 360
+      },
+      showCustomButton: {
+        type: Boolean,
+        default: false
+      },
+      bizPop: {  //  使用的popover组件名称
+        type: String
+      },
+      popData: {
+        type: Object,
+        default() {
+          return {
+            placement: '',
+            width: '150px',
+            trigger: 'click',
+            buttonName: '',
+            tableFields: [],
+            targetUrl: '',
+            bizKey: '',
+            jsonStr: ''
+          }
+        }
+      },
+      tinymcePlugins: {
+        type: String,
+        default: 'advlist,autolink,code,paste,textcolor, colorpicker,fullscreen,link,lists,media,wordcount, imagetools'
       }
     },
     data() {
@@ -90,7 +128,7 @@
           object_resizing: false,
           toolbar: this.toolbar,
           menubar: this.menubar,
-          plugins: 'advlist,autolink,code,fullpage,paste,textcolor, colorpicker,fullscreen,link,lists,media,wordcount, imagetools',
+          plugins: _this.tinymcePlugins,
           end_container_on_empty_block: true,
           powerpaste_word_import: 'clean',
           code_dialog_height: 450,
@@ -121,6 +159,12 @@
                 editor.execCommand('fontSize', false, '18pt')
               }, 20)
             })
+            editor.on('click', () => {
+              // popovertable组件使用，当点击事件触发时，关闭pop弹出框
+              if (this.showCustomButton === true) {
+                this.$emit('contentClick')
+              }
+            })
           },
           setup: function (ed) { // 设置默认字体和字号
             ed.on('init', function () {
@@ -148,6 +192,20 @@
         arr.forEach(v => {
           window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`)
         })
+      },
+      onPopoverClick(_data) { // popovert点击事件
+        this.$emit('popoverData', _data)
+      },
+      setInsertContent(value) { // tinymce组件内容在光标位置插入
+        window.tinymce.get(this.tinymceId).execCommand('mceInsertContent', false, value)
+      },
+      getPopoverData(_data) {
+        this.$emit('popoverData', _data)
+      },
+      getKalixPop(callBack) {
+        setTimeout(() => {
+          callBack(this.$refs.kalixPop)
+        }, 20)
       }
     },
     destroyed() {
@@ -168,8 +226,8 @@
   .editor-custom-btn-container {
     position: absolute;
     right: 15px;
-    /*z-index: 2005;*/
-    top: 18px;
+    z-index: 2005;
+    top: 32px;
   }
 
   .editor-upload-btn {
