@@ -254,6 +254,9 @@ name = "AdminConfiguer"
  path = "admin/template/templateEdit"
  name = "AdminTemplateEdit"
 [[TemplateComponent]]
+ path = "admin/template/templatePreview"
+ name = "AdminTemplatePreview"
+[[TemplateComponent]]
  path = "admin/template/templateConfigAdd"
  name = "AdminTemplateConfigAdd"
 [[TemplateComponent]]
