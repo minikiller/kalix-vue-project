@@ -3,11 +3,11 @@
 开发人：桑杨
 开发日期：2017年8月30日
 -->
+<!--v-bind:tableFields="tableFields"-->
 <template lang="pug">
   keep-alive
     base-table(bizKey="receiver" title='收件列表'
     ref="kalixTable"
-    v-bind:tableFields="tableFields"
     v-bind:targetURL="targetURL"
     v-bind:formModel="formModel"
     v-bind:formRules="formRules"
@@ -19,11 +19,22 @@
     v-bind:toolbarBtnList="toolbarBtnList"
     v-bind:hasTableSelection="hasTableSelection"
     v-bind:customToolBar="customToolBar"
+    v-bind:isAfterView="true"
+    v-bind:deleteAllUrl="batchDeleteUrl"
+    v-on:handleAfterView="handleAfterView"
     bizToolBar="CommonReceiverTableToolBar"
     bizSearch="CommonReceiverSearch")
+      template(slot="tableColumnSlot")
+        el-table-column(prop="senderName" label="发件人" align="center" )
+        el-table-column(prop="categoryName" label="消息类别" align="center")
+        el-table-column(prop="title" label="消息主题" align="center")
+        el-table-column(prop="creationDate" label="发布时间" )
+        el-table-column(label="是否已读" align="center")
+          template(slot-scope="scope")
+            span {{scope.row.read?'已读':'未读'}}
 </template>
 <script type="text/ecmascript-6">
-  import EventBus from 'common/eventbus'
+  // import EventBus from 'common/eventbus'
   import BaseTable from '@/components/custom/baseTable'
   import {ReceiverURL, ReceiverComponent, SenderToolButtonList} from '../config.toml'
   import {receiverSenderMixin} from '../receiverSenderMixin'
@@ -50,14 +61,14 @@
         }],
         btnList: SenderToolButtonList,
         targetURL: ReceiverURL,
-        tableFields: [
-          {prop: 'senderName', label: '发件人'},
-          {prop: 'categoryName', label: '消息类别'},
-          {prop: 'title', label: '消息主题'},
-          {prop: 'creationDate', label: '发布时间'},
-          {prop: 'isRead', label: '是否已读'}
-
-        ],
+        // tableFields: [
+        //   {prop: 'senderName', label: '发件人'},
+        //   {prop: 'categoryName', label: '消息类别'},
+        //   {prop: 'title', label: '消息主题'},
+        //   {prop: 'creationDate', label: '发布时间'},
+        //   {prop: 'read', label: '是否已读'}
+        //
+        // ],
         bizDialog: [
           {id: 'view', dialog: 'CommonReceiverView'},
           {id: 'add', dialog: 'CommonReceiverAdd'}
@@ -79,13 +90,26 @@
       }
     },
     created() {
-      EventBus.$on('deleteCheckedClick', this.onDeleteChecked)
+      // EventBus.$on('deleteCheckedClick', this.onDeleteChecked)
     },
     methods: {
       customRender(_data) {
         _data.forEach(function (e) {
-          e.isRead = e.read ? '是' : '否'
+          e.isRead = e.read ? '已读' : '未读'
         })
+      },
+      handleAfterView(row) {
+        if (row.read === false) {
+          row.read = true
+          // row.isRead = '是'
+          this.axios.request({
+            method: 'PUT',
+            url: `${this.targetURL}/${row.id}`,
+            data: row,
+            params: {}
+          }).then(response => {
+          })
+        }
       }
     },
     components: {

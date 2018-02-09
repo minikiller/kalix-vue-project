@@ -190,6 +190,10 @@
       isAfterSearch: {
         type: Boolean,
         default: false
+      },
+      isAfterView: {
+        type: Boolean,
+        default: false
       }
     },
     watch: {
@@ -390,6 +394,9 @@
 //              this.$emit('update:formModel', row)
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看', false, row)
+              if (this.isAfterView === true) {
+                this.$emit('handleAfterView', row)
+              }
             }, 20)
             break
           }
@@ -560,6 +567,9 @@
       },
       clearData() {
         this.tableData = []
+      },
+      setTableData(_tableData) {
+        this.tableData = _tableData
       },
       columnWidth(flag) {
         let width = 90
