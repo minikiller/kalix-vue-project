@@ -10,16 +10,15 @@
         el-input(v-model="formModel.name")
       el-form-item(label="模板描述" prop="desc" v-bind:label-width="labelWidth")
         el-input(type="textarea" v-model="formModel.desc" v-bind:rows="3")
-      el-form-item(label="模板内容" prop="content" v-bind:label-width="labelWidth")
-        <!--el-input(type="textarea" v-model="formModel.content" v-bind:rows="3")-->
-        tinymce(v-model="formModel.content" ref="editor")
+      <!--el-form-item(label="模板内容" prop="content" v-bind:label-width="labelWidth")-->
+        <!--tinymce(v-model="formModel.content" ref="editor")-->
 </template>
 
 <script type="text/ecmascript-6">
   import FormModel from './templateModel'
   import Dialog from '@/components/custom/baseDialog.vue'
   import {templateURL} from '../config.toml'
-  import Tinymce from '@/third/Tinymce'
+  // import Tinymce from '@/third/Tinymce'
 
   export default {
     data() {
@@ -33,18 +32,18 @@
       }
     },
     components: {
-      KalixDialog: Dialog,
-      Tinymce
+      KalixDialog: Dialog
+      // Tinymce
     },
     methods: {
-      kalixDialogOpen() {
-        this.$nextTick(() => {
-          this.$refs.editor.initTinymce()
-        })
-      },
-      kalixDialogClose() {
-        this.$refs.editor.destroyTinymce()
-      }
+      // kalixDialogOpen() {
+      //   this.$nextTick(() => {
+      //     this.$refs.editor.initTinymce()
+      //   })
+      // },
+      // kalixDialogClose() {
+      //   this.$refs.editor.destroyTinymce()
+      // }
     }
   }
 </script>

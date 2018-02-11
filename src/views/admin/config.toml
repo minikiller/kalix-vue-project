@@ -18,7 +18,8 @@ functionMenuURL = "camel/rest/applications/extend/tree" # 功能管理菜单
 functionItemBaseURL = "/camel/rest/functions/application/" # 功能管理点击菜单节点
 functionURL = "/camel/rest/functions" # 功能管理树表
 templateURL = "/camel/rest/admin/templates" # 模板管理
-templateConfigURL = "/camel/rest/templateconfigs" # 模板配置管理
+templateConfigURL = "/camel/rest/templateconfigs" # 模板配置
+templateContentURL = "/camel/rest/templatecontents" # 模板内容
 auditURL = "/camel/rest/audits" # 审计管理
 auditConfigURL = "/camel/rest/auditconfigs" # 审计配置管理
 userBtnPermissionPrefix = "admin:permissionModule:userMenu:"
@@ -265,6 +266,15 @@ name = "AdminConfiguer"
 [[TemplateComponent]]
  path = "admin/template/templateConfigEdit"
  name = "AdminTemplateConfigEdit"
+[[TemplateComponent]]
+ path = "admin/template/templateContentAdd"
+ name = "AdminTemplateContentAdd"
+[[TemplateComponent]]
+ path = "admin/template/templateContentEdit"
+ name = "AdminTemplateContentEdit"
+[[TemplateComponent]]
+ path = "admin/template/templateContentView"
+ name = "AdminTemplateContentView"
 [[TemplateEditComponent]]
  path = "admin/template/templatePopTable"
  name = "AdminTemplatePopTable"

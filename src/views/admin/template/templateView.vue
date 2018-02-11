@@ -10,8 +10,8 @@
         el-input(v-model="formModel.name" readonly)
       el-form-item(label="模板描述" prop="desc" v-bind:label-width="labelWidth")
         el-input(type="textarea" v-model="formModel.desc" v-bind:rows="3" readonly)
-      el-form-item(label="模板内容" prop="content" v-bind:label-width="labelWidth")
-        el-input(type="textarea" v-model="formModel.content" v-bind:rows="3" readonly)
+      <!--el-form-item(label="模板内容" prop="content" v-bind:label-width="labelWidth")-->
+        <!--el-input(type="textarea" v-model="formModel.content" v-bind:rows="3" readonly)-->
 </template>
 
 <script type="text/ecmascript-6">

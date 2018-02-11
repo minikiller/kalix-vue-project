@@ -42,9 +42,10 @@
             this.content = templateContent
             return
           }
-          let templateId = this.formModel.id
+          let templateId = this.formModel.templateId
+          let templateType = this.formModel.templateType
           let _data = {
-            jsonStr: `{'templateId': '` + templateId + `'}`
+            jsonStr: `{'templateId': '` + templateId + `','templateType': '` + templateType + `'}`
           }
           this.$http.get(this.configURL, {
             params: _data
