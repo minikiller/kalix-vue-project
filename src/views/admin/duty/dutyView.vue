@@ -7,7 +7,7 @@
 <template lang="pug">
   kalix-dialog.user-add(bizKey="candidate" ref="kalixBizDialog" v-bind:formModel.sync="formModel" isView)
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="组织机构" label-width="120px" )
+      el-form-item(label="所属机构" label-width="120px" )
         el-input(v-text="orgName")
       el-form-item(label="职务名称" prop="name" label-width="120px")
         el-input(v-model="formModel.name" readonly)
@@ -29,6 +29,7 @@
     },
     methods: {
       init(dialogOption) {
+        console.info('dialogOption.orgName=========', dialogOption.orgName)
         this.orgName = dialogOption.orgName
       }
     },
