@@ -15,6 +15,7 @@
     v-bind:btnList="btnList"
     v-bind:dictDefine="dictDefine"
     v-bind:customRender="customRender"
+    v-on:handleAfterView="handleAfterView"
     v-on:tableSelectionChange="onTableSelectionChange"
     v-bind:toolbarBtnList="toolbarBtnList"
     v-bind:hasTableSelection="hasTableSelection"
@@ -23,7 +24,6 @@
     bizSearch="CommonReceiverSearch")
 </template>
 <script type="text/ecmascript-6">
-  import EventBus from 'common/eventbus'
   import BaseTable from '@/components/custom/baseTable'
   import {ReceiverURL, ReceiverComponent, SenderToolButtonList} from '../config.toml'
   import {receiverSenderMixin} from '../receiverSenderMixin'
@@ -79,13 +79,26 @@
       }
     },
     created() {
-      EventBus.$on('deleteCheckedClick', this.onDeleteChecked)
+      // EventBus.$on('deleteCheckedClick', this.onDeleteChecked)
     },
     methods: {
       customRender(_data) {
         _data.forEach(function (e) {
           e.isRead = e.read ? '是' : '否'
         })
+      },
+      handleAfterView(row) {
+        if (row.read === false) {
+          row.read = true
+          // row.isRead = '是'
+          this.axios.request({
+            method: 'PUT',
+            url: `${this.targetURL}/${row.id}`,
+            data: row,
+            params: {}
+          }).then(response => {
+          })
+        }
       }
     },
     components: {

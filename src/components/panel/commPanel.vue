@@ -4,7 +4,9 @@
       template(slot="title")
         div {{title}}
       template(slot="right")
-        panel-header-button(type="close" v-on:click="close")
+        panel-header-button(v-if="cls === 'max'" type="ori" v-on:click="oriBaseTable")
+        panel-header-button(v-else type="max" v-on:click="maxBaseTable")
+        panel-header-button(type="close" v-on:click="closeBaseTable")
     div.panel-body
       slot(name="panelSlot")
 </template>
@@ -24,7 +26,17 @@
       }
     },
     methods: {
-      close() {
+      setCls(clsName = '') {
+      },
+      oriBaseTable() {
+        this.cls = ''
+        EventBus.$emit('ON_ORI_BASETABLE')
+      },
+      maxBaseTable() {
+        this.cls = 'max'
+        EventBus.$emit('ON_MAX_BASETABLE')
+      },
+      closeBaseTable() {
         // 关闭窗体
         EventBus.$emit('ON_CLOSE_BASETABLE')
       }
@@ -57,6 +69,13 @@
     &.min
       opacity 0
       transform scale(.5)
+    &.max
+      top 0
+      left 0
+      width 100%
+      height 100%
+      margin 0
+      border-radius 0
     .group-title
       text-align center
       font-size 18px

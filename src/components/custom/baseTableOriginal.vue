@@ -9,6 +9,7 @@
     keep-alive
       component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch"
       v-on:onSearchBtnClick="onSearchClick")
+      div.place-title(v-else) {{title}}
     kalix-tool-bar(v-if="isShowToolBar"
     v-bind:toolbarBtnList="toolbarBtnList"
     v-on:onToolBarClick="onToolBarClick"
@@ -50,7 +51,7 @@
                     v-bind:scope="scope")
           div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
-        div.kalix-table-pagination.s-flex
+        div.kalix-table-pagination.s-flex(v-if="tableData.length")
           div.s-flex_item
           div.base-table-pager
             el-pagination(v-if="pager.totalCount"
@@ -67,7 +68,7 @@
                 span.pager-slot
                   span.pager-count 共{{pageCount}}页
                   span.pager-current {{pager.currentPage}}/{{pageCount}}
-          div.btn-wrapper(v-if="tableData.length")
+          div.btn-wrapper
             el-button(type="primary" size="small" v-on:click="onRefreshClick")
               i.iconfont.icon-refresh
               | 刷新
@@ -368,6 +369,16 @@
 //              this.$emit('update:formModel', row)
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看', false, row)
+              if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                // 添加初始化模型赋值参数
+                if (this.dialogOptions.row) {
+                  this.dialogOptions.row = row
+                }
+                this.$refs.kalixDialog.init(this.dialogOptions)
+              }
+              if (this.isAfterView === true) {
+                this.$emit('handleAfterView', row)
+              }
             }, 20)
             break
           }
@@ -573,8 +584,8 @@
     height 100%
     .kalix-base-tool-bar
       position absolute
-      right 0px
-      top 0px
+      right 0
+      top 0
     .kalix-wrapper
       position relative
       flex 1
@@ -609,4 +620,10 @@
               padding 0 12px
         .no-list
           background-color #fefeef
+
+    .place-title
+      height 32px
+      line-height 32px
+      font-size 14px
+      color #5a5e66
 </style>

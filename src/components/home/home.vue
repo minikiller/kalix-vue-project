@@ -159,6 +159,8 @@
       fetchData() {
         let app = this.$route.params.app // 应用名称
         let fun = this.$route.params.fun // 功能名称
+        this.$myConsoleLog('fetchData app:', app)
+        this.$myConsoleLog('fetchData fun:', fun)
         if (fun !== undefined) {
           this.which_to_show = _import(`${app}/${fun.toLowerCase()}/${fun.toLowerCase()}`)
           // setTimeout(() => {

@@ -79,12 +79,13 @@
         let d = new Date()
         let cd = d.getTime()
         let toolListData = {}
-        if (Cache.get('toolListData')) {
-          toolListData = JSON.parse(Cache.get('toolListData'))
-          EventBus.$emit('toolListDataComplete', toolListData[0].id)
-        }
         if (!isEmptyObject(toolListData)) {
           this.menuList = toolListData
+          if (Cache.get('toolListData')) {
+            toolListData = JSON.parse(Cache.get('toolListData'))
+            this.$myConsoleLog('toolListData', toolListData, '#550000')
+            EventBus.$emit('toolListDataComplete', toolListData[0].id)
+          }
         } else {
           const data = {
             _dc: cd,
