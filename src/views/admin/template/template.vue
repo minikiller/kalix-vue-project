@@ -4,11 +4,11 @@
 开发日期：2018年02月01日
 -->
 <template lang="pug">
-  kalix-comm-panel.template(title="模板管理")
+  kalix-base-panel.template(title="模板管理")
     div.row(slot="panelSlot")
       div.col.col-container
         keep-alive
-          base-table(bizKey="template" title="模板列表" v-bind:targetURL="templateURL"
+          base-table-original(bizKey="template" title="模板列表" v-bind:targetURL="templateURL"
           v-bind:bizDialog="templateDialog" bizSearch="AdminTemplateSearch"
           v-bind:btnList="templateBtnList" v-bind:dialogOptions="dialogOptionsTemplate"
           v-bind:isAfterSearch="templateAfterSearch" v-bind:customTableTool="callCustomTableTool"
@@ -20,7 +20,7 @@
       div.col.col-container.row-vertical
         div.col
           keep-alive
-            base-table(bizKey="templateConfig" title="模板属性列表" v-bind:targetURL="templateConfigURL"
+            base-table-original(bizKey="templateConfig" title="模板属性列表" v-bind:targetURL="templateConfigURL"
             v-bind:bizDialog="templateConfigDialog" v-bind:jsonStr="templateConfigJsonStr"
             v-bind:toolbarBtnList="templateConfigBtnList"
             v-bind:btnList="configBtnList" v-bind:noSearchParam="true" v-bind:dialogOptions="dialogOptions"
@@ -32,7 +32,7 @@
         div.cut-row
         div.col
           keep-alive
-            base-table(bizKey="templateContent" title="模板内容列表" v-bind:targetURL="templateContentURL"
+            base-table-original(bizKey="templateContent" title="模板内容列表" v-bind:targetURL="templateContentURL"
             v-bind:bizDialog="templateContentDialog" v-bind:jsonStr="templateContentJsonStr"
             v-bind:toolbarBtnList="templateConfigBtnList" v-bind:dictDefine="dictDefine"
             v-bind:isAfterSearch="templateAfterSearch" v-bind:customTableTool="callCustomTableTool"
@@ -44,8 +44,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import KalixCommPanel from '@/components/panel/commPanel.vue'
-  import BaseTable from '@/components/custom/baseTableOriginal'
+  import KalixBasePanel from '@/components/panel/basePanel.vue'
+  import BaseTableOriginal from '@/components/custom/baseTableOriginal'
   import {templateURL, templateConfigURL, templateContentURL, TemplateComponent} from '../config.toml'
   import {registerComponent} from '@/api/register'
   import {templateBtnList} from '../template/index'
@@ -55,8 +55,8 @@
   registerComponent(TemplateComponent)
   export default {
     components: {
-      KalixCommPanel,
-      BaseTable
+      KalixBasePanel,
+      BaseTableOriginal
     },
     data() {
       return {
@@ -191,7 +191,7 @@
 
 <style scoped lang="stylus" type="text/stylus">
   .template
-    width 1040px !important
+    width 1060px !important
     .row
       display flex
       padding 0 1px

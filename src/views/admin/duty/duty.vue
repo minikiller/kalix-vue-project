@@ -9,7 +9,8 @@
             kalix-base-table-original.duty-wrapper(ref="kalixBaseTable"
             bizKey='duty' title='职务列表' v-bind:targetURL='targetURL'
             v-bind:bizDialog='bizDialog' bizSearch='AdminDutySearch' v-bind:btnList='btnList' v-bind:customRender="customRender"
-            v-bind:isFixedColumn="isFixedColumn" v-bind:dialogOptions="dialogOptions")
+            v-bind:isFixedColumn="isFixedColumn" v-bind:dialogOptions="dialogOptions"
+            v-bind:customTableTool="customTableTool")
               template(slot="tableColumnSlot")
                 el-table-column(prop="name"  label="职务名称")
                 el-table-column(prop="comment" label="职务描述")
@@ -33,6 +34,21 @@
     watch: {},
 
     methods: {
+      customTableTool(row, btnId, that) {
+        switch (btnId) {
+          case 'addUser':  // 增加用户
+            that.whichBizDialog = ''
+            let dig =
+              that.bizDialog.filter((item) => {
+                return item.id === 'addUser'
+              })
+            that.whichBizDialog = dig[0].dialog
+            setTimeout(() => {
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', false, row)
+            }, 20)
+            break
+        }
+      },
       onOrgTreeClick(data) {
 //        console.log('org data is ', data.id)
         this.orgId = data.id
@@ -67,7 +83,8 @@
         bizDialog: [
           {id: 'view', dialog: 'AdminDutyView'},
           {id: 'edit', dialog: 'AdminDutyAdd'},
-          {id: 'add', dialog: 'AdminDutyAdd'}
+          {id: 'add', dialog: 'AdminDutyAdd'},
+          {id: 'addUser', dialog: 'AdminDutyAddUser'}
         ],
         tableHeight: 0 //  列表组件高度
       }
