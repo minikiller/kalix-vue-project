@@ -8,8 +8,9 @@
   div.kalix-article
     keep-alive
       component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch"
+      v-bind:class="searchCls"
       v-on:onSearchBtnClick="onSearchClick")
-    div.kalix-wrapper(v-bind:style="setWrapperStyle()")
+    div.kalix-wrapper(v-bind:style="wrapperTop")
       div.kalix-wrapper-hd
         i(v-bind:class="iconCls")
         | {{title}}
@@ -219,7 +220,8 @@
         tableHeight: 0, //  列表组件高度
         searchParam: {}, //  列表查询条件
         isShowToolBarB: true,
-        currentRow: null
+        currentRow: null,
+        wrapperTop: {}
       }
     },
     created() {
@@ -252,8 +254,20 @@
       if (currentTreeListItem) {
         this.iconCls = currentTreeListItem.iconCls
       }
+      this.setWrapperStyle()
     },
     methods: {
+      setWrapperStyle() {
+        if (!this.bizSearch) {
+          this.wrapperTop = {'top': 0}
+        } else {
+          this.$nextTick(() => {
+            let kalixSearch = document.querySelector('.kalix-search-' + this.bizKey)
+            console.log('===== kalixSearch =====', kalixSearch.clientHeight + 40 + 'px')
+            this.wrapperTop = {'top': kalixSearch.clientHeight + 40 + 'px'}
+          })
+        }
+      },
       onCheckBtnList(flag) {
         this.isShowToolBarB = this.isShowToolBar !== null ? this.isShowToolBar : flag
       },
@@ -561,12 +575,6 @@
 //          console.log(`[Kalix] table tool button list is `, this.btnList)
         }
       },
-      setWrapperStyle() {
-        if (!this.bizSearch) {
-          return {'top': 0}
-        }
-        return {}
-      },
       _getTableHeight() {
         if (this.$refs.kalixTableContainer && this.$refs.kalixTableContainer.clientHeight) {
           this.tableHeight = this.$refs.kalixTableContainer.clientHeight
@@ -596,6 +604,10 @@
       KalixDialog: Dialog
     },
     computed: {
+      searchCls() {
+        console.log('BBBBBBBBBBBBBBBBBBBBBBBB', this.bizKey)
+        return 'kalix-search-' + this.bizKey
+      },
       isShowOperate() {
         if (!this.btnList || !this.btnList.length) {
           return false
