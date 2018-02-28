@@ -11,7 +11,7 @@
     div.kalix-search-bd
       el-input(placeholder="输入关键字进行过滤" v-model="filterText")
       div.kalix-tree-wrapper
-        el-tree.filter-tree(v-bind:data="treeData"
+        el-tree.filter-tree.org(v-bind:data="treeData"
         v-bind:props="defaultProps" accordion
         node-key="id" highlight-current
         v-bind:filter-node-method="filterNode" v-on:node-click="handleNodeClick"
@@ -68,7 +68,6 @@
         this.orgId = data.id
         this.orgName = data.name
         this.$emit('orgTreeClick', data) // 发送事件供外部调用
-        console.log('org tree data is ', data.id)
       },
       getData() {
         let url = ''
@@ -85,7 +84,8 @@
           this.treeData = res.data.children
           // 加载数据后自动选中第一个节点
           this.$nextTick(() => {
-            const firstNode = document.querySelector('.el-tree-node')
+            const firstNode = document.querySelector('.filter-tree.org>.el-tree-node')
+            this.$myConsoleLog('firstNode', firstNode)
             if (firstNode) {
               firstNode.click()
             }

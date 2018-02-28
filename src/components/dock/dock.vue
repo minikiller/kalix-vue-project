@@ -100,7 +100,6 @@
               this.menuList = response.data
               console.log('this.menuList：', this.menuList)
               toolListData = this.menuList
-              this.$myConsoleLog(' [Dock] this.menuList ', this.menuList, '#8B4513')
               Cache.save('toolListData', JSON.stringify(toolListData))
               if (toolListData.length && toolListData[0].id) {
                 EventBus.$emit('toolListDataComplete', toolListData[0].id)

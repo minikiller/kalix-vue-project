@@ -7,7 +7,7 @@
   div.im-org-tree
     el-input(placeholder="输入关键字进行过滤" v-model="filterText")
     div.kalix-tree-wrapper
-      el-tree.filter-tree(v-bind:data="treeData"
+      el-tree.filter-tree.im(v-bind:data="treeData"
       v-bind:props="defaultProps" accordion
       node-key="id" highlight-current
       v-bind:filter-node-method="filterNode" v-on:node-click="handleNodeClick"
@@ -61,10 +61,10 @@
         return data.name.indexOf(value) !== -1
       },
       handleNodeClick(data) {
-        this.orgId = data.id
-        this.orgName = data.name
-        this.$emit('orgTreeClick', data) // 发送事件供外部调用
-        console.log('org tree data is ', data.id)
+        // this.orgId = data.id
+        // this.orgName = data.name
+        // this.$emit('orgTreeClick', data) // 发送事件供外部调用
+        // console.log('org tree data is ', data.id)
       },
       getData() {
         let url = ''
@@ -81,7 +81,7 @@
           this.treeData = res.data.children
           // 加载数据后自动选中第一个节点
           this.$nextTick(() => {
-            const firstNode = document.querySelector('.filter-tree .el-tree-node')
+            const firstNode = document.querySelector('.filter-tree.im > .el-tree-node')
             if (firstNode) {
               firstNode.click()
             }

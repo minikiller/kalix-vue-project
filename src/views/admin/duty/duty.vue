@@ -50,7 +50,8 @@
         }
       },
       onOrgTreeClick(data) {
-//        console.log('org data is ', data.id)
+        this.$myConsoleLog('org data is', data.id, '#550000')
+        console.log('org data is ', data.id)
         this.orgId = data.id
         this.orgName = data.name
         this.targetURL = `/camel/rest/orgs/${data.id}/dutys`
