@@ -27,7 +27,16 @@
                 el-badge(:value="msgCount")
                   el-button(icon="el-icon-message" v-on:click="onMsgClick") 消息
               li
-                el-dropdown(@command="handleCommand")
+                el-dropdown(v-on:command="onFlowCommand" style="margin-top:10px;")
+                  el-button
+                    | 代办流程
+                    i.el-icon-arrow-down.el-icon--right
+                  el-dropdown-menu(slot="dropdown")
+                    el-dropdown-item 流程-1
+                    el-dropdown-item 流程-2
+                    el-dropdown-item 流程-3
+              li
+                el-dropdown(v-on:command="handleCommand")
                   div.s-flex.el-dropdown-link
                     div.avatar-wrapper
                       div.avatar(v-bind:style="styleObject")
@@ -173,6 +182,7 @@
         }, 60000)
       },
       handleCommand(command) {
+        console.log(' ===== handleCommand ===== ')
         switch (command) {
           case 'changeInfo' :
 //            let formData = new FormData()
@@ -201,6 +211,11 @@
             })
             break
         }
+      },
+      onFlowCommand(command) {
+        console.log(' ===== 代办流程 ===== ')
+        // 代办流程
+        this.$router.push({path: `/oa/Task`})
       },
       bindClass(e) {
         return e
