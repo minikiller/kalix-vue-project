@@ -58,7 +58,7 @@
         bizKey: 'taskComplete',
         btnList: [{
           id: 'viewTask',
-          title: '查看',
+          title: '进度',
           isShow: true
         }, {
           id: 'complete',
