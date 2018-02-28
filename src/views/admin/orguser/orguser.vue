@@ -5,20 +5,30 @@
         el-col.orguser-col(:span="8" style="padding:8px 0 8px 8px;")
           kalix-org-tree(treeTitle="机构列表" v-on:orgTreeClick="onOrgTreeClick")
         el-col.orguser-col(:span="16")
-          kalix-base-table.orguser-wrapper(bizKey='orguser' title='用户列表'
-            ref="kalixOrgUserTable")
+          kalix-user.orguser-wrapper(bizKey='orguser' v-bind:targetURL="targetURL"
+            v-bind:bizSearch="bizSearch" ref="kalixUser")
 </template>
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
   import OrgTree from '@/components/biz/tree/OrgTree'
+  import User from '@/views/admin/user/user'
+  import {usersURL} from '../config.toml'
   export default {
+    data() {
+      return {
+        targetURL: usersURL,
+        bizSearch: null
+      }
+    },
     components: {
       KalixBaseTable: BaseTable,
-      KalixOrgTree: OrgTree
+      KalixOrgTree: OrgTree,
+      KalixUser: User
     },
     methods: {
       onOrgTreeClick(data) {
+        this.targetURL = `/camel/rest/orgs/${data.id}/users/list`
       }
     }
   }
@@ -27,6 +37,39 @@
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
   @import "~@/assets/stylus/color.styl"
+  .kalix-search
+    position relative
+    margin 5px
+    border 1px solid border-color_1
+    box-sizing border-box
+    .kalix-search-hd
+      background-color #5fa2dd
+      color txt-color_1
+      line-height 44px
+      padding 0 15px
+      text-align left
+    .kalix-search-bd
+      position absolute
+      border-top 1px solid border-color_1
+      font-size 0
+      padding 5px 15px
+      text-align left
+      top 44px
+      left 0
+      bottom: 0;
+      width: 100%;
+      box-sizing: border-box;
+      .search-container
+        display flex
+      .kalix-tree-wrapper
+        position: absolute;
+        top 60px
+        right 10px
+        bottom 10px
+        left 10px
+        padding-right 16px
+        box-sizing border-box
+        overflow auto
   .kalix-article
     position relative
     height 100%

@@ -1,9 +1,12 @@
 <template lang="pug">
   keep-alive
-    base-table(bizKey="user" title='用户列表' v-bind:targetURL="targetURL"
-    v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields" bizSearch="AdminUserSearch" v-bind:btnList="btnList"
-    v-bind:customTableTool="customTableTool" v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
-    v-bind:dictDefine="dictDefine" ref="userTable")
+    base-table(title='用户列表'
+      v-bind:bizKey="bizKey" v-bind:targetURL="targetURL"
+      v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields"
+      v-bind:bizSearch="bizSearch" v-bind:btnList="btnList"
+      v-bind:customTableTool="customTableTool" v-bind:isFixedColumn="isFixedColumn"
+      v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
+      v-bind:dictDefine="dictDefine" ref="userTable")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
@@ -18,6 +21,24 @@
   registerComponent(UserComponent)
 
   export default {
+    props: {
+      bizKey: {
+        type: String,
+        default: 'user'
+      },
+      targetURL: {
+        type: String,
+        default: usersURL
+      },
+      bizSearch: {
+        type: String,
+        default: 'AdminUserSearch'
+      },
+      isFixedColumn: {
+        type: Boolean,
+        default: true
+      }
+    },
     data() {
       return {
         dictDefine: [{ // 定义数据字典的显示
@@ -33,7 +54,7 @@
         }],
         btnList: userBtnList,
         buttonPermissionPrefix: userBtnPermissionPrefix,
-        targetURL: usersURL,
+        // targetURL: usersURL,
         tableFields: [
           {prop: 'userTypeName', label: '用户类型'},
           {prop: 'code', label: '用户代码'},
