@@ -11,5 +11,17 @@ export default {
   },
   clear() {
     sessionStorage.clear()
+  },
+  _saveLocal(key, data) {
+    localStorage.setItem(key, data)
+  },
+  _getLocal(key) {
+    return localStorage.getItem(key)
+  },
+  _removeLocal(key) {
+    localStorage.removeItem(key)
+  },
+  _clearLocal() {
+    localStorage.clear()
   }
 }

@@ -5,13 +5,13 @@
 -->
 <template lang="pug">
   div(style="position: absolute;width: 100%;height: 100%;overflow: auto;")
-    div(style="height:500px;position:relative")
+    div(style="height:50%;position:relative")
       keep-alive
         base-table(bizKey="researchStudent" title='学生信息列表' v-bind:targetURL="targetURL"
         v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields" bizSearch="ResearchStudentSearch"
         v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList" v-bind:customTableTool="customTableTool"
         v-bind:dictDefine="dictDefine" v-on:onTableRowClick="onTableRowClick")
-    div(style="height:500px;position:relative")
+    div(style="height:50%;position:relative")
       keep-alive
         base-table(bizKey="researchScore" title='学生成绩列表' v-bind:targetURL="detailTargetURL"
         v-bind:bizDialog="detailBizDialog" v-bind:tableFields="detailTableFields" v-bind:btnList="detailBtnList"
