@@ -22,7 +22,7 @@
                 div.rhf-content-2
                   div.rhf-article-doc(v-html="scope.row.docContent" data-content)
           kalix-biz-no-column(title="文号")  // 业务编号
-          el-table-column(prop="title" label="业务名称" align="center" width="220")
+          el-table-column(prop="title" label="文件名称" align="center" width="220")
           el-table-column(prop="docCaption" label="文号标题" align="center" width="100")
           el-table-column(prop="docTypeName" label="文号类型" align="center" width="220")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
