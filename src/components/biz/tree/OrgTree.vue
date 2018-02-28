@@ -31,6 +31,10 @@
       EventBus.$off('refreshData')
     },
     props: {
+      treeTitle: {
+        type: String,
+        default: '组织机构树'
+      },
       placeholder: {
         default: '请选择职务'
       },
@@ -43,7 +47,6 @@
       return {
         currentValue: this.value,
         input: '',
-        treeTitle: '组织机构树',
         iconCls: '',
         filterText: '',
         treeData: [],

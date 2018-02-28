@@ -25,8 +25,10 @@
 <script type="text/ecmascript-6">
   //  import Router from 'router'
   import {mapMutations} from 'vuex'
-  import {Cache, Message, Eventbus} from 'kalix-base'
+  import {Message, Eventbus} from 'kalix-base'
+  import Cache from 'common/cache'
   import Login from 'api/login'
+  // import {logoutURL} from 'config/global.toml'
 
   export default {
     data() {
@@ -91,6 +93,10 @@
             Cache.save('user_token', data.user.token)
             Cache.save('user_name', data.user.name)
             Cache.save('loginname', that.loginForm.name)
+            // 在缓存中记录最后登录时间，处理单用户登录需求
+            let now = new Date().getTime()
+            Cache._saveLocal('lastLoginTime', now)
+            Cache.save('lastLoginTime', now)
 //                console.log('access token is: ', data.access_token)
             this.setSaveLogin({
               access_token: data.access_token,

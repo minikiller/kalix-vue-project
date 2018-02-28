@@ -70,6 +70,7 @@
         name: 'kalixHeader',
         isPollMsg: true, // 是否进行消息轮询
         userName: '',
+        singleLogin: true,
         menuList: [],
         themeOptions: [
           {value: 'theme-triton', label: '浅蓝'},
@@ -85,9 +86,14 @@
         icon: ''
       }
     },
-    watch: {'$route': 'initMenu'},
+    watch: {
+      '$route': 'initMenu'
+    },
     activated() {
       this.userName = Cache.get('user_name')
+      if (this.singleLogin) {
+        this.checkLogin()
+      }
       console.log('header is activated')
 //      this.$nextTick(() => {
 //        console.log('user name cache is ' + this.userName)
@@ -160,6 +166,17 @@
         }
         return 'null'
       },
+      checkLogin() {
+        clearInterval(this.islogin)
+        this.islogin = setInterval(() => {
+          let lastLoginTime = Cache._getLocal('lastLoginTime')
+          let sessionLatLoginTime = Cache.get('lastLoginTime')
+          if (lastLoginTime !== null && sessionLatLoginTime !== lastLoginTime) {
+            clearInterval(this.islogin)
+            this.doLogout()
+          }
+        }, 3000)
+      },
       pollMsg() { // 消息通知轮询
         let that = this
         that.getMsg()
@@ -195,12 +212,16 @@
             this.$refs.userEditpwd.open('')
             break
           case 'logout' :
-            Vue.axios.get(logoutURL, {}).then(response => {
-              Cache.clear()
-              router.push({path: '/login'})
-            })
+            this.doLogout()
             break
         }
+      },
+      doLogout() {
+        Vue.axios.get(logoutURL, {}).then(response => {
+          Cache.clear()
+          Cache._clearLocal()
+          router.push({path: '/login'})
+        })
       },
       bindClass(e) {
         return e
