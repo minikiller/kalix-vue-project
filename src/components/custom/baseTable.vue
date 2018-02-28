@@ -394,6 +394,13 @@
 //              this.$emit('update:formModel', row)
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看', false, row)
+              if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                // 添加初始化模型赋值参数
+                if (this.dialogOptions.row) {
+                  this.dialogOptions.row = row
+                }
+                this.$refs.kalixDialog.init(this.dialogOptions)
+              }
               if (this.isAfterView === true) {
                 this.$emit('handleAfterView', row)
               }

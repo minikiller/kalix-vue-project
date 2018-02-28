@@ -7,7 +7,7 @@
 <template lang="pug">
   kalix-dialog.user-add(bizKey="duty" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
-      el-form-item(label="组织机构" prop="orgid" label-width="120px" )
+      el-form-item(label="所属机构" prop="orgid" label-width="120px" )
         el-input(v-text="orgName")
         input(v-model="formModel.orgid" type="hidden")
       el-form-item(label="职务名称" prop="name" label-width="120px"  v-bind:rules="rules.name")
