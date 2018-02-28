@@ -16,7 +16,7 @@
     data() {
       return {
         searchFields: [
-          {label: '文号', prop: 'businessNo', width: '100'},
+          {label: '文号', prop: 'businessNo'},
           {label: '文件名称', prop: 'title'},
           {label: '文号类型', prop: 'docType', type: 'dict', appName: 'oa', dictType: '文号类型'},
           {
