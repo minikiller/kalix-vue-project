@@ -58,6 +58,10 @@
 .icon-workgroup-management:before {
   content: "\e621";
 }
+/*数据权限管理图标*/
+.icon-dataauth-management:before {
+  content: "\e67a";
+}
 
 .icon-organization-chart:before {
   content: "\e62d";
