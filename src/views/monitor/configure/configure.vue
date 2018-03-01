@@ -12,7 +12,7 @@
         el-table-column(type="expand")
           template(slot-scope="scope")
             el-form(label-position="left" class="demo-table-expand")
-              el-form-item(v-for="item in scope.row.configBean" v-bind:label="item.name")
+              el-form-item(v-for="item in scope.row.configBean" v-bind:key="item.name" v-bind:label="item.name")
                 span {{item.value}}
         el-table-column(prop="classType" label="类型"  align="center")
 
