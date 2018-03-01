@@ -9,13 +9,13 @@
     keep-alive
       base-table(:isShowToolBar="isShowToolBar" bizKey="myprocesshistory" title='我的流程列表'
       v-bind:targetURL="targetURL"
-      v-bind:formModel.sync="formModel"
       v-bind:bizDialog="bizDialog"
       bizSearch="OaProcessHistorySearch"
       v-bind:tableRowClassName="tableRowClassName"
       v-bind:customTableTool='customTableTool'
       v-bind:btnList="btnList")
         template(slot="tableColumnSlot")
+          el-table-column
           kalix-biz-no-column(name="name")
           el-table-column(prop="title" label="业务名称" width="280" align="center")
           el-table-column(prop="startUserId" label="启动用户" align="center")
@@ -53,12 +53,10 @@
         targetURL: MyHistoryURL,
         bizDialog: [
           {id: 'viewHistory', dialog: ''}
-        ],
-        formModel: {}
+        ]
       }
     },
     created() {
-//      this.tempFormModel = JSON.stringify(Object.assign({}, this.formModel))
     },
     mounted() {
       registerComp()
