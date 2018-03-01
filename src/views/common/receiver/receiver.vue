@@ -51,6 +51,7 @@
         batchDeleteUrl: `${ReceiverURL}/remove`,
         hasTableSelection: true,
         toolbarBtnList: [
+          {id: 'add', title: '写消息', isShow: true, icon: 'icon-add'},
           {id: 'deleteChecked', isShow: true}
         ],
         dictDefine: [{ // 定义数据字典的显示
