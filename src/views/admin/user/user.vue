@@ -11,7 +11,7 @@
         el-table-column(prop="icon" label="头像" align="center")
           template(slot-scope="scope")
             img(v-if="scope.row.icon" v-bind:src="scope.row.icon" width="32" height="32" alt="")
-            img(v-else src="../../../components/custom/images/default_user.png")
+            img(v-else src="../../../components/header/default_user.png" width="32" height="32" alt="")
         el-table-column(prop="userTypeName" label="用户类型" align="center")
         el-table-column(prop="code" label="用户代码" align="center")
         el-table-column(prop="loginName" label="登录名" align="center")
@@ -84,8 +84,7 @@
           {id: 'add', dialog: 'AdminUserAdd'},
           {id: 'key', dialog: 'AdminUserResetpwd'},
           {id: 'auth', dialog: 'AdminUserAuthView'}
-        ],
-        defaultImg: '/components/custom/images/default_user.png'
+        ]
       }
     },
     components: {
