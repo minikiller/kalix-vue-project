@@ -5,7 +5,7 @@
 -->
 <template lang="pug">
   kalix-dialog.user-add(bizKey="hardwarelog" ref="kalixBizDialog"
-  v-bind:submitCustom="submitCustom"  v-bind:form-model="formModel" v-bind:targetURL="targetRestURL")
+  v-bind:submitCustom="submitCustom"  v-bind:form-model.sync="formModel" v-bind:targetURL="targetRestURL")
     div.el-form(slot="dialogFormSlot")
       div(class="test" v-for='(item,index) in items')
         div(v-for="(data, key) in item") {{divLoad(data,key)}}
@@ -41,26 +41,9 @@
       baseHelp: Help
     },
     created() {
-      console.log('this.formModel : ', this.formModel['mail'].value)
+      console.log('this.formModel : ', this.formModel.classType)
     },
     mounted() {
-      this.axios.request({
-        method: 'GET',
-        url: this.targetRestURL + '/' + this.keyValue,
-        params: {
-          AppName: 'config.monitor.config'
-        },
-        dataType: 'json',
-        data: {
-        }
-      }).then(response => {
-        if (response.data) {
-          this.items = response.data.data
-        } else {
-          // Message.success('重置失败')
-        }
-      }).catch(() => {
-      })
     },
     methods: {
       divLoad(_data, _key) {
@@ -110,7 +93,24 @@
         })
       },
       listen(oldValue, newValue) {
-        console.log('[formModel]:', this.formModel)
+        console.log('[ ============== formModel]:', this.formModel)
+        this.axios.request({
+          method: 'GET',
+          url: this.targetRestURL + '/' + this.formModel.classType,
+          params: {
+            AppName: 'config.monitor.config'
+          },
+          dataType: 'json',
+          data: {
+          }
+        }).then(response => {
+          if (response.data) {
+            this.items = response.data.data
+          } else {
+            // Message.success('重置失败')
+          }
+        }).catch(() => {
+        })
       }
     },
     watch: {
