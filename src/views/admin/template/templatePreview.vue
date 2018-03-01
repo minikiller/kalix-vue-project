@@ -5,11 +5,15 @@
 -->
 <template lang="pug">
   el-dialog.dialog-form(v-bind:visible="visible"
-  fullscreen
   custom-class="previewDialog"
+  v-bind:show-close="false"
   v-bind:before-close="close"
+  fullscreen
   v-bind:close-on-click-modal="false"
-  v-bind:append-to-body="true")
+  v-bind:append-to-body="true" ref="preview")
+    el-button(v-on:click="close" type="primary"
+      size="mini" style="position: absolute;top: 20px;left: 20px;")
+      | 关闭
     div.preview-wrapper(ref="previewWrapper")
       kalix-template(v-bind:content="content")
 </template>
@@ -68,6 +72,8 @@
           this.$refs.previewWrapper.style.height = (window.innerHeight - 100) + 'px'
         }, 20)
       }
+    },
+    mounted() {
     }
   }
 </script>

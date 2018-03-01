@@ -24,7 +24,7 @@
             kalix-query-datetime-picker(v-else-if="item.type==='datetime'" v-model="form[item.prop]")
             kalix-dict-select(v-else-if="item.type==='dict'" v-bind:appName="item.appName" v-bind:dictType="item.dictType" v-model="form[item.prop]")
             Kalix-map-select(v-else-if="item.type==='map'" v-bind:appName="item.appName" v-bind:prop="item.prop" v-bind:selectUrl="item.selectUrl" v-model="form[item.prop]"
-              v-bind:selectedOptions="item.options" v-on:getProp="getProp" v-on:input="getSelectValue" v-bind:stopChange="item.stopChange")
+            v-bind:selectedOptions="item.options" v-on:getProp="getProp" v-on:input="getSelectValue" v-bind:stopChange="item.stopChange")
             el-input(v-else v-model="form[item.prop]")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
@@ -231,7 +231,8 @@
       KalixDictSelect: BaseDictSelect,
       KalixMapSelect: BaseMapSelect
     },
-    computed: {},
+    computed: {
+    },
     watch: {}
   }
 </script>
@@ -254,9 +255,10 @@
       padding 8px 12px
       text-align left
       .search-container
-        display flex
+        margin-bottom -12px
     .el-form-item
-      margin-bottom 0
+      margin-right 12px
+      margin-bottom 12px
     .el-button
       .iconfont
         font-size 14px

@@ -1,9 +1,25 @@
 <template lang="pug">
   keep-alive
-    base-table(bizKey="user" title='用户列表' v-bind:targetURL="targetURL"
-    v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields" bizSearch="AdminUserSearch" v-bind:btnList="btnList"
-    v-bind:customTableTool="customTableTool" v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
-    v-bind:dictDefine="dictDefine" ref="userTable")
+    base-table(title='用户列表'
+      v-bind:bizKey="bizKey" v-bind:targetURL="targetURL"
+      v-bind:bizDialog="bizDialog"
+      v-bind:bizSearch="bizSearch" v-bind:btnList="btnList"
+      v-bind:customTableTool="customTableTool" v-bind:isFixedColumn="isFixedColumn"
+      v-bind:buttonPermissionPrefix="buttonPermissionPrefix"
+      v-bind:dictDefine="dictDefine" ref="userTable")
+      template(slot="tableColumnSlot")
+        el-table-column(prop="icon" label="头像" align="center")
+          template(slot-scope="scope")
+            img(v-if="scope.row.icon" v-bind:src="scope.row.icon" width="32" height="32" alt="")
+            img(v-else src="../../../components/custom/images/default_user.png")
+        el-table-column(prop="userTypeName" label="用户类型" align="center")
+        el-table-column(prop="code" label="用户代码" align="center")
+        el-table-column(prop="loginName" label="登录名" align="center")
+        el-table-column(prop="name" label="名称" align="center")
+        el-table-column(prop="sex" label="性别" align="center")
+        el-table-column(prop="email" label="邮箱" align="center")
+        el-table-column(prop="phone" label="固定电话" align="center")
+        el-table-column(prop="mobile" label="手机" align="center")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
@@ -18,6 +34,24 @@
   registerComponent(UserComponent)
 
   export default {
+    props: {
+      bizKey: {
+        type: String,
+        default: 'user'
+      },
+      targetURL: {
+        type: String,
+        default: usersURL
+      },
+      bizSearch: {
+        type: String,
+        default: 'AdminUserSearch'
+      },
+      isFixedColumn: {
+        type: Boolean,
+        default: true
+      }
+    },
     data() {
       return {
         dictDefine: [{ // 定义数据字典的显示
@@ -33,7 +67,7 @@
         }],
         btnList: userBtnList,
         buttonPermissionPrefix: userBtnPermissionPrefix,
-        targetURL: usersURL,
+        // targetURL: usersURL,
         tableFields: [
           {prop: 'userTypeName', label: '用户类型'},
           {prop: 'code', label: '用户代码'},
@@ -50,7 +84,8 @@
           {id: 'add', dialog: 'AdminUserAdd'},
           {id: 'key', dialog: 'AdminUserResetpwd'},
           {id: 'auth', dialog: 'AdminUserAuthView'}
-        ]
+        ],
+        defaultImg: '/components/custom/images/default_user.png'
       }
     },
     components: {

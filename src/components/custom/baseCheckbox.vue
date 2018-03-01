@@ -7,7 +7,7 @@
   div(style="width:100%;")
     el-checkbox(v-model="checkAll" v-bind:indeterminate="isIndeterminate" v-bind:disabled="disabled" v-on:change="handleCheckAllChange") 全选
     div(style="margin: 15px 0;")
-    el-checkbox-group(v-model="checkedOptions" v-on:change="handleCheckedCitiesChange")
+    el-checkbox-group(v-model="checkedOptions" v-on:change="handleCheckedOptionsChange")
       el-checkbox(v-for="item in options" v-bind:label="item" v-bind:key="item" v-bind:disabled="disabled") {{item}}
 </template>
 
@@ -25,7 +25,7 @@
     data() {
       return {
         checkAll: false,
-        isIndeterminate: true,
+        isIndeterminate: false,
         options: [],
         checkedOptions: []
       }
@@ -46,19 +46,23 @@
           if (res.data.success === undefined) {
             if (res.data) {
               this.options = res.data
+
+              if (this.value) {
+                this.checkedOptions = this.value.split(',')
+              }
+              let checkedCount = this.checkedOptions.length
+              this.checkAll = checkedCount === this.options.length
+              this.isIndeterminate = checkedCount > 0 && checkedCount < this.options.length
             }
           }
         })
-        if (this.value) {
-          this.checkedOptions = this.value.split(',')
-        }
       },
       handleCheckAllChange(val) {
         this.checkedOptions = val ? this.options : []
         this.isIndeterminate = false
         this.$emit('input', val ? this.options.join(',') : '')
       },
-      handleCheckedCitiesChange(value) {
+      handleCheckedOptionsChange(value) {
         let checkedCount = value.length
         this.checkAll = checkedCount === this.options.length
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.options.length
