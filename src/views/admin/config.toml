@@ -33,9 +33,9 @@ configAdminURL= "/camel/rest/system/config"
 path = "admin/config/configureView"
 name = "AdminConfiguer"
 [[ConfigToolbarList]]
-  id = "edit"
+  id = "editSelf"
   title = "编辑"
-  isShow = false
+  isShow = true
   isPermission = true
 
 [[DutyButtonList]]
