@@ -7,7 +7,7 @@
         el-col.duty-col(:span="16")
           kalix-base-table.duty-wrapper(ref="kalixBaseTable"
           bizKey='duty' title='职务列表' v-bind:targetURL='targetURL'
-          v-bind:bizDialog='bizDialog' bizSearch='AdminDutySearch' v-bind:btnList='btnList' v-bind:customRender="customRender"
+          v-bind:bizDialog='bizDialog' v-bind:btnList='btnList' v-bind:customRender="customRender"
           v-bind:isFixedColumn="isFixedColumn" v-bind:dialogOptions="dialogOptions"
           v-bind:customTableTool="customTableTool")
             template(slot="tableColumnSlot")
@@ -85,9 +85,9 @@
           {id: 'edit', dialog: 'AdminDutyAdd'},
           {id: 'add', dialog: 'AdminDutyAdd'},
           {id: 'addUser', dialog: 'AdminDutyAddUser'}
-
         ],
         tableHeight: 0 //  列表组件高度
+        // bizSearch: 'AdminDutySearch'
       }
     },
     mounted() {
@@ -184,7 +184,7 @@
       height 100%
       box-sizing border-box
   .duty-wrapper
-    margin -10px 0
+    margin 8px 0
     .kalix-wrapper
       bottom 0 !important
 </style>
