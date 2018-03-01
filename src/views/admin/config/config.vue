@@ -7,11 +7,15 @@
   keep-alive
     base-table(bizKey="hardwareconfigure" title='系统配置列表' v-bind:tableFields="tableFields" v-bind:targetURL="targetURL"
      v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList" v-bind:jsonStr="appName"
-     v-bind:bizDialog="bizDialog" v-bind:customToolBar="customToolBar")
+     v-bind:bizDialog="bizDialog" v-bind:customTableTool="customTableTool")
       template(slot="tableColumnSlot")
-            el-table-column(prop="type" label="类型" width="280" align="center")
-            el-table-column(prop="name" label="标签名" width="280" align="center")
-            el-table-column(prop="value" label="数值" align="center")
+        el-table-column(type="expand")
+          template(slot-scope="scope")
+            el-form(label-position="left" class="demo-table-expand")
+              el-form-item(v-for="item in scope.row.configBean" v-bind:key="item.name" v-bind:label="item.name")
+                span {{item.value}}
+        el-table-column(prop="classType" label="类型"  align="center")
+
 
 </template>
 
@@ -30,7 +34,7 @@
         toolbarBtnList: [
           {id: 'add', isShow: false},
           {id: 'edit', isShow: false},
-          {id: 'customBtn1', icon: 'icon-edit', title: '配置', isShow: true}
+          {id: 'customBtn1', icon: 'icon-edit', title: '配置', isShow: false}
         ],
         targetURL: configAdminURL,
         tableFields: [
@@ -41,7 +45,7 @@
         items: {},
         appName: 'ConfigDb',
         bizDialog: [
-          {id: 'customBtn1', dialog: 'AdminConfiguer'}
+          {id: 'editSelf', dialog: 'AdminConfiguer'}
         ]
       }
     },
@@ -49,12 +53,6 @@
       BaseTable
     },
     created() {
-      const that = this
-      this.customToolbarClickEvents = {
-        customBtn1() {
-          that.customEventBtn1()
-        }
-      }
     },
     mounted() {
       this.axios.request({
@@ -82,21 +80,24 @@
       console.log(this.bizKey + '  is deactivated')
     },
     methods: {
-      customToolBar(btnId, baseTable) {
+      customTableTool(row, btnId, that) {
+        console.log('row', row)
         switch (btnId) {
-          case 'customBtn1':
-            let that = baseTable
+          case
+          'editSelf'
+          : { // 增加用户
+            that.whichBizDialog = ''
+            console.log(that.bizDialog)
             let dig =
-              baseTable.bizDialog.filter((item) => {
-                return item.id === 'customBtn1'
+              that.bizDialog.filter((item) => {
+                return item.id === 'editSelf'
               })
-            baseTable.whichBizDialog = dig[0].dialog
+            that.whichBizDialog = dig[0].dialog
             setTimeout(() => {
-//              this.$emit('update:formModel', row)
-//              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
-              that.$refs.kalixDialog.$refs.kalixBizDialog.open('配置', false, {})
+              that.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', false, row)
             }, 20)
             break
+          }
         }
       }
     }
@@ -104,5 +105,10 @@
 </script>
 
 <style scoped lang="stylus">
-
+  .demo-table-expand
+    label
+      width 90px
+      color #99a9bf
+    .el-form-item
+      margin-bottom 0
 </style>
