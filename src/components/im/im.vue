@@ -21,7 +21,8 @@
               message-list(v-show="footerBars[0].isSelect")
             div.panel_footer
               im-footer-bar(v-for='bar in footerBars' v-bind:key="bar.type" v-bind:data="bar" v-on:click="onFooterBarClick(bar)")
-    <!-- kalix-chat-panel -->
+    kalix-chat-panel(ref="kalixChatPanel")
+    <!--component(v-bind:is="which_to_show" ref="bizPanel")-->
 </template>
 <script type="text/ecmascript-6">
   import ImState from './imState'
@@ -31,6 +32,7 @@
   import UserAvatar from './userAvatar'
   import OrgList from './orgList'
   import ImFooterBar from './imFooterBar'
+  import EventBus from 'common/eventbus'
   import KalixChatPanel from '@/components/panel/chatPanel'
 
   export default {
@@ -52,6 +54,7 @@
       }
     },
     activated() {
+      EventBus.$on('onChatItemDbClick', this.onChatItemDbClick)
       this.footerBars = [
         {type: 'contact', isSelect: true},
         {type: 'conversation', isSelect: false},
@@ -60,6 +63,9 @@
       ]
     },
     methods: {
+      onChatItemDbClick(chatItem) {
+        this.$refs.kalixChatPanel.open(chatItem)
+      },
       onFooterBarClick(bar) {
         this.footerBars.map(e => {
           if (e === bar) {

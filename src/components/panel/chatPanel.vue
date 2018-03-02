@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-if="isVisible")
     div.panel(v-bind:class="cls" ref="chatPanel")
       panel-header
         template(slot="title")
@@ -40,6 +40,7 @@
   export default {
     data() {
       return {
+        isVisible: false,
         cls: '',
         title: '',
         userObj: {
@@ -56,6 +57,10 @@
     mounds() {
     },
     methods: {
+      open(row) {
+        this.isVisible = true
+        this.$myConsoleLog('[onDbClock] item', row, '#B03060')
+      },
       onCallClose() {
         this.which_to_show = ''
       },
