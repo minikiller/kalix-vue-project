@@ -477,7 +477,7 @@
           }
 
           case 'attachment': {
-            console.log('attachment is clicked')
+            console.log(' attachment is clicked ', 'background:#c7320a;')
             let that = this
             this.whichBizDialog = 'AttachmentDialog'
             setTimeout(() => {

@@ -4,16 +4,18 @@
   开发日期：2017年8月17日
 -->
 <template lang="pug">
-  el-dialog(v-bind:visible="visible" v-bind:before-close="close" v-bind:close-on-click-modal="false")
+  el-dialog(v-bind:visible="visible" v-bind:before-close="close"
+  v-bind:close-on-click-modal="false"
+  v-bind:append-to-body="true")
     span(slot="title")
       i.iconfont.icon-attachment-column
       | 附件管理
-    el-button.upload
-      i.iconfont.icon-upload
-      | 上 传
-      input(type="file" v-on:change="selectedFile")
     div.file-list
-      kalix-paged-table(ref="pagedTable" v-bind:targetURL="targetURL" v-bind:jsonStr="jsonStr")
+      paged-table(ref="pagedTable"
+      v-bind:targetURL="targetURL"
+      v-bind:jsonStr="jsonStr"
+      v-bind:btnList='btnList'
+      v-bind:customTableTool="customTableTool")
         template(slot="tableColumnSlot")
           el-table-column(prop="attachmentName" label="名称")
             template(slot-scope="scope")
@@ -23,20 +25,25 @@
               span {{setFileSize(scope.row.attachmentSize)}}
           el-table-column(prop="attachmentType" label="类型" width="116")
           kalix-date-column(prop="creationDate" label="上传日期")
-          el-table-column(label="操作" width="120")
-            template(slot-scope="scope")
-              el-button(size="mini" type="danger" v-on:click="deleteSelectFile(scope.$index, scope.row)")
-                | 删除
-              a.el-button.el-button--primary.el-button--mini(v-bind:href="scope.row.attachmentPath" target="_blank")
-                | 下载
+          el-table-column(width="1")
+          <!--el-table-column(label="操作" width="120")-->
+          <!--template(slot-scope="scope")-->
+          <!--el-button(size="mini" type="danger" v-on:click="deleteSelectFile(scope.$index, scope.row)")-->
+          <!--| 删除-->
+          <!--a.el-button.el-button&#45;&#45;primary.el-button&#45;&#45;mini(v-bind:href="scope.row.attachmentPath" target="_blank")-->
+          <!--| 下载-->
     div.dialog-footer(slot="footer")
+      el-button.upload
+        i.iconfont.icon-upload
+        | 上 传
+        input(type="file" v-on:change="selectedFile")
       el-button(type="primary" v-on:click="onCancelClick") 关 闭
 </template>
 <script type="text/ecmascript-6">
   import Message from 'common/message'
   import EventBus from 'common/eventbus'
   import {AttachmentURL} from 'config/global.toml'
-//  import PagedTable from '@/components/custom/pagedTable'
+  import PagedTable from './pagedTable'
   import DateColumn from 'views/oa/comp/dateColumn'
   import prettyBytes from 'pretty-bytes'
 
@@ -44,6 +51,20 @@
   export default {
     data() {
       return {
+        btnList: [
+          {
+            id: 'delete',
+            title: '删除',
+            isShow: true,
+            isPermission: true
+          },
+          {
+            id: 'download',
+            title: '下载',
+            isShow: true,
+            isPermission: false
+          }
+        ],
         targetURL: AttachmentURL,
         jsonStr: '',
         bizKey: '',
@@ -102,6 +123,14 @@
           }
         })
       },
+      customTableTool(row, btnId, tb) {
+        switch (btnId) {
+          case 'download':
+            console.log('row', row.attachmentPath)
+            window.open(row.attachmentPath)
+            break
+        }
+      },
       deleteSelectFile(_index, row) {
         this.$confirm('确定要删除吗?', '提示', {
           confirmButtonText: '确定',
@@ -146,7 +175,7 @@
     },
     computed: {},
     components: {
-//      KalixPagedTable: PagedTable,
+      PagedTable,
       KalixDateColumn: DateColumn
     }
   }
@@ -156,7 +185,7 @@
     display inline-block
     position relative
     overflow hidden
-    margin-bottom 20px
+    float left
     input
       position absolute
       top 0
@@ -166,6 +195,7 @@
       opacity 0
 
   .file-list
+    margin -20px 0 -30px 0
     .el-button
       vertical-align top
       text-decoration none

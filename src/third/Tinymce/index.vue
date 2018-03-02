@@ -234,3 +234,8 @@
     display: inline-block;
   }
 </style>
+<style lang="stylus" type="text/stylus">
+  .tinymce-container.editor-container .mce-tinymce
+    box-sizing border-box
+
+</style>
