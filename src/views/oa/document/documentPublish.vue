@@ -32,9 +32,11 @@
       kalix-redhead-apply-view-form(v-bind:formModel.sync="redheadapplyFormModel" v-bind:isRequest="true" v-bind:bizId="formModel.redheadId")
       div.el-form.kalix-form-table
         div.table-title 发文信息
-        div
-          el-form-item.kalix-form-table-td(label="发文部门" prop="docDeptId" v-bind:rules="rules.docDeptId" v-bind:label-width="labelWidth")
+        div.s-flex
+          el-form-item.s-flex_item.kalix-form-table-td(label="发文部门" prop="docDeptId" v-bind:rules="rules.docDeptId" v-bind:label-width="labelWidth")
             kalix-org-select(v-model="formModel.docDeptId" v-on:selectChange="onOrgIdChange")
+          el-form-item.s-flex_item.kalix-form-table-td(label="发文日期" prop="docDate" v-bind:rules="rules.docDate" v-bind:label-width="labelWidth")
+            kalix-date-picker(v-model="formModel.docDate")
         div.s-flex
           el-form-item.s-flex_item.kalix-form-table-td(label="打印人" prop="printer" v-bind:rules="rules.printer" v-bind:label-width="labelWidth")
             el-input(v-model="formModel.printer")
@@ -42,10 +44,10 @@
             el-input(v-model="formModel.checker")
         div.s-flex
           el-form-item.s-flex_item.kalix-form-table-td(label="页数" prop="page" v-bind:label-width="labelWidth")
-            el-input(v-model="formModel.page")
+            el-input-number(v-model="formModel.page" v-bind:min="1" style="width:100%")
           el-form-item.s-flex_item.kalix-form-table-td(label="份数" prop="copy" v-bind:label-width="labelWidth")
-            el-input(v-model="formModel.copy")
-        div
+            el-input-number(v-model="formModel.copy" v-bind:min="1" style="width:100%")
+        div(v-if="false")
           el-form-item.kalix-form-table-td(label="抄送" prop="other" v-bind:label-width="labelWidth")
             el-input(v-model="formModel.other")
 </template>
@@ -56,6 +58,7 @@
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import UserOrgSelect from '@/components/biz/select/UserOrgSelect'
+  import DatePicker from '@/components/biz/date/datepicker.vue'
   import redheadapplyFormModel from '../redheadapply/model'
   import RedheadApplyViewForm from '../redheadapply/RedheadApplyViewForm.vue'
   import Message from 'common/message'
@@ -68,6 +71,7 @@
         formModel: Object.assign({}, FormModel),
         rules: {
           docDeptId: [{type: 'number', required: true, message: '请选择发文部门', trigger: 'change'}],
+          docDate: [{required: true, message: '请选择发文日期', trigger: 'change'}],
           printer: [{required: true, message: '请输入打印人', trigger: 'blur'}],
           checker: [{required: true, message: '请输入校对人', trigger: 'blur'}]
         },
@@ -80,24 +84,32 @@
       KalixDialog: Dialog,
       KalixDictSelect: BaseDictSelect,
       KalixOrgSelect: UserOrgSelect,
+      KalixDatePicker: DatePicker,
       KalixRedheadApplyViewForm: RedheadApplyViewForm
     },
     methods: {
       submitCustom (dialog) {
-        if (this.formModel.id) {
-          this.axios.request({
-            method: 'POST',
-            url: this.targetURL + this.formModel.id,
-            data: this.formModel,
-            params: {}
-          }).then((res) => {
-            Message.processResult(res)
-            dialog.$refs.dialogForm.resetFields()
-            // 刷新列表
-            EventBus.$emit(ON_REFRESH_DATA)
-            dialog._afterDialogClose()
-          })
-        }
+        dialog.$refs.dialogForm.validate((valid) => {
+          if (valid) {
+            if (this.formModel.id) {
+              this.axios.request({
+                method: 'POST',
+                url: this.targetURL + this.formModel.id,
+                data: this.formModel,
+                params: {}
+              }).then((res) => {
+                Message.processResult(res)
+                dialog.$refs.dialogForm.resetFields()
+                // 刷新列表
+                EventBus.$emit(ON_REFRESH_DATA)
+                dialog._afterDialogClose()
+              })
+            }
+          } else {
+            Message.error('请检查输入项！')
+            return false
+          }
+        })
       },
       onOrgIdChange(item) {
         this.formModel.docDept = item.name
