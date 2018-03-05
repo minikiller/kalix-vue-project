@@ -29,10 +29,10 @@
               li
                 el-dropdown(v-on:command="onFlowCommand" style="margin-top:10px;")
                   el-button
-                    | 代办工作
+                    | 待办工作
                     i.el-icon-arrow-down.el-icon--right
                   el-dropdown-menu(slot="dropdown")
-                    el-dropdown-item 代办流程
+                    el-dropdown-item 待办流程
                     // el-dropdown-item 流程-2
                     // el-dropdown-item 流程-3
               li

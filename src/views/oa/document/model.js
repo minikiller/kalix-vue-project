@@ -11,7 +11,7 @@ const FormModel = {
   checker: '',                // 校对
   page: null,                 // 页数
   copy: null,                 // 份数
-  other: '',                  // 抄送
+  other: '学校领导、学校各单位、部门',   // 抄送
   creationDate: null,         // 创建时间
   updateDate: null,           // 更新时间
   redheadId: null,            // 红头文件id

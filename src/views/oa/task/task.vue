@@ -11,6 +11,7 @@
       v-bind:targetURL='targetURL'
       v-bind:formModel.sync='formModel'
       v-bind:bizDialog='bizDialog'
+      v-bind:isFixedColumn="isFixedColumn"
       bizSearch='TaskSearch'
       v-bind:toolbarBtnList="toolbarBtnList"
       v-bind:isShowToolBar="isShowToolBar"
@@ -49,6 +50,7 @@
     filters: {},
     data() {
       return {
+        isFixedColumn: true,
         isShowToolBar: false,  // 不显示工具栏
         toolbarBtnList: [{id: 'add', isShow: false},
           {id: 'customBtn1', icon: 'icon-edit', title: '自定义按钮 1', isShow: false},

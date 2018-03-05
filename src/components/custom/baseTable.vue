@@ -145,6 +145,10 @@
         type: String,
         default: ''
       },
+      sort: {
+        type: String,
+        default: null
+      },
       tableFields: {   //  数据列表的列名
         type: Array
       },
@@ -473,7 +477,7 @@
           }
 
           case 'attachment': {
-            console.log('attachment is clicked')
+            console.log(' attachment is clicked ', 'background:#c7320a;')
             let that = this
             this.whichBizDialog = 'AttachmentDialog'
             setTimeout(() => {
@@ -507,7 +511,8 @@
             jsonStr: this.jsonStr,
             page: this.pager.currentPage,
             start: this.pager.start,
-            limit: this.pager.limit
+            limit: this.pager.limit,
+            sort: this.sort
           }
           if (this.noSearchParam === false) {
             _data = Object.assign(_data, this.searchParam)
