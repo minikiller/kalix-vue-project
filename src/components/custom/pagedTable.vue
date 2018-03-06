@@ -260,6 +260,11 @@
 <style lang="stylus" type="text/stylus">
   .page-wrapper
     margin-top 10px
+    .btn-wrapper
+      margin-left 20px
+    .el-button
+      .iconfont
+        font-size 14px
 
   .el-pager
     li

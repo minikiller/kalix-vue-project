@@ -26,12 +26,6 @@
           el-table-column(prop="attachmentType" label="类型" width="116")
           kalix-date-column(prop="creationDate" label="上传日期")
           el-table-column(width="1")
-          <!--el-table-column(label="操作" width="120")-->
-          <!--template(slot-scope="scope")-->
-          <!--el-button(size="mini" type="danger" v-on:click="deleteSelectFile(scope.$index, scope.row)")-->
-          <!--| 删除-->
-          <!--a.el-button.el-button&#45;&#45;primary.el-button&#45;&#45;mini(v-bind:href="scope.row.attachmentPath" target="_blank")-->
-          <!--| 下载-->
     div.dialog-footer(slot="footer")
       el-button.upload
         i.iconfont.icon-upload
@@ -195,7 +189,6 @@
       opacity 0
 
   .file-list
-    margin -20px 0 -30px 0
     .el-button
       vertical-align top
       text-decoration none

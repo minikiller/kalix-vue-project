@@ -66,7 +66,9 @@ add by yangz
         this.isShowToolBar = flag
       },
       onToolBarClick(btnId) {
-        this.onRefreshClick()
+        if (btnId === 'refresh') {
+          this.onRefreshClick()
+        }
       },
       onRefreshClick() { // 刷新按钮点击事件
         this.getMenu()
@@ -75,8 +77,11 @@ add by yangz
         this.$emit('menuItem', JSON.parse(key))
       },
       getMenu() {
+        let _data = {
+          jsonStr: this.paramStr
+        }
         this.axios.get(this.menuUrl, {
-          params: this.paramStr
+          params: _data
         }).then(response => {
           if (response.data) {
             this.menuItems = response.data.children
