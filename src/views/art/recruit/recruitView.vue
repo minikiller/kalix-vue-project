@@ -46,7 +46,7 @@
           el-input(v-model="formModel.position" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="工作省份" prop="region" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.region" readonly)
+          kalix-dict-select(v-model="formModel.region" appName="art" dictType="省份" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="工作城市" prop="city" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.city" readonly)
       div.s-flex
@@ -59,14 +59,17 @@
           el-input(v-model="formModel.jobNumbers" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="学历" prop="education" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.education" readonly)
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="职能类别" prop="functionCategoryId" v-bind:label-width="labelWidth")
-          kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL" disabled)
-        el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.salary" readonly)
       div
-        el-form-item.kalix-form-table-td(label="应用技术名称" prop="appliedTechnology" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.appliedTechnology" type="textarea" readonly)
+        el-form-item.kalix-form-table-td(label="职能类别" prop="functionCategoryId" v-bind:label-width="labelWidth")
+          kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL" disabled)
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="试用期薪资" prop="probationSalary" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.probationSalary" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="转正薪资" prop="salary" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.salary" readonly)
+      <!--div-->
+        <!--el-form-item.kalix-form-table-td(label="应用技术名称" prop="appliedTechnology" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.appliedTechnology" type="textarea" readonly)-->
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="个人要求" prop="personRequires" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" multiple disabled)
