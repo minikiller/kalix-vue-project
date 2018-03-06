@@ -20,7 +20,8 @@ const FormModel = {
   jobNumbers: 1,            // 岗位个数
   education: '',            // 学历
   functionCategoryId: null, // 职能类别，对象字典
-  salary: 1000,             // 薪资
+  probationSalary: 1600,     // 试用期薪资
+  salary: 2000,              // 转正薪资
   // appliedTechnology: '',    // 应用技术名称
   personRequires: '',       // 个人要求
   jobType: null             // 工作类型
