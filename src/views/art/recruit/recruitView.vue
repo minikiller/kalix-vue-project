@@ -64,9 +64,9 @@
           kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.salary" readonly)
-      div
-        el-form-item.kalix-form-table-td(label="应用技术名称" prop="appliedTechnology" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.appliedTechnology" type="textarea" readonly)
+      <!--div-->
+        <!--el-form-item.kalix-form-table-td(label="应用技术名称" prop="appliedTechnology" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.appliedTechnology" type="textarea" readonly)-->
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="个人要求" prop="personRequires" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.personRequires" appName="art" dictType="个人要求" multiple disabled)
