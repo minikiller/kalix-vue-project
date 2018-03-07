@@ -55,7 +55,7 @@
             el-tag(type="warning")
               i.header-icon.el-icon-edit
               | &nbsp;业务审批
-          el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
+          el-form(ref="dialogForm" v-bind:model="formModel" label-width="100px")
             el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
               el-input(v-model="formModel.content" type="textarea")
             el-form-item
@@ -110,7 +110,8 @@
         bizData: {}, // 流程业务的动态返回配置信息
         bizForm: {}, // 流程数据信息
         title: '',
-        activeNames: ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab'],
+        /* activeNames: ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab'], */
+        activeNames: ['bizDataTab', 'attachmentTab'],
         isView: true,
         bizKey: 'taskComplete',
         whichBizForm: '', // 动态加载业务view
@@ -132,7 +133,8 @@
             this.$refs.dialogForm.resetFields()
           }
         } else {
-          this.activeNames = ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab']
+          // this.activeNames = ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab']
+          this.activeNames = ['bizDataTab', 'approveTab']
         }
       }
     },
