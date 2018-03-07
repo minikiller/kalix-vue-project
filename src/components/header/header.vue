@@ -130,26 +130,6 @@
       onOpenMenu(flag) {
         this.isShowAsideBtn && (this.menuIsOpen = flag)
       },
-      // 计算 ulMenu 高度，决定 menu 是否带有展开功能
-      _setAsideBtn() {
-        setTimeout(() => {
-          this.isShowAsideBtn = (this.$refs.ulMenu.clientHeight > 64)
-        }, 20)
-      },
-      // 判断是否显示快捷按钮
-      _setTopBtns() {
-        // 是否显示 消息 按钮
-        let oaItem = this.menuList.filter(item => {
-          return item.id === 'oa'
-        })
-        this.isShowMessage = (oaItem.length > 0)
-
-        // 是否显示 待办工作 按钮
-        let scheduleItem = this.menuList.filter(item => {
-          return item.id === 'schedule'
-        })
-        this.isFlowCommand = (scheduleItem.length > 0)
-      },
       setTheme(theme) {
         if (theme) {
           this.themeValue = theme
@@ -169,6 +149,7 @@
           this.menuList = toolListData
           this._setAsideBtn()
           this._setTopBtns()
+          this._getDict()
         } else {
           const data = {
             _dc: cd,
@@ -181,11 +162,12 @@
           }).then(response => {
             if (response && response.data) {
               console.log('[toolListData] data:', response.data)
-              this.menuList = response.data
-              toolListData = this.menuList
+              toolListData = response.data
+              this.menuList = toolListData
               Cache.save('toolListData', JSON.stringify(toolListData))
               this._setAsideBtn()
               this._setTopBtns()
+              this._getDict()
               // EventBus.$emit('toolListDataComplete', toolListData[0].id)
               if (toolListData.length && toolListData[0].id) {
                 this.$router.push({
@@ -310,6 +292,48 @@
       },
       onChangeTheme() {
         this.$emit('onChangeTheme', this.themeValue)
+      },
+      // 计算 ulMenu 高度，决定 menu 是否带有展开功能
+      _setAsideBtn() {
+        setTimeout(() => {
+          this.isShowAsideBtn = (this.$refs.ulMenu.clientHeight > 64)
+        }, 20)
+      },
+      // 判断是否显示快捷按钮
+      _setTopBtns() {
+        // 是否显示 消息 按钮
+        let oaItem = this.menuList.filter(item => {
+          return item.id === 'oa'
+        })
+        this.isShowMessage = (oaItem.length > 0)
+
+        // 是否显示 待办工作 按钮
+        let scheduleItem = this.menuList.filter(item => {
+          return item.id === 'schedule'
+        })
+        this.isFlowCommand = (scheduleItem.length > 0)
+      },
+      _getDict() {
+        this.menuList.forEach(item => {
+          const DictURL = `/camel/rest/${item.id}/dicts`
+          const DictKey = `${item.id.toUpperCase()}-DICT-KEY`
+          if (!Cache.get(DictKey)) {
+            const data = {
+              page: 1,
+              start: 0,
+              limit: 200,
+              sort: '[{\'property\': \'value\', \'direction\': \'ASC\'}]'
+            }
+            this.axios.get(DictURL, {
+              params: data
+            }).then(response => {
+              if (response.data) {
+                Cache.save(DictKey, JSON.stringify(response.data.data))
+                console.log(`dict cached under key ${DictKey}`, response.data)
+              }
+            })
+          }
+        })
       }
     },
     components: {
