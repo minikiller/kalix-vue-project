@@ -149,7 +149,6 @@
           this.menuList = toolListData
           this._setAsideBtn()
           this._setTopBtns()
-          this._getDict()
         } else {
           const data = {
             _dc: cd,
@@ -167,7 +166,6 @@
               Cache.save('toolListData', JSON.stringify(toolListData))
               this._setAsideBtn()
               this._setTopBtns()
-              this._getDict()
               // EventBus.$emit('toolListDataComplete', toolListData[0].id)
               if (toolListData.length && toolListData[0].id) {
                 this.$router.push({
@@ -302,38 +300,38 @@
       // 判断是否显示快捷按钮
       _setTopBtns() {
         // 是否显示 消息 按钮
-        let oaItem = this.menuList.filter(item => {
-          return item.id === 'oa'
-        })
-        this.isShowMessage = (oaItem.length > 0)
+        this.isShowMessage = this._chkShortcutBtn('common')
 
         // 是否显示 待办工作 按钮
-        let scheduleItem = this.menuList.filter(item => {
-          return item.id === 'schedule'
-        })
-        this.isFlowCommand = (scheduleItem.length > 0)
+        this.isFlowCommand = this._chkShortcutBtn('oa')
       },
-      _getDict() {
-        this.menuList.forEach(item => {
-          const DictURL = `/camel/rest/${item.id}/dicts`
-          const DictKey = `${item.id.toUpperCase()}-DICT-KEY`
-          if (!Cache.get(DictKey)) {
-            const data = {
-              page: 1,
-              start: 0,
-              limit: 200,
-              sort: '[{\'property\': \'value\', \'direction\': \'ASC\'}]'
-            }
-            this.axios.get(DictURL, {
-              params: data
-            }).then(response => {
-              if (response.data) {
-                Cache.save(DictKey, JSON.stringify(response.data.data))
-                console.log(`dict cached under key ${DictKey}`, response.data)
-              }
-            })
-          }
+      _chkShortcutBtn(_itemId) {
+        let items = this.menuList.filter(item => {
+          return item.id === _itemId
         })
+        this._getDict(_itemId)
+        return (items.length > 0)
+      },
+      // 获取快捷按钮对应的数据字典
+      _getDict(_id) {
+        const DictURL = `/camel/rest/${_id}/dicts`
+        const DictKey = `${_id.toUpperCase()}-DICT-KEY`
+        if (!Cache.get(DictKey)) {
+          const data = {
+            page: 1,
+            start: 0,
+            limit: 200,
+            sort: '[{\'property\': \'value\', \'direction\': \'ASC\'}]'
+          }
+          this.axios.get(DictURL, {
+            params: data
+          }).then(response => {
+            if (response.data) {
+              Cache.save(DictKey, JSON.stringify(response.data.data))
+              console.log(`dict cached under key ${DictKey}`, response.data)
+            }
+          })
+        }
       }
     },
     components: {
