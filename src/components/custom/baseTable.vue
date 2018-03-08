@@ -145,6 +145,9 @@
         type: String,
         default: ''
       },
+      appendCondition: { // search组件之外的查询条件
+        type: Array
+      },
       sort: {
         type: String,
         default: null
@@ -516,6 +519,10 @@
           }
           if (this.noSearchParam === false) {
             _data = Object.assign(_data, this.searchParam)
+            // 添加search组件之外的查询条件，解决jsonStr key覆盖问题
+            if (this.appendCondition && _data.jsonStr.length > 0) {
+              _data.jsonStr = _data.jsonStr.substring(0, _data.jsonStr.length - 1) + ',' + this.appendCondition + '}'
+            }
           }
           this.$http.get(this.targetURL, {
             params: _data

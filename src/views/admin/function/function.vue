@@ -9,8 +9,10 @@
     keep-alive
       el-row.function-row(:gutter="0")
         el-col.function-col(:span="4" style="padding:8px 0 8px 8px;")
-          kalix-nav-menu(title="应用列表" v-bind:basePath="itemBasePath" v-bind:toolbarBtnList="toolbarBtnList" v-bind:menuUrl="targetUrl"
-            v-on:menuItem="getMenuItem" )
+          kalix-nav-menu(title="应用列表" selfIconCls="tit_icon iconfont icon-application-management"
+            v-bind:basePath="itemBasePath" v-bind:toolbarBtnList="toolbarBtnList"
+            v-bind:menuUrl="targetUrl" v-bind:menuItems="menuItems" v-bind:isIconSelf="isIconSelf"
+            v-on:menuItems="getMenuItems" v-on:menuItem="getMenuItem")
         el-col.function-col(:span="20")
           kalix-tree-grid(bizKey="function" title="功能管理"
             ref="kalixTreeGrid"
@@ -43,6 +45,7 @@
         targetUrl: functionMenuURL,
         treeUrl: undefined,
         functionUrl: functionURL,
+        menuItems: [],
         addFormModel: Object.assign({}, FormModel),
         editFormModel: Object.assign({}, FormModel),
         applicationName: undefined,
@@ -51,6 +54,7 @@
         parentPermission: undefined,
         kalixDialog: undefined,
         currentRow: undefined,
+        isIconSelf: true,
         bizDialog: [
           {id: 'add', dialog: 'AdminFunctionAdd'},
           {id: 'edit', dialog: 'AdminFunctionEdit'}
@@ -126,6 +130,9 @@
     computed: {
     },
     methods: {
+      getMenuItems(data) {
+        this.menuItems = data.children
+      },
       getMenuItem(val) {
         this.treeUrl = this.itemBasePath + val.id
         this.applicationName = val.name
