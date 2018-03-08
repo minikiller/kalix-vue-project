@@ -18,14 +18,80 @@
     .s-check__label
       display block
       cursor pointer
+      line-height 32px
+      height 32px
+      padding 0 12px
+      margin-top 16px
+      margin-left 20px
     .mn
+      .menu-main
+        position relative
+        background-color #FFFFFF
+        border 1px solid #FFFFFF
+        border-top 0
+        box-sizing border-box
+        height 65px
+        overflow hidden
+        flex-flow column
+        transition all .2s
+        .aside-btn
+          position absolute
+          bottom 0
+          left 0
+          width 100%
+          text-align center
+          font-size 0
+          line-height 0
+          height 10px
+          display flex
+          .line
+            flex 1
+            background-color #d8dce5
+            height 1px
+          .arrow
+            margin-top -1px
+            height 7px
+            overflow: hidden;
+            .arrow-mn
+              width 9px
+              height 9px
+              margin-top -4px
+              &:after
+                content ''
+                display block
+                width 9px
+                height 9px
+                transform rotate(45deg)
+                border 1px solid #d8dce5
+                box-sizing border-box
+
+        &.open
+          height min-content
+          border-color #352420
+          border-radius 0 0 5px 5px
+          box-shadow 1px 1px 5px rgba(0, 0, 0, .5)
+          .aside-btn
+            height 6px
+            background-color #ebebeb
+            .arrow
+              margin-top: -5px;
+              transform: rotate(180deg);
+              .arrow-mn
+                &:after
+                  background-color #ebebeb;
+                  border-color #CDD1DA
       ul
         text-align left
         li
           display inline-block
-          margin-left 20px
+          margin 0 10px
           cursor pointer
         &.menu
+          flex 1
+          box-sizing border-box
+          padding-bottom 16px
+          height min-content
+          min-width 150px
           li
             margin-top 16px
             .link-btn

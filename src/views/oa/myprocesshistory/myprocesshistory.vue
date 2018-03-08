@@ -9,7 +9,6 @@
     keep-alive
       base-table(:isShowToolBar="isShowToolBar" bizKey="myprocesshistory" title='我的流程列表'
       v-bind:targetURL="targetURL"
-      v-bind:formModel.sync="formModel"
       v-bind:isFixedColumn="isFixedColumn"
       v-bind:bizDialog="bizDialog"
       bizSearch="OaProcessHistorySearch"

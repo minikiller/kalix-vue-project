@@ -1,7 +1,7 @@
 <!--
-描述：系统头部组件
-开发人：冯伟斌
-开发日期：2017年10月24日
+  描述：系统头部组件
+  开发人：冯伟斌
+  开发日期：2017年10月24日
 -->
 
 <template lang="pug">
@@ -12,29 +12,33 @@
           div.logo(:class="{'small':menuChk}")
             img(src="./logo_oa_horizontal.png")
           div.s-flex_item.s-flex.mn
-            ul.s-flex_item.menu
-              li
-                label.s-check__label.link-btn(for="menuChk")
-                  input.s-check(type="checkbox" id="menuChk"
-                  v-on:change="menuChkChange" v-model="headerMenuChk")
-                  i(v-bind:class="{'el-icon-d-arrow-left':!menuChk,'el-icon-d-arrow-right':menuChk}")
-              li(v-for="item in menuList")
-                router-link.link-btn(tag="div" v-bind:to="{path:'/'+item.id}")
-                  i(:class="bindClass(item.iconCls)")
-                  | {{item.text}}
+            label.s-check__label.link-btn(for="menuChk")
+              input.s-check(type="checkbox" id="menuChk"
+              v-on:change="menuChkChange" v-model="headerMenuChk")
+              i(v-bind:class="{'el-icon-d-arrow-left':!menuChk,'el-icon-d-arrow-right':menuChk}")
+            div.s-flex_item
+              div.s-flex.menu-main(v-bind:class="{'open':menuIsOpen}" v-on:mouseover="onOpenMenu(true)"  v-on:mouseout="onOpenMenu(false)")
+                ul.menu(ref="ulMenu")
+                  li(v-for="item in menuList")
+                    router-link.link-btn(tag="div" v-bind:to="{path:'/'+item.id}")
+                      i(:class="bindClass(item.iconCls)")
+                      | {{item.text}}
+                div.aside-btn(v-if="isShowAsideBtn")
+                  div.line
+                  div.arrow
+                    div.arrow-mn
+                  div.line
             ul.aside
-              li
+              li(v-if="isShowMessage")
                 el-badge(:value="msgCount")
                   el-button(icon="el-icon-message" v-on:click="onMsgClick") 消息
-              li
+              li(v-if="isFlowCommand")
                 el-dropdown(v-on:command="onFlowCommand" style="margin-top:10px;")
                   el-button
                     | 待办工作
                     i.el-icon-arrow-down.el-icon--right
                   el-dropdown-menu(slot="dropdown")
                     el-dropdown-item 待办流程
-                    // el-dropdown-item 流程-2
-                    // el-dropdown-item 流程-3
               li
                 el-dropdown(v-on:command="handleCommand")
                   div.s-flex.el-dropdown-link
@@ -92,7 +96,11 @@
         themeValue: '',
         headerMenuChk: this.menuChk,
         msgCount: 0,
-        icon: ''
+        icon: '',
+        menuIsOpen: false,
+        isShowAsideBtn: false,
+        isShowMessage: false,
+        isFlowCommand: false
       }
     },
     watch: {
@@ -113,8 +121,15 @@
     },
     mounted() {
       this.initMenu()
+      window.onresize = () => {
+        this._setAsideBtn()
+      }
     },
     methods: {
+      // 展开导航按钮
+      onOpenMenu(flag) {
+        this.isShowAsideBtn && (this.menuIsOpen = flag)
+      },
       setTheme(theme) {
         if (theme) {
           this.themeValue = theme
@@ -132,6 +147,8 @@
         }
         if (!isEmptyObject(toolListData)) {
           this.menuList = toolListData
+          this._setAsideBtn()
+          this._setTopBtns()
         } else {
           const data = {
             _dc: cd,
@@ -144,9 +161,11 @@
           }).then(response => {
             if (response && response.data) {
               console.log('[toolListData] data:', response.data)
-              this.menuList = response.data
-              toolListData = this.menuList
+              toolListData = response.data
+              this.menuList = toolListData
               Cache.save('toolListData', JSON.stringify(toolListData))
+              this._setAsideBtn()
+              this._setTopBtns()
               // EventBus.$emit('toolListDataComplete', toolListData[0].id)
               if (toolListData.length && toolListData[0].id) {
                 this.$router.push({
@@ -271,6 +290,48 @@
       },
       onChangeTheme() {
         this.$emit('onChangeTheme', this.themeValue)
+      },
+      // 计算 ulMenu 高度，决定 menu 是否带有展开功能
+      _setAsideBtn() {
+        setTimeout(() => {
+          this.isShowAsideBtn = (this.$refs.ulMenu.clientHeight > 64)
+        }, 20)
+      },
+      // 判断是否显示快捷按钮
+      _setTopBtns() {
+        // 是否显示 消息 按钮
+        this.isShowMessage = this._chkShortcutBtn('common')
+
+        // 是否显示 待办工作 按钮
+        this.isFlowCommand = this._chkShortcutBtn('oa')
+      },
+      _chkShortcutBtn(_itemId) {
+        let items = this.menuList.filter(item => {
+          return item.id === _itemId
+        })
+        this._getDict(_itemId)
+        return (items.length > 0)
+      },
+      // 获取快捷按钮对应的数据字典
+      _getDict(_id) {
+        const DictURL = `/camel/rest/${_id}/dicts`
+        const DictKey = `${_id.toUpperCase()}-DICT-KEY`
+        if (!Cache.get(DictKey)) {
+          const data = {
+            page: 1,
+            start: 0,
+            limit: 200,
+            sort: '[{\'property\': \'value\', \'direction\': \'ASC\'}]'
+          }
+          this.axios.get(DictURL, {
+            params: data
+          }).then(response => {
+            if (response.data) {
+              Cache.save(DictKey, JSON.stringify(response.data.data))
+              console.log(`dict cached under key ${DictKey}`, response.data)
+            }
+          })
+        }
       }
     },
     components: {
