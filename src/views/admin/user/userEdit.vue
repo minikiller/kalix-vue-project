@@ -2,7 +2,7 @@
   kalix-dialog.user-add(title='个人信息修改' bizKey="user" ref="kalixBizDialog" v-bind:form-model.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="用户类型" prop="userType" v-bind:rules="rules.userType" v-bind:label-width="labelWidth")
-        kalix-dict-select(v-model="formModel.userType" appName="admin" dictType="用户类型" v-on:input="change($event)" style="width:100%")
+        kalix-dict-select(v-model="formModel.userType" appName="admin" dictType="用户类型" v-on:input="change($event)" disabled)
       el-form-item(label="头像" prop="icon" v-bind:label-width="labelWidth")
         kalix-upload(v-model="formModel.icon" v-bind:isImage="true" style="width:100%")
       el-form-item(label="登录名" prop="loginName" v-bind:rules="rules.loginName" v-bind:label-width="labelWidth")
@@ -35,9 +35,9 @@
             el-radio(label="女")
         el-form-item(label="邮箱" prop="email" v-bind:rules="rules.email" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.email")
-        el-form-item(label="固定电话" prop="phone" v-bind:rules="rules.phone" v-bind:label-width="labelWidth")
+        el-form-item(label="固定电话" prop="phone" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.phone")
-        el-form-item(label="手机" prop="mobile" v-bind:label-width="labelWidth")
+        el-form-item(label="手机" prop="mobile" v-bind:rules="rules.mobile" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.mobile")
       template(v-else-if="formModel.userType === 3")
         el-form-item(label="企业组织机构代码" prop="code" v-bind:rules="rules.code_qy" v-bind:label-width="labelWidth")
@@ -75,7 +75,8 @@
             {required: true, message: '请输入邮箱地址', trigger: 'blur'},
             {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
           ],
-          phone: [{required: true, message: '请输入固定电话', trigger: 'blur'}]
+          phone: [{required: true, message: '请输入固定电话', trigger: 'blur'}],
+          mobile: [{required: true, message: '请输入手机', trigger: 'blur'}]
         },
         targetURL: usersURL,
         labelWidth: '140px'
@@ -91,7 +92,7 @@
         this.$refs.kalixBizDialog.open('', true, obj)
       },
       change(event) {
-        alert(event)
+        this.$refs.kalixBizDialog.$refs.dialogForm.clearValidate()
       }
     }
   }
