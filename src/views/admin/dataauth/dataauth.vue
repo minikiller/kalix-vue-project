@@ -34,21 +34,31 @@
         bizDialog: [
           {id: 'view', dialog: 'AdminDataAuthView'},
           {id: 'add', dialog: 'AdminDataAuthAdd'},
-          {id: 'edit', dialog: 'AdminDataAuthAdd'}
-  //      {id: 'addUser', dialog: 'AdminDataAuthAddUser'}
+          {id: 'edit', dialog: 'AdminDataAuthAdd'},
+          {id: 'addUser', dialog: 'AdminDataAuthAddUser'}
         ]
       }
     },
     methods: {
-      customTableTool(row, btnId, table) {
-//     if (btnId === 'addUser') {
-//        this.$refs.myDialog.open()
-//        table.whichBizDialog = 'AdminDataAuthAddUser'
-//        setTimeout(() => {
-//          table.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', false, row)
-//        }, 200)
-//        table.$refs.myDialog.openDialog('', {})
-//      }
+      customTableTool(row, btnId, that) {
+        // if (btnId === 'addUser') {
+        //    this.$refs.myDialog.open()
+        //    table.whichBizDialog = 'AdminDataAuthAddUser'
+        //    setTimeout(() => {
+        //      table.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', false, row)
+        //    }, 200)
+        //    table.$refs.myDialog.openDialog('', {})
+        //  }
+        if (btnId === 'addUser') {
+          that.whichBizDialog = 'AdminDataAuthAddUser'
+          let dig = that.bizDialog.filter((item) => {
+            return item.id === 'addUser'
+          })
+          that.whichBizDialog = dig[0].dialog
+          setTimeout(() => {
+            that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', false, row)
+          }, 20)
+        }
       }
     },
     components: {
