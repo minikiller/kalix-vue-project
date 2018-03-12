@@ -43,8 +43,8 @@ yarn test
 * vue-ueditor 富文本编辑器
 * https://github.com/monterail/vue-multiselect
 
-## doc url   
-> command: 
+## doc url
+> command:
 ```
 npm i docsify-cli -g
 
@@ -59,3 +59,5 @@ Listening at http://localhost:3000
 https://webpack.js.org/configuration/devtool/#devtool
 https://webpack.js.org/configuration/other-options/#cache
 
+## change log
+http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
