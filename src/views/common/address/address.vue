@@ -1,0 +1,245 @@
+<!--
+描述：我的首页-通讯录
+开发人：yangz
+开发日期：2018年03月05日
+-->
+<template lang="pug">
+  div.kalix-article
+    keep-alive
+      el-row.address-row(:gutter="0")
+        el-col.address-col(:span="6" style="padding:20px 0 20px 8px;")
+          keep-alive
+            base-nav-menu.address-menu(title="组列表" bizKey="addressGroup"
+            v-bind:toolbarBtnList="toolbarBtnList" v-bind:menuUrl="groupUrl"
+            v-bind:paramStr="paramStr" v-bind:activeIndex="activeIndex"
+            v-bind:bizDialog="groupDialog"
+            v-bind:dialogOptions="dialogOptionsGroup"
+            v-on:menuItems="getMenuItems" v-on:menuItem="getMenuItem"
+            ref="kalixNavMenu")
+              template(slot="menuItemSlot")
+                el-menu-item(v-if="menuItems.length" v-bind:index="itemIndex.toString()" v-for="(item, itemIndex) in menuItems" key="item.id" )
+                  i(v-bind:class="item.iconCls")
+                  span(slot="title")
+                    | {{item.groupName}}
+                  base-menu-tool(v-if="!item.default" v-bind:btnList="groupBtnList" v-bind:item="item"
+                    v-on:handleItemOption="handleItemOption")
+        el-col.address-col(:span="18" style="position:relative;height:100%;box-sizing: border-box;")
+          keep-alive
+            base-table.address-wrapper(bizKey="address" title="通讯录" bizSearch="CommonAddressSearch"
+            v-bind:targetURL="addressURL" v-bind:btnList="addressBtnList"
+            v-bind:isFixedColumn="isFixedColumn"
+            ref="addressTable")
+              template(slot="tableColumnSlot")
+                el-table-column(prop="icon" label="头像" align="center")
+                  template(slot-scope="scope")
+                    img(v-if="scope.row.icon" v-bind:src="scope.row.icon" width="32" height="32" alt="")
+                    img(v-else src="../../../components/header/default_user.png" width="32" height="32" alt="")
+                el-table-column(prop="name" label="姓名" align="center")
+                el-table-column(prop="sex" label="性别" align="center")
+                el-table-column(prop="nickName" label="昵称" align="center")
+                el-table-column(prop="phone" label="电话" align="center")
+                el-table-column(prop="email" label="邮箱" align="center")
+                el-table-column(prop="qqNum" label="QQ" align="center")
+                el-table-column(prop="address" label="通讯地址" align="center")
+                el-table-column(prop="groupId" label="所在分组" align="center")
+</template>
+
+<script type="text/ecmascript-6">
+  import BaseNavMenu from '@/components/custom/baseNavMenu'
+  import BaseTable from '@/components/custom/baseTable'
+  import BaseMenuTool from '@/components/custom/baseMenuTool'
+  import Cache from 'common/cache'
+  import Message from 'common/message'
+  import {AddressGroupURL, AddressURL, AddressComponent} from '../config.toml'
+  import {addressBtnList} from '../address/index'
+  import {groupBtnList} from '../address/groupIndex'
+  import {registerComponent} from '@/api/register'
+
+  registerComponent(AddressComponent)
+  export default {
+    props: {
+      btnList: {   //  table中按钮数组
+        type: Array,
+        required: false,
+        default: () => {
+          return []
+        }
+      }
+    },
+    created() {
+    },
+    data() {
+      return {
+        dialogOptionsGroup: {},
+        groupDialog: [
+          {id: 'add', dialog: 'CommonGroupAdd'},
+          {id: 'edit', dialog: 'CommonGroupEdit'}
+        ],
+        addressDialog: [
+          {id: 'add', dialog: 'CommonAddressAdd'},
+          {id: 'edit', dialog: 'CommonAddressEdit'},
+          {id: 'view', dialog: 'CommonAddressView'}
+        ],
+        toolbarBtnList: [
+          {id: 'refresh', isShow: true, icon: 'icon-refresh', title: '刷新'}
+        ],
+        paramStr: `{'userId': ` + Cache.get('id') + `}`,
+        userId: Cache.get('id'),
+        groupUrl: AddressGroupURL + '/all',
+        menuItems: [],
+        groupBtnList: groupBtnList,
+        addressBtnList: addressBtnList,
+        activeIndex: '0',
+        selectItem: undefined,
+        addressURL: undefined,
+        jsonStr: '',
+        isFixedColumn: true,
+        kalixDialog: undefined
+      }
+    },
+    components: {
+      BaseNavMenu,
+      BaseMenuTool,
+      BaseTable
+    },
+    mounted() {
+      this.dialogOptionsGroup = {
+        userId: this.userId
+      }
+    },
+    methods: {
+      initDialogOptionsGroup(currentItem) {
+        var groupNames = []
+        this.menuItems.forEach((item) => {
+          if (currentItem) {
+            if (currentItem.groupName !== item.groupName) {
+              groupNames.push(item.groupName)
+            }
+          } else {
+            groupNames.push(item.groupName)
+          }
+        })
+        this.dialogOptionsGroup = {
+          userId: this.userId,
+          groupNames: groupNames
+        }
+      },
+      getMenuItems(data) {
+        let isActive = data.active
+        let selectRow = data.selectRow
+        this.menuItems = data.data
+        if (this.menuItems.length > 0) {
+          this.initDialogOptionsGroup()
+          if (isActive) {
+            let elIndex = 0
+            if (selectRow === 'first') {
+              this.activeIndex = '0'
+            } else if (selectRow === 'last') {
+              elIndex = this.menuItems.length - 1
+              this.activeIndex = (this.menuItems.length - 1).toString()
+            }
+            setTimeout(() => {
+              let elMenu = document.querySelector('.address-menu .el-menu')
+              if (elMenu) {
+                let elMenuItemActives = elMenu.getElementsByClassName('is-active')
+                let elMenuItem = elMenu.children[elIndex]
+
+                if (elMenuItemActives[0]) {
+                  elMenuItemActives[0].className = 'el-menu-item'
+                }
+                if (elMenuItem) {
+                  elMenuItem.className = 'el-menu-item is-active'
+                }
+              }
+            }, 20)
+          }
+          this.jsonStr = `{'userId': ` + this.userId + `,'groupId': ` + this.menuItems[0].id + `}`
+          // this.groupConditionStr = '"userId": ' + Cache.get('id') + ',"groupId": ' + this.menuItems[0].id
+          this.addressURL = AddressURL + '/' + this.menuItems[this.activeIndex].id
+          console.log('this.addressURL====11111111', this.addressURL)
+          console.log('this.menuItems====11111111', this.menuItems)
+        }
+      },
+      getMenuItem(val) {
+        this.activeIndex = val.toString()
+        this.selectItem = this.menuItems[val]
+        this.jsonStr = `{'userId': ` + this.userId + `,'groupId': ` + this.selectItem.id + `}`
+        // this.groupConditionStr = '"userId": ' + Cache.get('id') + ',"groupId": ' + this.menuItems[0].id
+        this.addressURL = AddressURL + '/' + this.selectItem.id
+        console.log('this.addressURL====22222222', this.addressURL)
+        setTimeout(() => {
+          if (val !== this.menuItems.length - 1) {
+            let elMenu = document.querySelector('.address-menu .el-menu')
+            if (elMenu) {
+              let elMenuItemActives = elMenu.getElementsByClassName('is-active')
+              if (elMenuItemActives[1]) {
+                elMenuItemActives[1].className = 'el-menu-item'
+              }
+            }
+          }
+        }, 20)
+      },
+      handleItemOption(item, btnId) {
+        if (btnId === 'edit') {
+          this.doGroupEdit(item)
+        } else if (btnId === 'delete') {
+          this.doGroupDelete(item)
+        }
+      },
+      doGroupEdit(item) {
+        this.initDialogOptionsGroup(item)
+        let that = this
+        this.$refs.kalixNavMenu.getKalixDialog('edit', (_kalixDialog) => {
+          this.kalixDialog = _kalixDialog
+          setTimeout(() => {
+            this.editFormModel = item
+            this.kalixDialog.$refs.kalixBizDialog.open('编辑', true, this.editFormModel)
+            if (typeof (that.kalixDialog.init) === 'function') {
+              that.kalixDialog.init(this.dialogOptionsGroup)
+            }
+          }, 20)
+        })
+      },
+      doGroupDelete(item) {
+        this.$confirm('确定要删除吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          return this.axios.request({
+            method: 'DELETE',
+            url: this.groupUrl + '/' + item.id,
+            params: {}
+            // data: {
+            //   id: item.id
+            // }
+          })
+        }).then(response => {
+          this.$refs.kalixNavMenu.onRefreshClick()
+          Message.success(response.data.msg)
+        }).catch(() => {
+        })
+      }
+    }
+  }
+</script>
+
+<style scoped lang="stylus" type="text/stylus">
+  @import "~@/assets/stylus/color.styl"
+  .kalix-article
+    position relative
+    height 100%
+    overflow hidden
+    box-sizing border-box
+
+  .address-row
+    height 100%
+    .address-col
+      height 100%
+      box-sizing border-box
+
+  .address-wrapper
+    margin 0px 0
+    .kalix-wrapper
+      bottom 0 !important
+</style>

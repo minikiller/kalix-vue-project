@@ -44,7 +44,7 @@
   import EventBus from 'common/eventbus'
   import {baseURL} from 'config/global.toml'
   import redheadapplyFormModel from '../redheadapply/model'
-//  import {DictKeyValueObject} from 'common/keyValueObject'
+  //  import {DictKeyValueObject} from 'common/keyValueObject'
 
   // 注册全局组件
   registerComponent(DocumentComponent)
@@ -184,6 +184,7 @@
           })
         table.whichBizDialog = dig[0].dialog
         setTimeout(() => {
+          row.other = '学校领导、学校各单位、部门'
           table.$refs.kalixDialog.$refs.kalixBizDialog.open('发文', true, row)
         }, 20)
       },

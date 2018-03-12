@@ -9,7 +9,9 @@
     div.table-title 吉林动画学院红头文件申请表
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="名称" prop="title" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.title" readonly)
+        div.s-flex
+          el-input(v-model="formModel.title" readonly)
+          el-button(type="primary" icon="el-icon-search" v-on:click="onPreview") 预览
       el-form-item.s-flex_item.kalix-form-table-td(label="创建时间" prop="creationDate" v-bind:label-width="labelWidth")
         kalix-date-time-picker(v-model="formModel.creationDate" style="width:100%" readonly)
     div.s-flex
@@ -54,6 +56,8 @@
 <script type="text/ecmascript-6">
   import DateTimePicker from '@/components/biz/date/datetimepicker.vue'
   import {RedheadApplyURL} from '../config.toml'
+  import {baseURL} from 'config/global.toml'
+  import Message from 'common/message'
   import Vue from 'vue'
 
   export default {
@@ -100,6 +104,18 @@
               }
             }
           })
+        }
+      },
+      // 预览
+      onPreview() {
+        if (this.bizId) {
+          window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + this.bizId + '&filetype=html')
+        } else {
+          if (this.formModel.id) {
+            window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + this.formModel.id + '&filetype=html')
+          } else {
+            Message.warning('文号未关联红头文件,无法进行预览!')
+          }
         }
       }
     }

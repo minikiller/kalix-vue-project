@@ -16,9 +16,21 @@
     data() {
       return {
         searchFields: [
-          {label: '文号', prop: 'businessNo'},
           {label: '文件名称', prop: 'title'},
+          {
+            label: '文件状态',
+            prop: 'docStatus',
+            type: 'select',
+            options: [
+              {value: '新建', label: '新建'},
+              {value: '审批中', label: '审批中'},
+              {value: '审批通过', label: '审批通过'},
+              {value: '已发文', label: '已发文'},
+              {value: '已废除', label: '已废除'}
+            ]
+          },
           {label: '文号类型', prop: 'docType', type: 'dict', appName: 'oa', dictType: '文号类型'},
+          {label: '文号', prop: 'businessNo'},
           {
             label: '当前环节',
             prop: 'currentNode',

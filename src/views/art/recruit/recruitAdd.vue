@@ -10,9 +10,12 @@
       div.table-title 企业信息
       div
         el-form-item.kalix-form-table-td(label="企业组织机构代码" prop="companyCode" v-bind:rules="rules.companyCode" v-bind:label-width="labelWidth")
-          div.s-flex
-            el-input(v-model="formModel.companyCode" placeholder="请输入企业组织机构代码进行查询" v-on:focus="onCompanyCodeFocus")
-            el-button(type="primary" icon="el-icon-search" v-on:click="getCompany") 查询
+          template(v-if="isAdmin")
+            div.s-flex
+              el-input(v-model="formModel.companyCode" placeholder="请输入企业组织机构代码进行查询" v-on:focus="onCompanyCodeFocus")
+              el-button(type="primary" icon="el-icon-search" v-on:click="getCompanyByCode") 查询
+          template(v-else)
+            el-input(v-model="formModel.companyCode" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="企业名称" prop="companyName" v-bind:rules="rules.companyName" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.companyName" disabled)
@@ -62,10 +65,13 @@
           el-input-number(v-model="formModel.jobNumbers" v-bind:min="1" style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="学历" prop="education" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.education")
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="职能类别" prop="functionCategoryId" v-bind:label-width="labelWidth")
+      div
+        el-form-item.kalix-form-table-td(label="职能类别" prop="functionCategoryId" v-bind:label-width="labelWidth")
           kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL")
-        el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:label-width="labelWidth")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="试用期薪资" prop="probationSalary" v-bind:label-width="labelWidth")
+          el-input-number(v-model="formModel.probationSalary" v-bind:step="400" style="width:100%")
+        el-form-item.s-flex_item.kalix-form-table-td(label="转正薪资" prop="salary" v-bind:label-width="labelWidth")
           el-input-number(v-model="formModel.salary" v-bind:step="500" style="width:100%")
       <!--div-->
         <!--el-form-item.kalix-form-table-td(label="应用技术名称" prop="appliedTechnology" v-bind:label-width="labelWidth")-->
@@ -85,6 +91,7 @@
   import DatePicker from '@/components/biz/date/datepicker.vue'
   import FcTree2 from '@/components/tree/basetree2'
   import Vue from 'vue'
+  import Cache from 'common/cache'
 
   export default {
     data() {
@@ -96,7 +103,7 @@
           position: [{required: true, message: '请输入岗位名称', trigger: 'blur'}]
         },
         targetURL: RecruitURL,
-        labelWidth: '140px',
+        labelWidth: '160px',
         functionCategroyURL: FunctionCategroyURL
       }
     },
@@ -105,6 +112,17 @@
       KalixDictSelect: BaseDictSelect,
       KalixDatePicker: DatePicker,
       KalixFcTree2: FcTree2
+    },
+    mounted() {
+      if (!this.isAdmin) {
+        this.getCompanyByUserId()
+      }
+    },
+    computed: {
+      // 判断当前登录用户是否是管理员
+      isAdmin() {
+        return (Cache.get('id') * 1 === -1 || Cache.get('id') * 1 === -2)
+      }
     },
     methods: {
       onCompanyCodeFocus() {
@@ -123,7 +141,7 @@
         this.formModel.companyCity = ''
         this.formModel.companyAddress = ''
       },
-      getCompany() {
+      getCompanyByCode() {
         this.initData()
         let companyCode = this.formModel.companyCode
         // let sort = '[{\'property\': \'creationDate\', \'direction\': \'DESC\'}]'
@@ -155,6 +173,42 @@
           })
         } else {
           alert('请输入企业组织机构代码')
+        }
+      },
+      getCompanyByUserId() {
+        this.initData()
+        this.formModel.companyCode = ''
+        let userId = Cache.get('id')
+        // let sort = '[{\'property\': \'creationDate\', \'direction\': \'DESC\'}]'
+        if (userId) {
+          let params = {
+            params: {
+              'jsonStr': {'userId': userId},
+              'page': 1,
+              'limit': 1,
+              'sort': null
+            }
+          }
+          Vue.axios.get(CompanyURL, params).then((response) => {
+            if (response.data.data && response.data.data.length > 0) {
+              let rec = response.data.data[0]
+              // this.formModel = Object.assign({}, rec)
+              this.formModel.companyCode = rec.code
+              this.formModel.companyName = rec.name
+              this.formModel.companyEmail = rec.email
+              this.formModel.companyPhone = rec.phone
+              this.formModel.companyMobile = rec.mobile
+              this.formModel.companyNature = rec.nature
+              this.formModel.companyScale = rec.scale
+              this.formModel.companyIndustry = rec.industry
+              this.formModel.companyLife = rec.life
+              this.formModel.companyRegion = rec.region
+              this.formModel.companyCity = rec.city
+              this.formModel.companyAddress = rec.address
+            }
+          })
+        } else {
+          alert('请重新登录系统!')
         }
       }
     }
