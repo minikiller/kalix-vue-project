@@ -41,6 +41,8 @@
             } else {
               callback()
             }
+          } else {
+            callback()
           }
         }
       }

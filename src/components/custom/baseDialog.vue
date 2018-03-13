@@ -110,7 +110,7 @@
                 this.submitComplete()
               }
               // 刷新列表
-              EventBus.$emit(ON_REFRESH_DATA)
+              EventBus.$emit(ON_REFRESH_DATA, this.bizKey)
               this._afterDialogClose()
               console.log('[kalix] dialog submit button clicked !')
               this.visible = false

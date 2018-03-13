@@ -14,7 +14,12 @@
     v-bind:bizSearch="'AdminOrgSearch'"
     v-bind:btnList="btnList"
     v-bind:bizDialog="bizDialog"
-    v-bind:formModel="formModel")
+    v-bind:formModel="formModel"
+    v-bind:dialogOptions="dialogOptions"
+    v-on:selectedRow="selectedRow"
+    v-bind:isSearchAfterHandle="true"
+    v-on:handleAfterSearch="handleAfterSearch"
+    v-bind:isLimitLayer="false")
 </template>
 
 <script type="text/ecmascript-6">
@@ -80,7 +85,8 @@
           {id: 'edit', dialog: 'AdminOrgEdit'},
           {id: 'add', dialog: 'AdminOrgAdd'},
           {id: 'addUser', dialog: 'AdminOrgAddUser'}
-        ]
+        ],
+        dialogOptions: {}
       }
     },
     created() {
@@ -89,6 +95,8 @@
 //        console.log(`[kalix]-[${this.bizKey}] registry name is:  ${item.name}, registry path is: ${item.path}`)
 //        Vue.component(item.name, require('' + item.path))
 //      })
+    },
+    mounted() {
     },
     methods: {
       customTableTool(row, btnId, that) {
@@ -106,6 +114,24 @@
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加用户', false, row)
             }, 20)
             break
+          }
+        }
+      },
+      selectedRow(row) {
+        if (row) {
+          this.dialogOptions = {
+            parentId: row.id,
+            // 选中以后orgName 为当前选中行的值
+            orgName: row.name
+          }
+        }
+      },
+      handleAfterSearch(tableData) {
+        if (tableData && tableData.length) {
+          this.dialogOptions = {
+            parentId: tableData[0].parentId,
+            // 未被选中时orgName 为父节点名
+            orgName: tableData[0].parentName
           }
         }
       }
