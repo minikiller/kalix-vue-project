@@ -16,9 +16,7 @@
 
   export default {
     props: {
-      value: {
-        Type: String
-      },
+      value: null,
       width: {
         Type: String,
         default: '100%'
@@ -30,6 +28,7 @@
     },
     data() {
       return {
+        currentValue: '',
         editor: null,
         toolBars: [
           {
@@ -88,11 +87,18 @@
       }
     },
     mounted() {
+      let oldCnt = ''
+      let newCnt = ''
+      let editorMt = null
       /* eslint-disable */
+      if (this.value) {
+        this.currentValue = this.value
+      }
       setTimeout(() => {
         this.editor = new Squire(document.getElementById('editor'), {
           blockTag: 'span'
         });
+        window.ED = this.editor
         this.editor.testPresenceinSelection = (name, action, format, validation) => {
           let path = this.editor.getPath(),
             test = (validation.test(path) | this.editor.hasFormat(format));
@@ -112,7 +118,19 @@
           this.editor.setTextAlignment('left')
         }
 
-        this.editor.setHTML(this.value)
+        this.editor.setHTML(this.currentValue)
+
+        editorMt = setInterval(() => {
+          newCnt = this.editor.getHTML()
+          if (oldCnt !== newCnt) {
+            oldCnt = newCnt
+            this.$emit('input', this.editor.getHTML())
+            console.log('input ==== input')
+          }
+          let divEditor = document.getElementById('editor')
+          !divEditor && (clearInterval(editorMt), console.log('editorMt clearInterval'))
+        }, 500)
+
       }, 20)
     },
     methods: {
@@ -129,10 +147,10 @@
           testUnderline: editor.testPresenceinSelection('underline', item.key, 'U', (/>U\b/)),
           testOrderedList: editor.testPresenceinSelection('makeOrderedList', item.key, 'OL', (/>OL\b/)),
           testLink: editor.testPresenceinSelection('makeLink', item.key, 'A', (/>A\b/)),
-          testQuote: editor.testPresenceinSelection('increaseQuoteLevel', item.key, 'blockquote', (/>blockquote\b/)),
-          isNotValue: function (a) {
-            return (a === item.key && this.value !== '')
-          }
+          testQuote: editor.testPresenceinSelection('increaseQuoteLevel', item.key, 'blockquote', (/>blockquote\b/))
+          // isNotValue: function (a) {
+          //   return (a === item.key && this.value !== '')
+          // }
         }
         if (test.testBold | test.testItalic | test.testUnderline | test.testOrderedList | test.testLink | test.testQuote) {
           if (test.testBold) editor.removeBold()
@@ -147,11 +165,6 @@
           editor[item.key]();
           editor.focus();
         }
-      }
-    },
-    watch: {
-      value(newValue, oldValue) {
-        this.editor.setHTML(this.value)
       }
     },
     computed: {
