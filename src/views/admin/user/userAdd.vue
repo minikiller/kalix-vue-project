@@ -2,7 +2,7 @@
   kalix-dialog.user-add(bizKey="user" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       el-form-item(label="用户类型" prop="userType" v-bind:rules="rules.userType" v-bind:label-width="labelWidth")
-        kalix-dict-select(v-model="formModel.userType" appName="admin" dictType="用户类型" v-on:input="change($event)" style="width:100%")
+        kalix-dict-select(v-model="formModel.userType" appName="admin" dictType="用户类型" v-on:input="change($event)")
       template(v-if="formModel.userType === 0 || formModel.userType === 2")
         el-form-item(label="工号" prop="code" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.code")
