@@ -21,15 +21,17 @@
               <!--div.rhf-content-->
                 <!--div.rhf-content-2-->
                   <!--div.rhf-article-doc(v-html="scope.row.docContent" data-content)-->
-          kalix-biz-no-column(title="文号" width="200")  // 业务编号
           el-table-column(prop="title" label="文件名称" align="center" width="220")
+          el-table-column
+          kalix-doc-status-column  // 文件状态
+          el-table-column(prop="docTypeName" label="文号类型" align="center" width="120")
+          el-table-column
+          kalix-biz-no-column(title="文号" width="200")  // 业务编号
           <!--el-table-column(prop="docCaption" label="文号标题" align="center" width="100")-->
-          el-table-column(prop="docTypeName" label="文号类型" align="center" width="220")
           el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
           kalix-process-status-column // 工作流状态
           el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
-          kalix-doc-status-column  // 文件状态
           kalix-date-column(prop="creationDate" label="创建时间")
           kalix-date-column(prop="applyDate" label="申请时间")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
