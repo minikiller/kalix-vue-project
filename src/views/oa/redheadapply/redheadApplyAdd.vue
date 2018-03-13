@@ -25,7 +25,8 @@
       <!--el-input(v-model="formModel.docContent" type="textarea")-->
       div
         el-form-item.kalix-form-table-td(label="发文内容" v-bind:label-width="labelWidth" prop="docContent" v-bind:rules="rules.docContent")
-          tinymce(v-model="formModel.docContent" ref="editor")
+          <!--tinymce(v-model="formModel.docContent" ref="editor")-->
+          squire(v-model="formModel.docContent" ref="editor")
       div
         el-form-item.kalix-form-table-td(label="审批选项" v-bind:label-width="labelWidth")
           div(style="text-align:center")
@@ -56,6 +57,7 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import Tinymce from '@/third/Tinymce'
   import BaseCheckbox from '@/components/custom/baseCheckbox'
+  import Squire from '@/components/squire/Squire'
 
   export default {
     watch: {
@@ -163,11 +165,11 @@
       kalixDialogOpen() {
         this.$nextTick(() => {
           console.log('%c ==== KalixDialogOpen ==== ', 'color:#FFF;background:#055', this.$refs.editor)
-          this.$refs.editor.initTinymce()
+          // this.$refs.editor.initTinymce()
         })
       },
       kalixDialogClose() {
-        this.$refs.editor.destroyTinymce()
+        // this.$refs.editor.destroyTinymce()
       },
       submitBefore(baseDialog, callBack) {
         // this.formModel.docType = this.formModel.docAssort[1]
@@ -193,7 +195,8 @@
       KalixDictSelect: BaseDictSelect,
       KalixDialog: Dialog,
       Tinymce,
-      KalixCheckbox: BaseCheckbox
+      KalixCheckbox: BaseCheckbox,
+      Squire
     }
   }
 </script>
