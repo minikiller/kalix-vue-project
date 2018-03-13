@@ -145,6 +145,10 @@
         type: String,
         default: ''
       },
+      otherStr: { // 非search from下参数
+        type: String,
+        default: ''
+      },
       appendCondition: { // search组件之外的查询条件
         type: Array
       },
@@ -515,7 +519,8 @@
             page: this.pager.currentPage,
             start: this.pager.start,
             limit: this.pager.limit,
-            sort: this.sort
+            sort: this.sort,
+            otherStr: this.otherStr
           }
           if (this.noSearchParam === false) {
             _data = Object.assign(_data, this.searchParam)

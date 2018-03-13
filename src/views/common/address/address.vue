@@ -10,12 +10,12 @@
         el-col.address-col(:span="6" style="padding:20px 0 20px 8px;")
           keep-alive
             base-nav-menu.address-menu(title="组列表" bizKey="addressGroup"
-            v-bind:toolbarBtnList="toolbarBtnList" v-bind:menuUrl="groupUrl"
-            v-bind:paramStr="paramStr" v-bind:activeIndex="activeIndex"
-            v-bind:bizDialog="groupDialog"
-            v-bind:dialogOptions="dialogOptionsGroup"
-            v-on:menuItems="getMenuItems" v-on:menuItem="getMenuItem"
-            ref="kalixNavMenu")
+              v-bind:toolbarBtnList="toolbarBtnList" v-bind:menuUrl="groupUrl"
+              v-bind:paramStr="paramStr" v-bind:activeIndex="activeIndex"
+              v-bind:bizDialog="groupDialog"
+              v-bind:dialogOptions="dialogOptionsGroup"
+              v-on:menuItems="getMenuItems" v-on:menuItem="getMenuItem"
+              ref="kalixNavMenu")
               template(slot="menuItemSlot")
                 el-menu-item(v-if="menuItems.length" v-bind:index="itemIndex.toString()" v-for="(item, itemIndex) in menuItems" key="item.id" )
                   i(v-bind:class="item.iconCls")
@@ -26,22 +26,25 @@
         el-col.address-col(:span="18" style="position:relative;height:100%;box-sizing: border-box;")
           keep-alive
             base-table.address-wrapper(bizKey="address" title="通讯录" bizSearch="CommonAddressSearch"
-            v-bind:targetURL="addressURL" v-bind:btnList="addressBtnList"
-            v-bind:isFixedColumn="isFixedColumn"
-            ref="addressTable")
+              v-bind:targetURL="addressURL" v-bind:btnList="addressBtnList" v-bind:otherStr="jsonStr"
+              v-bind:isFixedColumn="isFixedColumn" v-bind:bizDialog="addressDialog"
+              v-bind:dialogOptions="dialogOptionsAddress" v-bind:isAfterSearch = "true"
+              v-on:handleAfterSearch = "addressAfterSearch" v-bind:customTableTool="customTableTool"
+              v-bind:customRender="showGroupName"
+              ref="addressTable")
               template(slot="tableColumnSlot")
                 el-table-column(prop="icon" label="头像" align="center")
                   template(slot-scope="scope")
                     img(v-if="scope.row.icon" v-bind:src="scope.row.icon" width="32" height="32" alt="")
                     img(v-else src="../../../components/header/default_user.png" width="32" height="32" alt="")
-                el-table-column(prop="name" label="姓名" align="center")
-                el-table-column(prop="sex" label="性别" align="center")
-                el-table-column(prop="nickName" label="昵称" align="center")
-                el-table-column(prop="phone" label="电话" align="center")
-                el-table-column(prop="email" label="邮箱" align="center")
-                el-table-column(prop="qqNum" label="QQ" align="center")
-                el-table-column(prop="address" label="通讯地址" align="center")
-                el-table-column(prop="groupId" label="所在分组" align="center")
+                el-table-column(prop="name" label="姓名" align="center" width="100px")
+                el-table-column(prop="sex" label="性别" align="center" width="100px")
+                el-table-column(prop="nickName" label="昵称" align="center" width="100px")
+                el-table-column(prop="phone" label="电话" align="center" width="150px")
+                el-table-column(prop="email" label="邮箱" align="center" width="150px")
+                el-table-column(prop="qqNum" label="QQ" align="center" width="150px")
+                el-table-column(prop="address" label="通讯地址" align="center" width="200px")
+                el-table-column(prop="groupName" label="所在分组" align="center" width="100px")
 </template>
 
 <script type="text/ecmascript-6">
@@ -71,6 +74,7 @@
     data() {
       return {
         dialogOptionsGroup: {},
+        dialogOptionsAddress: {},
         groupDialog: [
           {id: 'add', dialog: 'CommonGroupAdd'},
           {id: 'edit', dialog: 'CommonGroupEdit'}
@@ -92,9 +96,11 @@
         activeIndex: '0',
         selectItem: undefined,
         addressURL: undefined,
+        baseAddressUrl: AddressURL,
         jsonStr: '',
         isFixedColumn: true,
-        kalixDialog: undefined
+        kalixDialog: undefined,
+        groupName: undefined
       }
     },
     components: {
@@ -104,6 +110,9 @@
     },
     mounted() {
       this.dialogOptionsGroup = {
+        userId: this.userId
+      }
+      this.dialogOptionsAddress = {
         userId: this.userId
       }
     },
@@ -124,7 +133,7 @@
           groupNames: groupNames
         }
       },
-      getMenuItems(data) {
+      getMenuItems(data, bizKey) {
         let isActive = data.active
         let selectRow = data.selectRow
         this.menuItems = data.data
@@ -134,6 +143,7 @@
             let elIndex = 0
             if (selectRow === 'first') {
               this.activeIndex = '0'
+              this.clearLastSelectStyle()
             } else if (selectRow === 'last') {
               elIndex = this.menuItems.length - 1
               this.activeIndex = (this.menuItems.length - 1).toString()
@@ -153,28 +163,29 @@
               }
             }, 20)
           }
-          this.jsonStr = `{'userId': ` + this.userId + `,'groupId': ` + this.menuItems[0].id + `}`
-          // this.groupConditionStr = '"userId": ' + Cache.get('id') + ',"groupId": ' + this.menuItems[0].id
+          this.jsonStr = `{'userId': ` + this.userId + `,'groupId': ` + this.menuItems[this.activeIndex].id + `}`
           this.addressURL = AddressURL + '/' + this.menuItems[this.activeIndex].id
-          console.log('this.addressURL====11111111', this.addressURL)
-          console.log('this.menuItems====11111111', this.menuItems)
+          this.groupName = this.menuItems[this.activeIndex].groupName
         }
       },
-      getMenuItem(val) {
+      getMenuItem(val, bizKey) {
         this.activeIndex = val.toString()
         this.selectItem = this.menuItems[val]
         this.jsonStr = `{'userId': ` + this.userId + `,'groupId': ` + this.selectItem.id + `}`
         // this.groupConditionStr = '"userId": ' + Cache.get('id') + ',"groupId": ' + this.menuItems[0].id
         this.addressURL = AddressURL + '/' + this.selectItem.id
-        console.log('this.addressURL====22222222', this.addressURL)
+        this.groupName = this.selectItem.groupName
+        if (val !== this.menuItems.length - 1) {
+          this.clearLastSelectStyle()
+        }
+      },
+      clearLastSelectStyle() {
         setTimeout(() => {
-          if (val !== this.menuItems.length - 1) {
-            let elMenu = document.querySelector('.address-menu .el-menu')
-            if (elMenu) {
-              let elMenuItemActives = elMenu.getElementsByClassName('is-active')
-              if (elMenuItemActives[1]) {
-                elMenuItemActives[1].className = 'el-menu-item'
-              }
+          let elMenu = document.querySelector('.address-menu .el-menu')
+          if (elMenu) {
+            let elMenuItemActives = elMenu.getElementsByClassName('is-active')
+            if (elMenuItemActives[1]) {
+              elMenuItemActives[1].className = 'el-menu-item'
             }
           }
         }, 20)
@@ -209,9 +220,10 @@
           return this.axios.request({
             method: 'DELETE',
             url: this.groupUrl + '/' + item.id,
-            params: {}
+            params: {
+              jsonStr: this.paramStr
+            }
             // data: {
-            //   id: item.id
             // }
           })
         }).then(response => {
@@ -219,6 +231,58 @@
           Message.success(response.data.msg)
         }).catch(() => {
         })
+      },
+      addressAfterSearch(bizKey, tableData) {
+        if (bizKey === 'address') {
+          let curentAddressUsers = []
+          if (tableData && tableData.length > 0) {
+            tableData.forEach((row) => {
+              curentAddressUsers.push(row.addressUserId)
+            })
+          }
+          this.dialogOptionsAddress = {
+            userId: this.userId,
+            addressUsers: curentAddressUsers,
+            groupName: this.groupName
+          }
+        }
+      },
+      customTableTool(row, btnId, that) {
+        if (btnId === 'deleteSelf') {
+          this.$confirm('确定要删除吗?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            return this.axios.request({
+              method: 'DELETE',
+              url: this.baseAddressUrl + '/' + row.id,
+              params: {},
+              data: {
+                id: row.id
+              }
+            })
+          }).then(response => {
+            this.$refs.addressTable.getData()
+            Message.success(response.data.msg)
+          }).catch(() => {
+          })
+        }
+      },
+      showGroupName(_data) {
+        if (_data) {
+          let _this = this
+          _data.forEach((e) => {
+            if (_this.menuItems) {
+              for (let i = 0; i < _this.menuItems.length; i++) {
+                if (_this.menuItems[i].id === e.groupId) {
+                  e.groupName = _this.menuItems[i].groupName
+                  break
+                }
+              }
+            }
+          })
+        }
       }
     }
   }

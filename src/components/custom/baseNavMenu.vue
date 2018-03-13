@@ -134,9 +134,11 @@ add by yangz
           this.onAddClick()
         }
       },
-      onRefresh() {
-        let selectRow = 'last'
-        this.getMenu(true, selectRow)
+      onRefresh(val) {
+        if (val === this.bizKey) {
+          let selectRow = 'last'
+          this.getMenu(true, selectRow)
+        }
       },
       onRefreshClick() { // 刷新按钮点击事件
         let selectRow = 'first'
@@ -156,7 +158,7 @@ add by yangz
         }, 20)
       },
       handleSelect(key, keyPath) {
-        this.$emit('menuItem', JSON.parse(key))
+        this.$emit('menuItem', JSON.parse(key), this.bizKey)
       },
       getMenu(setActive, selectRow) {
         let _data = {
@@ -168,7 +170,7 @@ add by yangz
           if (response.data) {
             response.data.active = setActive
             response.data.selectRow = selectRow
-            this.$emit('menuItems', response.data)
+            this.$emit('menuItems', response.data, this.bizKey)
           }
         })
       },
@@ -184,7 +186,6 @@ add by yangz
     },
     watch: {
       activeIndex(newVal, oldVal) {
-        console.log('newVal==========', newVal)
         return newVal
       }
     }

@@ -127,6 +127,15 @@
       isColumnfixed: {
         type: Boolean,
         default: false
+      },
+      dialogOptions: {},
+      isSearchAfterHandle: {
+        type: Boolean,
+        default: false
+      },
+      isLimitLayer: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
@@ -264,6 +273,9 @@
           }
           // 查询以后清空选中
           this.clearSeleted()
+          if (this.isSearchAfterHandle) {
+            this.$emit('handleAfterSearch', this.items)
+          }
         })
         const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
         if (currentTreeListItem) {
@@ -326,7 +338,7 @@
             this.formModel.parentId = this.checkedItem.id
           }
           let len = this.checkedItem.code.length
-          if (len > 6) {
+          if (len > 6 && this.isLimitLayer) {
             this.$alert('无法在该层级下增加节点！')
           } else {
             that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加', false, this.formModel)

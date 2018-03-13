@@ -112,3 +112,12 @@ AddressGroupURL = "/camel/rest/addressgroups"
 [[AddressComponent]]
   path = "common/address/groupEdit"
   name = "CommonGroupEdit"
+[[AddressComponent]]
+  path = "common/address/addressEdit"
+  name = "CommonAddressEdit"
+[[AddressComponent]]
+  path = "common/address/addressAdd"
+  name = "CommonAddressAdd"
+[[AddressComponent]]
+  path = "common/address/addressView"
+  name = "CommonAddressView"

@@ -37,8 +37,11 @@
     },
     methods: {
       init(dialogOption) {
-        this.formModel.orgName = dialogOption.row.name
-        this.formModel.parentId = dialogOption.row.id
+        // this.formModel.orgName = dialogOption.row.name
+        // this.formModel.parentId = dialogOption.row.id
+        this.formModel.parentId = dialogOption.parentId
+        this.formModel.orgName = dialogOption.orgName
+        console.log('this.formModel================', this.formModel)
       }
     }
   }
