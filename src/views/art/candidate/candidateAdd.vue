@@ -31,30 +31,35 @@
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="专业" prop="majorId" v-bind:label-width="labelWidth")
           kalix-major-tree2(v-model="formModel.majorId" v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId" disabled)
-        el-form-item.s-flex_item.kalix-form-table-td(label="辅导员" prop="instructor" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.instructor" disabled)
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="辅导员" prop="instructor" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.instructor" disabled)-->
+        el-form-item.s-flex_item.kalix-form-table-td(label="班级" prop="className" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.className" disabled)
       div.s-flex
         <!--el-form-item.s-flex_item.kalix-form-table-td(label="身份证号" prop="identificationCard" v-bind:label-width="labelWidth")-->
         <!--el-input(v-model="formModel.identificationCard" disabled)-->
-        el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" v-bind:label-width="labelWidth")
-          kalix-date-picker.kalix-date(v-model="formModel.birthday" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="民族" prop="nation" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.nation" disabled)
-      div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="籍贯" prop="placeOfOrigin" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.placeOfOrigin" disabled)
-        el-form-item.s-flex_item.kalix-form-table-td(label="现联系地址" prop="address" v-bind:label-width="labelWidth")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" v-bind:label-width="labelWidth")
+          kalix-date-picker.kalix-date(v-model="formModel.birthday" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.postalcode" disabled)
+      div
+        el-form-item.kalix-form-table-td(label="现联系地址" prop="address" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.address" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="政治面貌" prop="politicalStatus" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.politicalStatus" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="入党(团)时间" prop="joinPartyDate" v-bind:label-width="labelWidth")
           kalix-date-picker.kalix-date(v-model="formModel.joinPartyDate" readonly)
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.postalcode" disabled)
-        el-form-item.s-flex_item.kalix-form-table-td(label="家庭联系电话" prop="homePhone" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.homePhone" disabled)
+      <!--div.s-flex-->
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.postalcode" disabled)-->
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="家庭联系电话" prop="homePhone" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.homePhone" disabled)-->
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="生源省份" prop="province" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.province" appName="art" dictType="省份" disabled)
@@ -158,7 +163,8 @@
         this.formModel.mobile = ''
         this.formModel.majorId = null
         this.formModel.majorName = ''
-        this.formModel.instructor = ''
+        this.formModel.className = ''
+//        this.formModel.instructor = ''
 //        this.formModel.identificationCard = ''
         this.formModel.birthday = null
         this.formModel.nation = ''
@@ -167,7 +173,7 @@
         this.formModel.joinPartyDate = null
         this.formModel.address = ''
         this.formModel.postalcode = ''
-        this.formModel.homePhone = ''
+//        this.formModel.homePhone = ''
         this.formModel.province = null
         this.formModel.entranceYear = null
         this.formModel.trainingLevel = ''
@@ -200,7 +206,8 @@
               this.formModel.mobile = rec.mobile
               this.formModel.majorId = rec.majorId
               this.formModel.majorName = rec.majorName
-              this.formModel.instructor = rec.instructor
+              this.formModel.className = rec.className
+//              this.formModel.instructor = rec.instructor
 //              this.formModel.identificationCard = rec.identificationCard
               this.formModel.birthday = rec.birthday
               this.formModel.nation = rec.nation
@@ -209,7 +216,7 @@
               this.formModel.joinPartyDate = rec.joinPartyDate
               this.formModel.address = rec.address
               this.formModel.postalcode = rec.postalcode
-              this.formModel.homePhone = rec.homePhone
+//              this.formModel.homePhone = rec.homePhone
               this.formModel.province = rec.province
               this.formModel.entranceYear = rec.entranceYear
               this.formModel.trainingLevel = rec.trainingLevel
@@ -249,7 +256,8 @@
               this.formModel.mobile = rec.mobile
               this.formModel.majorId = rec.majorId
               this.formModel.majorName = rec.majorName
-              this.formModel.instructor = rec.instructor
+              this.formModel.className = rec.className
+//              this.formModel.instructor = rec.instructor
 //              this.formModel.identificationCard = rec.identificationCard
               this.formModel.birthday = rec.birthday
               this.formModel.nation = rec.nation
@@ -258,7 +266,7 @@
               this.formModel.joinPartyDate = rec.joinPartyDate
               this.formModel.address = rec.address
               this.formModel.postalcode = rec.postalcode
-              this.formModel.homePhone = rec.homePhone
+//              this.formModel.homePhone = rec.homePhone
               this.formModel.province = rec.province
               this.formModel.entranceYear = rec.entranceYear
               this.formModel.trainingLevel = rec.trainingLevel
