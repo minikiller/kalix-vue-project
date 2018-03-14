@@ -90,6 +90,8 @@
       let oldCnt = ''
       let newCnt = ''
       let editorMt = null
+      let regImg = /<img[^>]*>/gi
+      let regText = /<\/?[^>]*>/g
       /* eslint-disable */
       if (this.value) {
         this.currentValue = this.value
@@ -124,8 +126,16 @@
           newCnt = this.editor.getHTML()
           if (oldCnt !== newCnt) {
             oldCnt = newCnt
-            this.$emit('input', this.editor.getHTML())
-            console.log('input ==== input')
+            let cntImgs = newCnt.match(regImg)
+            let cntText = newCnt.replace(regText, '')
+            if (cntImgs && newCnt.length) {
+              this.$emit('input', this.editor.getHTML())
+            } else if (cntText.length) {
+              this.$emit('input', this.editor.getHTML())
+            } else {
+              this.$emit('input', '')
+            }
+
           }
           let divEditor = document.getElementById('editor')
           !divEditor && (clearInterval(editorMt), console.log('editorMt clearInterval'))
