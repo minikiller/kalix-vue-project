@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-bind:disabled="disabled" v-on:input="change($event)" style="width:100%;")
+  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-bind:disabled="disabled" v-on:input="change($event)" v-bind:clearable="clearable" style="width:100%;")
     el-option(v-for="item in options"
     v-bind:key="item[id]"
     v-bind:label="item[label]"
@@ -46,6 +46,10 @@
       defaultSelectLabel: {
         type: String,
         default: ''
+      },
+      clearable: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
