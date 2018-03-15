@@ -5,34 +5,35 @@
 -->
 
 <template lang="pug">
-  div.treeList(:class="{'small':menuChk}")
-    ul.bd.bg(v-if="!menuChk")
-      li(v-for="item in treeData" v-bind:key="item.id" v-bind:class="{'active':item.isShow}")
-        div.s-flex.tit.tit-txt(@click="showTree(item,$event)")
-          div.s-flex_item
+  keep-alive
+    div.treeList(:class="{'small':menuChk}")
+      ul.bd.bg(v-if="!menuChk")
+        li(v-for="item in treeData" v-bind:key="item.id" v-bind:class="{'active':item.isShow}")
+          div.s-flex.tit.tit-txt(@click="showTree(item,$event)")
+            div.s-flex_item
+              i.tit_icon(:class="bindClass(item.iconCls)")
+              span.txt {{item.text}}
+            div.arrow
+              i(:class="showIcon(item.isShow)")
+          el-collapse-transition
+            div.mn(v-show="item.isShow")
+              ul
+                li(v-for="item in item.children" v-bind:key="item.id")
+                  div.tit(v-on:click="selectItem(item)" v-bind:class="currentCls(item)")
+                    i.tit_icon(:class="bindClass(item.iconCls)")
+                    | {{item.text}}
+      ul.bd.samll(v-if="menuChk")
+        li(v-for="item in treeData")
+          div.s-flex.tit(v-bind:class="{'active':item.isShow}")
             i.tit_icon(:class="bindClass(item.iconCls)")
-            span.txt {{item.text}}
-          div.arrow
-            i(:class="showIcon(item.isShow)")
-        el-collapse-transition
-          div.mn(v-show="item.isShow")
-            ul
-              li(v-for="item in item.children" v-bind:key="item.id")
-                div.tit(v-on:click="selectItem(item)" v-bind:class="currentCls(item)")
+            div.mn
+              div.txt {{item.text}}
+              ul
+                li.tit(v-for="item in item.children"
+                v-bind:key="item.id"
+                v-on:click="selectItem(item)")
                   i.tit_icon(:class="bindClass(item.iconCls)")
                   | {{item.text}}
-    ul.bd.samll(v-if="menuChk")
-      li(v-for="item in treeData")
-        div.s-flex.tit(v-bind:class="{'active':item.isShow}")
-          i.tit_icon(:class="bindClass(item.iconCls)")
-          div.mn
-            div.txt {{item.text}}
-            ul
-              li.tit(v-for="item in item.children"
-              v-bind:key="item.id"
-              v-on:click="selectItem(item)")
-                i.tit_icon(:class="bindClass(item.iconCls)")
-                | {{item.text}}
 </template>
 
 <script type="text/ecmascript-6">
@@ -62,10 +63,10 @@
       }
     },
     activated() {
+      this.fetchData()
       // EventBus.$on('toolListDataComplete', this.fetchData)
     },
     mounted() {
-      this.fetchData()
     },
     watch: {
       '$route'(to, from) {
@@ -76,6 +77,7 @@
     },
     methods: {
       fetchData(appId) {
+        this.treeData = []
         console.log('this.$route:', this.$route.params.app)
         if (this.$route.name === 'login') {
           return

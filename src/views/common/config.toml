@@ -6,6 +6,8 @@ NewsURL = "/camel/rest/newss"
 NoteURL = "/camel/rest/notes"
 SenderURL = "/camel/rest/messages/sender"
 ReceiverURL = "/camel/rest/messages/receiver"
+AddressURL = "/camel/rest/addresss"
+AddressGroupURL = "/camel/rest/addressgroups"
 
 # 需要自动注册成全局的News组件
 [[CommonDictComponent]]
@@ -100,3 +102,22 @@ ReceiverURL = "/camel/rest/messages/receiver"
 [[GroupPanelComponent]]
   path = "common/easemob/groupPanel"
   name = "CommonGroupPanel"
+# 通讯录组件
+[[AddressComponent]]
+  path = "common/address/addressSearch"
+  name = "CommonAddressSearch"
+[[AddressComponent]]
+  path = "common/address/groupAdd"
+  name = "CommonGroupAdd"
+[[AddressComponent]]
+  path = "common/address/groupEdit"
+  name = "CommonGroupEdit"
+[[AddressComponent]]
+  path = "common/address/addressEdit"
+  name = "CommonAddressEdit"
+[[AddressComponent]]
+  path = "common/address/addressAdd"
+  name = "CommonAddressAdd"
+[[AddressComponent]]
+  path = "common/address/addressView"
+  name = "CommonAddressView"

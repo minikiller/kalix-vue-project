@@ -14,9 +14,9 @@
         kalix-biz-no-column(title="文号")  // 业务编号
         el-table-column(prop="docTypeName" label="文号类型" align="center" width="120")
         el-table-column(prop="year" label="年份" align="center" width="100")
-        kalix-status-column
+        kalix-status-column  // 文号状态
         el-table-column(prop="title" label="文题" align="center" width="300")
-        kalix-doc-status-column
+        kalix-doc-status-column  // 文件状态
         el-table-column(prop="docDate" label="发文时间" align="center" width="220")
         el-table-column(prop="docDept" label="发文部门" align="center" width="220")
         kalix-date-column(prop="creationDate" label="创建时间")
@@ -25,7 +25,14 @@
 
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'
-  import {DocumentURL, DocumentComponent, RedheadApplyURL, DocumentRevokeURL, DocumentAbolishURL} from '../config.toml'
+  import {
+    DocumentURL,
+    DocumentComponent,
+    RedheadApplyURL,
+    DocumentRevokeURL,
+    DocumentAbolishURL,
+    RedheadApplyComponent
+  } from '../config.toml'
   import {DocumentToolButtonList} from '../document/index'
   import {registerComponent} from '@/api/register'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
@@ -35,9 +42,13 @@
   import Message from 'common/message'
   import {ON_REFRESH_DATA} from '@/components/custom/event.toml'
   import EventBus from 'common/eventbus'
+  import {baseURL} from 'config/global.toml'
+  import redheadapplyFormModel from '../redheadapply/model'
+  //  import {DictKeyValueObject} from 'common/keyValueObject'
 
   // 注册全局组件
   registerComponent(DocumentComponent)
+  registerComponent(RedheadApplyComponent)
 
   export default {
     data() {
@@ -68,10 +79,12 @@
         bizDialog: [
           {id: 'view', dialog: 'OaDocumentView'},
           {id: 'publish', dialog: 'OaDocumentPublish'}
+//          {id: 'preview', dialog: 'OaRedheadPreview'}
         ],
         redheadApplyURL: RedheadApplyURL,
         documentRevokeURL: DocumentRevokeURL,
-        documentAbolishURL: DocumentAbolishURL
+        documentAbolishURL: DocumentAbolishURL,
+        redheadapplyFormModel: Object.assign({}, redheadapplyFormModel)
       }
     },
     components: {
@@ -99,6 +112,16 @@
           // 发文
           case 'publish': {
             this.onPublish(row, table)
+            break
+          }
+          // 预览
+          case 'preview': {
+            this.onPreview(row, table)
+            break
+          }
+          // 下载转成word
+          case 'download': {
+            this.onDownload(row, table)
             break
           }
         }
@@ -161,8 +184,45 @@
           })
         table.whichBizDialog = dig[0].dialog
         setTimeout(() => {
+          row.other = '学校领导、学校各单位、部门'
           table.$refs.kalixDialog.$refs.kalixBizDialog.open('发文', true, row)
         }, 20)
+      },
+      // 预览
+      onPreview(row, table) {
+//        if (row.redheadId && (row.status === '使用中') && (row.docStatus === '审批通过'))
+        if (row.redheadId) {
+//          let url = RedheadApplyURL + '/' + row.redheadId
+//          this.axios.request({
+//            method: 'GET',
+//            url: url,
+//            params: {}
+//          }).then(res => {
+//            if (res.data.success === undefined) {
+//              if (res.data) {
+//                this.redheadapplyFormModel = res.data
+//                // 处理红头文件标题
+//                let _keyObj = DictKeyValueObject('OA-DICT-KEY', '文号标题')
+//                this.redheadapplyFormModel.docCaption = _keyObj[this.redheadapplyFormModel.docType]
+//                let dig =
+//                  table.bizDialog.filter((item) => {
+//                    return item.id === 'preview'
+//                  })
+//                table.whichBizDialog = dig[0].dialog
+//                setTimeout(() => {
+//                  table.$refs.kalixDialog.open(this.redheadapplyFormModel)
+//                }, 20)
+//              }
+//            }
+//          })
+          window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + row.redheadId + '&filetype=html')
+        } else {
+          Message.warning('文号未关联红头文件,无法进行预览!')
+        }
+      },
+      // 下载转成word
+      onDownload(row, table) {
+        window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + row.redheadId + '&filetype=word')
       }
     }
   }

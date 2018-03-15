@@ -7,7 +7,7 @@
   div
     keep-alive
       base-table(title='红头文件申请列表'
-      bizKey="sealApply"
+      bizKey="redheadApply"
       v-bind:targetURL='targetURL'
       v-bind:bizDialog='bizDialog'
       bizSearch='OaRedheadApplySearch'
@@ -16,23 +16,25 @@
       v-bind:dictDefine="dictDefine"
       v-bind:btnList='btnList')
         template(slot="tableColumnSlot")
-          el-table-column(type="expand")
-            template(slot-scope="scope")
-              div.rhf-content
-                div.rhf-content-2
-                  div.rhf-article-doc(v-html="scope.row.docContent" data-content)
-          kalix-biz-no-column(title="文号")  // 业务编号
-          el-table-column(prop="title" label="业务名称" align="center" width="220")
-          el-table-column(prop="docCaption" label="文号标题" align="center" width="100")
-          el-table-column(prop="docTypeName" label="文号类型" align="center" width="220")
+          <!--el-table-column(type="expand")-->
+            <!--template(slot-scope="scope")-->
+              <!--div.rhf-content-->
+                <!--div.rhf-content-2-->
+                  <!--div.rhf-article-doc(v-html="scope.row.docContent" data-content)-->
+          el-table-column(prop="title" label="文件名称" align="center" width="220")
+          el-table-column
+          kalix-doc-status-column  // 文件状态
+          el-table-column(prop="docTypeName" label="文号类型" align="center" width="120")
+          el-table-column
+          kalix-biz-no-column(title="文号" width="200")  // 业务编号
+          <!--el-table-column(prop="docCaption" label="文号标题" align="center" width="100")-->
+          el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
+          kalix-process-status-column // 工作流状态
+          el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
           el-table-column(prop="orgName" label="申请部门" align="center" width="220")
-          el-table-column(prop="docStatus" label="文档状态" align="center" width="220")
           kalix-date-column(prop="creationDate" label="创建时间")
           kalix-date-column(prop="applyDate" label="申请时间")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
-          el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
-          el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
-          kalix-process-status-column
     kalix-task-view(ref="kalixDialog")
 </template>
 
@@ -43,6 +45,7 @@
     RedheadApplyComponent,
     RedheadApplyStartURL
   } from '../config.toml'
+  import {baseURL} from 'config/global.toml'
   import {registerComponent} from '@/api/register'
   import {workflowBtnList, registerComp, startFun, progressFun} from '@/views/oa/comp'
   import TaskView from '@/views/oa/comp/taskView'
@@ -50,6 +53,7 @@
   import ProcessStatusColumn from '@/views/oa/comp/processStatusColumn.vue'
   import BizNoColumn from '@/views/oa/comp/bizNoColumn'
   import DateColumn from 'views/oa/comp/dateColumn'
+  import DocStatusColumn from '@/views/oa/comp/docStatusColumn.vue'
 
   registerComponent(RedheadApplyComponent)
   export default {
@@ -61,13 +65,13 @@
             type: '文号类型',
             targetField: 'docTypeName',
             sourceField: 'docType'
-          },
-          {
-            cacheKey: 'OA-DICT-KEY',
-            type: '文号标题',
-            targetField: 'docCaption',
-            sourceField: 'docType'
           }
+//          {
+//            cacheKey: 'OA-DICT-KEY',
+//            type: '文号标题',
+//            targetField: 'docCaption',
+//            sourceField: 'docType'
+//          }
         ],
         isFixedColumn: true,
         hasTableSelection: true,
@@ -77,27 +81,9 @@
           {id: 'view', dialog: 'OaRedheadApplyView'},
           {id: 'edit', dialog: 'OaRedheadApplyAdd'},
           {id: 'add', dialog: 'OaRedheadApplyAdd'},
-          {id: 'progress', dialog: 'OaTaskView'},
-          {id: 'preview', dialog: 'OaRedheadPreview'}
-        ],
-        formModel: {
-          title: '吉林动画学院红头文件申请表',
-          orgId: '',
-          orgName: '',
-          creationDate: '',
-          usageCount: '',
-          sealType: '',
-          sealTypeName: '',
-          createBy: '',
-          auditResult: '',
-          currentNode: '',
-          departmentHead: '', // 部门负责人
-          tableFormField: '', // 分公司负责人
-          counsel: '', // 法律顾问
-          generalManager: '', // 总经理
-          sealAdministrator: '', // 发文专管员
-          remark: '' // 发文专管员
-        }
+          {id: 'progress', dialog: 'OaTaskView'}
+//          {id: 'preview', dialog: 'OaRedheadPreview'}
+        ]
       }
     },
     mounted() {
@@ -129,16 +115,17 @@
             break
           }
           case 'preview': { // 启用/停用
-            console.log('开始预览咯！！！')
-            that.whichBizDialog = ''
-            let dig =
-              that.bizDialog.filter((item) => {
-                return item.id === 'preview'
-              })
-            that.whichBizDialog = dig[0].dialog
-            setTimeout(() => {
-              that.$refs.kalixDialog.open(row)
-            }, 20)
+//            console.log('开始预览咯！！！')
+//            that.whichBizDialog = ''
+//            let dig =
+//              that.bizDialog.filter((item) => {
+//                return item.id === 'preview'
+//              })
+//            that.whichBizDialog = dig[0].dialog
+//            setTimeout(() => {
+//              that.$refs.kalixDialog.open(row)
+//            }, 20)
+            window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + row.id + '&filetype=html')
             break
           }
         }
@@ -149,7 +136,8 @@
       KalixTaskView: TaskView,
       KalixProcessStatusColumn: ProcessStatusColumn, // 工作流状态列
       KalixBizNoColumn: BizNoColumn,
-      KalixDateColumn: DateColumn
+      KalixDateColumn: DateColumn,
+      KalixDocStatusColumn: DocStatusColumn
     }
   }
 </script>

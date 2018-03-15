@@ -8,23 +8,25 @@
   div.kalix-article
     keep-alive
       component(:is="bizSearch" ref="bizSearchRef" v-if="bizSearch"
+      v-bind:class="searchCls"
       v-on:onSearchBtnClick="onSearchClick")
-    div.kalix-wrapper(v-bind:style="setWrapperStyle()")
+    div.kalix-wrapper(v-bind:style="wrapperTop")
       div.kalix-wrapper-hd
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar(v-if="isShowToolBar"
-        v-bind:toolbarBtnList="toolbarBtnList"
+        kalix-tool-bar(v-if="isShowToolBarB"
+        v-bind:toolbarBtnList="toolbarBtnList" v-bind:bizKey="bizKey"
         v-on:onToolBarClick="onToolBarClick"
         v-on:onCheckBtnList="onCheckBtnList")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle")
-          el-table(:data="tableData"  style="width:100%"
+          el-table(:data="tableData"  style="width:100%" ref="kalixTable"
           v-bind:row-class-name="tableRowClassName"
           v-loading.body="loading" fit
           v-bind:height="tableHeight"
           highlight-current-row
           v-on:selection-change="onTableSelectionChange"
+          v-on:current-change="handleCurrentChange"
           v-on:row-click="onTableRowClick"
           header-cell-class-name="base-table-th"
           cell-class-name="base-table-cell")
@@ -41,15 +43,14 @@
                   template(slot-scope="scope")
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
               //  table的工具按钮
-              el-table-column(label="操作" align="center"
+              el-table-column(v-if="isShowOperate" label="操作" align="center"
               fixed="right"
               v-bind:fixed="isFiex"
-              v-bind:width="columnWidth"
+              v-bind:width="columnWidth(true)"
               class-name="base-teble-operation")
                 template(slot-scope="scope")
                   slot(name="tableToolSlot" slot-scope="scope")
-                    kalix-table-tool(:btnList="btnList" v-on:onTableToolBarClick="btnClick"
-                    v-bind:scope="scope")
+                    kalix-table-tool(v-bind:displayStyle="2" v-bind:btnList="btnList" v-on:onTableToolBarClick="btnClick" v-bind:scope="scope")
           div.no-list(v-if="!tableData || !tableData.length > 0")
             div 暂无数据
         div.kalix-table-pagination.s-flex
@@ -61,7 +62,7 @@
             v-bind:current-page="pager.currentPage"
             v-bind:page-sizes="pager.pageSizes"
             v-bind:page-size="1"
-            layout="sizes, prev, next, slot, jumper,->"
+            layout="total, sizes, prev, next, slot, jumper,->"
             v-bind:total="pager.totalCount"
             prev-text="上一页"
             next-text="下一页")
@@ -144,12 +145,26 @@
         type: String,
         default: ''
       },
+      otherStr: { // 非search from下参数
+        type: String,
+        default: ''
+      },
+      appendCondition: { // search组件之外的查询条件
+        type: Array
+      },
+      sort: {
+        type: String,
+        default: null
+      },
       tableFields: {   //  数据列表的列名
         type: Array
       },
       btnList: {   //  table中按钮数组
         type: Array,
-        required: true
+        required: false,
+        default: () => {
+          return []
+        }
       },
       dictDefine: {  // 数据字典定义
         type: Array
@@ -175,6 +190,26 @@
         default: () => {
           return {}
         }
+      },
+      isShowToolBar: {  // 是否显示工具栏
+        type: Boolean,
+        default: null
+      },
+      noSearchParam: {
+        type: Boolean,
+        default: false
+      },
+      isAfterSearch: {
+        type: Boolean,
+        default: false
+      },
+      isAfterView: {
+        type: Boolean,
+        default: false
+      },
+      isBeforeView: {
+        type: Boolean,
+        default: false
       }
     },
     watch: {
@@ -199,7 +234,9 @@
         },
         tableHeight: 0, //  列表组件高度
         searchParam: {}, //  列表查询条件
-        isShowToolBar: true // 是否显示工具栏
+        isShowToolBarB: true,
+        currentRow: null,
+        wrapperTop: {}
       }
     },
     created() {
@@ -211,11 +248,20 @@
       console.log(this.bizKey + '  is activated')
       EventBus.$on(ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
       EventBus.$on(ON_REFRESH_DATA, this.refresh)
+      // d
+      EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', (closeParam) => {
+        console.log(' ------- KalixDialogClose ------- ')
+//        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
+        this.whichBizDialog = ''
+        this.$emit('afterDialogClose', this.bizKey, closeParam)
+      })
     },
     deactivated() {
       console.log(this.bizKey + '  is deactivated')
       EventBus.$off(ON_SEARCH_BUTTON_CLICK)
       EventBus.$off(ON_REFRESH_DATA)
+      // 11
+      EventBus.$off(this.bizKey + '-' + 'KalixDialogClose')
     },
     mounted() {
       // 注册事件接受
@@ -223,19 +269,33 @@
       window.addEventListener('resize', () => {
         that._getTableHeight()
       })
-      EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', () => {
-//        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
-        this.whichBizDialog = ''
-      })
+//       EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', () => {
+//         console.log(' ------- KalixDialogClose ------- ')
+// //        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
+//         this.whichBizDialog = ''
+//         this.$emit('afterDialogClose', this.bizKey)
+//       })
       //  绑定表格 icon 图标
       const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
       if (currentTreeListItem) {
         this.iconCls = currentTreeListItem.iconCls
       }
+      this.setWrapperStyle()
     },
     methods: {
+      setWrapperStyle() {
+        if (!this.bizSearch) {
+          this.wrapperTop = {'top': 0}
+        } else {
+          this.$nextTick(() => {
+            let kalixSearch = document.querySelector('.kalix-search-' + this.bizKey)
+            console.log('===== kalixSearch =====', kalixSearch.clientHeight + 40 + 'px')
+            this.wrapperTop = {'top': kalixSearch.clientHeight + 40 + 'px'}
+          })
+        }
+      },
       onCheckBtnList(flag) {
-        this.isShowToolBar = flag
+        this.isShowToolBarB = this.isShowToolBar !== null ? this.isShowToolBar : flag
       },
       onToolBarClick(btnId) {
         // baseToolBar 回调事件
@@ -246,6 +306,9 @@
           case 'refresh':
             this.onRefreshClick()
             break
+          case 'deleteChecked': // 选中行的删除
+            this.onDeleteChecked()
+            break
           default:
             this.customToolBar(btnId, this)
             break
@@ -253,6 +316,13 @@
       },
       onTableSelectionChange(val) {
         this.deleteList = val
+      },
+      setCurrent(row) {
+        this.$refs.kalixTable.highlightCurrentRow = true
+        this.$refs.kalixTable.setCurrentRow(row)
+      },
+      handleCurrentChange(val) {
+        this.currentRow = val
       },
       onTableRowClick(row, event, column) {
         this.$emit('onTableRowClick', row, event, column)
@@ -273,8 +343,20 @@
       },
       onSearchClick(_searchParam) { // 查询按钮点击事件
         console.log('[kalix] base table search clicked')
-        this.searchParam = _searchParam
-        this.refresh()
+        // 设置searchparam
+        this.noSearchParam = false
+        // 兼容多个baseTable同时使用情况，用bizKey区分具体查询
+        if (_searchParam.bizKey) {
+          this.searchParam = _searchParam.searchObj
+          if (_searchParam.bizKey === this.bizKey) {
+            this.refresh()
+          }
+        } else {
+          this.searchParam = _searchParam
+          this.refresh()
+        }
+        // 添加点击查询按钮之后的外部事件处理
+        // this.$emit('afterSearch', this.bizKey)
       },
       onAddClick() {
         // 添加按钮点击事件
@@ -353,7 +435,23 @@
             setTimeout(() => {
 //              this.$emit('update:formModel', row)
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+              if (this.isBeforeView) {
+                this.$emit('handleBeforeView', row)
+                if (typeof (this.$refs.kalixDialog.initPropertis) === 'object') {
+                  this.$refs.kalixDialog.initPropertis = row
+                }
+              }
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看', false, row)
+              if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                // 添加初始化模型赋值参数
+                if (this.dialogOptions.row) {
+                  this.dialogOptions.row = row
+                }
+                this.$refs.kalixDialog.init(this.dialogOptions)
+              }
+              if (this.isAfterView === true) {
+                this.$emit('handleAfterView', row)
+              }
             }, 20)
             break
           }
@@ -371,6 +469,11 @@
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true, row)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
+                // 添加初始化模型赋值参数
+                // this.dialogOptions.editFormModel = row
+                if (this.dialogOptions.row) {
+                  this.dialogOptions.row = row
+                }
                 this.$refs.kalixDialog.init(this.dialogOptions)
               }
             }, 20)
@@ -396,13 +499,15 @@
             }).then(response => {
               this.getData()
               Message.success(response.data.msg)
+              // 添加删除后自定义处理事件
+              // this.$emit('afterDelete')
             }).catch(() => {
             })
             break
           }
 
           case 'attachment': {
-            console.log('attachment is clicked')
+            console.log(' attachment is clicked ', 'background:#c7320a;')
             let that = this
             this.whichBizDialog = 'AttachmentDialog'
             setTimeout(() => {
@@ -429,16 +534,26 @@
           return
         }
         let that = this
-        console.log('baseTable', this.targetURL)
+        console.log('baseTable-----------', this.targetURL)
         this.loading = true
         setTimeout(_ => {
           let _data = {
             jsonStr: this.jsonStr,
             page: this.pager.currentPage,
             start: this.pager.start,
-            limit: this.pager.limit
+            limit: this.pager.limit,
+            sort: this.sort,
+            otherStr: this.otherStr
           }
-          _data = Object.assign(_data, this.searchParam)
+          console.log('this.jsonStr=======1', _data.jsonStr)
+          if (this.noSearchParam === false) {
+            _data = Object.assign(_data, this.searchParam)
+            // 添加search组件之外的查询条件，解决jsonStr key覆盖问题
+            if (this.appendCondition && _data.jsonStr.length > 0) {
+              _data.jsonStr = _data.jsonStr.substring(0, _data.jsonStr.length - 1) + ',' + this.appendCondition + '}'
+            }
+          }
+          console.log('this.jsonStr=======2', _data.jsonStr)
           this.$http.get(this.targetURL, {
             params: _data
           }).then(response => {
@@ -446,6 +561,10 @@
               item.rowNumber = index + that.rowNo
               return item
             })
+            // 添加表格查询后的处理事件
+            if (this.isAfterSearch === true) {
+              this.$emit('handleAfterSearch', this.bizKey, this.tableData)
+            }
 
             if (this.dictDefine) { // 设置数据字典
               this.setDictDefine(this.tableData)
@@ -498,12 +617,6 @@
 //          console.log(`[Kalix] table tool button list is `, this.btnList)
         }
       },
-      setWrapperStyle() {
-        if (!this.bizSearch) {
-          return {'top': 0}
-        }
-        return {}
-      },
       _getTableHeight() {
         if (this.$refs.kalixTableContainer && this.$refs.kalixTableContainer.clientHeight) {
           this.tableHeight = this.$refs.kalixTableContainer.clientHeight
@@ -511,6 +624,20 @@
       },
       clearData() {
         this.tableData = []
+      },
+      setTableData(_tableData) {
+        this.tableData = _tableData
+      },
+      columnWidth(flag) {
+        let width = 90
+        if (!flag) {
+          let len = this.btnList.length
+          let btnWidth = 34
+          if (len > 1) {
+            width += btnWidth * (len - 1)
+          }
+        }
+        return width
       }
     },
     components: {
@@ -519,14 +646,18 @@
       KalixDialog: Dialog
     },
     computed: {
-      columnWidth() {
-        let width = 65
-        let len = this.btnList.length
-        let btnWidth = 34
-        if (len > 1) {
-          width += btnWidth * (len - 1)
+      searchCls() {
+        console.log('BBBBBBBBBBBBBBBBBBBBBBBB', this.bizKey)
+        return 'kalix-search-' + this.bizKey
+      },
+      isShowOperate() {
+        if (!this.btnList || !this.btnList.length) {
+          return false
         }
-        return width
+        let items = this.btnList.filter(e => {
+          return e.isShow
+        })
+        return items.length
       },
       isFiex() {
         return this.isFixedColumn ? 'right' : this.isFixedColumn
@@ -535,7 +666,7 @@
         return (1 + ((this.pager.currentPage - 1) * this.pager.limit)) // 返回当前行号
       },
       tableContainerStyle() {
-        return {'top': (!this.isShowToolBar ? '56px' : '')}
+        return {'top': (this.isShowToolBarB ? '102px' : '56px')}
       },
       pageCount() {
         return Math.floor((this.pager.totalCount + this.pager.limit - 1) / this.pager.limit)

@@ -12,7 +12,8 @@ const FormModel = {
   mobile: '',      // 手机
   majorId: null,          // 专业id
   majorName: '',          // 专业名称
-  instructor: '',         // 辅导员
+  className: '',          // 班级名称
+  // instructor: '',         // 辅导员
   // identificationCard: '', // 身份证号
   birthday: null,         // 出生日期
   nation: '',             // 民族
@@ -21,7 +22,7 @@ const FormModel = {
   joinPartyDate: null,    // 入党团时间
   address: '',            // 联系地址
   postalcode: '',         // 邮政编码
-  homePhone: '',          // 家庭联系电话
+  // homePhone: '',          // 家庭联系电话
   province: null,         // 生源省份
   entranceYear: null,     // 入学年份
   trainingLevel: '',      // 学生培养层次

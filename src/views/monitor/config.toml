@@ -6,9 +6,8 @@ MonitorDictsTypesListURL = "/camel/rest/monitor/dicts/types/list"
 HardwareInfoURL = "/camel/rest/hardwareInfos"
 restHardwareInfoURL = "/camel/rest/resetHardwareinfos"
 HardwareLogURL= "/camel/rest/hardwarelogs"
-HardwareLogMailURL= "/camel/rest/resetHardwareMails"
-HardwareLogConfigureMailURL="camel/rest/configureHardwareMails"
-
+HardwareLogMailURL= "/camel/rest/system/config"
+HardwareStatisticsURL = "/camel/rest/getHardwareStatistics"
 SignupURL = "/camel/rest/signups"
 signupBtnPermissionPrefix = "research:researchCompetitionModule:competitionSigninMenu:"
 competitBtnPermissionPrefix = "research:researchCompetitionModule:competitionInfoMenu:"
@@ -53,9 +52,9 @@ MonitorCacheKey = "MONITOR-DICT-KEY"
   isPermission = true   # 是否进行权限认证
 
 [[ConfigToolbarList]]
-  id = "edit"
+  id = "editSelf"
   title = "编辑"
-  isShow = false
+  isShow = true
   isPermission = true
 
 [[LogToolbarList]]
@@ -65,3 +64,6 @@ MonitorCacheKey = "MONITOR-DICT-KEY"
   type = "success"
   isShow = true    # 是否显示
   isPermission = true   # 是否进行权限认证
+[[StatisticsComponent]]
+  path = "monitor/statistics/statisticsSearch"
+  name = "OaStatisticSearch"

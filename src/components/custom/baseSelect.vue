@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-bind:disabled="disabled" v-on:input="change($event)" style="width:100%;")
+  el-select(v-model="currentValue" v-bind:placeholder="placeholder" v-bind:disabled="disabled" v-on:input="change($event)" v-bind:clearable="clearable" style="width:100%;")
     el-option(v-for="item in options"
     v-bind:key="item[id]"
     v-bind:label="item[label]"
@@ -32,6 +32,24 @@
       },
       disabled: {
         type: Boolean, default: false
+      },
+      paramObj: {
+        type: Object,
+        default: () => {
+          return {page: 1, start: 0, limit: 20}
+        }
+      },
+      defaultSelect: {
+        type: Boolean,
+        default: false
+      },
+      defaultSelectLabel: {
+        type: String,
+        default: ''
+      },
+      clearable: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
@@ -50,7 +68,8 @@
 //          console.log('this.requestUrl 111:')
           this.$http
             .get(this.requestUrl, {
-              params: {page: 1, start: 0, limit: 20}
+              // params: {page: 1, start: 0, limit: 20}
+              params: this.paramObj
             })
             .then(res => {
               this.options = res.data
@@ -59,11 +78,13 @@
               }
               if (res.data.data) {
                 this.options = res.data.data
+                this.defaultSelectVal()
               }
               Cache.save(DictKey, JSON.stringify(this.options))
             })
         } else {
           this.options = JSON.parse(Cache.get(DictKey))
+          this.defaultSelectVal()
         }
       },
       change(value) {
@@ -72,6 +93,16 @@
           return e.id === value
         })
         this.$emit('selectChange', item)
+      },
+      defaultSelectVal() {
+        if (this.defaultSelect) {
+          this.options.forEach((item) => {
+            if (this.defaultSelectLabel === item[this.label]) {
+              this.currentValue = item[this.id]
+              this.$emit('vauleSetForm', this.currentValue)
+            }
+          })
+        }
       }
     },
     watch: {

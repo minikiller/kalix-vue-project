@@ -9,13 +9,14 @@
     keep-alive
       base-table(:isShowToolBar="isShowToolBar" bizKey="myprocesshistory" title='我的流程列表'
       v-bind:targetURL="targetURL"
-      v-bind:formModel.sync="formModel"
+      v-bind:isFixedColumn="isFixedColumn"
       v-bind:bizDialog="bizDialog"
       bizSearch="OaProcessHistorySearch"
       v-bind:tableRowClassName="tableRowClassName"
       v-bind:customTableTool='customTableTool'
       v-bind:btnList="btnList")
         template(slot="tableColumnSlot")
+          el-table-column
           kalix-biz-no-column(name="name")
           el-table-column(prop="title" label="业务名称" width="280" align="center")
           el-table-column(prop="startUserId" label="启动用户" align="center")
@@ -47,14 +48,14 @@
     },
     data() {
       return {
+        isFixedColumn: true,
         isApproveShow: false,
         isShowToolBar: false,  // 不显示工具栏
         btnList: WorkflowButtonList,
         targetURL: MyHistoryURL,
         bizDialog: [
           {id: 'viewHistory', dialog: ''}
-        ],
-        formModel: {}
+        ]
       }
     },
     created() {

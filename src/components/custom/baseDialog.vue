@@ -15,6 +15,9 @@
       div.dialog-footer(slot="footer")
         template(v-if="isView")
           el-button(type="primary" v-on:click="onCancelClick") 关 闭
+        template(v-else-if="isYesNoView")
+          el-button(type="primary" v-on:click="onYesClick") {{yesText}}
+          el-button(type="primary" v-on:click="onNoClick") {{noText}}
         template(v-else)
           el-button(v-on:click="onCancelClick") 取 消
           el-button(type="primary" v-on:click="onSubmitClick") 提 交
@@ -24,17 +27,17 @@
   import Message from 'common/message'
   import Vue from 'vue'
   import EventBus from 'common/eventbus'
-  import {ON_REFRESH_DATA} from './event.toml'
+  import {ON_REFRESH_DATA, ON_INIT_DIALOG_DATA} from './event.toml'
 
   export default {
-//    activated() {
-//      console.log('base dialog ' + this.bizKey + '  is activated')
-//      EventBus.$on(ON_INIT_DIALOG_DATA, this.initData)
-//    },
-//    deactivated() {
-//      console.log('base dialog ' + this.bizKey + '  is deactivated')
-//      EventBus.$off(ON_INIT_DIALOG_DATA)
-//    },
+    activated() {
+      console.log('base dialog ' + this.bizKey + '  is activated')
+      EventBus.$on(ON_INIT_DIALOG_DATA, this.initData)
+    },
+    deactivated() {
+      console.log('base dialog ' + this.bizKey + '  is deactivated')
+      EventBus.$off(ON_INIT_DIALOG_DATA)
+    },
     props: {
       size: {
         type: String,
@@ -54,6 +57,18 @@
 //        required: true
       },
       isView: false,
+      isYesNoView: {
+        type: Boolean,
+        default: false
+      },
+      yesText: {
+        type: String,
+        default: '同意'
+      },
+      noText: {
+        type: String,
+        default: '拒绝'
+      },
       title: '',
       submitBefore: {  // 提交前执行  submitBefore(baseDialog,function Submit)
         type: Function
@@ -110,7 +125,7 @@
                 this.submitComplete()
               }
               // 刷新列表
-              EventBus.$emit(ON_REFRESH_DATA)
+              EventBus.$emit(ON_REFRESH_DATA, this.bizKey)
               this._afterDialogClose()
               console.log('[kalix] dialog submit button clicked !')
               this.visible = false
@@ -126,10 +141,23 @@
         this.$emit('KalixDialogClose')
         console.log('dialog cancel button clicked !')
         this.visible = false
-        if (!this.isView) {
+        if (!this.isView && !this.isYesNoView) {
           this.$refs.dialogForm.resetFields()
         }
 //        this.$emit('update:formModel', JSON.parse(this.tempFormModel))
+        this._afterDialogClose()
+      },
+      onYesClick() {
+        // console.log(' ===== onYesClick 1 =====')
+        this.$emit('yesClick', this.bizKey)
+        // console.log(' ===== onYesClick 2 =====')
+        // this.visible = false
+        // this._afterDialogClose()
+        // console.log(' ===== onYesClick 3 =====')
+      },
+      onNoClick() {
+        this.$emit('noClick', this.bizKey)
+        this.visible = false
         this._afterDialogClose()
       },
       onSubmitClick() {
@@ -153,8 +181,9 @@
         this.privateTitle = _title
         this.visible = true
         this.isEdit = isEdit
-        let beforeFormModel = JSON.parse(JSON.stringify(this.formModel))
-        console.log(`open before formModel :`, beforeFormModel)
+        // 树表结构json解析会报错,后面没有用到这个解析,注释掉
+        // let beforeFormModel = JSON.parse(JSON.stringify(this.formModel))
+        // console.log(`open before formModel :`, beforeFormModel)
         if (row) {
           this.$emit('update:formModel', row)  // 设置sync才有效
 //          Object.assign(this.formModel, row)
@@ -174,8 +203,9 @@
 //        this.formModel = {}
 //        Object.assign(this.formModel, row)
       },
-      _afterDialogClose() {
-        EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose')
+      _afterDialogClose(closeParam) {
+        console.log(` =========== bizKey ======`, this.bizKey)
+        EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose', closeParam)
       }
     },
     created() {

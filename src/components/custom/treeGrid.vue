@@ -6,43 +6,58 @@
       ref="bizSearchRef"
       v-if="bizSearch"
       v-on:onSearchBtnClick="onSearchClick")
-    div.kalix-wrapper(v-bind:style="setWrapperStyle")
+    div.kalix-wrapper(v-bind:style="setWrapperStyle()" style="bottom:8px;")
       div.kalix-wrapper-hd
         i(v-bind:class="iconCls")
         | {{title}}
       div.kalix-wrapper-bd
-        kalix-tool-bar(v-if="isShowToolBar"
-        v-bind:toolbarBtnList="toolbarBtnList"
-        v-on:onToolBarClick="onToolBarClick")
+        template(v-if="isToolBarSelf")
+          kalix-tool-bar(v-if="isShowToolBar" v-bind:toolbarBtnList="toolbarBtnList" v-on:onToolBarClick="onToolBarSelfClick")
+        template(v-else)
+          kalix-tool-bar(v-if="isShowToolBar" v-bind:toolbarBtnList="toolbarBtnList" v-on:onToolBarClick="onToolBarClick")
         div.kalix-table-container(ref="kalixTableContainer" v-bind:style="tableContainerStyle" style="overflow-y:auto;")
           div.autoTbale(v-bind:style="{width:tableWidth}")
             table.table.table-bordered(id="hl-tree-table")
               thead
                 tr
-                  th(v-for="(column,index) in cloneColumns")
-                    i(v-if="column.type === 'hidden'" type="hidden" v-bind:style="{width:0}")
-                    label(v-else) {{ renderHeader(column, index) }}
-                      span.ivu-table-sort(v-if="column.sortable")
-                        i(v-bind:class="{on: column._sortType === 'asc'}"
-                        v-on:click.native="handleSort(index, 'asc')" title="上箭头")
-                        i(v-bind:class="{on: column._sortType === 'desc'}"
-                        v-on:click.native="handleSort(index, 'desc')" title="下箭头")
+                  template(v-if="isColumnfixed")
+                    th(v-for="(column,index) in cloneColumns" v-bind:style="getColumnWidth(column.width)")
+                      i(v-if="column.type === 'hidden'" type="hidden" v-bind:style="{width:0}")
+                      label(v-else) {{ renderHeader(column, index) }}
+                        span.ivu-table-sort(v-if="column.sortable")
+                          i(v-bind:class="{on: column._sortType === 'asc'}"
+                          v-on:click.native="handleSort(index, 'asc')" title="上箭头")
+                          i(v-bind:class="{on: column._sortType === 'desc'}"
+                          v-on:click.native="handleSort(index, 'desc')" title="下箭头")
+                  template(v-else)
+                    th(v-for="(column,index) in cloneColumns")
+                      i(v-if="column.type === 'hidden'" type="hidden" v-bind:style="{width:0}")
+                      label(v-else) {{ renderHeader(column, index) }}
+                        span.ivu-table-sort(v-if="column.sortable")
+                          i(v-bind:class="{on: column._sortType === 'asc'}"
+                          v-on:click.native="handleSort(index, 'asc')" title="上箭头")
+                          i(v-bind:class="{on: column._sortType === 'desc'}"
+                          v-on:click.native="handleSort(index, 'desc')" title="下箭头")
               tbody
                 tr(v-for="(item,index) in initItems" v-bind:key="item.id" v-show="show(item)" v-bind:class="{'child-tr':item.parent,'active':item.id === checkId}" v-on:click="toSelect(item)")
                   td(v-for="(column,snum) in columns" v-bind:key="column.key" v-bind:style="tdStyle(column)")
                     div(v-if="column.type === 'action'")
                       template(v-for="action in column.actions")
-                        el-tooltip(v-if="action.toolTipTitle" v-bind:content="action.toolTipTitle" placement="top")
-                          el-button.base-teble-operation(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
-                        el-tooltip(v-else v-bind:content="action.text" placement="top")
-                          el-button.base-teble-operation(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
+                        template(v-if="isRowButtonSelf")
+                          el-tooltip(v-bind:content="action.text" placement="top")
+                            el-button.base-teble-operation(type="text" v-on:click="btnSelfClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
+                        template(v-else)
+                          el-tooltip(v-if="action.toolTipTitle" v-bind:content="action.toolTipTitle" placement="top")
+                            el-button.base-teble-operation(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
+                          el-tooltip(v-else v-bind:content="action.text" placement="top")
+                            el-button.base-teble-operation(type="text" v-on:click="btnClick(item,action.type)" style="width:30px" v-bind:key="action.text") {{action.text}}
                     input(v-if="column.type === 'hidden'" type="hidden" v-bind:value="renderBody(item, column)")
                     div(v-else)
                       label(v-on:click="toggle(index,item)" v-if="!column.type")
-                        span(v-if='snum==2')
+                        span.tree-icon(v-if='snum==2')
                           i(v-html='item.spaceHtml')
                           i.el-icon(v-if="item.children&&item.children.length>0"
-                          v-bind:class="{'el-icon-circle-plus':!item.expanded,'el-icon-remove':item.expanded}")
+                          v-bind:class="{'el-icon-plus':!item.expanded,'el-icon-minus':item.expanded}")
                           i(v-else class="kailx-ms-tree-space")
                         | {{renderBody(item, column)}}
       component(:is="whichBizDialog" ref="kalixDialog"
@@ -71,6 +86,10 @@
         type: Boolean,
         default: true
       },
+      isToolBarSelf: { // 是否使用自定义事件的工具栏
+        type: Boolean,
+        default: false
+      },
       toolbarBtnList: {   //  toolBar 中按钮数组
         type: Array,
         default: () => {
@@ -83,11 +102,40 @@
       bizDialog: {  //  使用的对话框组件名称
         type: Array
       },
+      bizKey: {  // 主鍵
+        type: String
+      },
       columns: Array,
       targetURL: '',
       formModel: null,
       customTableTool: { // 对table的操作按钮进行自定义的操作
         type: Function
+      },
+      isRowButtonSelf: { // table 行按钮自实现
+        type: Boolean,
+        default: false
+      },
+      customRender: { // 对table的数据进行自定义的修饰
+        type: Function
+      },
+      onToolBarSelfClick: { // toolbar自定义点击事件
+        type: Function
+      },
+      btnSelfClick: { // 表格行添加按钮自定义点击事件
+        type: Function
+      },
+      isColumnfixed: {
+        type: Boolean,
+        default: false
+      },
+      dialogOptions: {},
+      isSearchAfterHandle: {
+        type: Boolean,
+        default: false
+      },
+      isLimitLayer: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
@@ -153,6 +201,10 @@
       },
       checkGroup(data) {
         this.checkAllGroupChange(data)
+      },
+      // 添加url变化时获取数据, add by yangze 2018-1-25
+      targetURL() {
+        this.getData()
       }
     },
     mounted() {
@@ -192,6 +244,12 @@
       if (currentTreeListItem) {
         this.iconCls = currentTreeListItem.iconCls
       }
+      // console.log(' ===== this.bizDialog =====', this.bizDialog)
+      if (this.bizDialog) {
+        setTimeout(() => {
+          this.$emit('kalixDialog', this.$refs.kalixDialog)
+        }, 200)
+      }
     },
     methods: {
       // 获取表格数据
@@ -210,6 +268,14 @@
             }
           })
 //          this._getTableHeight()
+          if (this.customRender) { // 对table的数据进行自定义的修饰
+            this.customRender(this.items)
+          }
+          // 查询以后清空选中
+          this.clearSeleted()
+          if (this.isSearchAfterHandle) {
+            this.$emit('handleAfterSearch', this.items)
+          }
         })
         const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
         if (currentTreeListItem) {
@@ -217,8 +283,9 @@
         }
       },
       setWrapperStyle() {
+        // console.log('bizSearch', this.bizSearch)
         if (!this.bizSearch) {
-          return {'top': 0}
+          return {'top': '8px'}
         }
         return {}
       },
@@ -271,7 +338,7 @@
             this.formModel.parentId = this.checkedItem.id
           }
           let len = this.checkedItem.code.length
-          if (len > 6) {
+          if (len > 6 && this.isLimitLayer) {
             this.$alert('无法在该层级下增加节点！')
           } else {
             that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加', false, this.formModel)
@@ -319,9 +386,21 @@
       },
       // 选中某一行
       toSelect(item) {
+        // 添加选中反选
+        // if (this.checkId !== item.id) {
         this.checkId = item.id
         this.checkedItem = item
-        console.log('item', item)
+        // console.log('item', item)
+        // 选中行父组件父组件获取
+        this.$emit('selectedRow', item)
+        // } else {
+        //   this.clearSeleted()
+        // }
+      },
+      clearSeleted() {
+        this.checkId = 1
+        this.checkedItem = null
+        this.$emit('selectedRow', undefined)
       },
       // 点击事件 返回数据处理
       makeData(data) {
@@ -602,6 +681,18 @@
             this.customTableTool(row, btnId, this)
             break
         }
+      },
+      getKalixDialog(opt, callBack) {
+        let dig = this.bizDialog.filter((item) => {
+          return item.id === opt
+        })
+        this.whichBizDialog = dig[0].dialog
+        setTimeout(() => {
+          callBack(this.$refs.kalixDialog)
+        }, 20)
+      },
+      getColumnWidth(width) {
+        return {width: width + 'px'}
       }
     },
     components: {
@@ -619,10 +710,16 @@
 </style>
 <style scoped lang="stylus" type="text/stylus">
   @import "~@/assets/stylus/baseTable"
+  .tree-icon
+    margin-right 8px
+    color #dd9e4a
+    font-weight bold
+    cursor pointer
 
   .autoTbale {
     overflow: auto;
   }
+
   table {
     width: 100%;
     border-spacing: 0;
@@ -638,7 +735,7 @@
   .table > tbody > tr > th {
     border-top: 1px solid #e7eaec;
     line-height: 1.42857;
-    padding: 8px;
+    padding: 5px;
     vertical-align: middle;
     font-size: 14px;
     line-height: 23px;
@@ -698,7 +795,8 @@
   }
 
   #hl-tree-table > tbody > tr.active {
-    background-color #ffefbb
+    /*background-color #ffefbb*/
+    background-color rgba(255, 239, 187, 0.21)
   }
 
   #hl-tree-table > tbody > .child-tr {

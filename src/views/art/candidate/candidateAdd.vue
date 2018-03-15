@@ -10,9 +10,12 @@
       div.table-title 个人基本信息
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="学号" prop="code" v-bind:rules="rules.code" v-bind:label-width="labelWidth")
-          div.s-flex
-            el-input(v-model="formModel.code" placeholder="请输入学号进行查询" v-on:focus="onCodeFocus")
-            el-button(type="primary" icon="el-icon-search" v-on:click="getStudent") 查询
+          template(v-if="isAdmin")
+            div.s-flex
+              el-input(v-model="formModel.code" placeholder="请输入学号进行查询" v-on:focus="onCodeFocus")
+              el-button(type="primary" icon="el-icon-search" v-on:click="getStudentByCode") 查询
+          template(v-else)
+            el-input(v-model="formModel.code" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="姓名" prop="name" v-bind:rules="rules.name" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.name" disabled)
       div.s-flex
@@ -28,30 +31,35 @@
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="专业" prop="majorId" v-bind:label-width="labelWidth")
           kalix-major-tree2(v-model="formModel.majorId" v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId" disabled)
-        el-form-item.s-flex_item.kalix-form-table-td(label="辅导员" prop="instructor" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.instructor" disabled)
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="辅导员" prop="instructor" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.instructor" disabled)-->
+        el-form-item.s-flex_item.kalix-form-table-td(label="班级" prop="className" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.className" disabled)
       div.s-flex
         <!--el-form-item.s-flex_item.kalix-form-table-td(label="身份证号" prop="identificationCard" v-bind:label-width="labelWidth")-->
-          <!--el-input(v-model="formModel.identificationCard" disabled)-->
-        el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" v-bind:label-width="labelWidth")
-          kalix-date-picker.kalix-date(v-model="formModel.birthday" readonly)
+        <!--el-input(v-model="formModel.identificationCard" disabled)-->
         el-form-item.s-flex_item.kalix-form-table-td(label="民族" prop="nation" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.nation" disabled)
-      div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="籍贯" prop="placeOfOrigin" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.placeOfOrigin" disabled)
-        el-form-item.s-flex_item.kalix-form-table-td(label="现联系地址" prop="address" v-bind:label-width="labelWidth")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" v-bind:label-width="labelWidth")
+          kalix-date-picker.kalix-date(v-model="formModel.birthday" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.postalcode" disabled)
+      div
+        el-form-item.kalix-form-table-td(label="现联系地址" prop="address" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.address" disabled)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="政治面貌" prop="politicalStatus" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.politicalStatus" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="入党(团)时间" prop="joinPartyDate" v-bind:label-width="labelWidth")
           kalix-date-picker.kalix-date(v-model="formModel.joinPartyDate" readonly)
-      div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.postalcode" disabled)
-        el-form-item.s-flex_item.kalix-form-table-td(label="家庭联系电话" prop="homePhone" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.homePhone" disabled)
+      <!--div.s-flex-->
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.postalcode" disabled)-->
+        <!--el-form-item.s-flex_item.kalix-form-table-td(label="家庭联系电话" prop="homePhone" v-bind:label-width="labelWidth")-->
+          <!--el-input(v-model="formModel.homePhone" disabled)-->
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="生源省份" prop="province" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.province" appName="art" dictType="省份" disabled)
@@ -87,8 +95,8 @@
         el-form-item.kalix-form-table-td(label="个人特点" prop="skills" v-bind:rules="rules.skills" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.skills" appName="art" dictType="个人要求" multiple placeholder="请选择,可多选")
       <!--div-->
-        <!--el-form-item.kalix-form-table-td(label="职业规划目标" prop="careerGoal" v-bind:rules="rules.careerGoal" v-bind:label-width="labelWidth")-->
-          <!--el-input(v-model="formModel.careerGoal" type="textarea")-->
+      <!--el-form-item.kalix-form-table-td(label="职业规划目标" prop="careerGoal" v-bind:rules="rules.careerGoal" v-bind:label-width="labelWidth")-->
+      <!--el-input(v-model="formModel.careerGoal" type="textarea")-->
 </template>
 
 <script type="text/ecmascript-6">
@@ -100,6 +108,7 @@
   import DatePicker from '@/components/biz/date/datepicker.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import Vue from 'vue'
+  import Cache from 'common/cache'
 
   export default {
     data() {
@@ -130,6 +139,17 @@
       KalixDatePicker: DatePicker,
       KalixDictSelect: BaseDictSelect
     },
+    mounted() {
+      if (!this.isAdmin) {
+        this.getStudentByUserId()
+      }
+    },
+    computed: {
+      // 判断当前登录用户是否是管理员
+      isAdmin() {
+        return (Cache.get('id') * 1 === -1 || Cache.get('id') * 1 === -2)
+      }
+    },
     methods: {
       onCodeFocus() {
         this.initData()
@@ -143,7 +163,8 @@
         this.formModel.mobile = ''
         this.formModel.majorId = null
         this.formModel.majorName = ''
-        this.formModel.instructor = ''
+        this.formModel.className = ''
+//        this.formModel.instructor = ''
 //        this.formModel.identificationCard = ''
         this.formModel.birthday = null
         this.formModel.nation = ''
@@ -152,13 +173,13 @@
         this.formModel.joinPartyDate = null
         this.formModel.address = ''
         this.formModel.postalcode = ''
-        this.formModel.homePhone = ''
+//        this.formModel.homePhone = ''
         this.formModel.province = null
         this.formModel.entranceYear = null
         this.formModel.trainingLevel = ''
         this.formModel.period = ''
       },
-      getStudent() {
+      getStudentByCode() {
         this.initData()
         let studentNo = this.formModel.code
         // let sort = '[{\'property\': \'updateDate\', \'direction\': \'DESC\'}]'
@@ -185,7 +206,8 @@
               this.formModel.mobile = rec.mobile
               this.formModel.majorId = rec.majorId
               this.formModel.majorName = rec.majorName
-              this.formModel.instructor = rec.instructor
+              this.formModel.className = rec.className
+//              this.formModel.instructor = rec.instructor
 //              this.formModel.identificationCard = rec.identificationCard
               this.formModel.birthday = rec.birthday
               this.formModel.nation = rec.nation
@@ -194,7 +216,7 @@
               this.formModel.joinPartyDate = rec.joinPartyDate
               this.formModel.address = rec.address
               this.formModel.postalcode = rec.postalcode
-              this.formModel.homePhone = rec.homePhone
+//              this.formModel.homePhone = rec.homePhone
               this.formModel.province = rec.province
               this.formModel.entranceYear = rec.entranceYear
               this.formModel.trainingLevel = rec.trainingLevel
@@ -203,6 +225,56 @@
           })
         } else {
           alert('请输入学号')
+        }
+      },
+      getStudentByUserId() {
+        this.initData()
+        this.formModel.code = ''
+        let userId = Cache.get('id')
+        // let sort = '[{\'property\': \'updateDate\', \'direction\': \'DESC\'}]'
+        if (userId) {
+          let params = {
+            params: {
+              'jsonStr': {'userId': userId},
+              'page': 1,
+              'limit': 1,
+              'sort': null
+            }
+          }
+          Vue.axios.get(StudentURL, params).then((response) => {
+            if (response.data.data && response.data.data.length > 0) {
+              let rec = response.data.data[0]
+              /* this.$nextTick(() => {
+               this.formModel = Object.assign({}, rec)
+               }) */
+              // this.$set(this.formModel, 'majorId', rec.majorId)
+              this.formModel.code = rec.code
+              this.formModel.name = rec.name
+              this.formModel.sex = rec.sex
+              this.formModel.email = rec.email
+              this.formModel.phone = rec.phone
+              this.formModel.mobile = rec.mobile
+              this.formModel.majorId = rec.majorId
+              this.formModel.majorName = rec.majorName
+              this.formModel.className = rec.className
+//              this.formModel.instructor = rec.instructor
+//              this.formModel.identificationCard = rec.identificationCard
+              this.formModel.birthday = rec.birthday
+              this.formModel.nation = rec.nation
+              this.formModel.placeOfOrigin = rec.placeOfOrigin
+              this.formModel.politicalStatus = rec.politicalStatus
+              this.formModel.joinPartyDate = rec.joinPartyDate
+              this.formModel.address = rec.address
+              this.formModel.postalcode = rec.postalcode
+//              this.formModel.homePhone = rec.homePhone
+              this.formModel.province = rec.province
+              this.formModel.entranceYear = rec.entranceYear
+              this.formModel.trainingLevel = rec.trainingLevel
+              this.formModel.period = rec.period
+            }
+          })
+        } else {
+          alert('请重新登录系统!')
         }
       }
     }

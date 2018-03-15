@@ -107,11 +107,11 @@ const progressFun = (row, btnId, requestUrl, that) => {
 const customTableTool = (row, btnId, requestUrl, that) => {
   switch (btnId) {
     case 'start': { // 流程启动
-      this.startFun(row, btnId, requestUrl, that)
+      startFun(row, btnId, requestUrl, that)
       break
     }
     case 'progress' : {
-      this.progressFun(row, btnId, requestUrl, that)
+      progressFun(row, btnId, requestUrl, that)
       break
     }
   }

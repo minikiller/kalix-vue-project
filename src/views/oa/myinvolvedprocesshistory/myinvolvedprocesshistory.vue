@@ -10,6 +10,7 @@
       base-table(:isShowToolBar="isShowToolBar" bizKey="myinvolvedprocesshistory" title='我参与的流程列表'
       v-bind:targetURL="targetURL"
       v-bind:formModel.sync="formModel"
+      v-bind:isFixedColumn="isFixedColumn"
       v-bind:bizDialog="bizDialog"
       bizSearch="OaProcessHistorySearch"
       v-bind:tableRowClassName="tableRowClassName"
@@ -47,6 +48,7 @@
     },
     data() {
       return {
+        isFixedColumn: true,
         isApproveShow: false,
         isShowToolBar: false,  // 不显示工具栏
         btnList: WorkflowButtonList,

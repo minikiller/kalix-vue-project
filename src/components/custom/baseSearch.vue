@@ -15,7 +15,7 @@
       el-form.search-container(ref="searchForm" v-bind:model="form" v-bind:inline="true")
         slot(name="searchFormSlot")
           el-form-item(v-for="item in searchFields" v-bind:label="item.label" v-bind:prop="item.prop" v-bind:key="item.prop")
-            el-select(v-if="item.type==='select'" v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
+            el-select(v-if="item.type==='select'" v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType" v-bind:clearable="item.clearable")
               el-option(v-for="option in item.options" v-bind:key="option.value" v-bind:label="option.label" v-bind:value="option.value")
             el-input-number(v-else-if="item.type==='number'" v-model="form[item.prop]" v-bind:class="bindCls(item.cls)" v-bind:data-type="item.dataType")
             org-tree.inline(v-else-if="item.type==='orgTree'" v-model="form[item.prop]" v-bind:isAll="item.isAll")
@@ -25,6 +25,7 @@
             kalix-dict-select(v-else-if="item.type==='dict'" v-bind:appName="item.appName" v-bind:dictType="item.dictType" v-model="form[item.prop]")
             Kalix-map-select(v-else-if="item.type==='map'" v-bind:appName="item.appName" v-bind:prop="item.prop" v-bind:selectUrl="item.selectUrl" v-model="form[item.prop]"
               v-bind:selectedOptions="item.options" v-on:getProp="getProp" v-on:input="getSelectValue" v-bind:stopChange="item.stopChange")
+            input(v-else-if="item.type==='inputHidden'" v-model="form[item.prop]" type="hidden")
             el-input(v-else v-model="form[item.prop]")
         el-form-item
           el-button(type="primary" v-on:click="onSubmitClick")
@@ -183,7 +184,16 @@
 //              console.log('[Search]', `{${requestDatas.join(',')}}`)
             }
             this.isSearch = true
-            EventBus.$emit(ON_SEARCH_BUTTON_CLICK, searchObj)
+            // 兼容多个basetable查询情况
+            let searchObjAll = {}
+            if (this.bizKey) {
+              searchObjAll.searchObj = searchObj
+              searchObjAll.bizKey = this.bizKey
+            } else {
+              searchObjAll = searchObj
+            }
+            // EventBus.$emit(ON_SEARCH_BUTTON_CLICK, searchObj)
+            EventBus.$emit(ON_SEARCH_BUTTON_CLICK, searchObjAll)
           } else {
             console.log('ERR')
           }
@@ -222,7 +232,8 @@
       KalixDictSelect: BaseDictSelect,
       KalixMapSelect: BaseMapSelect
     },
-    computed: {},
+    computed: {
+    },
     watch: {}
   }
 </script>
@@ -245,9 +256,10 @@
       padding 8px 12px
       text-align left
       .search-container
-        display flex
+        margin-bottom -12px
     .el-form-item
-      margin-bottom 0
+      margin-right 12px
+      margin-bottom 12px
     .el-button
       .iconfont
         font-size 14px

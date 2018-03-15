@@ -1,5 +1,11 @@
 <template lang="pug">
-  el-popover(v-bind:ref="popover" v-bind:placement="top-start" v-bind:title="title" v-bind:width="width" v-bind:trigger="trigger")
+  el-popover(
+  popper-class="kalix-popover"
+  v-bind:ref="popover"
+  v-bind:placement="placement"
+  v-bind:title="title"
+  v-bind:width="width"
+  v-bind:trigger="trigger")
     i(style="margin-right: 10px;" v-bind:class="classname" slot="reference")
 </template>
 <script type="text/ecmascript-6">
@@ -14,9 +20,7 @@
       title: {
         type: String, default: ''
       },
-      width: {
-        type: String, default: '200'
-      },
+      width: {},
       trigger: {
         type: String, default: 'hover'
       },
@@ -36,5 +40,11 @@
     }
   }
 </script>
-<style scoped lang="stylus" type="text/stylus">
+<style lang="stylus" type="text/stylus">
+  .kalix-popover
+    &.el-popover
+      min-width auto
+      .el-popover__title
+        font-size 12px
+        margin-bottom 0
 </style>

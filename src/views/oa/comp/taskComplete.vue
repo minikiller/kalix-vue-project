@@ -55,13 +55,16 @@
             el-tag(type="warning")
               i.header-icon.el-icon-edit
               | &nbsp;业务审批
-          el-form(ref="dialogForm" v-bind:model="formModel" label-width="80px")
-            el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
-              el-input(v-model="formModel.content" type="textarea")
-            el-form-item
-              template(v-if="formClass.indexOf('Modify')>0")
+          el-form(ref="dialogForm" v-bind:model="formModel" label-width="100px")
+            template(v-if="formClass.indexOf('Modify')>0")
+              el-form-item(label="修改内容" prop="content" v-bind:rules="rules.content")
+                el-input(v-model="formModel.content" type="textarea")
+              el-form-item
                 el-button(type="success" v-on:click="onReApply") 重新申请
-              template(v-else)
+            template(v-else)
+              el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
+                el-input(v-model="formModel.content" type="textarea")
+              el-form-item
                 el-button(type="success" v-on:click="onAgree") 同意
                 el-button(type="danger" v-on:click="onDisagree") 不同意
     div.dialog-footer(slot="footer")
@@ -110,7 +113,8 @@
         bizData: {}, // 流程业务的动态返回配置信息
         bizForm: {}, // 流程数据信息
         title: '',
-        activeNames: ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab'],
+        /* activeNames: ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab'], */
+        activeNames: ['bizDataTab', 'attachmentTab'],
         isView: true,
         bizKey: 'taskComplete',
         whichBizForm: '', // 动态加载业务view
@@ -132,7 +136,8 @@
             this.$refs.dialogForm.resetFields()
           }
         } else {
-          this.activeNames = ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab']
+          // this.activeNames = ['bizDataTab', 'approveTab', 'historyTab', 'attachmentTab']
+          this.activeNames = ['bizDataTab', 'approveTab']
         }
       }
     },
@@ -195,6 +200,7 @@
               } else {
                 Message.error(response.data.msg)
               }
+              EventBus.$emit(ON_REFRESH_DATA)
             })
           } else {
             Message.error('请检查输入项！')

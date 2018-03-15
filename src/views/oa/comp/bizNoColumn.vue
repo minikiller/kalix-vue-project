@@ -4,7 +4,7 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  el-table-column(prop="name" v-bind:label="title" width="280" align="center")
+  el-table-column(prop="name" v-bind:label="title" v-bind:width="width" align="center")
     template(slot-scope="scope")
       el-tag(v-if="scope.row[name]") {{ scope.row[name] }}
 </template>
@@ -19,6 +19,10 @@
       title: {
         type: String,
         default: '编号'
+      },
+      width: {
+        type: String,
+        default: '280'
       }
     }
   }

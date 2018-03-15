@@ -9,7 +9,9 @@
     div.table-title 吉林动画学院红头文件申请表
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="名称" prop="title" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.title" readonly)
+        div.s-flex
+          el-input(v-model="formModel.title" readonly)
+          el-button(type="primary" icon="el-icon-search" v-on:click="onPreview") 预览
       el-form-item.s-flex_item.kalix-form-table-td(label="创建时间" prop="creationDate" v-bind:label-width="labelWidth")
         kalix-date-time-picker(v-model="formModel.creationDate" style="width:100%" readonly)
     div.s-flex
@@ -29,7 +31,16 @@
         el-input(v-model="formModel.createBy" readonly)
     div
       el-form-item.kalix-form-table-td(label="发文内容" prop="docContent" v-bind:label-width="labelWidth")
-        div(v-html="formModel.docContent")
+        div.doc-content(v-html="formModel.docContent")
+    div
+      el-form-item.kalix-form-table-td(label="审批选项" prop="needHeader" v-bind:label-width="labelWidth")
+        div(style="text-align:center")
+          el-switch(v-model="formModel.needHeader" active-text="需要校领导审批" inactive-text="不需要校领导审批" disabled)
+    template(v-if="formModel.needHeader")
+      div
+        el-form-item.kalix-form-table-td(label="校领导审批名单" prop="needManagerUser" v-bind:label-width="labelWidth")
+          <!--kalix-checkbox(v-model="formModel.managerUser" v-bind:dataUrl="managerUsersURL" disabled)-->
+          el-input(v-model="formModel.needManagerUser" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="部门负责人签字" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.depUser" readonly)
@@ -37,7 +48,7 @@
         el-input(v-model="formModel.schoolUser" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="校领导签字" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.managerUser"  readonly)
+        el-input(v-model="formModel.managerUser" readonly)
       el-form-item.s-flex_item.kalix-form-table-td(label="董事长签字" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.chairmanUser" readonly)
 </template>
@@ -45,6 +56,8 @@
 <script type="text/ecmascript-6">
   import DateTimePicker from '@/components/biz/date/datetimepicker.vue'
   import {RedheadApplyURL} from '../config.toml'
+  import {baseURL} from 'config/global.toml'
+  import Message from 'common/message'
   import Vue from 'vue'
 
   export default {
@@ -92,7 +105,24 @@
             }
           })
         }
+      },
+      // 预览
+      onPreview() {
+        if (this.bizId) {
+          window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + this.bizId + '&filetype=html')
+        } else {
+          if (this.formModel.id) {
+            window.open(baseURL + '/camel/servlet/download?beanname=RedheadApply&id=' + this.formModel.id + '&filetype=html')
+          } else {
+            Message.warning('文号未关联红头文件,无法进行预览!')
+          }
+        }
       }
     }
   }
 </script>
+<style scoped lang="stylus" type="text/stylus">
+  .doc-content
+    max-height 500px
+    overflow auto
+</style>

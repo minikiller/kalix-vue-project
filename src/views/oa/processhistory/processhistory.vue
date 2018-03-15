@@ -11,6 +11,8 @@
       v-bind:targetURL="targetURL"
       v-bind:formModel.sync="formModel"
       v-bind:bizDialog="bizDialog"
+      v-bind:toolbarBtnList="toolbarBtnList"
+      v-bind:isFixedColumn="isFixedColumn"
       bizSearch="OaProcessHistorySearch"
       v-bind:tableRowClassName="tableRowClassName"
       v-bind:customTableTool='customTableTool'
@@ -47,8 +49,10 @@
     },
     data() {
       return {
+        isFixedColumn: true,
         isApproveShow: false,
         isShowToolBar: false,  // 不显示工具栏
+        toolbarBtnList: [{id: 'add', isShow: false}],
         btnList: WorkflowButtonList,
         targetURL: WorkflowHistoryURL,
         bizDialog: [

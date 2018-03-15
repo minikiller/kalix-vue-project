@@ -18,10 +18,11 @@ const FormModel = {
   positionRequires: '',     // 岗位要求
   requireSofts: '',         // 岗位所需软件
   jobNumbers: 1,            // 岗位个数
-  education: '',            // 学历
+  education: null,          // 学历，字典
   functionCategoryId: null, // 职能类别，对象字典
-  salary: 1000,             // 薪资
-  appliedTechnology: '',    // 应用技术名称
+  probationSalary: null,    // 实习薪资，字典
+  salary: null,             // 转正薪资，字典
+  // appliedTechnology: '',    // 应用技术名称
   personRequires: '',       // 个人要求
   jobType: null             // 工作类型
 }

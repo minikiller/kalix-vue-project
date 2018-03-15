@@ -38,11 +38,11 @@
           {prop: 'name', label: '姓名'},
           {prop: 'sex', label: '性别'},
           {prop: 'majorName', label: '专业'},
+          {prop: 'className', label: '班级'},
           {prop: 'provinceName', label: '生源省份'},
           {prop: 'entranceYear', label: '入学年份'},
           {prop: 'phone', label: '固定电话'},
           {prop: 'mobile', label: '手机'},
-          {prop: 'homePhone', label: '家庭联系电话'},
           {prop: 'address', label: '联系地址'}
         ],
         bizDialog: [
