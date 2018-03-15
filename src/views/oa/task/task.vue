@@ -29,6 +29,7 @@
 <script type='text/ecmascript-6'>
   import BaseTable from '@/components/custom/baseTable'
   import {TaskURL} from '../config.toml'
+  import {taskBtnList} from '../task/index'
   import {registerComp} from 'views/oa/comp'
   import BizNoColumn from 'views/oa/comp/bizNoColumn'
   import Vue from 'vue'
@@ -58,22 +59,13 @@
           {id: 'customBtn3', icon: 'icon-edit', title: '自定义按钮 3', isShow: false},
           {id: 'customBtn4', icon: 'icon-edit', title: '自定义按钮 4', isShow: false}],
         bizKey: 'taskComplete',
-        btnList: [{
-          id: 'viewTask',
-          title: '进度',
-          isShow: true
-        }, {
-          id: 'complete',
-          title: '审批',
-          isShow: true
-        }],
+        btnList: taskBtnList,
         targetURL: TaskURL,
         bizDialog: [
           {id: 'view', dialog: 'OaTaskView'},
           {id: 'complete', dialog: 'OaTaskComplete'}
         ],
-        formModel:
-          {}
+        formModel: {}
       }
     },
     created() {

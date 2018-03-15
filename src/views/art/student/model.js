@@ -12,6 +12,7 @@ const FormModel = {
   mobile: '',      // 手机
   majorId: null,          // 专业id
   majorName: '',          // 专业名称
+  className: '',          // 班级名称
   // instructor: '',         // 辅导员
   // identificationCard: '', // 身份证号
   birthday: null,         // 出生日期

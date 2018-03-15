@@ -28,8 +28,8 @@
           kalix-major-tree2(v-model="formModel.majorId" v-bind:treeDataURL="orgURL" v-bind:parentNodeId="orgId" disabled)
         <!--el-form-item.s-flex_item.kalix-form-table-td(label="辅导员" prop="instructor" v-bind:label-width="labelWidth")-->
           <!--el-input(v-model="formModel.instructor" readonly)-->
-        el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" v-bind:label-width="labelWidth")
-          kalix-date-picker(v-model="formModel.birthday" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="班级" prop="className" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.className" readonly)
       div.s-flex
         <!--el-form-item.s-flex_item.kalix-form-table-td(label="身份证号" prop="identificationCard" v-bind:label-width="labelWidth")-->
           <!--el-input(v-model="formModel.identificationCard" readonly)-->
@@ -38,10 +38,13 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="籍贯" prop="placeOfOrigin" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.placeOfOrigin" readonly)
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="现联系地址" prop="address" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.address" readonly)
+        el-form-item.s-flex_item.kalix-form-table-td(label="出生日期" prop="birthday" v-bind:label-width="labelWidth")
+          kalix-date-picker(v-model="formModel.birthday" readonly)
         el-form-item.s-flex_item.kalix-form-table-td(label="邮政编码" prop="postalcode" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.postalcode" readonly)
+      div
+        el-form-item.kalix-form-table-td(label="现联系地址" prop="address" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.address" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="政治面貌" prop="politicalStatus" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.politicalStatus" readonly)

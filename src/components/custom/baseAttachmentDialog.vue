@@ -94,7 +94,7 @@
         this.jsonStr = `{mainId:${_row.id}}`
       },
       refreshData() {
-        this.$refs.pagedTable.getBizData()
+        this.$refs.pagedTable.getData()
       },
       selectedFile(e) {
         let that = this

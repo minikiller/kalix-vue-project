@@ -59,15 +59,15 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="岗位个数" prop="jobNumbers" v-bind:label-width="labelWidth")
           el-input-number(v-model="formModel.jobNumbers" v-bind:min="1" style="width:100%")
         el-form-item.s-flex_item.kalix-form-table-td(label="学历" prop="education" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.education")
+          kalix-dict-select(v-model="formModel.education" appName="art" dictType="学历")
       div
         el-form-item.kalix-form-table-td(label="职能类别" prop="functionCategoryId" v-bind:label-width="labelWidth")
           kalix-fc-tree2(v-model="formModel.functionCategoryId" v-bind:treeDataURL="functionCategroyURL")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="试用期薪资" prop="probationSalary" v-bind:label-width="labelWidth")
-          el-input-number(v-model="formModel.probationSalary" v-bind:step="400" style="width:100%")
+        el-form-item.s-flex_item.kalix-form-table-td(label="实习薪资" prop="probationSalary" v-bind:label-width="labelWidth")
+          kalix-dict-select(v-model="formModel.probationSalary" appName="art" dictType="月薪")
         el-form-item.s-flex_item.kalix-form-table-td(label="转正薪资" prop="salary" v-bind:label-width="labelWidth")
-          el-input-number(v-model="formModel.salary" v-bind:step="500" style="width:100%")
+          kalix-dict-select(v-model="formModel.salary" appName="art" dictType="月薪")
       <!--div-->
         <!--el-form-item.kalix-form-table-td(label="应用技术名称" prop="appliedTechnology" v-bind:label-width="labelWidth")-->
           <!--el-input(v-model="formModel.appliedTechnology" type="textarea")-->

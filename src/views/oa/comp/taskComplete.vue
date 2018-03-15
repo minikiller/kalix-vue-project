@@ -56,12 +56,15 @@
               i.header-icon.el-icon-edit
               | &nbsp;业务审批
           el-form(ref="dialogForm" v-bind:model="formModel" label-width="100px")
-            el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
-              el-input(v-model="formModel.content" type="textarea")
-            el-form-item
-              template(v-if="formClass.indexOf('Modify')>0")
+            template(v-if="formClass.indexOf('Modify')>0")
+              el-form-item(label="修改内容" prop="content" v-bind:rules="rules.content")
+                el-input(v-model="formModel.content" type="textarea")
+              el-form-item
                 el-button(type="success" v-on:click="onReApply") 重新申请
-              template(v-else)
+            template(v-else)
+              el-form-item(label="审批意见" prop="content" v-bind:rules="rules.content")
+                el-input(v-model="formModel.content" type="textarea")
+              el-form-item
                 el-button(type="success" v-on:click="onAgree") 同意
                 el-button(type="danger" v-on:click="onDisagree") 不同意
     div.dialog-footer(slot="footer")
