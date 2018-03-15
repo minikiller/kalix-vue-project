@@ -206,6 +206,10 @@
       isAfterView: {
         type: Boolean,
         default: false
+      },
+      isBeforeView: {
+        type: Boolean,
+        default: false
       }
     },
     watch: {
@@ -244,11 +248,20 @@
       console.log(this.bizKey + '  is activated')
       EventBus.$on(ON_SEARCH_BUTTON_CLICK, this.onSearchClick)
       EventBus.$on(ON_REFRESH_DATA, this.refresh)
+      // d
+      EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', (closeParam) => {
+        console.log(' ------- KalixDialogClose ------- ')
+//        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
+        this.whichBizDialog = ''
+        this.$emit('afterDialogClose', this.bizKey, closeParam)
+      })
     },
     deactivated() {
       console.log(this.bizKey + '  is deactivated')
       EventBus.$off(ON_SEARCH_BUTTON_CLICK)
       EventBus.$off(ON_REFRESH_DATA)
+      // 11
+      EventBus.$off(this.bizKey + '-' + 'KalixDialogClose')
     },
     mounted() {
       // 注册事件接受
@@ -256,10 +269,12 @@
       window.addEventListener('resize', () => {
         that._getTableHeight()
       })
-      EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', () => {
-//        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
-        this.whichBizDialog = ''
-      })
+//       EventBus.$on(this.bizKey + '-' + 'KalixDialogClose', () => {
+//         console.log(' ------- KalixDialogClose ------- ')
+// //        console.log(`%c[kalix] reset ${this.bizKey} whichBizDialog`, 'background: #222;color: #bada55')
+//         this.whichBizDialog = ''
+//         this.$emit('afterDialogClose', this.bizKey)
+//       })
       //  绑定表格 icon 图标
       const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
       if (currentTreeListItem) {
@@ -328,6 +343,8 @@
       },
       onSearchClick(_searchParam) { // 查询按钮点击事件
         console.log('[kalix] base table search clicked')
+        // 设置searchparam
+        this.noSearchParam = false
         // 兼容多个baseTable同时使用情况，用bizKey区分具体查询
         if (_searchParam.bizKey) {
           this.searchParam = _searchParam.searchObj
@@ -418,6 +435,12 @@
             setTimeout(() => {
 //              this.$emit('update:formModel', row)
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
+              if (this.isBeforeView) {
+                this.$emit('handleBeforeView', row)
+                if (typeof (this.$refs.kalixDialog.initPropertis) === 'object') {
+                  this.$refs.kalixDialog.initPropertis = row
+                }
+              }
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看', false, row)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 // 添加初始化模型赋值参数
@@ -522,6 +545,7 @@
             sort: this.sort,
             otherStr: this.otherStr
           }
+          console.log('this.jsonStr=======1', _data.jsonStr)
           if (this.noSearchParam === false) {
             _data = Object.assign(_data, this.searchParam)
             // 添加search组件之外的查询条件，解决jsonStr key覆盖问题
@@ -529,6 +553,7 @@
               _data.jsonStr = _data.jsonStr.substring(0, _data.jsonStr.length - 1) + ',' + this.appendCondition + '}'
             }
           }
+          console.log('this.jsonStr=======2', _data.jsonStr)
           this.$http.get(this.targetURL, {
             params: _data
           }).then(response => {

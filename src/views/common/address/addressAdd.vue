@@ -71,7 +71,7 @@
       var validatePhone = (rule, value, callback) => {
         if (value !== undefined && value !== null && value !== '') {
           let valTrim = value.replace(/^\s+|\s+$/g, '')
-          let mobile = /^1[3|5|8]\d{9}$/
+          let mobile = /^1[3|5|7|8]\d{9}$/
           let phone = /^0\d{2,3}-?\d{7,8}$/
           if (mobile.test(valTrim) || phone.test(valTrim)) {
             callback()
@@ -118,7 +118,8 @@
           email: [{required: false, validator: validateEmail, trigger: 'blur'}],
           qqNum: [{required: false, validator: validateQQ, trigger: 'blur'}]
         },
-        targetURL: AddressURL,
+        targetURL: AddressURL + '/add',
+        addressUsersURL: AddressURL + '/users',
         groupURL: AddressGroupURL + '/all',
         groupParam: undefined,
         userParams: {},
@@ -138,7 +139,8 @@
         this.groupParam = {
           jsonStr: `{'userId': ` + this.formModel.userId + `}`
         }
-        this.addressUsers = dialogOption.addressUsers
+        // this.addressUsers = dialogOption.addressUsers
+        this.getAllAddressUsers(dialogOption.userId)
         this.groupName = dialogOption.groupName
         this.formModel.isAgree = false
       },
@@ -153,6 +155,15 @@
       },
       setGroup(val) {
         this.formModel.groupId = val
+      },
+      getAllAddressUsers(userId) {
+        this.$http.get(this.addressUsersURL, {
+          params: {
+            userId: userId
+          }
+        }).then(response => {
+          this.addressUsers = response.data.data
+        })
       }
     }
   }

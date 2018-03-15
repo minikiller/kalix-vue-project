@@ -6,7 +6,7 @@
 <!--v-bind:tableFields="tableFields"-->
 <template lang="pug">
   keep-alive
-    base-table(bizKey="receiver" title='收件列表'
+    base-table(v-bind:bizKey="bizKey" title='收件列表'
     ref="kalixTable"
     v-bind:targetURL="targetURL"
     v-bind:formModel="formModel"
@@ -19,9 +19,12 @@
     v-bind:toolbarBtnList="toolbarBtnList"
     v-bind:hasTableSelection="hasTableSelection"
     v-bind:customToolBar="customToolBar"
+    v-bind:isBeforeView="true"
     v-bind:isAfterView="true"
+    v-bind:dialogOptions="dialogOptions"
     v-bind:deleteAllUrl="batchDeleteUrl"
     v-on:handleAfterView="handleAfterView"
+    v-on:afterDialogClose="handleAfterDialogClose"
     bizToolBar="CommonReceiverTableToolBar"
     bizSearch="CommonReceiverSearch")
       template(slot="tableColumnSlot")
@@ -48,6 +51,7 @@
     mixins: [receiverSenderMixin],
     data() {
       return {
+        bizKey: 'receiver',
         batchDeleteUrl: `${ReceiverURL}/remove`,
         hasTableSelection: true,
         toolbarBtnList: [
@@ -62,6 +66,9 @@
         }],
         btnList: SenderToolButtonList,
         targetURL: ReceiverURL,
+        dialogOptions: {
+          row: {}
+        },
         // tableFields: [
         //   {prop: 'senderName', label: '发件人'},
         //   {prop: 'categoryName', label: '消息类别'},
@@ -110,6 +117,11 @@
             params: {}
           }).then(response => {
           })
+        }
+      },
+      handleAfterDialogClose(bizKey, closeParam) {
+        if (closeParam) {
+          this.$refs.kalixTable.getData()
         }
       }
     },
