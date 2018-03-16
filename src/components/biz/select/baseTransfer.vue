@@ -1,5 +1,5 @@
 <template lang="pug">
-  el-transfer.kalix-transfer(
+  el-transfer.kalix-transfer(data-kalix-transfer="kalix-transfer"
   v-bind:targetURL="targetURL"
   v-bind:sourceURL="sourceURL"
   v-bind:targetID="targetID"
@@ -115,5 +115,22 @@
     margin-left: 20px;
     padding: 6px 5px;
 
-</style>
+  .el-transfer__button
+    color #fff
+    background-color #409eff
+    &.is-disabled
+    &:hover
+      border 1px solid #dcdfe6
+      background-color #f5f7fa
+      color #c0c4cc
 
+  .kalix-transfer[data-kalix-transfer]
+    .el-transfer__button
+      color #fff
+      background-color #409eff
+      &.is-disabled
+      &:hover
+        border 1px solid #dcdfe6
+        background-color #f5f7fa
+        color #c0c4cc
+</style>
