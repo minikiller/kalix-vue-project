@@ -8,9 +8,9 @@
   kalix-dialog.user-add(bizKey="duty" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
       input(v-model="formModel.parentId" type="hidden")
-      el-form-item(label="父组织机构名称" prop="orgName" label-width="120px")
+      el-form-item(label="上级机构" prop="orgName" label-width="120px")
         el-input(v-model="formModel.orgName" readonly)
-      el-form-item(label="组织机构名称" prop="name" label-width="120px"  v-bind:rules="rules.name")
+      el-form-item(label="机构名称" prop="name" label-width="120px"  v-bind:rules="rules.name")
         el-input(v-model="formModel.name")
 </template>
 

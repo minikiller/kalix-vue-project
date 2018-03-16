@@ -1,3 +1,8 @@
+<!--
+  描述：聊天窗口
+  开发：桑杨
+  日期：2018年3月2日15:10:17
+-->
 <template lang="pug">
   div(v-if="isVisible")
     div.panel(v-bind:class="cls" ref="chatPanel")

@@ -153,11 +153,11 @@
     left 50%
     height 82px
     z-index: 4000;
-    transition all .5s
+    transition all .2s
     transform translate3d(-50%, 0, 0)
     user-select none
     &.hide
-      transform translate3d(-50%, 100%, 0)
+      transform translate3d(-50%, 90%, 0)
       &.visible
         transform translate3d(-50%, 0, 0)
     .dock-bg
