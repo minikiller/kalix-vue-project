@@ -20,8 +20,9 @@
               ref="kalixNavMenu")
               template(slot="menuItemSlot")
                 el-menu-item(v-if="menuItems.length" v-bind:index="itemIndex.toString()" v-for="(item, itemIndex) in menuItems" key="item.id" )
-                  i(v-bind:class="item.iconCls")
+                  <!--i(v-bind:class="item.iconCls")-->
                   span(slot="title")
+                    i(v-bind:class="item.iconCls")
                     | {{item.groupName}}
                   base-menu-tool(v-if="!item.default" v-bind:btnList="groupBtnList" v-bind:item="item"
                     v-on:handleItemOption="handleItemOption")

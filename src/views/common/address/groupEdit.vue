@@ -6,6 +6,7 @@
 <template lang="pug">
   kalix-dialog.user-add(title='编辑' bizKey="addressGroup" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form(slot="dialogFormSlot")
+      input(v-model="formModel.iconCls" type="hidden")
       input(v-model="formModel.userId" type="hidden")
       el-form-item(label="分组名" prop="groupName" v-bind:label-width="labelWidth" v-bind:rules="rules.groupName")
         el-input(v-model="formModel.groupName")
