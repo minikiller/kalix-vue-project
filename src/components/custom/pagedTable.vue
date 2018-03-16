@@ -237,6 +237,9 @@
       },
       onRefreshClick() { // 刷新按钮点击事件
         this.getData()
+      },
+      _getFilesList() {
+        this.getData()
       }
     },
     data() {

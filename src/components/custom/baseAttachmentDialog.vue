@@ -30,7 +30,7 @@
       el-button.upload
         i.iconfont.icon-upload
         | 上 传
-        input(type="file" v-on:change="selectedFile")
+        input(ref="iptFile" type="file" v-on:change="selectedFile" v-bind:accept="fileAccept" )
       el-button(type="primary" v-on:click="onCancelClick") 关 闭
 </template>
 <script type="text/ecmascript-6">
@@ -65,7 +65,8 @@
         title: '',
         visible: false,
         files: [],
-        tableHeight: MAX_TABLE_HEIGHT
+        tableHeight: MAX_TABLE_HEIGHT,
+        fileAccept: '*' // 上传文件类型
       }
     },
     methods: {
@@ -115,6 +116,7 @@
               this.refreshData()
             })
           }
+          // this.$refs.iptFile.value = ''
         })
       },
       customTableTool(row, btnId, tb) {
