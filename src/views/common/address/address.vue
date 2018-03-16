@@ -10,6 +10,8 @@
         el-col.address-col(:span="6" style="padding:20px 0 20px 8px;")
           keep-alive
             base-nav-menu.address-menu(title="组列表" bizKey="addressGroup"
+              selfIconCls="tit_icon iconfont icon-huiyuanfenzu"
+              v-bind:isIconSelf="true"
               v-bind:toolbarBtnList="toolbarBtnList" v-bind:menuUrl="groupUrl"
               v-bind:paramStr="paramStr" v-bind:activeIndex="activeIndex"
               v-bind:bizDialog="groupDialog"
