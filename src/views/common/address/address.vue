@@ -10,6 +10,8 @@
         el-col.address-col(:span="6" style="padding:20px 0 20px 8px;")
           keep-alive
             base-nav-menu.address-menu(title="组列表" bizKey="addressGroup"
+              selfIconCls="tit_icon iconfont icon-huiyuanfenzu"
+              v-bind:isIconSelf="true"
               v-bind:toolbarBtnList="toolbarBtnList" v-bind:menuUrl="groupUrl"
               v-bind:paramStr="paramStr" v-bind:activeIndex="activeIndex"
               v-bind:bizDialog="groupDialog"
@@ -18,8 +20,9 @@
               ref="kalixNavMenu")
               template(slot="menuItemSlot")
                 el-menu-item(v-if="menuItems.length" v-bind:index="itemIndex.toString()" v-for="(item, itemIndex) in menuItems" key="item.id" )
-                  i(v-bind:class="item.iconCls")
+                  <!--i(v-bind:class="item.iconCls")-->
                   span(slot="title")
+                    i(v-bind:class="item.iconCls")
                     | {{item.groupName}}
                   base-menu-tool(v-if="!item.default" v-bind:btnList="groupBtnList" v-bind:item="item"
                     v-on:handleItemOption="handleItemOption")

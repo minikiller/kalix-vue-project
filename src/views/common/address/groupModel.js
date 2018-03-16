@@ -8,6 +8,7 @@ const FormModel = {
   id: 0,
   userId: 0,
   groupName: '',
-  describe: ''
+  describe: '',
+  iconCls: 'iconfont icon-fenzu'
 }
 export default FormModel
