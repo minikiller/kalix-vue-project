@@ -7,12 +7,12 @@
 <template lang="pug">
   div.el-form.kalix-form-table(slot="dialogFormSlot")
     div.table-title 吉林动画学院红头文件申请表
-    div.s-flex
-      el-form-item.s-flex_item.kalix-form-table-td(label="名称" prop="title" v-bind:label-width="labelWidth")
-        div.s-flex
-          el-input(v-model="formModel.title" readonly)
-          el-button(type="primary" icon="el-icon-search" v-on:click="onPreview") 预览
-      el-form-item.s-flex_item.kalix-form-table-td(label="创建时间" prop="creationDate" v-bind:label-width="labelWidth")
+    div
+      el-form-item.kalix-form-table-td(label="名称" prop="title" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.title" readonly)
+          el-button(type="primary" icon="el-icon-search" slot="append" v-on:click="onPreview") 预览
+    div
+      el-form-item.kalix-form-table-td(label="创建时间" prop="creationDate" v-bind:label-width="labelWidth")
         kalix-date-time-picker(v-model="formModel.creationDate" style="width:100%" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" prop="orgName" v-bind:label-width="labelWidth")

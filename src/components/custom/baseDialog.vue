@@ -15,6 +15,9 @@
       div.dialog-footer(slot="footer")
         template(v-if="isView")
           el-button(type="primary" v-on:click="onCancelClick") 关 闭
+        template(v-else-if="isYesNoView")
+          el-button(type="primary" v-on:click="onYesClick") {{yesText}}
+          el-button(type="primary" v-on:click="onNoClick") {{noText}}
         template(v-else)
           el-button(v-on:click="onCancelClick") 取 消
           el-button(type="primary" v-on:click="onSubmitClick") 提 交
@@ -54,6 +57,18 @@
 //        required: true
       },
       isView: false,
+      isYesNoView: {
+        type: Boolean,
+        default: false
+      },
+      yesText: {
+        type: String,
+        default: '同意'
+      },
+      noText: {
+        type: String,
+        default: '拒绝'
+      },
       title: '',
       submitBefore: {  // 提交前执行  submitBefore(baseDialog,function Submit)
         type: Function
@@ -126,10 +141,23 @@
         this.$emit('KalixDialogClose')
         console.log('dialog cancel button clicked !')
         this.visible = false
-        if (!this.isView) {
+        if (!this.isView && !this.isYesNoView) {
           this.$refs.dialogForm.resetFields()
         }
 //        this.$emit('update:formModel', JSON.parse(this.tempFormModel))
+        this._afterDialogClose()
+      },
+      onYesClick() {
+        // console.log(' ===== onYesClick 1 =====')
+        this.$emit('yesClick', this.bizKey)
+        // console.log(' ===== onYesClick 2 =====')
+        // this.visible = false
+        // this._afterDialogClose()
+        // console.log(' ===== onYesClick 3 =====')
+      },
+      onNoClick() {
+        this.$emit('noClick', this.bizKey)
+        this.visible = false
         this._afterDialogClose()
       },
       onSubmitClick() {
@@ -175,8 +203,9 @@
 //        this.formModel = {}
 //        Object.assign(this.formModel, row)
       },
-      _afterDialogClose() {
-        EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose')
+      _afterDialogClose(closeParam) {
+        console.log(` =========== bizKey ======`, this.bizKey)
+        EventBus.$emit(this.bizKey + '-' + 'KalixDialogClose', closeParam)
       }
     },
     created() {

@@ -35,3 +35,9 @@ set chromedriver_cdnurl=https://npm.taobao.org/mirrors/chromedriver
 npm install chromedriver --chromedriver_cdnurl=https://npm.taobao.org/mirrors/chromedriver
 ```
 
+## eslint
+```
+https://segmentfault.com/q/1010000013079361
+add script to setting
+```
+

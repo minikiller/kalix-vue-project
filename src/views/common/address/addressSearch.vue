@@ -9,6 +9,8 @@
 
 <script type="text/ecmascript-6">
   import BaseSearch from '@/components/custom/baseSearch.vue'
+  import Cache from 'common/cache'
+
   export default {
     components: {
       KalixSearch: BaseSearch
@@ -16,7 +18,8 @@
     data() {
       return {
         searchFields: [
-          {label: '姓名', prop: 'name'}
+          {label: '姓名', prop: 'name'},
+          {type: 'inputHidden', prop: 'userId', defaultVal: Cache.get('id')}
         ]
       }
     }

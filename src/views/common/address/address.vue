@@ -26,11 +26,12 @@
         el-col.address-col(:span="18" style="position:relative;height:100%;box-sizing: border-box;")
           keep-alive
             base-table.address-wrapper(bizKey="address" title="通讯录" bizSearch="CommonAddressSearch"
-              v-bind:targetURL="addressURL" v-bind:btnList="addressBtnList" v-bind:otherStr="jsonStr"
+              v-bind:targetURL="addressURL" v-bind:btnList="addressBtnList" v-bind:jsonStr="jsonStr"
               v-bind:isFixedColumn="isFixedColumn" v-bind:bizDialog="addressDialog"
               v-bind:dialogOptions="dialogOptionsAddress" v-bind:isAfterSearch = "true"
               v-on:handleAfterSearch = "addressAfterSearch" v-bind:customTableTool="customTableTool"
-              v-bind:customRender="showGroupName"
+              v-bind:customRender="showGroupName" v-bind:toolbarBtnList="addressToolBtnList"
+              v-bind:noSearchParam="noSearchParam"
               ref="addressTable")
               template(slot="tableColumnSlot")
                 el-table-column(prop="icon" label="头像" align="center")
@@ -38,13 +39,13 @@
                     img(v-if="scope.row.icon" v-bind:src="scope.row.icon" width="32" height="32" alt="")
                     img(v-else src="../../../components/header/default_user.png" width="32" height="32" alt="")
                 el-table-column(prop="name" label="姓名" align="center" width="100px")
+                el-table-column(prop="groupName" label="所在分组" align="center" width="100px")
                 el-table-column(prop="sex" label="性别" align="center" width="100px")
                 el-table-column(prop="nickName" label="昵称" align="center" width="100px")
                 el-table-column(prop="phone" label="电话" align="center" width="150px")
                 el-table-column(prop="email" label="邮箱" align="center" width="150px")
                 el-table-column(prop="qqNum" label="QQ" align="center" width="150px")
                 el-table-column(prop="address" label="通讯地址" align="center" width="200px")
-                el-table-column(prop="groupName" label="所在分组" align="center" width="100px")
 </template>
 
 <script type="text/ecmascript-6">
@@ -100,7 +101,16 @@
         jsonStr: '',
         isFixedColumn: true,
         kalixDialog: undefined,
-        groupName: undefined
+        groupName: undefined,
+        addressAddDisabled: false,
+        noSearchParam: false
+      }
+    },
+    computed: {
+      addressToolBtnList() {
+        return [
+          {id: 'add', isShow: true, type: 'default', isDisable: this.addressAddDisabled}
+        ]
       }
     },
     components: {
@@ -163,18 +173,30 @@
               }
             }, 20)
           }
+          this.noSearchParam = true
           this.jsonStr = `{'userId': ` + this.userId + `,'groupId': ` + this.menuItems[this.activeIndex].id + `}`
           this.addressURL = AddressURL + '/' + this.menuItems[this.activeIndex].id
           this.groupName = this.menuItems[this.activeIndex].groupName
+          if (this.groupName === '我的好友') {
+            this.addressAddDisabled = false
+          } else {
+            this.addressAddDisabled = true
+          }
         }
       },
       getMenuItem(val, bizKey) {
         this.activeIndex = val.toString()
         this.selectItem = this.menuItems[val]
+        this.noSearchParam = true
         this.jsonStr = `{'userId': ` + this.userId + `,'groupId': ` + this.selectItem.id + `}`
         // this.groupConditionStr = '"userId": ' + Cache.get('id') + ',"groupId": ' + this.menuItems[0].id
         this.addressURL = AddressURL + '/' + this.selectItem.id
         this.groupName = this.selectItem.groupName
+        if (this.groupName === '我的好友') {
+          this.addressAddDisabled = false
+        } else {
+          this.addressAddDisabled = true
+        }
         if (val !== this.menuItems.length - 1) {
           this.clearLastSelectStyle()
         }
