@@ -11,7 +11,7 @@
         base-table(bizKey="artScore" title='学生成绩列表' v-bind:targetURL="targetURL"
         v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields" bizSearch="ArtScoreSearch" v-bind:btnList="btnList"
         v-bind:toolbarBtnList="toolbarBtnList" v-bind:customToolBar="customToolBar" v-bind:customTableTool="customTableTool"
-        v-bind:jsonStr="jsonStr" ref="scoreTable")
+        v-bind:jsonStr="jsonStr" v-bind:isFixedColumn="isFixedColumn" ref="scoreTable")
 </template>
 
 <script type="text/ecmascript-6">
@@ -46,7 +46,8 @@
           {id: 'newAdd', dialog: 'ArtScoreAdd'}
         ],
         row: null,
-        jsonStr: ''
+        jsonStr: '',
+        isFixedColumn: true
       }
     },
     components: {

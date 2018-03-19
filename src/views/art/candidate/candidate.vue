@@ -8,7 +8,7 @@
   keep-alive
     base-table(bizKey="artCandidate" title='应聘信息列表' v-bind:targetURL="targetURL"
     v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields"  bizSearch="ArtCandidateSearch" v-bind:btnList="btnList"
-    v-bind:dictDefine="dictDefine")
+    v-bind:dictDefine="dictDefine" v-bind:isFixedColumn="isFixedColumn")
 </template>
 
 <script type="text/ecmascript-6">
@@ -48,7 +48,8 @@
           {id: 'view', dialog: 'ArtCandidateView'},
           {id: 'edit', dialog: 'ArtCandidateEdit'},
           {id: 'add', dialog: 'ArtCandidateAdd'}
-        ]
+        ],
+        isFixedColumn: true
       }
     },
     created() {

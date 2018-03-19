@@ -9,7 +9,7 @@
     base-table(bizKey="artCompany" title='公司信息列表' v-bind:targetURL="targetURL"
     v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields" bizSearch="ArtCompanySearch"
     v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList" v-bind:customTableTool="customTableTool"
-    v-bind:dictDefine="dictDefine")
+    v-bind:dictDefine="dictDefine" v-bind:isFixedColumn="isFixedColumn")
 </template>
 
 <script type="text/ecmascript-6">
@@ -52,7 +52,8 @@
         bizDialog: [
           {id: 'view', dialog: 'ArtCompanyView'},
           {id: 'newEdit', dialog: 'ArtCompanyAdd'}
-        ]
+        ],
+        isFixedColumn: true
       }
     },
     components: {
