@@ -8,7 +8,7 @@
     base-table(bizKey="artStudent" title='学生信息列表' v-bind:targetURL="targetURL"
     v-bind:bizDialog="bizDialog" v-bind:tableFields="tableFields" bizSearch="ArtStudentSearch"
     v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList" v-bind:customTableTool="customTableTool"
-    v-bind:dictDefine="dictDefine")
+    v-bind:dictDefine="dictDefine" v-bind:isFixedColumn="isFixedColumn")
 </template>
 
 <script type="text/ecmascript-6">
@@ -49,7 +49,8 @@
           {id: 'view', dialog: 'ArtStudentView'},
           {id: 'newEdit', dialog: 'ArtStudentAdd'}
 //          {id: 'scoreManage', dialog: 'ArtScoreManage'}
-        ]
+        ],
+        isFixedColumn: true
       }
     },
     components: {
