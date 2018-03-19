@@ -34,7 +34,8 @@
       template(v-if="formModel.needHeader")
         div
           el-form-item.kalix-form-table-td(label="校领导审批名单" prop="needManagerUser" v-bind:rules="rules.needManagerUser" v-bind:label-width="labelWidth")
-            kalix-checkbox(v-model="formModel.needManagerUser" v-bind:dataUrl="managerUsersURL")
+            div(style="padding: 0 25px;")
+              kalix-checkbox(v-model="formModel.needManagerUser" v-bind:dataUrl="managerUsersURL")
       <!--el-input(v-model="formModel.needManagerUser")-->
   <!--div.s-flex-->
   <!--el-form-item.s-flex_item.kalix-form-table-td(label="打印人" v-bind:label-width="labelWidth")-->

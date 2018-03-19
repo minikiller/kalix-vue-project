@@ -210,6 +210,11 @@
       isBeforeView: {
         type: Boolean,
         default: false
+      },
+      // 附件管理 文件类型
+      fileAccept: {
+        type: String,
+        default: '*'
       }
     },
     watch: {
@@ -505,13 +510,13 @@
             })
             break
           }
-
+          // 附件管理
           case 'attachment': {
             console.log(' attachment is clicked ', 'background:#c7320a;')
             let that = this
             this.whichBizDialog = 'AttachmentDialog'
             setTimeout(() => {
-              that.$refs.kalixDialog.openDialog(row, this.bizKey)
+              that.$refs.kalixDialog.openDialog(row, this.bizKey, this.fileAccept)
             }, 20)
             break
           }
