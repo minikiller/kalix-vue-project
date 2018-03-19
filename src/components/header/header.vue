@@ -30,8 +30,9 @@
                   div.line
             ul.aside
               li(v-if="isShowMessage")
-                el-badge(:value="msgCount")
+                el-badge(v-if="msgCount > 0" v-bind:value="msgCount")
                   el-button(icon="el-icon-message" v-on:click="onMsgClick") 消息
+                el-button(v-else= icon="el-icon-message" v-on:click="onMsgClick" style="margin-top:10px;") 消息
               li(v-if="isFlowCommand")
                 el-dropdown(v-on:command="onFlowCommand" style="margin-top:10px;")
                   el-button
