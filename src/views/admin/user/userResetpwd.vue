@@ -18,7 +18,7 @@
         if (value === '') {
           callback(new Error('请输入密码'))
         } else {
-          if (this.formModel.confirmPassword !== '') {
+          if (this.formModel.confirmPassword && this.formModel.confirmPassword !== '') {
             this.$refs.kalixBizDialog.$refs.dialogForm.validateField('confirmPassword')
           }
           callback()
@@ -36,12 +36,8 @@
       return {
         formModel: Object.assign({}, FormModel),
         rules: {
-          password: [
-            {required: true, validator: validatePassword, trigger: 'blur'}
-          ],
-          confirmPassword: [
-            {required: true, validator: validateConfirmPassword, trigger: 'blur'}
-          ]
+          password: [{required: true, validator: validatePassword, trigger: 'blur'}],
+          confirmPassword: [{required: true, validator: validateConfirmPassword, trigger: 'blur'}]
         },
         targetURL: usersURL,
         labelWidth: '140px'
@@ -50,7 +46,6 @@
     components: {
       KalixDialog: Dialog
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
