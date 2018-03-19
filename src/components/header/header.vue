@@ -267,13 +267,15 @@
         //  消息通知
         this.$http.get(msgCountURL).then(res => {
           //  获取消息数量
-          if (res && res.data && res.data.tag) {
+          if (res && res.data && res.data.success && res.data.tag) {
             this.msgCount = res.data.tag
+          } else {
+            clearInterval(window.msgTask)
           }
         })
         this.$http.get(msgURL).then(res => {
           //  获取最新消息
-          if (res && res.data.tag && res.data.tag.length) {
+          if (res && res.data.tag && res.data.success && res.data.tag.length) {
             let msg = JSON.parse(res.data.tag)
             let headerNotif = this.$notify({
               title: msg.title,
@@ -285,6 +287,8 @@
                 headerNotif.close()
               }
             })
+          } else {
+            clearInterval(window.msgTask)
           }
         })
       },
