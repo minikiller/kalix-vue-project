@@ -87,12 +87,13 @@
         this.visible = false
         this._afterDialogClose()
       },
-      openDialog(_row, _bizKey) {
+      openDialog(_row, _bizKey, _fileAccept) {
         console.log('scheduledictAttachment', 'openDialog')
         this.visible = true
         this.row = _row
         this.bizKey = _bizKey
         this.jsonStr = `{mainId:${_row.id}}`
+        this.fileAccept = _fileAccept
       },
       refreshData() {
         this.$refs.pagedTable.getData()
