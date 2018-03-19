@@ -22,7 +22,8 @@ const FormModel = {
   operatorPhone: '', // 申请人联系电话
 
   schoolAdminUser: '', // 校务部行政事务办主管
-  schoolUser: '' // 校务部签字
+  schoolUser: '', // 校务部签字
+  weekCalander: '否' // 是否周历
 }
 
 export default FormModel

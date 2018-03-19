@@ -20,9 +20,10 @@
         el-form-item(label="使用时间" v-bind:label-width="labelWidth" prop="meetingDate" v-bind:rules="rules.meetingDate")
           div.s-flex
             div.s-flex_item
-              kalix-date-picker(v-model="meetingDate" placeholder="选择会议日期" v-bind:editable="false" )
+              <!--kalix-date-picker(v-model="meetingDate" placeholder="选择会议日期" v-bind:editable="false" v-on:change="getMeetingDate")-->
+              el-date-picker(v-model="meetingDate" placeholder="选择会议日期" v-bind:editable="false" v-on:change="getMeetingDate")
             div.s-flex_item.no-link
-              el-form-item(label="" v-bind:label-width="labelWidth0"  prop="beginTime" v-bind:rules="rules.beginTime" v-on:change="getMeetingDate")
+              el-form-item(label="" v-bind:label-width="labelWidth0"  prop="beginTime" v-bind:rules="rules.beginTime" )
                 el-time-picker(v-model="beginTime" placeholder="选择开始时间" style="margin-left:1px;width:180px"  v-bind:editable="false" v-on:change="getStartTime")
             div.s-flex_item.no-link
               el-form-item(label="" v-bind:label-width="labelWidth0"  prop="endTime" v-bind:rules="rules.endTime")
@@ -34,6 +35,10 @@
           kalix-dict-select(v-model="formModel.requireType" appName="oa" dictType="会议需求类型" style="width:100%")
       el-form-item(label="主持人" v-bind:label-width="labelWidth" prop="host" v-bind:rules="rules.host")
         el-input(v-model="formModel.host")
+      el-form-item(label="是否周历" v-bind:label-width="labelWidth" prop="weekCalander" )
+        el-radio-group(v-model="formModel.weekCalander")
+          el-radio(label="是")
+          el-radio(label="否")
 </template>
 
 <script type="text/ecmascript-6">
@@ -134,6 +139,9 @@
       }
     },
     methods: {
+      init(dialogOption) {
+        this.formModel.weekCalander = '否'
+      },
       onOrgIdChange(item) {
         this.formModel.orgName = item.name
       },
@@ -144,7 +152,8 @@
         this.formModel.endTime = formatDate(new Date(val), 'hh:mm:ss')
       },
       getMeetingDate(val) {
-        this.formModel.meetingDate = formatDate(new Date(val), 'yyyy-MM-dd ')
+        let meetingDate = formatDate(new Date(val), 'yyyy-MM-dd ')
+        this.formModel.meetingDate = meetingDate + '00:00:00'
       },
       openMessage(val1, val2) {
         this.$alert('已存在' + val1 + '—' + val2 + '时段的会议！', '冲突信息', {

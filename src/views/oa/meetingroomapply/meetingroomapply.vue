@@ -34,6 +34,7 @@
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
           el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
           el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
+          el-table-column(prop="weekCalander" label="是否周历" align="center" width="90")
           kalix-process-status-column
     kalix-task-view(ref="kalixDialog")
 </template>
