@@ -138,9 +138,11 @@
     },
     methods: {
       init(dialogOption) {
-        this.beginTime = dialogOption.row.beginTimeStr
-        this.endTime = dialogOption.row.endTimeStr
         this.meetingDate = dialogOption.row.meetingDateStr
+        this.beginTime = new Date(this.meetingDate + ' ' + dialogOption.row.beginTimeStr)
+        // this.beginTime = dialogOption.row.beginTimeStr
+        this.endTime = new Date(this.meetingDate + ' ' + dialogOption.row.endTimeStr)
+        // this.endTime = dialogOption.row.endTimeStr
       },
       onOrgIdChange(item) {
         this.formModel.orgName = item.name
