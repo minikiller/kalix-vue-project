@@ -12,8 +12,11 @@ const FormModel = {
 
   host: '', // 主持人
   meetingDate: '', // 会议日期
+  meetingDateStr: '',
   beginTime: '', // 会议时段,开始时间
+  beginTimeStr: '',
   endTime: '', // 会议时段，结束时间
+  endTimeStr: '',
   participant: '', // 参会人员
   attendance: '', // 出席人数
   equipmentRequirement: '', // 设备要求

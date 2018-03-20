@@ -13,6 +13,7 @@
       bizSearch='OaMeetingroomApplySearch'
       v-bind:isFixedColumn="isFixedColumn"
       v-bind:customTableTool="customTableTool"
+      v-bind:dialogOptions = "dialogOptions"
       v-bind:btnList='btnList')
         template(slot="tableColumnSlot")
           kalix-biz-no-column  // 业务编号
@@ -60,10 +61,13 @@
         btnList: workflowBtnList,
         bizDialog: [
           {id: 'view', dialog: 'OaMeetingroomApplyView'},
-          {id: 'edit', dialog: 'OaMeetingroomApplyAdd'},
+          {id: 'edit', dialog: 'OaMeetingroomApplyEdit'},
           {id: 'add', dialog: 'OaMeetingroomApplyAdd'},
           {id: 'progress', dialog: 'OaTaskView'}
-        ]
+        ],
+        dialogOptions: {
+          row: {}
+        }
       }
     },
     mounted() {
