@@ -34,6 +34,10 @@
         kalix-dict-select(v-model="formModel.requireType" appName="oa" dictType="会议需求类型" style="width:100%" readonly)
     el-form-item(label="主持人" v-bind:label-width="labelWidth" prop="host")
       el-input(v-model="formModel.host" readonly)
+    el-form-item(label="是否周历" v-bind:label-width="labelWidth" prop="weekCalander" )
+      el-radio-group(v-model="formModel.weekCalander")
+        el-radio(label="是" disabled)
+        el-radio(label="否" disabled)
 </template>
 
 <script type="text/ecmascript-6">
