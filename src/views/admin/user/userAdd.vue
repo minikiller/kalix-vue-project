@@ -18,7 +18,7 @@
           el-input(v-model="formModel.email")
         el-form-item(label="固定电话" prop="phone" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.phone")
-        el-form-item(label="手机" prop="mobile" v-bind:label-width="labelWidth")
+        el-form-item(label="手机" prop="mobile" v-bind:rules="rules.checkMobile" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.mobile")
       template(v-else-if="formModel.userType === 1")
         el-form-item(label="学号" prop="code" v-bind:rules="rules.code_xh" v-bind:label-width="labelWidth")
@@ -33,7 +33,7 @@
           el-input(v-model="formModel.email")
         el-form-item(label="固定电话" prop="phone" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.phone")
-        el-form-item(label="手机" prop="mobile" v-bind:rules="rules.mobile" v-bind:label-width="labelWidth")
+        el-form-item(label="手机" prop="mobile" required v-bind:rules="rules.checkMobile" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.mobile")
       template(v-else-if="formModel.userType === 3")
         el-form-item(label="企业组织机构代码" prop="code" v-bind:rules="rules.code_qy" v-bind:label-width="labelWidth")
@@ -44,7 +44,7 @@
           el-input(v-model="formModel.email")
         el-form-item(label="固定电话" prop="phone" v-bind:rules="rules.phone" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.phone")
-        el-form-item(label="手机" prop="mobile" v-bind:label-width="labelWidth")
+        el-form-item(label="手机" prop="mobile" v-bind:rules="rules.checkMobile" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.mobile")
       template(v-else)
         // 暂无
@@ -87,6 +87,29 @@
           callback()
         }
       }
+      var checkMobile = (rule, value, callback) => {
+        if (value) {
+          if (value !== '') {
+            if (!(/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(value))) {
+              callback(new Error('请输入正确的电话号码'))
+            } else {
+              callback()
+            }
+          } else {
+            if (this.formModel.userType === 1) {
+              callback(new Error('请输入手机'))
+            } else {
+              callback()
+            }
+          }
+        } else {
+          if (this.formModel.userType === 1) {
+            callback(new Error('请输入手机'))
+          } else {
+            callback()
+          }
+        }
+      }
       return {
         formModel: Object.assign({}, FormModel),
         rules: {
@@ -106,7 +129,8 @@
             {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
           ],
           phone: [{required: true, message: '请输入固定电话', trigger: 'blur'}],
-          mobile: [{required: true, message: '请输入手机', trigger: 'blur'}]
+//          mobile: [{required: true, message: '请输入手机', trigger: 'blur'}],
+          checkMobile: [{validator: checkMobile, trigger: 'blur'}]
         },
         targetURL: usersURL,
         labelWidth: '140px'

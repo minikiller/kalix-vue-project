@@ -31,6 +31,7 @@
   import {baseURL, uploadURL, couchdbDelURL} from 'config/global.toml'
   import Cache from 'common/cache.js'
   import Vue from 'vue'
+  import Message from 'common/message'
 
   let fileCount = 0
   export default {
@@ -79,7 +80,7 @@
       },
       handleBeforeUpload(file) {
         if (fileCount > 1) {
-          this.$message.error('只允许上传一个文件且文件已经存在,请先删除原有文件再进行上传！')
+          Message.error('只允许上传一个文件且文件已经存在,请先删除原有文件再进行上传！')
           return false
         }
 
@@ -87,10 +88,10 @@
           const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
           const isLt2M = file.size / 1024 / 1024 < 2
           if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!')
+            Message.error('上传头像图片只能是 JPG 或 PNG 格式!')
           }
           if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!')
+            Message.error('上传头像图片大小不能超过 2MB!')
           }
           return isJPG && isLt2M
         }
