@@ -38,6 +38,11 @@
       KalixTempApplyViewForm: TempApplyViewForm
     },
     methods: {
+      init(dialogOption) {
+        let meetingDate = dialogOption.row.meetingDateStr
+        this.formModel.beginTime = new Date(meetingDate + ' ' + dialogOption.row.beginTimeStr)
+        this.formModel.endTime = new Date(meetingDate + ' ' + dialogOption.row.endTimeStr)
+      }
     }
   }
 </script>

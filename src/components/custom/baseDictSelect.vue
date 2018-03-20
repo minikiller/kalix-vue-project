@@ -31,7 +31,10 @@
         type: String,
         required: true
       },
-      disabled: Boolean, // 是否禁止
+      disabled: {
+        type: Boolean, // 是否禁止
+        default: false
+      },
       value: null,
       multiple: {
         type: Boolean,

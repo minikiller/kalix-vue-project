@@ -11,9 +11,9 @@
       el-input(v-model="formModel.title" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth" prop="orgId")
-        kalix-org-select(v-model="formModel.orgId"  readonly)
+        kalix-org-select(v-model="formModel.orgId" v-bind:disabled="true" readonly)
       el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" v-bind:label-width="labelWidth" prop="targetDuty")
-        kalix-meeting-room-select(v-model="formModel.meetingroomId" readonly)
+        kalix-meeting-room-select(v-model="formModel.meetingroomId" v-bind:disabled="true" readonly)
     el-form-item(label="会议名称" v-bind:label-width="labelWidth" prop="meetingTopic")
       el-input(v-model="formModel.meetingTopic" readonly)
     div.s-flex_item
@@ -29,11 +29,15 @@
               el-time-picker(v-model="formModel.endTime" placeholder="选择结束时间" style="width:180px"  readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="参会人员" v-bind:label-width="labelWidth" prop="participant" )
-        el-input-number(v-model="formModel.participant" v-bind:min="1" v-bind:max="10" style="width:100%" readonly)
+        el-input-number(v-model="formModel.participant" v-bind:min="1" v-bind:max="10" style="width:100%" v-bind:disabled="true" readonly)
       el-form-item.s-flex_item.kalix-form-table-td(label="宣传需求" v-bind:label-width="labelWidth" prop="requireType" )
-        kalix-dict-select(v-model="formModel.requireType" appName="oa" dictType="会议需求类型" style="width:100%" readonly)
+        kalix-dict-select(v-model="formModel.requireType" appName="oa" dictType="会议需求类型" style="width:100%" v-bind:disabled="true" readonly)
     el-form-item(label="主持人" v-bind:label-width="labelWidth" prop="host")
       el-input(v-model="formModel.host" readonly)
+    el-form-item(label="是否周历" v-bind:label-width="labelWidth" prop="weekCalander" )
+      el-radio-group(v-model="formModel.weekCalander")
+        el-radio(label="是" disabled)
+        el-radio(label="否" disabled)
 </template>
 
 <script type="text/ecmascript-6">
@@ -48,6 +52,8 @@
       return {
         targetURL: '',
         readonly: true,
+        beginTime: '',
+        endTime: '',
         meetingTypeName: ''
       }
     },
@@ -62,6 +68,7 @@
       KalixDialog: Dialog,
       KalixDatePicker: DatePicker      // KalixDictSelect: BaseDictSelect
     },
-    methods: {}
+    methods: {
+    }
   }
 </script>

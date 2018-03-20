@@ -20,7 +20,6 @@
         el-form-item(label="使用时间" v-bind:label-width="labelWidth" prop="meetingDate" v-bind:rules="rules.meetingDate")
           div.s-flex
             div.s-flex_item
-              <!--kalix-date-picker(v-model="meetingDate" placeholder="选择会议日期" v-bind:editable="false" v-on:change="getMeetingDate")-->
               el-date-picker(v-model="meetingDate" placeholder="选择会议日期" v-bind:editable="false" v-on:change="getMeetingDate")
             div.s-flex_item.no-link
               el-form-item(label="" v-bind:label-width="labelWidth0"  prop="beginTime" v-bind:rules="rules.beginTime" )
@@ -47,7 +46,6 @@
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import MeetingRoomSelect from '@/components/biz/select/MeetingRoomSelect'
-  import DatePicker from '@/components/biz/date/datepicker'
   import FormModel from './model'
   import {formatDate} from 'common/typeFormat'
 
@@ -140,7 +138,11 @@
     },
     methods: {
       init(dialogOption) {
-        this.formModel.weekCalander = '否'
+        this.meetingDate = dialogOption.row.meetingDateStr
+        this.beginTime = new Date(this.meetingDate + ' ' + dialogOption.row.beginTimeStr)
+        // this.beginTime = dialogOption.row.beginTimeStr
+        this.endTime = new Date(this.meetingDate + ' ' + dialogOption.row.endTimeStr)
+        // this.endTime = dialogOption.row.endTimeStr
       },
       onOrgIdChange(item) {
         this.formModel.orgName = item.name
@@ -181,8 +183,7 @@
       KalixOrgSelect: UserOrgSelect,
       KalixDictSelect: BaseDictSelect,
       KalixMeetingRoomSelect: MeetingRoomSelect,
-      KalixDialog: Dialog,
-      KalixDatePicker: DatePicker
+      KalixDialog: Dialog
     }
 //    watch: {
 //      formModel: {

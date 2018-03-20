@@ -30,8 +30,9 @@
                   div.line
             ul.aside
               li(v-if="isShowMessage")
-                el-badge(:value="msgCount")
+                el-badge(v-if="msgCount > 0" v-bind:value="msgCount")
                   el-button(icon="el-icon-message" v-on:click="onMsgClick") 消息
+                el-button(v-else= icon="el-icon-message" v-on:click="onMsgClick" style="margin-top:10px;") 消息
               li(v-if="isFlowCommand")
                 el-dropdown(v-on:command="onFlowCommand" style="margin-top:10px;")
                   el-button
@@ -267,13 +268,15 @@
         //  消息通知
         this.$http.get(msgCountURL).then(res => {
           //  获取消息数量
-          if (res && res.data && res.data.tag) {
+          if (res && res.data && res.data.success && res.data.tag) {
             this.msgCount = res.data.tag
+          } else {
+            clearInterval(window.msgTask)
           }
         })
         this.$http.get(msgURL).then(res => {
           //  获取最新消息
-          if (res && res.data.tag && res.data.tag.length) {
+          if (res && res.data.tag && res.data.success && res.data.tag.length) {
             let msg = JSON.parse(res.data.tag)
             let headerNotif = this.$notify({
               title: msg.title,
@@ -285,6 +288,8 @@
                 headerNotif.close()
               }
             })
+          } else {
+            clearInterval(window.msgTask)
           }
         })
       },

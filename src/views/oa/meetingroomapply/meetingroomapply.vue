@@ -13,6 +13,7 @@
       bizSearch='OaMeetingroomApplySearch'
       v-bind:isFixedColumn="isFixedColumn"
       v-bind:customTableTool="customTableTool"
+      v-bind:dialogOptions = "dialogOptions"
       v-bind:btnList='btnList')
         template(slot="tableColumnSlot")
           kalix-biz-no-column  // 业务编号
@@ -34,6 +35,7 @@
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
           el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
           el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
+          el-table-column(prop="weekCalander" label="是否周历" align="center" width="90")
           kalix-process-status-column
     kalix-task-view(ref="kalixDialog")
 </template>
@@ -59,10 +61,13 @@
         btnList: workflowBtnList,
         bizDialog: [
           {id: 'view', dialog: 'OaMeetingroomApplyView'},
-          {id: 'edit', dialog: 'OaMeetingroomApplyAdd'},
+          {id: 'edit', dialog: 'OaMeetingroomApplyEdit'},
           {id: 'add', dialog: 'OaMeetingroomApplyAdd'},
           {id: 'progress', dialog: 'OaTaskView'}
-        ]
+        ],
+        dialogOptions: {
+          row: {}
+        }
       }
     },
     mounted() {
