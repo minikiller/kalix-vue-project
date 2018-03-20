@@ -12,14 +12,14 @@
           template(slot-scope="scope")
             img(v-if="scope.row.icon" v-bind:src="scope.row.icon" width="32" height="32" alt="")
             img(v-else src="../../../components/header/default_user.png" width="32" height="32" alt="")
-        el-table-column(prop="userTypeName" label="用户类型" align="center")
-        el-table-column(prop="code" label="工号/学号/企业组织机构代码" align="center")
-        el-table-column(prop="loginName" label="登录名" align="center")
-        el-table-column(prop="name" label="姓名/企业名称" align="center")
-        el-table-column(prop="sex" label="性别" align="center")
-        el-table-column(prop="email" label="邮箱" align="center")
-        el-table-column(prop="phone" label="固定电话" align="center")
-        el-table-column(prop="mobile" label="手机" align="center")
+        el-table-column(prop="userTypeName" label="用户类型" align="center" width="100px")
+        el-table-column(prop="code" label="工号/学号/企业组织机构代码" align="center" width="200px")
+        el-table-column(prop="loginName" label="登录名" align="center" width="100px")
+        el-table-column(prop="name" label="姓名/企业名称" align="center" width="200px")
+        el-table-column(prop="sex" label="性别" align="center" width="100px")
+        el-table-column(prop="email" label="邮箱" align="center" width="150px")
+        el-table-column(prop="phone" label="固定电话" align="center" width="150px")
+        el-table-column(prop="mobile" label="手机" align="center" width="150px")
 </template>
 <script type="text/ecmascript-6">
   import BaseTable from '@/components/custom/baseTable'

@@ -6,7 +6,7 @@
 
 <template lang="pug">
   kalix-select(v-model="currentValue" placeholder="请选择申请部门" v-bind:clearable="clearable" style="width:100%"
-  appName="USERORGS" v-on:selectChange="onChange" v-bind:requestUrl="requestUrl" warnMsg="当前登录用户无法找到组织机构！")
+    v-bind:disabled="disabled" appName="USERORGS" v-on:selectChange="onChange" v-bind:requestUrl="requestUrl" warnMsg="当前登录用户无法找到组织机构！")
 </template>
 <script type="text/ecmascript-6">
   import {SelectMixin} from './SelectMixin'
@@ -20,6 +20,10 @@
       clearable: {
         type: Boolean,
         default: true
+      },
+      disabled: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
