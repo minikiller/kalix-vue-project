@@ -82,9 +82,9 @@
           el-input(v-model="formModel.learningSofts" type="textarea" readonly)
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="学历" prop="education" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.education" readonly)
+          kalix-dict-select(v-model="formModel.education" appName="art" dictType="学历" disabled)
         el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.salary" readonly)
+          kalix-dict-select(v-model="formModel.salary" appName="art" dictType="月薪" disabled)
       div
         el-form-item.kalix-form-table-td(label="个人特点" prop="skills" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.skills" appName="art" dictType="个人要求" multiple placeholder="请选择,可多选" disabled)

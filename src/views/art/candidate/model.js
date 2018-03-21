@@ -7,8 +7,8 @@ const FormModel = {
   jobType: null,              // 工作类型，字典【工作类型】
   position: '',               // 期望岗位
   learningSofts: '',          // 所学软件
-  education: '',              // 学历
-  salary: 1000,               // 薪资
+  education: null,            // 学历，字典【学历】
+  salary: null,               // 薪资，字典【月薪】
   skills: '',                 // 个人特点，字典【个人要求】多个
   // careerGoal: '',             // 职业规划、目标
   creationDate: null,         // 创建时间

@@ -29,6 +29,16 @@
           sourceField: 'region'
         }, {
           cacheKey: 'ART-DICT-KEY',
+          type: '学历',
+          targetField: 'educationName',
+          sourceField: 'education'
+        }, {
+          cacheKey: 'ART-DICT-KEY',
+          type: '月薪',
+          targetField: 'salaryName',
+          sourceField: 'salary'
+        }, {
+          cacheKey: 'ART-DICT-KEY',
           type: '企业行业',
           targetField: 'expectingIndustryName',
           sourceField: 'expectingIndustry'
@@ -41,7 +51,8 @@
           {prop: 'name', label: '姓名'},
           {prop: 'regionName', label: '工作省份'},
           {prop: 'city', label: '工作城市'},
-          {prop: 'education', label: '学历'},
+          {prop: 'educationName', label: '学历'},
+          {prop: 'salaryName', label: '薪资'},
           {prop: 'expectingIndustryName', label: '期望行业'}
         ],
         bizDialog: [

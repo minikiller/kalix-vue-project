@@ -79,7 +79,7 @@
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="期望行业" prop="expectingIndustry" v-bind:rules="rules.expectingIndustry" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.expectingIndustry" appName="art" dictType="企业行业")
-        el-form-item.s-flex_item.kalix-form-table-td(label="工作类型" prop="jobType" v-bind:label-width="labelWidth")
+        el-form-item.s-flex_item.kalix-form-table-td(label="工作类型" prop="jobType" v-bind:rules="rules.jobType" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.jobType" appName="art" dictType="工作类型")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="期望岗位" prop="position" v-bind:rules="rules.position" v-bind:label-width="labelWidth")
@@ -88,9 +88,9 @@
           el-input(v-model="formModel.learningSofts" type="textarea")
       div.s-flex
         el-form-item.s-flex_item.kalix-form-table-td(label="学历" prop="education" v-bind:rules="rules.education" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.education")
-        el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:label-width="labelWidth")
-          el-input-number(v-model="formModel.salary" v-bind:step="500" style="width:100%")
+          kalix-dict-select(v-model="formModel.education" appName="art" dictType="学历")
+        el-form-item.s-flex_item.kalix-form-table-td(label="薪资" prop="salary" v-bind:rules="rules.salary" v-bind:label-width="labelWidth")
+          kalix-dict-select(v-model="formModel.salary" appName="art" dictType="月薪")
       div
         el-form-item.kalix-form-table-td(label="个人特点" prop="skills" v-bind:rules="rules.skills" v-bind:label-width="labelWidth")
           kalix-dict-select(v-model="formModel.skills" appName="art" dictType="个人要求" multiple placeholder="请选择,可多选")
@@ -123,7 +123,8 @@
           jobType: [{required: true, message: '请选择期望工作类型', trigger: 'change'}],
           position: [{required: true, message: '请输入期望岗位', trigger: 'blur'}],
           learningSofts: [{required: true, message: '请输入所学软件', trigger: 'blur'}],
-          education: [{required: true, message: '请输入学历', trigger: 'blur'}],
+          education: [{required: true, message: '请选择学历', trigger: 'change'}],
+          salary: [{required: true, message: '请选择薪资', trigger: 'change'}],
           skills: [{required: true, message: '请选择个人特点,可多选', trigger: 'change'}]
 //          careerGoal: [{required: true, message: '请输入职业规划目标', trigger: 'blur'}]
         },
