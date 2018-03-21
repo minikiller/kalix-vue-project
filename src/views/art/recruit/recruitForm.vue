@@ -71,7 +71,7 @@
   import BaseDictSelect from '@/components/custom/baseDictSelect'
   import DatePicker from '@/components/biz/date/datepicker.vue'
   import Vue from 'vue'
-  import Swiper from 'swiper'
+  // import Swiper from 'swiper'
   import {formatDate} from 'common/typeFormat'
 
   export default {
@@ -97,16 +97,16 @@
         history.pushState(null, null, document.URL)
       })
 
-      let swiper = new Swiper('.swiper-container', {
-        direction: 'vertical',
-        slidesPerView: 'auto',
-        freeMode: true,
-        scrollbar: {
-          el: '.swiper-scrollbar'
-        },
-        mousewheel: true
-      })
-      console.log('swiper', swiper)
+      // let swiper = new Swiper('.swiper-container', {
+      //   direction: 'vertical',
+      //   slidesPerView: 'auto',
+      //   freeMode: true,
+      //   scrollbar: {
+      //     el: '.swiper-scrollbar'
+      //   },
+      //   mousewheel: true
+      // })
+      // console.log('swiper', swiper)
     },
     methods: {
       initData() {

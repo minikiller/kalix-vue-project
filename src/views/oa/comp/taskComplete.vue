@@ -82,7 +82,7 @@
   import Message from 'common/message'
   import DateColumn from 'views/oa/comp/dateColumn'
   import {Loading} from 'element-ui'
-  import prettyBytes from 'pretty-bytes'
+  import prettyBytes from 'common/pretty-bytes'
   import Vue from 'vue'
 
   const baseFormUrl = '/camel/rest/'
