@@ -28,7 +28,7 @@
   import {Message, Eventbus} from 'kalix-base'
   import Cache from 'common/cache'
   import Login from 'api/login'
-  // import {logoutURL} from 'config/global.toml'
+  // import {logoutUrl} from 'config/global.toml'
 
   export default {
     data() {

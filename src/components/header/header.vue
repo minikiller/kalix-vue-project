@@ -32,7 +32,7 @@
               li(v-if="isShowMessage")
                 el-badge(v-if="msgCount > 0" v-bind:value="msgCount")
                   el-button(icon="el-icon-message" v-on:click="onMsgClick") 消息
-                el-button(v-else= icon="el-icon-message" v-on:click="onMsgClick" style="margin-top:10px;") 消息
+                el-button(v-else= icon = "el-icon-message" v-on:click="onMsgClick" style="margin-top:10px;") 消息
               li(v-if="isFlowCommand")
                 el-dropdown(v-on:command="onFlowCommand" style="margin-top:10px;")
                   el-button
@@ -62,12 +62,13 @@
   import Vue from 'vue'
   import router from 'router'
   import Cache from 'common/cache'
-  import {applicationURL, logoutURL, msgCountURL, msgURL, userURL} from 'config/global.toml'
+  import {applicationURL, logoutUrl, msgCountURL, msgURL, userURL} from 'config/global.toml'
   import {isEmptyObject} from 'common/util'
   import Cookie from 'js-cookie'
   import UserEditpwd from 'views/admin/user/userEditpwd.vue'
   import UserEdit from 'views/admin/user/userEdit.vue'
   import EventBus from 'common/eventbus'
+  // import $ from 'jquery'
 
   export default {
     props: {
@@ -247,11 +248,29 @@
         }
       },
       doLogout() {
-        Vue.axios.get(logoutURL, {}).then(response => {
-          Cache.clear()
-          Cache._clearLocal()
-          router.push({path: '/login'})
-        })
+        // console.log(' ===== logoutUrl ===== ', logoutUrl)
+        // $.ajax({
+        //   url: 'http://192.168.0.116:8181/logout',
+        //   type: 'GET',
+        //   success: (res) => {
+        //     console.log(' ===== success ===== ', res)
+        //   },
+        //   error: (err) => {
+        //     console.log(' ===== error ===== ', err)
+        //   }
+        // })
+        Vue.axios.get(logoutUrl, {})
+          .then(response => {
+            Cache.clear()
+            Cache._clearLocal()
+            router.push({path: '/login'})
+          })
+          .catch(err => {
+            console.log(' ===== err ===== ', err)
+            Cache.clear()
+            Cache._clearLocal()
+            router.push({path: '/login'})
+          })
       },
       onFlowCommand(command) {
         console.log(' ===== 代办流程 ===== ')
