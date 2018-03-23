@@ -1,13 +1,13 @@
 <!--
-描述：办公自动化-公务用车申请-新增组件
+描述：办公自动化-教学用车申请-新增组件
 开发人：hqj
-开发日期：2017年10月19日
+开发日期：2018年03月23日
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="carApply" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
+  kalix-dialog.user-add(bizKey="teachingCarApply" ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
-      div.table-title 吉林动画学院公务用车申请表
+      div.table-title 吉林动画学院教学用车申请表
       el-form-item(label="名称" v-bind:label-width="labelWidth" prop="title" v-bind:rules="rules.title")
         el-input(v-model="formModel.title")
       div.s-flex
@@ -40,13 +40,17 @@
         el-form-item.s-flex_item.kalix-form-table-td(label="用车情况" prop="city" v-bind:label-width="labelWidth")
           div(style="text-align:center")
             el-switch.s-flex_item(v-model="formModel.city" active-text="市内用车" inactive-text="市外用车")
-        el-form-item.s-flex_item.kalix-form-table-td(label="联系电话" prop="operatorPhone" v-bind:label-width="labelWidth")
+        el-form-item.s-flex_item.kalix-form-table-td(label="签批选项" prop="needTeachingUser" v-bind:label-width="labelWidth")
+          div(style="text-align:center")
+            el-switch.s-flex_item(v-model="formModel.needTeachingUser" active-text="教务部签批" inactive-text="平台建设与管理中心签批")
+      div
+        el-form-item.kalix-form-table-td(label="联系电话" prop="operatorPhone" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.operatorPhone")
 </template>
 
 <script type="text/ecmascript-6">
   import FormModel from './model'
-  import {CarApplyURL} from '../config.toml'
+  import {TeachingCarApplyURL} from '../config.toml'
   import Cache from 'common/cache'
   import Dialog from '@/components/custom/baseDialog.vue'
   import UserOrgSelect from '@/components/biz/select/UserOrgSelect'
@@ -60,7 +64,7 @@
           title: [{required: true, message: '请输入名称', trigger: 'blur'}],
           orgId: [{type: 'number', required: true, message: '请选择申请部门', trigger: 'change'}]
         },
-        targetURL: CarApplyURL,
+        targetURL: TeachingCarApplyURL,
         labelWidth: '110px',
         orgNameOptions: []
       }

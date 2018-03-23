@@ -33,9 +33,12 @@ RecruitApplyStartURL = "/camel/rest/recruitapplys/workflow/startProcess?id="
 # 入职申请
 EmployApplyURL = "/camel/rest/employapplys"
 EmployApplyStartURL = "/camel/rest/employapplys/workflow/startProcess?id="
-# 用车申请
+# 公务用车申请
 CarApplyURL = "/camel/rest/carapplys"
 CarApplyStartURL = "/camel/rest/carapplys/workflow/startProcess?id="
+# 教学用车申请
+TeachingCarApplyURL = "/camel/rest/teachingcarapplys"
+TeachingCarApplyStartURL = "/camel/rest/teachingcarapplys/workflow/startProcess?id="
 # 出差申请
 EvectionApplyURL = "/camel/rest/evectionapplys"
 EvectionApplyStartURL = "/camel/rest/evectionapplys/workflow/startProcess?id="
@@ -169,7 +172,7 @@ DocumentPublishURL = "camel/rest/documents/publish?id="
   path = "oa/employapply/employApplySearch"
   name = "OaEmployApplySearch"
 
-# 需要自动注册成全局的CarApply(用车申请)组件
+# 需要自动注册成全局的CarApply(公务用车申请)组件
 [[CarApplyComponent]]
   path = "oa/carapply/carApplyView"
   name = "OaCarApplyView"
@@ -179,6 +182,17 @@ DocumentPublishURL = "camel/rest/documents/publish?id="
 [[CarApplyComponent]]
   path = "oa/carapply/carApplySearch"
   name = "OaCarApplySearch"
+
+# 需要自动注册成全局的TeachingCarApply(教学用车申请)组件
+[[TeachingCarApplyComponent]]
+  path = "oa/teachingcarapply/teachingCarApplyView"
+  name = "OaTeachingCarApplyView"
+[[TeachingCarApplyComponent]]
+  path = "oa/teachingcarapply/teachingCarApplyAdd"
+  name = "OaTeachingCarApplyAdd"
+[[TeachingCarApplyComponent]]
+  path = "oa/teachingcarapply/teachingCarApplySearch"
+  name = "OaTeachingCarApplySearch"
 
 # 需要自动注册成全局的EvectionApply(出差申请)组件
 [[EvectionApplyComponent]]

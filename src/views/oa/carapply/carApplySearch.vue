@@ -1,11 +1,11 @@
 <!--
-描述：办公自动化-用车申请-查询组件
+描述：办公自动化-公务用车申请-查询组件
 开发人：hqj
 开发日期：2017年10月19日
 -->
 
 <template lang="pug">
-  kalix-search(title="用车申请查询" v-bind:searchFields="searchFields")
+  kalix-search(title="公务用车申请查询" v-bind:searchFields="searchFields")
 </template>
 
 <script type="text/ecmascript-6">
