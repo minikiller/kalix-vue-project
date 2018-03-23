@@ -1,14 +1,24 @@
 <template lang="pug">
   im-box
     user-avatar(slot="imHeader")
-    div.user-list(slot="imBody")
-      user-list-item(v-for="(item,index) in items" v-bind:key="index" v-bind:item="item")
+    div(slot="imBody" id="user-list-session")
+    <!--div.user-list(slot="imBody" id)-->
+      <!--user-list-item(v-for="(item,index) in items" v-bind:key="index" v-bind:item="item")-->
 </template>
 <script type="text/ecmascript-6">
   import ImBox from './imBox'
   import UserAvatar from './userAvatar'
   import UserListItem from './userListItem'
+  import $ from 'jquery'
+  import EasemobApi from './js/api'
 
+  let params = {
+    appKey: 'kj7swf8okidb2',
+    token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
+  }
+  let config = {
+    localWindow: $('#session_list')
+  }
   export default {
     props: {
       user: {
@@ -30,10 +40,20 @@
         ]
       }
     },
+    mounted() {
+      if (this.$route.name !== 'home') {
+        this.moveLeft()
+      }
+
+      // this.init()
+      EasemobApi.api.init(params, config)
+      EasemobApi.api.getConversationList()
+    },
     components: {
       ImBox,
       UserAvatar,
-      UserListItem
+      UserListItem,
+      EasemobApi
     }
   }
 </script>

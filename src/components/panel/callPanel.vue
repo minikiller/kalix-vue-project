@@ -9,7 +9,7 @@
     div.timer 00:01
     div.chat_plan
       div.button-chat_plan.button-chat-min
-      div.button-chat_plan.button-chat-close(v-on:click="onCallClose")
+      div.button-chat_plan.button-chat-close
     div.button-wrapper
       div
         div.button-chat
@@ -24,10 +24,11 @@
           i.icon-chat.icon-chat-volume
           div.clear-fix-line
           span.name 音量
-      div.icon-chat.icon-chat-break
+      div.icon-chat.icon-chat-break(v-on:click="onCallClose")
 </template>
 <script type="text/ecmascript-6">
   import EventBus from 'common/eventbus'
+  import EasemobApi from '@/components/im/js/api'
 
   export default {
     props: {
@@ -50,12 +51,16 @@
       },
       onCallClose() {
         EventBus.$emit('ON_CALL_CLOSE')
+        EasemobApi.api.hungupCall()
       }
     },
     computed: {
       cls() {
         return `${this.type}-chat`
       }
+    },
+    components: {
+      EasemobApi
     }
   }
 </script>

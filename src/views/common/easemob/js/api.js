@@ -14,7 +14,7 @@ api.init = function (params, modules){
   var appKey = params.appKey;
   var token = params.token;
   var navi = params.navi || "";
-
+alert("dddddddddd");
   modules = modules || {};
   var RongIMLib = modules.RongIMLib || window.RongIMLib;
   var RongIMClient = RongIMLib.RongIMClient;

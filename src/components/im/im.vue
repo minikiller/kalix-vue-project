@@ -21,7 +21,7 @@
               message-list(v-show="footerBars[0].isSelect")
             div.panel_footer
               im-footer-bar(v-for='bar in footerBars' v-bind:key="bar.type" v-bind:data="bar" v-on:click="onFooterBarClick(bar)")
-    <!-- kalix-chat-panel -->
+    kalix-chat-panel
 </template>
 <script type="text/ecmascript-6">
   import ImState from './imState'
@@ -32,7 +32,15 @@
   import OrgList from './orgList'
   import ImFooterBar from './imFooterBar'
   import KalixChatPanel from '@/components/panel/chatPanel'
-
+  import $ from 'jquery'
+  import EasemobApi from './js/api'
+  let params = {
+    appKey: 'kj7swf8okidb2',
+    token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
+  }
+  let config = {
+    localWindow: $('#session_list')
+  }
   export default {
     data() {
       return {
@@ -50,6 +58,9 @@
       if (this.$route.name !== 'home') {
         this.moveLeft()
       }
+
+     // this.init()
+      EasemobApi.api.init(params, config)
     },
     activated() {
       this.footerBars = [
@@ -134,7 +145,8 @@
       UserAvatar,
       OrgList,
       ImFooterBar,
-      KalixChatPanel
+      KalixChatPanel,
+      EasemobApi
     }
   }
 </script>

@@ -312,13 +312,13 @@
   // let config = {
   // protobuf: './local-sdk/protobuf-2.2.7.min.js' //支持http(s)网络路径、本地相对路径
   // }
-  // let params = {
-  //   appKey: 'kj7swf8okidb2',
-  //   token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
-  // }
-  // let config = {
-  //   localWindow: $('#session_list')
-  // }
+  let params = {
+    appKey: 'kj7swf8okidb2',
+    token: 'j35uRz5LG/ke4PZ0+dk2EUnU21XupRz0OrQb1ndZFaNrbds/erY05YK293SNbc+we4WcRcSqFS0='
+  }
+  let config = {
+    localWindow: $('#session_list')
+  }
   export default {
     data() {
       return {
@@ -343,8 +343,8 @@
         Scrollbar.init(item)
       })
       this.init()
-      // EasemobApi.api.init(params, config)
-      // EasemobApi.api.initRevice($('#session_list'))
+      EasemobApi.api.init(params, config)
+      EasemobApi.api.initRevice($('#session_list'))
 
       // this.getConversationList()
     },

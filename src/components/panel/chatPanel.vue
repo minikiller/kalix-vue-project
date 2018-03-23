@@ -10,7 +10,7 @@
           panel-header-button(type="close" v-on:click="closeBaseTable")
       div.panel-body
         div.show-wrapper
-          div.message-cells
+          div.message-cells(id="session_list")
             div.cell
               div.avatar
               div.cnt 开会开会开会开会开会开会开会开会开会开会开会开会开会开会开会开会开会开会开会开会开会开会
@@ -19,13 +19,13 @@
               div.cnt 开会
         div.write-wrapper
           div.chat_tool_bar
-            div.button-chat_tool_bar.icon-chat_tool_bar-face
+            div.button-chat_tool_bar.icon-chat_tool_bar-face(v-on:click="getAllEmoji")
             div.button-chat_tool_bar.icon-chat_tool_bar-file
             div.button-chat_tool_bar.icon-chat_tool_bar-video(v-on:click="showVideo")
             div.button-chat_tool_bar.icon-chat_tool_bar-video(v-on:click="showVoice")
-          div.article
+          div.article(contenteditable="true" id="content")
           div.aside
-            div.btn-send 发送
+            div.btn-send(v-on:click="sendTextMessage") 发送
     component(v-bind:is="which_to_show" ref="bizCallPanel"
     v-bind:chatWrapper="chatWrapper")
 </template>
@@ -36,6 +36,8 @@
   import UserAvatar from '@/components/im/userAvatar'
   import VideoChat from './VideoChat'
   import VoiceChat from './VoiceChat'
+  import EasemobApi from '@/components/im/js/api'
+  import $ from 'jquery'
 
   export default {
     data() {
@@ -53,7 +55,11 @@
     activated() {
       EventBus.$on('ON_CALL_CLOSE', this.onCallClose)
     },
+    mounted() {
+      EasemobApi.api.initRevice($('#session_list'))
+    },
     mounds() {
+
     },
     methods: {
       onCallClose() {
@@ -65,6 +71,7 @@
         this.$nextTick(() => {
           this.$refs.bizCallPanel.open()
         })
+        EasemobApi.api.startDoCall()
       },
       showVoice() {
         this.which_to_show = 'VoiceChat'
@@ -84,6 +91,12 @@
       closeBaseTable() {
         // 关闭窗体
         EventBus.$emit('ON_CLOSE_BASETABLE')
+      },
+      sendTextMessage() {
+        EasemobApi.api.sendTextMessage($('#session_list'), $('#content'))
+      },
+      getAllEmoji() {
+        EasemobApi.api.getAllEmoji()
       }
     },
     components: {
@@ -91,7 +104,8 @@
       panelHeaderButton,
       UserAvatar,
       VideoChat,
-      VoiceChat
+      VoiceChat,
+      EasemobApi
     }
   }
 </script>

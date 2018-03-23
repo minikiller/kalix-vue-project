@@ -4,19 +4,19 @@
 开发日期：2017年11月08日
 -->
 <template lang="pug">
-  div.im-org-tree
+  div
     el-input(placeholder="输入关键字进行过滤" v-model="filterText")
-    div.kalix-tree-wrapper
-      el-tree.filter-tree.im(v-bind:data="treeData"
-      v-bind:props="defaultProps" accordion
-      node-key="id" highlight-current
-      v-bind:filter-node-method="filterNode" v-on:node-click="handleNodeClick"
-      ref="orgTree")
+    el-collapse()
+      el-collapse-item(v-bind:title="item.groupName" v-bind:key="item.id" v-for="(item,index) in treeData")
+        div(v-if="item.addressBeanList.length" v-for="(user,i) in item.addressBeanList")
+          div(onclick="") {{user.name}}
 </template>
 <script type="text/ecmascript-6">
   import Cache from 'common/cache'
   import EventBus from 'common/eventbus'
-
+  let _data = {
+    jsonStr: '{"userId":' + Cache.get('id') + '}'
+  }
   export default {
     activated() {
       console.log('orgTree component is activated')
@@ -67,30 +67,33 @@
         // console.log('org tree data is ', data.id)
       },
       getData() {
-        let url = ''
-        if (this.organizationId === -1) {
-          url = '/camel/rest/orgs?node=root'
-        } else {
-          url = '/camel/rest/orgs/' + this.organizationId
-        }
+        let url = '/camel/rest/addressgroups/all'
         this.axios.request({
           method: 'GET',
           url: url,
-          params: {}
+          params: _data
         }).then(res => {
-          this.treeData = res.data.children
-          // 加载数据后自动选中第一个节点
-          this.$nextTick(() => {
-            const firstNode = document.querySelector('.filter-tree.im > .el-tree-node')
-            if (firstNode) {
-              firstNode.click()
-            }
-          })
-//          this._getTableHeight()
+          console.log('treeData:', res.data)
+          this.treeData = res.data.data
+//          this.analyze(res.data.data)
         })
         const currentTreeListItem = JSON.parse(Cache.get('currentTreeListItem'))
         if (currentTreeListItem) {
           this.iconCls = currentTreeListItem.iconCls
+        }
+      },
+      /**
+       * 分解对象
+       * @param arr
+       */
+      analyze(arr) {
+        if (arr && arr.length > 0) {
+          arr.forEach(item => {
+            console.log(item)
+            this.$set(item, 'active', false)
+            this.treeData.push(item)
+            this.analyze(item)
+          })
         }
       }
     },
