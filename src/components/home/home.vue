@@ -103,6 +103,7 @@
         this.$router.push({path: '/'})
         this.which_to_show = ''
         this.$refs.kalixIm.original()
+        EventBus.$emit('ON_ORI_BASETABLE')
       },
       onClickGroupCell(item) {
         if (this.$refs[this.activePlank]) {

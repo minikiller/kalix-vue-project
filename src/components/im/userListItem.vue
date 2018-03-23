@@ -8,6 +8,8 @@
     div.time {{getTime(item.time)}}
 </template>
 <script type="text/ecmascript-6">
+  import EventBus from 'common/eventbus'
+
   export default {
     props: {
       item: {
@@ -16,7 +18,7 @@
     },
     methods: {
       onDbClock() {
-        this.$myConsoleLog('[onDbClock] item', this.item, '#B03060')
+        EventBus.$emit('onChatItemDbClick', this.item)
       },
       styleObject() {
         let style = {}

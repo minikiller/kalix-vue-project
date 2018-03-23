@@ -1,3 +1,8 @@
+<!--
+  描述：音视频聊天
+  开发：桑杨
+  日期：2018年3月2日15:09:23
+-->
 <template lang="pug">
   div.call-panel(v-bind:class="cls" ref="callPanel")
     slot(name="panelSlot")

@@ -21,7 +21,12 @@
               message-list(v-show="footerBars[0].isSelect")
             div.panel_footer
               im-footer-bar(v-for='bar in footerBars' v-bind:key="bar.type" v-bind:data="bar" v-on:click="onFooterBarClick(bar)")
+<<<<<<< HEAD
     kalix-chat-panel
+=======
+    kalix-chat-panel(ref="kalixChatPanel")
+    <!--component(v-bind:is="which_to_show" ref="bizPanel")-->
+>>>>>>> origin/Second
 </template>
 <script type="text/ecmascript-6">
   import ImState from './imState'
@@ -31,6 +36,7 @@
   import UserAvatar from './userAvatar'
   import OrgList from './orgList'
   import ImFooterBar from './imFooterBar'
+  import EventBus from 'common/eventbus'
   import KalixChatPanel from '@/components/panel/chatPanel'
   import $ from 'jquery'
   import EasemobApi from './js/api'
@@ -63,6 +69,7 @@
       EasemobApi.api.init(params, config)
     },
     activated() {
+      EventBus.$on('onChatItemDbClick', this.onChatItemDbClick)
       this.footerBars = [
         {type: 'contact', isSelect: true},
         {type: 'conversation', isSelect: false},
@@ -71,6 +78,9 @@
       ]
     },
     methods: {
+      onChatItemDbClick(chatItem) {
+        this.$refs.kalixChatPanel.open(chatItem)
+      },
       onFooterBarClick(bar) {
         this.footerBars.map(e => {
           if (e === bar) {
@@ -90,10 +100,20 @@
         this.mini()
       },
       original() {
-        this.showState = ImState.original
+        // console.log('%c [IM ] :' + this.isMini, 'background:#ff0000;color:#ffffff;font-size:24px;')
+        if (this.isMini) {
+          this.mini()
+        } else {
+          this.showState = ImState.original
+        }
+        // if (this.isMini) {
+        //   this.mini()
+        // } else {
+        // }
       },
       moveLeft() {
-        this.showState = ImState.moveLeft
+        // console.log('ImState.moveLeft')
+        // this.showState = ImState.moveLeft
       },
       hidden() {
         this.showState = ImState.hidden
@@ -104,10 +124,11 @@
     },
     computed: {
       bindCls() {
-        console.log('%cthis.showState', 'color:#009999', this.showState)
+        // console.log('%c [this.showState] ', 'background:#009999;color:#ffffff;', this.showState)
         let cls = ''
         switch (this.showState) {
           case ImState.original:
+            this.isMini = false
             cls = ''
             break
           case ImState.moveLeft:
@@ -115,8 +136,11 @@
             break
           case ImState.hidden:
             cls = 'hide'
+            // console.log('%c[this.isMin]', 'background:#4B0082;color:#ffffff;', this.isMin)
+            this.isMini && (cls = 'mini hide')
             break
           case ImState.mini:
+            this.isMini = true
             cls = 'mini'
             break
         }
@@ -134,9 +158,6 @@
       }
     },
     watch: {
-      showState(oldValue, newValue) {
-        console.log('%cnewValue', 'color:#003399', newValue)
-      }
     },
     components: {
       KalixSideBar,
@@ -158,7 +179,7 @@
     top 5%
     height 80%
     left 50%
-    margin-left -504px
+    margin-left -612px
     &.mini
       animation f1 .3s linear
       animation-fill-mode forwards

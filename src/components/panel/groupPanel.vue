@@ -1,3 +1,8 @@
+<!--
+  描述：分类窗口
+  开发：桑杨
+  日期：2018年3月2日15:12:21
+-->
 <template lang="pug">
   transition(v-bind:name="animationName")
     div.panel.group-panel(v-if="isVisible" ref="groupPanel")
@@ -275,12 +280,12 @@
 
   @keyframes turn-out
     50%, 70%
-      right 15px
+      right -150px
       top 80%
       margin-right 0
       transform scale(.2)
     100%
-      right 15px
+      right -150px
       top 80%
       margin-right 0
       transform scale(.2) translate3d(500%, 0, 0)
