@@ -42,6 +42,11 @@
             el-switch.s-flex_item(v-model="formModel.city" active-text="市内用车" inactive-text="市外用车")
         el-form-item.s-flex_item.kalix-form-table-td(label="联系电话" prop="operatorPhone" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.operatorPhone")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="部门陪同人员" prop="entourage" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.entourage")
+        el-form-item.s-flex_item.kalix-form-table-td(label="陪同人员电话" prop="entouragePhone" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.entouragePhone")
 </template>
 
 <script type="text/ecmascript-6">

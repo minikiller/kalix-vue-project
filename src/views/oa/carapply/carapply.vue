@@ -10,19 +10,20 @@
       v-bind:bizDialog='bizDialog' bizSearch='OaCarApplySearch' v-bind:btnList='btnList'
       v-bind:isFixedColumn="isFixedColumn" v-bind:customTableTool="customTableTool" v-bind:customRender="customRender")
         template(slot="tableColumnSlot")
-          kalix-biz-no-column // 业务编号
           el-table-column(prop="title" label="名称" align="center" width="220")
-          kalix-date-column(prop="creationDate" label="创建时间")
-          el-table-column(prop="orgName" label="申请部门" align="center" width="220")
-          kalix-date-column(prop="applyDate" label="申请时间")
+          el-table-column
+          kalix-biz-no-column // 业务编号
+          el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
+          kalix-process-status-column // 工作流状态
+          el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
           el-table-column(prop="reason" label="用车事由" align="center" width="220")
           el-table-column(prop="usageCount" label="乘车人数" align="center" width="220")
           el-table-column(prop="address" label="用车起始地点" align="center" width="220")
           el-table-column(prop="cityName" label="市内用车" align="center" width="220")
+          el-table-column(prop="orgName" label="申请部门" align="center" width="220")
+          kalix-date-column(prop="creationDate" label="创建时间")
+          kalix-date-column(prop="applyDate" label="申请时间")
           el-table-column(prop="createBy" label="经办人" align="center" width="90")
-          el-table-column(prop="auditResult" label="审批结果" align="center" width="220")
-          el-table-column(prop="currentNode" label="当前环节" align="center" width="220")
-          kalix-process-status-column
     kalix-task-view(ref="kalixDialog")
 </template>
 
@@ -80,5 +81,4 @@
 </script>
 
 <style scoped lang="stylus">
-
 </style>

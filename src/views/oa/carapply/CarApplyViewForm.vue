@@ -10,7 +10,7 @@
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="名称" v-bind:label-width="labelWidth" prop="title")
         el-input(v-model="formModel.title" readonly)
-      el-form-item.s-flex_item.kalix-form-table-td(label="创建时间" prop="creationDate" v-bind:label-width="labelWidth")
+      el-form-item.s-flex_item.kalix-form-table-td(label="填表时间" prop="creationDate" v-bind:label-width="labelWidth")
         kalix-date-time-picker(v-model="formModel.creationDate" style="width:100%" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" prop="orgName" v-bind:label-width="labelWidth")
@@ -46,15 +46,29 @@
       el-form-item.s-flex_item.kalix-form-table-td(label="联系电话" prop="operatorPhone" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.operatorPhone" readonly)
     div.s-flex
+      el-form-item.s-flex_item.kalix-form-table-td(label="部门陪同人员" prop="entourage" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.entourage" readonly)
+      el-form-item.s-flex_item.kalix-form-table-td(label="陪同人员电话" prop="entouragePhone" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.entouragePhone" readonly)
+    div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="部门负责人" prop="depUser" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.depUser" readonly)
-      el-form-item.s-flex_item.kalix-form-table-td(label="副校级领导" prop="managerUser" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.managerUser" readonly)
+      el-form-item.s-flex_item.kalix-form-table-td(label="部门主管领导" prop="depManageUser" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.depManageUser" readonly)
     div.s-flex
       el-form-item.s-flex_item.kalix-form-table-td(label="校务部" prop="schoolUser" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.schoolUser" readonly)
-      el-form-item.s-flex_item.kalix-form-table-td(label="主管领导(市外)" prop="schoolManagerUser" v-bind:label-width="labelWidth")
-        el-input(v-model="formModel.schoolManagerUser" readonly)
+      el-form-item.s-flex_item.kalix-form-table-td(label="校务部主管领导(市外)" prop="schoolManageUser" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.schoolManageUser" readonly)
+    div(style="padding-left:20px;font-weight:bold") 以下是司机填写
+    div.s-flex
+      el-form-item.s-flex_item.kalix-form-table-td(label="车牌号" prop="carNo" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.carNo" readonly)
+      el-form-item.s-flex_item.kalix-form-table-td(label="起车公里数" prop="startKM" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.startKM" readonly)
+      el-form-item.s-flex_item.kalix-form-table-td(label="收车公里数" prop="endKM" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.endKM" readonly)
+    div(style="padding-left:20px;font-weight:bold") 注：合计里程金额（大车：5元/公里，小车：2元/公里）
 </template>
 
 <script type="text/ecmascript-6">
