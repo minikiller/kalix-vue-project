@@ -17,11 +17,11 @@
       div.button-chat_plan.button-chat-close
     div.button-wrapper
       div
-        div.button-chat
+        div.button-chat(v-on:click="doMute")
           i.icon-chat.icon-chat-mute
           div.clear-fix-line
-          span.name 静音
-        div.button-chat(v-if="type === 'video'")
+          span.name {{isMute?'取消静音':'静音'}}
+        div.button-chat(v-if="type === 'video'" v-on:click="MediaModify")
           i.icon-chat.icon-chat-toggle
           div.clear-fix-line
           span.name 切换到语音聊天
@@ -44,6 +44,11 @@
         type: HTMLDivElement
       }
     },
+    data() {
+      return {
+        isMute: false
+      }
+    },
     activated() {
     },
     methods: {
@@ -53,6 +58,17 @@
         window.callPanel = this.$refs.callPanel
         window.chatWrapper = this.chatWrapper
         this.$refs.callPanel.style.left = (this.chatWrapper.offsetLeft + this.chatWrapper.offsetWidth + 20) + 'px'
+      },
+      MediaModify() {
+        EasemobApi.api.MediaModify()
+      },
+      doMute() {
+        this.isMute = !this.isMute
+        if (this.isMute) {
+          EasemobApi.api.doMute()
+        } else {
+          EasemobApi.api.doUnMute()
+        }
       },
       onCallClose() {
         EventBus.$emit('ON_CALL_CLOSE')

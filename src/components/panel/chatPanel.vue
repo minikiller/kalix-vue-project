@@ -47,7 +47,7 @@
   export default {
     data() {
       return {
-        isVisible: false,
+        isVisible: true,
         cls: '',
         title: '',
         userObj: {

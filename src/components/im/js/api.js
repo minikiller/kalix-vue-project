@@ -8,15 +8,15 @@ let targetId='user10'
 let config = {};
 let vueObj=''
 let voip=''
-
+var audio = new Audio();
+audio.src = "../static/sound/ring.mp3";
 
 api.init = function (params, modules){
   var appKey = params.appKey;
   var token = params.token;
   var navi = params.navi || "";
-  var audio = new Audio();
-  audio.src = "../static/sound/Audio.wav";
-  audio.play();
+
+
   modules = modules || {};
   var RongIMLib = modules.RongIMLib || window.RongIMLib;
   var RongIMClient = RongIMLib.RongIMClient;
@@ -131,16 +131,17 @@ api.init = function (params, modules){
   RongIMClient.setOnReceiveMessageListener({
     // 接收到的消息
     onReceived: function (message) {
-      console.log("-----------------message.messageType" + message.messageType);
       // 判断消息类型
       switch (message.messageType) {
         case RongIMClient.MessageType.InviteMessage:
           // 收到音视频通话邀请
+          audio.play();
           console.log("邀请。。。。")
           break;
         case RongIMClient.MessageType.SummaryMessage:
           if(message.content.mediaType==2) {
             if (message.content.status == 3) {
+              audio.pause();
               vueObj.append('<div class="receiver"><div class="receiver-avatar"><img src="/static/images/im/6.jpg" width="30" height="30"></div><div class="receiver-cont"><div class="left_triangle"></div><span>已取消</span></div></div>');
             } else {
               vueObj.append('<div class="receiver"><div class="receiver-avatar"><img src="/static/images/im/6.jpg" width="30" height="30"></div><div class="receiver-cont"><div class="left_triangle"></div><span>聊天时长 ' + message.content.duration + '</span></div></div>');
@@ -1194,8 +1195,10 @@ api.startDoCall = function (){
   });
 }
 api.joinCall = function () {
+
   clibinstance.joinCall(mediaType, {
     onSuccess: function () {
+      audio.pause();
       console.log("接受视频成功");
     },
     onError: function (err) {
@@ -1203,6 +1206,43 @@ api.joinCall = function () {
     }
   });
 }
+api.MediaModify = function (){
+
+  clibinstance.changeMediaType(RongIMLib.ConversationType.PRIVATE,toUserIds,RongIMLib.VoIPMediaType.MEDIA_VEDIO,{
+    onSuccess:function(){
+      console.log("转换成功");
+    },
+    onError:function(err){
+      console.log(err);
+    }
+  });
+}
+api.doMute = function (){
+    clibinstance.mute({
+      onSuccess:function(){
+        console.log("静音成功");// => successfully
+      },
+      onError:function(err){
+        // => error
+      }
+    });
+}
+
+
+api.doUnMute = function (){
+  clibinstance.unmute({
+    onSuccess:function(){
+      console.log("取消静音成功");// => successfully
+    },
+    onError:function(err){
+      // => error
+    }
+  });
+}
+
+
+
+
 api.hungupCall = function () {
   var targetId="user10";
   var converType = RongIMLib.ConversationType.PRIVATE;
@@ -1262,26 +1302,8 @@ function clickEmoji(event) {
   pasteHtmlAtCaret(target.getAttribute("name"));
 }
 
-// function appendChild(text) {
-//
-//   pasteHtmlAtCaret(text,false);
-//   //$('#content').append(text);
-// }
 
-function setFocus(el) {
-  el = el[0]; // jquery 对象转dom对象
-  el.focus();
-  var range = document.createRange();
-  range.selectNodeContents(el);
-  range.collapse(false);
-  var sel = window.getSelection();
-  //判断光标位置，如不需要可删除
-  if(sel.anchorOffset!=0){
-    return;
-  };
-  sel.removeAllRanges();
-  sel.addRange(range);
-};
+
 
 function pasteHtmlAtCaret(html, selectPastedContent) {
   var sel, range;
@@ -1326,9 +1348,6 @@ function pasteHtmlAtCaret(html, selectPastedContent) {
       range.select();
     }
   }
-}
-function mediaPlayer(mediaURL, ctxPath, mediaType, mediaTitle, mediaWidth, mediaHeight) {
-    document.write('<embed src="' + mediaURL + '" mce_src="' + mediaURL + '" style="border: 1px solid #666;" type="application/x-oleobject" classid="CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95" standby="Loading Windows Media Player components..." width="' + (mediaWidth || 430) + '" height="' + (mediaHeight || 380) + '" title="' + (mediaTitle || '') + '" autostart="false" loop="1" />');
 }
 
 function formatDateTime(inputTime) {

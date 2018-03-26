@@ -60,7 +60,7 @@
         this.moveLeft()
       }
 
-     // this.init()
+      // this.init()
       EasemobApi.api.init(params, config)
     },
     activated() {
