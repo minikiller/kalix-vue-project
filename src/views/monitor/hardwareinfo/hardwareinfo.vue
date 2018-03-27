@@ -14,7 +14,7 @@
   import BaseTable from '@/components/custom/baseTable'
   import {HardwareInfoURL, HardwareinfoComponent, ToolButtonList, restHardwareInfoURL} from '../config.toml'
   import {registerComponent} from '@/api/register'
-  import {Message} from 'kalix-base'
+  import Message from 'common/message'
   // 注册全局组件
   registerComponent(HardwareinfoComponent)
 

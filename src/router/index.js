@@ -1,18 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from 'views/demo/Hello'
-import Test from 'views/demo/test'
-import Show from 'views/demo/highcharts/show'
-import VueShow from 'views/demo/highcharts/vue-chart.vue'
 import Login from '@/components/login/login'
 import Cache from 'common/cache'
 import Home from '@/components/home/home'
-import Tinymce from 'views/demo/tinymce/tinymce'
 // import QrcodeLogin from 'views/demo/qrcodelogin'
 // 二维码登录
-import ComQrcode from 'views/qrcode/comQrcode'
-import StuQrcode from 'views/qrcode/stuQrcode'
-import QrcodeLogin from 'views/qrcode/qrcodeLogin'
 import candidateForm from 'views/art/candidate/candidateForm'
 import recruitForm from 'views/art/recruit/recruitForm'
 import recruitResult from 'views/art/recruit/recruitResult'
@@ -22,31 +14,6 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes: [
-    {
-      path: '/demo',
-      name: 'demo',
-      component: Hello
-    },
-    {
-      path: '/demo/tiny',
-      name: 'tiny',
-      component: Tinymce
-    },
-    {
-      path: '/qrcode/comqrcode',
-      name: 'comqrcode',
-      component: ComQrcode
-    },
-    {
-      path: '/qrcode/stuqrcode',
-      name: 'stuqrcode',
-      component: StuQrcode
-    },
-    {
-      path: '/qrcode/login/:key',
-      name: 'qrcodelogin',
-      component: QrcodeLogin
-    },
     {
       path: '/art/recruitform',
       name: 'recruitform',
@@ -71,21 +38,6 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: Test
-    },
-    {
-      path: '/show',
-      name: 'show',
-      component: Show
-    },
-    {
-      path: '/vueshow',
-      name: 'VueShow',
-      component: VueShow
     },
     {
       path: '/',

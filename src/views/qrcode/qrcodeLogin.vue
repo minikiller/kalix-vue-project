@@ -5,11 +5,9 @@
 <script type="text/ecmascript-6">
   import Login from 'api/login'
   import Cache from 'common/cache'
-  import {mapMutations} from 'vuex'
 
   export default {
     methods: {
-      ...mapMutations({setSaveLogin: 'saveLogin'}),
       init() {
         let key = this.$route.params.key
         let params = {

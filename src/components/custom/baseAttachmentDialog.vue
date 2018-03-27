@@ -39,7 +39,7 @@
   import {AttachmentURL} from 'config/global.toml'
   import PagedTable from './pagedTable'
   import DateColumn from 'views/oa/comp/dateColumn'
-  import prettyBytes from 'pretty-bytes'
+  import prettyBytes from 'common/pretty-bytes'
 
   const MAX_TABLE_HEIGHT = 450
   export default {

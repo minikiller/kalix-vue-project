@@ -44,7 +44,6 @@
                     div(v-bind:class="field.prop" v-bind:data-val="scope.row[field.prop]") {{scope.row[field.prop]}}
               //  table的工具按钮
               el-table-column(v-if="isShowOperate" label="操作" align="center"
-              fixed="right"
               v-bind:fixed="isFiex"
               v-bind:width="columnWidth(true)"
               class-name="base-teble-operation")
