@@ -20,8 +20,7 @@
             el-radio(label="女")
         el-form-item(label="邮箱" prop="email" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.email")
-        el-form-item(label="固定电话" prop="phone" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.phone")
+        kalix-phone-form-item(v-model="formModel.phone" v-bind:label-width="labelWidth")
         kalix-mobile-form-item(v-model="formModel.mobile" v-bind:label-width="labelWidth")
       template(v-else-if="formModel.userType === 1")
         el-form-item(label="学号" prop="code" v-bind:rules="rules.code_xh" v-bind:label-width="labelWidth")
@@ -34,8 +33,7 @@
             el-radio(label="女")
         el-form-item(label="邮箱" prop="email" v-bind:rules="rules.email" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.email")
-        el-form-item(label="固定电话" prop="phone" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.phone")
+        kalix-phone-form-item(v-model="formModel.phone" v-bind:label-width="labelWidth")
         kalix-mobile-form-item(v-model="formModel.mobile" required v-bind:label-width="labelWidth")
       template(v-else-if="formModel.userType === 3")
         el-form-item(label="企业组织机构代码" prop="code" v-bind:rules="rules.code_qy" v-bind:label-width="labelWidth")
@@ -44,8 +42,7 @@
           el-input(v-model="formModel.name")
         el-form-item(label="邮箱" prop="email" v-bind:rules="rules.email" v-bind:label-width="labelWidth")
           el-input(v-model="formModel.email")
-        el-form-item(label="固定电话" prop="phone" v-bind:rules="rules.phone" v-bind:label-width="labelWidth")
-          el-input(v-model="formModel.phone")
+        kalix-phone-form-item(v-model="formModel.phone" required v-bind:label-width="labelWidth")
         kalix-mobile-form-item(v-model="formModel.mobile" v-bind:label-width="labelWidth")
       template(v-else)
         // 暂无
@@ -57,6 +54,7 @@
   import Dialog from '@/components/custom/baseDialog.vue'
   import BaseUpload from '@/components/custom/baseUpload'
   import BaseDictSelect from '@/components/custom/baseDictSelect'
+  import BasePhoneFormItem from '@/components/custom/basePhoneFormItem'
   import BaseMobileFormItem from '@/components/custom/baseMobileFormItem'
 
   export default {
@@ -72,8 +70,7 @@
           email: [
             {required: true, message: '请输入邮箱地址', trigger: 'blur'},
             {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
-          ],
-          phone: [{required: true, message: '请输入固定电话', trigger: 'blur'}]
+          ]
         },
         targetURL: usersURL,
         labelWidth: '140px'
@@ -83,6 +80,7 @@
       KalixDialog: Dialog,
       KalixUpload: BaseUpload,
       KalixDictSelect: BaseDictSelect,
+      KalixPhoneFormItem: BasePhoneFormItem,
       KalixMobileFormItem: BaseMobileFormItem
     },
     methods: {
