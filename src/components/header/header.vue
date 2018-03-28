@@ -41,11 +41,11 @@
                   el-dropdown-menu(slot="dropdown")
                     el-dropdown-item 待办流程
               li
-                el-dropdown(v-on:command="handleCommand")
+                el-dropdown(v-on:command="handleCommand" style="min-width:120px")
                   div.s-flex.el-dropdown-link
                     div.avatar-wrapper
                       div.avatar(v-bind:style="styleObject")
-                      span.user-name {{userName}}
+                      div.user-name {{userName}}
                     i.el-icon-caret-bottom.el-icon--right
                   el-dropdown-menu(slot="dropdown")
                     el-dropdown-item(command="changeInfo") 修改个人信息
@@ -54,6 +54,7 @@
               li(v-if="false")
                 el-select(v-model="themeValue" v-on:change="onChangeTheme" placeholder="请选择" v-bind:style="{width:'100px'}")
                   el-option(v-for="item in themeOptions" v-bind:key="item.value" v-bind:label="item.label" v-bind:value="item.value")
+
     user-editpwd(ref="userEditpwd")
     user-edit(ref="userEdit")
 </template>
