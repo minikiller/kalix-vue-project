@@ -110,59 +110,13 @@
           block_formats: 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;Heading 4=h4;Heading 5=h5;Heading 6=h6;'
         },
         managerUsersURL: '/camel/rest/dutys/' + ManagerUserDutyID + '/users/loginnames',
-//        options: [{
-//          value: '对外',
-//          label: '对外',
-//          children: [{
-//            label: '吉动院字',
-//            value: '1'
-//          }]
-//        }, {
-//          value: '对内',
-//          label: '对内',
-//          children: [
-//            {
-//              label: '吉动院人字',
-//              value: '2'
-//            },
-//            {
-//              label: '吉动院教字',
-//              value: '3'
-//            },
-//            {
-//              label: '吉动院学字',
-//              value: '4'
-//            },
-//            {
-//              label: '吉动院招字',
-//              value: '5'
-//            },
-//            {
-//              label: '吉动院研字',
-//              value: '6'
-//            },
-//            {
-//              label: '吉动院学位字',
-//              value: '7'
-//            },
-//            {
-//              label: '吉动校友字',
-//              value: '8'
-//            },
-//            {
-//              label: '吉动院研学字',
-//              value: '9'
-//            },
-//            {
-//              label: '吉动院字',
-//              value: '10'
-//            }
-//          ]
-//        }],
         labelWidth: '140px'
       }
     },
     methods: {
+      clickGetHtml() {
+        console.log('GET HTML：', this.$refs.editor.getHtml())
+      },
       kalixDialogOpen() {
         this.$nextTick(() => {
           console.log('%c ==== KalixDialogOpen ==== ', 'color:#FFF;background:#055', this.$refs.editor)

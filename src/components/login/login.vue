@@ -28,7 +28,7 @@
   import Eventbus from 'common/eventbus'
   import Cache from 'common/cache'
   import Login from 'api/login'
-  // import {logoutUrl} from 'config/global.toml'
+  import {logoutUrl} from 'config/global.toml'
 
   export default {
     data() {
@@ -61,6 +61,10 @@
 //      })
     },
     mounted() {
+      this.$http.get(logoutUrl)
+        .then(res => {
+          console.log('res', res)
+        })
       this.tabInput()
     },
     methods: {
