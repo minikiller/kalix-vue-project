@@ -79,7 +79,6 @@
         if (this.meetingDate === '' || this.meetingDate === null) {
           callback(new Error('请选择会议日期'))
         } else {
-          this.meetingDateOK = true
           callback()
         }
       }
@@ -87,17 +86,38 @@
         if (this.beginTime === '' || this.beginTime === null) {
           callback(new Error('请选择开始时间'))
         } else {
-          this.beginTimeOK = true
           callback()
         }
       }
       var validateEndTime = (rule, value, callback) => {
+        if (!this.formModel.meetingroomId) {
+          this.endTime = ''
+          callback(new Error('请先选择会议地点！'))
+          return
+        }
+        if (this.meetingDate === '' || this.meetingDate === null) {
+          this.endTime = ''
+          callback(new Error('请先选择会议日期！'))
+          return
+        }
+        if (this.beginTime === '' || this.beginTime === null) {
+          this.endTime = ''
+          callback(new Error('请先选择开始时间！'))
+          return
+        }
         if (this.endTime === '' || this.endTime === null) {
           callback(new Error('请选择结束时间'))
         } else if (this.beginTime >= this.endTime) {
           callback(new Error('结束时间需大于开始时间'))
-        } else if (this.meetingDateOK && this.beginTimeOK) {
-          this.axios.get(MeetingroomApplyURL, {}).then(response => {
+        } else {
+          const _data = {
+            jsonStr: {'meetingroomId': this.formModel.meetingroomId, 'meetingDateStr': this.formModel.meetingDateStr},
+            page: 1,
+            start: 0,
+            limit: 200,
+            sort: ''
+          }
+          this.axios.get(MeetingroomApplyURL, {params: _data}).then(response => {
             this.meetingRoomApplyList = response.data.data
             let tempDate = ''
             let tempDate2 = ''
@@ -107,7 +127,8 @@
               tempDate2 = formatDate(new Date(this.meetingDate), 'yyyy-MM-dd ')
               console.log('tempDate', tempDate)
               console.log('tempDate2', tempDate2)
-              if (this.meetingRoomApplyList[i].status !== 0) {
+              if (this.meetingRoomApplyList[i].status !== 3) { // 非中止的
+                // 缺少条件非(status===2（结束）且 流程结果不同意)
                 if (tempDate2 === tempDate) {
                   console.log('endTimeOK is ok')
                   if (formatDate(new Date(this.endTime), 'hh:mm:ss ') <= this.meetingRoomApplyList[i].beginTime) {
@@ -117,9 +138,7 @@
                     this.openMessage(this.meetingRoomApplyList[i].beginTime, this.meetingRoomApplyList[i].endTime)
                     callback(new Error('会议时间与其他会议冲突'))
                   }
-                } else {
                 }
-              } else {
               }
             }
             if (!hasConfic) {
@@ -150,8 +169,6 @@
         beginTime: '',
         endTime: '',
         meetingDate: '',
-        meetingDateOK: false,
-        beginTimeOK: false,
         meetingRoomApplyList: [],
         labelWidth: '110px',
         labelWidth0: '0px'
