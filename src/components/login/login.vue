@@ -24,11 +24,11 @@
 
 <script type="text/ecmascript-6">
   //  import Router from 'router'
-  import {mapMutations} from 'vuex'
-  import {Message, Eventbus} from 'kalix-base'
+  import Message from 'common/message'
+  import Eventbus from 'common/eventbus'
   import Cache from 'common/cache'
   import Login from 'api/login'
-  // import {logoutUrl} from 'config/global.toml'
+  import {logoutUrl} from 'config/global.toml'
 
   export default {
     data() {
@@ -61,10 +61,13 @@
 //      })
     },
     mounted() {
+      this.$http.get(logoutUrl)
+        .then(res => {
+          console.log('res', res)
+        })
       this.tabInput()
     },
     methods: {
-      ...mapMutations({setSaveLogin: 'saveLogin'}),
       onSubmit(formName) {
         if (this._validateForm()) {
           this.login()
@@ -97,15 +100,6 @@
             let now = new Date().getTime()
             Cache._saveLocal('lastLoginTime', now)
             Cache.save('lastLoginTime', now)
-//                console.log('access token is: ', data.access_token)
-            this.setSaveLogin({
-              access_token: data.access_token,
-              user_name: data.user.name,
-              user_token: data.user.token,
-              user_id: data.user.id,
-              user_login_name: that.loginForm.name
-            })
-//                Router.push({path: '/'})
             this.$router.push({path: '/'})
           } else {
             this.$refs.loginFormName.focus()

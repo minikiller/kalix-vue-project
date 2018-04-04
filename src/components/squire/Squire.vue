@@ -6,7 +6,7 @@
 <template>
   <div class="squire">
     <div class="tool-bar">
-      <span v-for="item in toolBars" class="item" key="item" @click="toolbarItemClick(item)">
+      <span v-for="item in toolBars" class="item" @click="toolbarItemClick(item)">
         <i :class="item.icon"></i>
       </span>
     </div>
@@ -31,7 +31,7 @@
     },
     data() {
       return {
-        currentValue: '',
+        currentValue: this.value,
         editor: null,
         toolBars: [
           {
@@ -99,6 +99,7 @@
         // console.log(this.$refs.iframe.contentWindow.editor.getHTML())
         this.$refs.iframe.onload = () => {
           // console.log(this.$refs.iframe.contentWindow.editor.getHTML())
+          this.$refs.iframe.contentWindow.editor.setHTML(this.value)
           editorMt = setInterval(() => {
             let divEditor = this.$refs.iframe
             if (divEditor && divEditor.contentWindow) {

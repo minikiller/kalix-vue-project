@@ -18,7 +18,7 @@ add by yangz
           el-menu(v-bind:default-active="activeIndex" v-bind:active="activeIndex" v-on:select="handleSelect")
             <!--el-menu-item(v-for="item in menuItems" key="item.id" v-bind:index="item.id+'##'+item.name+'##'+item.code")-->
             slot(name="menuItemSlot")
-              el-menu-item(v-for="item in menuItems" key="item.id" v-bind:index="JSON.stringify(item)")
+              el-menu-item(v-for="item in menuItems" v-bind:key="item.id" v-bind:index="JSON.stringify(item)")
                 i(v-bind:class="item.iconCls")
                 span(slot="title")
                   | {{item.text}}

@@ -1,18 +1,14 @@
 <template lang="pug">
   div.qrcode
     div.title {{title}}
-    kalix-qrcode.kalix-qrcode(v-bind:value="resUrl" data-qrcode)
 </template>
 <script type="text/ecmascript-6">
-  import KalixQrcode from '@/components/qrcode/qrcode'
-
   export default {
     props: {
       title: '',
       resUrl: ''
     },
     components: {
-      KalixQrcode
     }
   }
 </script>

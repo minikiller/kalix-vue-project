@@ -55,22 +55,22 @@
       return output;
     });
   };
-  this.editor.testPresenceinSelection = (name, action, format, validation) => {
-    let path = this.editor.getPath(),
-      test = (validation.test(path) | this.editor.hasFormat(format));
+  this.editor.testPresenceinSelection = function (name, action, format, validation) {
+    var path = editor.getPath();
+    var test = (validation.test(path) | editor.hasFormat(format));
     if (name === action && test) {
       return true;
     } else {
       return false;
     }
   };
-  this.editor.alignRight = () => {
+  this.editor.alignRight = function () {
     this.editor.setTextAlignment('right')
   }
-  this.editor.alignCenter = () => {
+  this.editor.alignCenter = function () {
     this.editor.setTextAlignment('center')
   }
-  this.editor.alignLeft = () => {
+  this.editor.alignLeft = function () {
     this.editor.setTextAlignment('left')
   }
 
