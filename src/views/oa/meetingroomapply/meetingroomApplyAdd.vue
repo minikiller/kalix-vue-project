@@ -7,38 +7,60 @@
   kalix-dialog.user-add(ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 吉林动画学院会议室申请表
-      el-form-item(label="名称" v-bind:label-width="labelWidth" prop="title" v-bind:rules="rules.title")
+      el-form-item(label="名称" prop="title" v-bind:rules="rules.title" v-bind:label-width="labelWidth")
         el-input(v-model="formModel.title")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" v-bind:label-width="labelWidth" prop="orgId" v-bind:rules="rules.orgId")
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请部门" prop="orgId" v-bind:rules="rules.orgId" v-bind:label-width="labelWidth")
           kalix-org-select(v-model="formModel.orgId" v-on:selectChange="onOrgIdChange")
-        el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" v-bind:label-width="labelWidth" prop="targetDuty" v-bind:rules="rules.meetingroomId")
+        el-form-item.s-flex_item.kalix-form-table-td(label="会议地点" prop="meetingroomId" v-bind:rules="rules.meetingroomId" v-bind:label-width="labelWidth")
           kalix-meeting-room-select(v-model="formModel.meetingroomId")
-      el-form-item(label="会议名称" v-bind:label-width="labelWidth" prop="meetingTopic" v-bind:rules="rules.meetingTopic")
-        el-input(v-model="formModel.meetingTopic")
-      div.s-flex_item
-        el-form-item(label="使用时间" v-bind:label-width="labelWidth" prop="meetingDate" v-bind:rules="rules.meetingDate")
+      div.s-flex
+        el-form-item(label="会议时间" prop="meetingDate" v-bind:rules="rules.meetingDate" v-bind:label-width="labelWidth")
           div.s-flex
             div.s-flex_item
               <!--kalix-date-picker(v-model="meetingDate" placeholder="选择会议日期" v-bind:editable="false" v-on:change="getMeetingDate")-->
               el-date-picker(v-model="meetingDate" placeholder="选择会议日期" v-bind:editable="false" v-on:change="getMeetingDate")
             div.s-flex_item.no-link
-              el-form-item(label="" v-bind:label-width="labelWidth0"  prop="beginTime" v-bind:rules="rules.beginTime" )
-                el-time-picker(v-model="beginTime" placeholder="选择开始时间" style="margin-left:1px;width:180px"  v-bind:editable="false" v-on:change="getStartTime")
+              el-form-item(label="" prop="beginTime" v-bind:rules="rules.beginTime" v-bind:label-width="labelWidth0")
+                el-time-picker(v-model="beginTime" placeholder="选择开始时间" v-bind:editable="false" v-on:change="getStartTime" style="margin-left:1px;width:180px")
             div.s-flex_item.no-link
-              el-form-item(label="" v-bind:label-width="labelWidth0"  prop="endTime" v-bind:rules="rules.endTime")
-                el-time-picker(v-model="endTime" placeholder="选择结束时间" style="width:180px" v-bind:editable="false" v-on:change="getEndTime")
+              el-form-item(label="" prop="endTime" v-bind:rules="rules.endTime" v-bind:label-width="labelWidth0")
+                el-time-picker(v-model="endTime" placeholder="选择结束时间" v-bind:editable="false" v-on:change="getEndTime" style="width:180px")
+      el-form-item(label="会议名称" prop="meetingTopic" v-bind:rules="rules.meetingTopic" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.meetingTopic")
+      el-form-item(label="会议内容" prop="meetingAgenda" v-bind:rules="rules.meetingAgenda" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.meetingAgenda" type="textarea" v-bind:rows="3")
+      el-form-item(label="参会人员" prop="participant" v-bind:rules="rules.participant" v-bind:label-width="labelWidth")
+        el-input(v-model="formModel.participant" type="textarea" v-bind:rows="2")
       div.s-flex
-        el-form-item.s-flex_item.kalix-form-table-td(label="参会人员" v-bind:label-width="labelWidth" prop="participant" v-bind:rules="rules.participant")
-          el-input-number(v-model="formModel.participant" v-bind:min="1" v-bind:max="10" style="width:100%")
-        el-form-item.s-flex_item.kalix-form-table-td(label="宣传需求" v-bind:label-width="labelWidth" prop="requireType" v-bind:rules="rules.requireType")
-          kalix-dict-select(v-model="formModel.requireType" appName="oa" dictType="会议需求类型" style="width:100%")
-      el-form-item(label="主持人" v-bind:label-width="labelWidth" prop="host" v-bind:rules="rules.host")
-        el-input(v-model="formModel.host")
-      el-form-item(label="是否周历" v-bind:label-width="labelWidth" prop="weekCalander" )
-        el-radio-group(v-model="formModel.weekCalander")
-          el-radio(label="是")
-          el-radio(label="否")
+        el-form-item.s-flex_item.kalix-form-table-td(label="主持人" prop="host" v-bind:rules="rules.host" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.host")
+        el-form-item.s-flex_item.kalix-form-table-td(label="参会人数" prop="attendance" v-bind:label-width="labelWidth")
+          el-input-number(v-model="formModel.attendance" v-bind:min="1" style="width:100%")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="协调人" prop="securityPerson" v-bind:rules="rules.securityPerson" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.securityPerson")
+        el-form-item.s-flex_item.kalix-form-table-td(label="协调人电话" prop="securityTel" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.securityTel")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="申请人电话" prop="operatorPhone" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.operatorPhone")
+        el-form-item.s-flex_item.kalix-form-table-td(label="宣传需求" prop="requireType" v-bind:label-width="labelWidth")
+          kalix-dict-select(v-model="formModel.requireType" appName="oa" dictType="会议需求类型")
+      div.s-flex
+        el-form-item.s-flex_item.kalix-form-table-td(label="是否周历" prop="weekCalander" v-bind:label-width="labelWidth")
+          div(style="text-align:center")
+            el-switch.s-flex_item(v-model="formModel.weekCalander" active-text="是" inactive-text="否" v-on:change="switchChange")
+        el-form-item.s-flex_item.kalix-form-table-td(label="设备要求" prop="equipmentRequirement" v-bind:label-width="labelWidth")
+          el-input(v-model="formModel.equipmentRequirement")
+      template(v-if="formModel.weekCalander")
+        div.s-flex
+          el-form-item.s-flex_item.kalix-form-table-td(label="学年" prop="schoolYear" v-bind:rules="rules.schoolYear" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.schoolYear" disabled)
+          el-form-item.s-flex_item.kalix-form-table-td(label="学期" prop="term" v-bind:rules="rules.term" v-bind:label-width="labelWidth")
+            el-input(v-model="formModel.term" disabled)
+        el-form-item(label="学周" prop="week" v-bind:rules="rules.week" v-bind:label-width="labelWidth")
+          kalix-dict-select(v-model="formModel.week" appName="oa" dictType="学周")
 </template>
 
 <script type="text/ecmascript-6">
@@ -52,10 +74,6 @@
   import {formatDate} from 'common/typeFormat'
 
   export default {
-    created() {
-      this.labelWidth = '110px'
-      this.labelWidth0 = '0px'
-    },
     data() {
       var validateMeetingDate = (rule, value, callback) => {
         if (this.meetingDate === '' || this.meetingDate === null) {
@@ -111,36 +129,62 @@
         }
       }
       return {
-        targetURL: MeetingroomApplyURL,
         formModel: Object.assign({}, FormModel),
+        rules: {
+          title: [{required: true, message: '请输入名称', trigger: 'blur'}],
+          orgId: [{type: 'number', required: true, message: '请选择申请部门', trigger: 'change'}],
+          meetingroomId: [{type: 'number', required: true, message: '请选择会议地点', trigger: 'change'}],
+          meetingDate: [{type: 'date', required: true, validator: validateMeetingDate, trigger: 'change'}],
+          beginTime: [{type: 'date', required: true, validator: validateBeginTime, trigger: 'change'}],
+          endTime: [{type: 'date', required: true, validator: validateEndTime, trigger: 'change'}],
+          meetingTopic: [{required: true, message: '请输入会议名称', trigger: 'blur'}],
+          meetingAgenda: [{required: true, message: '请输入会议内容', trigger: 'blur'}],
+          participant: [{required: true, message: '请输入参会人员', trigger: 'blur'}],
+          host: [{required: true, message: '请输入主持人', trigger: 'blur'}],
+          securityPerson: [{required: true, message: '请输入协调人', trigger: 'blur'}],
+          schoolYear: [{required: true, message: '学年不能为空', trigger: 'blur'}],
+          term: [{required: true, message: '学期不能为空', trigger: 'blur'}],
+          week: [{type: 'number', required: true, message: '请选择学周', trigger: 'change'}]
+        },
+        targetURL: MeetingroomApplyURL,
         beginTime: '',
         endTime: '',
         meetingDate: '',
         meetingDateOK: false,
         beginTimeOK: false,
         meetingRoomApplyList: [],
-        rules: {
-          title: [{required: true, message: '请输入名称', trigger: 'blur'}],
-          meetingTopic: [{required: true, message: '请输入会议名称', trigger: 'blur'}],
-          orgId: [{type: 'number', required: true, message: '请选择申请部门', trigger: 'change'}],
-          content: [{type: 'string', required: true, message: '请输入申请事由', trigger: 'blur'}],
-          targetDuty: [{type: 'string', required: true, message: '请选择审批领导职务', trigger: 'change'}],
-          participant: [{type: 'number', required: true, message: '请选择参会人数', trigger: 'change'}],
-          meetingDate: [
-            {required: true, type: 'date', validator: validateMeetingDate, trigger: 'change'}
-          ],
-          beginTime: [
-            {required: true, type: 'date', validator: validateBeginTime, trigger: 'change'}
-          ],
-          endTime: [
-            {required: true, type: 'date', validator: validateEndTime, trigger: 'change'}
-          ]
-        }
+        labelWidth: '110px',
+        labelWidth0: '0px'
       }
     },
+    components: {
+      KalixOrgSelect: UserOrgSelect,
+      KalixDictSelect: BaseDictSelect,
+      KalixMeetingRoomSelect: MeetingRoomSelect,
+      KalixDialog: Dialog,
+      KalixDatePicker: DatePicker
+    },
+    created() {
+    },
+    //    watch: {
+//      formModel: {
+//        handler: 'listen',
+//        // 深度观察
+//        deep: true
+//      }
+//    },
     methods: {
-      init(dialogOption) {
-        this.formModel.weekCalander = '否'
+      init(dialogOptions, row) {
+        // 编辑查看
+        if (row) {
+          this.meetingDate = row.meetingDateStr
+          this.beginTime = new Date(this.meetingDate + ' ' + row.beginTimeStr)
+          this.endTime = new Date(this.meetingDate + ' ' + row.endTimeStr)
+        } else { // 新增
+          this.meetingDate = ''
+          this.beginTime = ''
+          this.endTime = ''
+        }
       },
       onOrgIdChange(item) {
         this.formModel.orgName = item.name
@@ -163,34 +207,29 @@
           confirmButtonText: '确定'
         })
       },
-      validateField: function validateField(prop, cb) {
-//        var field = this.fields.filter(function (field) {
-//          return field.prop === prop;
-//        })[0];
-//        if (!field) {
-//          throw new Error('must call validateField with valid prop string!');
-//        }
-//
-//        field.validate('', cb);cb
+      switchChange(newStatus) {
+        if (newStatus) {
+          let nowDate = new Date()
+          let nowYear = nowDate.getFullYear()
+          let nowMonth = nowDate.getMonth() + 1
+          if (nowMonth > 1 && nowMonth < 8) {
+            this.formModel.schoolYear = (nowYear - 1).toString() + '-' + nowYear.toString() + '学年'
+            this.formModel.term = '第二学期'
+          } else {
+            if (nowMonth > 7) {
+              this.formModel.schoolYear = nowYear.toString() + '-' + (nowYear + 1).toString() + '学年'
+            } else {
+              this.formModel.schoolYear = (nowYear - 1).toString() + '-' + nowYear.toString() + '学年'
+            }
+            this.formModel.term = '第一学期'
+          }
+        } else {
+          this.formModel.schoolYear = ''
+          this.formModel.term = ''
+          this.formModel.week = null
+        }
       }
-//      listen(newVal, oldVal) {
-//        console.log('223222222222222333333333', newVal.endTime)
-//      }
-    },
-    components: {
-      KalixOrgSelect: UserOrgSelect,
-      KalixDictSelect: BaseDictSelect,
-      KalixMeetingRoomSelect: MeetingRoomSelect,
-      KalixDialog: Dialog,
-      KalixDatePicker: DatePicker
     }
-//    watch: {
-//      formModel: {
-//        handler: 'listen',
-//        // 深度观察
-//        deep: true
-//      }
-//    }
   }
 </script>
 

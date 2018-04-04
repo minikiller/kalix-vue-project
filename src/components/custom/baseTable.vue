@@ -110,7 +110,12 @@
         type: Boolean,
         default: false
       },
-      dialogOptions: {},
+      dialogOptions: {
+        type: Object,
+        default: () => {
+          return {}
+        }
+      },
       bizKey: {  // 主鍵
         type: String,
         required: true
@@ -379,7 +384,9 @@
 //          EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, JSON.parse(this.tempFormModel))
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
           if (typeof (this.$refs.kalixDialog.init) === 'function') {
-            that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
+//            that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
+            // 添加初始化模型赋值参数 需要传参数，就在dialog里面定义init方法
+            this.$refs.kalixDialog.init(this.dialogOptions, null)
           }
         }, 20)
       },
@@ -449,10 +456,8 @@
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看', false, row)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 // 添加初始化模型赋值参数
-                if (this.dialogOptions && this.dialogOptions.row) {
-                  this.dialogOptions.row = row
-                }
-                this.$refs.kalixDialog.init(this.dialogOptions)
+                // this.dialogOptions.row = row
+                this.$refs.kalixDialog.init(this.dialogOptions, row)
               }
               if (this.isAfterView === true) {
                 this.$emit('handleAfterView', row)
@@ -476,10 +481,8 @@
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 // 添加初始化模型赋值参数
                 // this.dialogOptions.editFormModel = row
-                if (this.dialogOptions && this.dialogOptions.row) {
-                  this.dialogOptions.row = row
-                }
-                this.$refs.kalixDialog.init(this.dialogOptions)
+                // this.dialogOptions.row = row
+                this.$refs.kalixDialog.init(this.dialogOptions, row)
               }
             }, 20)
             console.log('edit is clicked')

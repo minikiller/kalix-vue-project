@@ -97,9 +97,6 @@ DocumentPublishURL = "camel/rest/documents/publish?id="
   path = "oa/meetingroomapply/meetingroomApplyAdd"
   name = "OaMeetingroomApplyAdd"
 [[OaMeetingroomApplyComponent]]
-  path = "oa/meetingroomapply/meetingroomApplyEdit"
-  name = "OaMeetingroomApplyEdit"
-[[OaMeetingroomApplyComponent]]
   path = "oa/meetingroomapply/meetingroomApplySearch"
   name = "OaMeetingroomApplySearch"
 

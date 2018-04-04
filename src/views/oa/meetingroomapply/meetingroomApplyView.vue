@@ -5,43 +5,32 @@
 -->
 
 <template lang="pug">
-  kalix-dialog.user-add(bizKey="tempApply"
-  v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL"
-  ref="kalixBizDialog"
-  v-bind:isView="readonly"
-  )
-    div.el-form.kalix-form-table(slot="dialogFormSlot")
-      kalix-temp-apply-view-form(v-bind:form-model="formModel")
+  kalix-dialog.user-add(bizKey="tempApply" ref="kalixBizDialog" v-bind:formModel.sync="formModel" isView)
+    kalix-temp-apply-view-form(v-bind:form-model="formModel" slot="dialogFormSlot")
 </template>
 
 <script type="text/ecmascript-6">
-  import Dialog from '@/components/custom/baseDialog.vue'
-  import BaseDictSelect from '@/components/custom/baseDictSelect'
-  import TempApplyViewForm from './MeetingroomApplyViewForm'
   import FormModel from './model'
+  import Dialog from '@/components/custom/baseDialog.vue'
+  import TempApplyViewForm from './MeetingroomApplyViewForm'
 
   export default {
     data() {
       return {
-        formModel: Object.assign({}, FormModel),
-        targetURL: '',
-        readonly: true
+        formModel: Object.assign({}, FormModel)
       }
     },
     created() {
-      this.labelWidth = '110px'
-//      this.getMeetingTypeName()
     },
     components: {
       KalixDialog: Dialog,
-      KalixDictSelect: BaseDictSelect,
       KalixTempApplyViewForm: TempApplyViewForm
     },
     methods: {
-      init(dialogOption) {
-        let meetingDate = dialogOption.row.meetingDateStr
-        this.formModel.beginTime = new Date(meetingDate + ' ' + dialogOption.row.beginTimeStr)
-        this.formModel.endTime = new Date(meetingDate + ' ' + dialogOption.row.endTimeStr)
+      init(dialogOption, row) {
+        let meetingDate = row.meetingDateStr
+        this.formModel.beginTime = new Date(meetingDate + ' ' + row.beginTimeStr)
+        this.formModel.endTime = new Date(meetingDate + ' ' + row.endTimeStr)
       }
     }
   }
