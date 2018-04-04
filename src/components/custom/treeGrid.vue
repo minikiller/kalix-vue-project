@@ -343,7 +343,7 @@
           } else {
             that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加', false, this.formModel)
             if (typeof (this.$refs.kalixDialog.init) === 'function') {
-              that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
+              that.$refs.kalixDialog.init(this.dialogOptions, null) // 需要传参数，就在dialog里面定义init方法
             }
           }
         }, 20)
@@ -648,7 +648,7 @@
 //              EventBus.$emit(this.bizKey + '-' + ON_INIT_DIALOG_DATA, row)
               this.$refs.kalixDialog.$refs.kalixBizDialog.open('编辑', true, result)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
-                this.$refs.kalixDialog.init(this.dialogOptions)
+                this.$refs.kalixDialog.init(this.dialogOptions, row)
               }
             }, 20)
             console.log('edit is clicked')

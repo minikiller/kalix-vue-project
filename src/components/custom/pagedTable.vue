@@ -158,10 +158,8 @@
               that.$refs.kalixDialog.$refs.kalixBizDialog.open('查看', false, row)
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 // 添加初始化模型赋值参数
-                if (this.dialogOptions.row) {
-                  this.dialogOptions.row = row
-                }
-                this.$refs.kalixDialog.init(this.dialogOptions)
+                // this.dialogOptions.row = row
+                // this.$refs.kalixDialog.init(this.dialogOptions, row)
               }
               if (this.isAfterView === true) {
                 this.$emit('handleAfterView', row)
@@ -185,10 +183,10 @@
               if (typeof (this.$refs.kalixDialog.init) === 'function') {
                 // 添加初始化模型赋值参数
                 // this.dialogOptions.editFormModel = row
-                if (this.dialogOptions.row) {
-                  this.dialogOptions.row = row
-                }
-                this.$refs.kalixDialog.init(this.dialogOptions)
+//                if (this.dialogOptions.row) {
+//                  this.dialogOptions.row = row
+//                }
+//                this.$refs.kalixDialog.init(this.dialogOptions)
               }
             }, 20)
             console.log('edit is clicked')

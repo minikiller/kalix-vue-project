@@ -63,8 +63,8 @@
     mounted() {
     },
     methods: {
-      init(dialogOption) {
-        this.templateId = dialogOption.row.id
+      init(dialogOption, row) {
+        this.templateId = row.id
       }
       // kalixDialogOpen() {
       //   this.$nextTick(() => {

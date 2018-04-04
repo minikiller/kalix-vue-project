@@ -35,9 +35,9 @@
     created() {
     },
     methods: {
-      init(dialogOption) {
-        this.formModel.orgName = dialogOption.row.name
-        this.formModel.parentId = dialogOption.row.id
+      init(dialogOption, row) {
+        this.formModel.orgName = row.name
+        this.formModel.parentId = row.id
       }
     }
   }

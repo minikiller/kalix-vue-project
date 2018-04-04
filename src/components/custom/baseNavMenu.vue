@@ -153,7 +153,7 @@ add by yangz
         setTimeout(() => {
           that.$refs.kalixDialog.$refs.kalixBizDialog.open('添加')
           if (typeof (this.$refs.kalixDialog.init) === 'function') {
-            that.$refs.kalixDialog.init(this.dialogOptions) // 需要传参数，就在dialog里面定义init方法
+            that.$refs.kalixDialog.init(this.dialogOptions, null) // 需要传参数，就在dialog里面定义init方法
           }
         }, 20)
       },
