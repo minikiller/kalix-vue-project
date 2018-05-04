@@ -1,0 +1,52 @@
+# kalix-vue-project
+
+> use centos7 docker
+
+前提：已经通过windows npm run build打包项目，生成dist
+要求：docker目录下default.conf、Dockerfile文件和生成的dist位于同一目录下
+
+## 下载Nginx image
+
+```
+$ docker pull nginx
+```
+
+## 编写Dockerfile
+
+```
+$ touch Dockerfile  创建空文件(不需要手动创建，git上已经建立)
+
+$ cd /home/vue-develop/project
+
+$ git clone https://github.com/minikiller/kalix-vue-project.git
+```
+
+通过ssh FTP upload最新dist到/home/vue-develop/project/kalix-vue-project/docker目录下
+
+## Docker打包
+
+```
+$ cd /home/vue-develop/project/kalix-vue-project/docker
+
+$ docker build -t kalix-vue-project .
+
+$ docker build -t myproject/kalix-vue-project:v0.0.1 .  基于Dockerfile构建新镜像(仓库/名称)
+
+$ docker build -t myproject/kalix-vue-project:v0.0.1 /home/vue-develop/project/kalix-vue-project
+```
+
+## Docker运行
+
+```
+$ docker run -d --name kalix-vue-project -p 9000:9000 kalix-vue-project
+
+$ docker run -d --name kalix-vue-project -p 9000:9000 myproject/kalix-vue-project:v0.0.1
+```
+
+## 查看运行结果
+
+```
+$ docker ps
+```
+
+访问 http://192.168.0.227:9000
