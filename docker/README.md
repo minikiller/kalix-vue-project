@@ -45,9 +45,11 @@ $ docker build -t myproject/kalix-vue-project:v0.0.1 /home/vue-develop/project/k
 ```
 $ docker run -d --name kalix-vue-project -e "KALIX_SERVER_URL=http://192.168.0.221:2222" kalix-vue-project
 
-$ docker run -d --name kalix-vue-project -p 9000:8282 -p 3000:3000 -e "KALIX_SERVER_URL=http://192.168.0.221:8181" kalix-vue-project
+$ docker run -d --name kalix-vue-project -p 9000:8282 -p 3000:3000 -e "KALIX_SERVER_URL=http://192.168.0.221:8181" kalix-vue-project:v0.0.1
 
-$ docker run -d --name kalix-vue-project -p 9000:9000 myproject/kalix-vue-project:v0.0.1
+$ docker run -d --name kalix-vue-project -p 9000:8282 -p 3000:3000 -e "KALIX_SERVER_URL=http://192.168.0.221:8181" kalix-vue-project:v0.0.1
+
+$ docker run -d --name kalix-vue-project -p 9000:8282 -p 3000:3000 -e "KALIX_SERVER_URL=http://192.168.0.221:8181" myproject/kalix-vue-project:v0.0.1
 ```
 
 ## 查看运行结果
