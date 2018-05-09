@@ -35,6 +35,8 @@ $ cd /home/vue-develop/project/kalix-vue-project/docker
 
 $ docker build -t kalix-vue-project .
 
+$ docker build -t kalix-vue-project:v0.0.1 .
+
 $ docker build -t myproject/kalix-vue-project:v0.0.1 .  基于Dockerfile构建新镜像(仓库/名称)
 
 $ docker build -t myproject/kalix-vue-project:v0.0.1 /home/vue-develop/project/kalix-vue-project
