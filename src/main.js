@@ -12,11 +12,21 @@ import router from './router'
 import {GlobalComponent, GlobalFilter} from 'config/global.toml'
 import './element-ui'
 import Es6Promise from 'es6-promise'
+import KalixSecondPage from 'kalix-second-page'
+// import KalixHeader from 'kalix-header'
+import KalixNavigate from 'kalix-navigate'
+// import 'kalix-second-page/dist/kalix-second-page.min.css'
+
 // import VueMce from 'vue-mce'
 
 Es6Promise.polyfill()
 // Vue.use(VueMce)
 Vue.config.productionTip = false
+
+Vue.use(KalixSecondPage)
+// Vue.use(KalixHeader)
+Vue.use(KalixNavigate)
+
 Vue.use(VueAxios, axios)
 
 // for (const item of GlobalComponent) {

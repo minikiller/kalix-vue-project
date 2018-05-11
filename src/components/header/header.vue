@@ -123,6 +123,7 @@
       console.log('header is deactivated')
     },
     mounted() {
+      console.log(' ******************** ')
       this.initMenu()
       window.onresize = () => {
         this._setAsideBtn()
@@ -139,6 +140,7 @@
         }
       },
       initMenu() {
+        console.log(' ------------------ ')
         let d = new Date()
         let cd = d.getTime()
         let toolListData = {}
@@ -149,6 +151,7 @@
           }
         }
         if (!isEmptyObject(toolListData)) {
+          console.log(' ================== ')
           this.menuList = toolListData
           this._setAsideBtn()
           this._setTopBtns()
@@ -167,6 +170,7 @@
               toolListData = response.data
               this.menuList = toolListData
               Cache.save('toolListData', JSON.stringify(toolListData))
+              console.log(' ++++++++++++++ ')
               this._setAsideBtn()
               this._setTopBtns()
               // EventBus.$emit('toolListDataComplete', toolListData[0].id)
@@ -319,6 +323,7 @@
       // 计算 ulMenu 高度，决定 menu 是否带有展开功能
       _setAsideBtn() {
         setTimeout(() => {
+          // console.log('this.$refs.ulMenu.clientHeight:', this.$refs.ulMenu.clientHeight)
           this.isShowAsideBtn = (this.$refs.ulMenu.clientHeight > 64)
         }, 20)
       },

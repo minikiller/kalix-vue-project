@@ -17,6 +17,7 @@
   import FormModel from './model'
   import Dialog from '@/components/custom/baseDialog.vue'
   import {orgURL} from '../config.toml'
+
   export default {
     data() {
       return {
@@ -36,8 +37,9 @@
     },
     methods: {
       init(dialogOption, row) {
-        this.formModel.orgName = row.name
-        this.formModel.parentId = row.id
+        console.log('asdfasdfsdf', row)
+        // this.formModel.orgName = row.name
+        // this.formModel.parentId = row.id
       }
     }
   }

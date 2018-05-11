@@ -6,20 +6,28 @@
 
 <template lang="pug">
   div.home(v-bind:class="themeValue")
-    kalix-header(:menuChk="isSmall" ref="kalixHeader"
-    v-on:onSmall="setSmall" v-on:onChangeTheme="changeTheme")
+    kalix-header(
+    v-bind:reqUrl="applicationURL"
+    ref="kalixHeader"
+    v-on:onClickChangePwd="changePwd"
+    v-on:onClickUpdateUserInfo="updateUserInfo")
+    user-editpwd(ref="userEditpwd")
+    user-edit(ref="userEdit")
     div.s-flex.container
-      kalix-nav(:menuChk="isSmall")
+      kalix-navigate(v-bind:cacheTime="7200000" v-bind:url="systemApplicationsBaseURL")
       div.s-flex_item.article
         component(:is="which_to_show")
 </template>
-
 <script type="text/ecmascript-6">
   import Header from '@/components/header/header'
   import Navigater from '@/components/navigater/navigater'
   import Welcome from '@/views/admin/welcome'
   import Cache from '@/common/cache.js'
+  import UserEditpwd from 'views/admin/user/userEditpwd.vue'
+  import UserEdit from 'views/admin/user/userEdit.vue'
+  import {cacheTime, applicationURL, systemApplicationsBaseURL, userURL} from 'config/global.toml'
 
+  console.log('cacheTime:', cacheTime)
   const _import = require('@/api/_import_' + process.env.NODE_ENV)
 
   let content = {
@@ -32,7 +40,10 @@
         name: 'kalixHome',
         isSmall: false,
         which_to_show: 'Welcome',
-        themeValue: null
+        themeValue: null,
+        applicationURL: applicationURL,
+        cacheTime: cacheTime,
+        systemApplicationsBaseURL: systemApplicationsBaseURL
       }
     },
     mounted() {
@@ -48,15 +59,15 @@
             if (res && res.data && res.data.theme) {
               this.themeValue = res.data.theme
               Cache.save('styleTheme', this.themeValue)
-              this.$refs.kalixHeader.setTheme(this.themeValue)
+              // this.$refs.kalixHeader.setTheme(this.themeValue)
             } else {
               Cache.save('styleTheme', 'theme-triton')
-              this.$refs.kalixHeader.setTheme('theme-triton')
+              // this.$refs.kalixHeader.setTheme('theme-triton')
             }
           })
         } else {
           Cache.save('styleTheme', this.themeValue)
-          this.$refs.kalixHeader.setTheme(this.themeValue)
+          // this.$refs.kalixHeader.setTheme(this.themeValue)
         }
       },
       setSmall(e) {
@@ -87,17 +98,34 @@
 //          }
         })
         Cache.save('styleTheme', value)
+      },
+      changePwd(txt) {
+        let _data = {
+          jsonStr: '{"id":' + JSON.stringify(Cache.get('id')) + '}'
+        }
+        this.$http.request(userURL, {
+          params: _data
+        }).then(res => {
+          console.log(res)
+          if (res.data.data && res.data.data.length) {
+            this.$refs.userEdit.open(res.data.data[0])
+          }
+        })
+      },
+      updateUserInfo(row) {
+        this.$refs.userEdit.open(row)
       }
     },
     components: {
       KalixHeader: Header,
       KalixNav: Navigater,
       Welcome: Welcome,
-      KalixContent: content // 动态显示组件
+      KalixContent: content, // 动态显示组件
+      UserEditpwd,
+      UserEdit
     }
   }
 </script>
-
 <style lang="stylus">
   @import "./home.styl"
   @import "~@/assets/stylus/theme/theme.styl"
