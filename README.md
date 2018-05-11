@@ -62,3 +62,4 @@ https://webpack.js.org/configuration/other-options/#cache
 ## change log
 https://github.com/PanJiaChen/vue-element-admin/issues/502#issuecomment-372172636
 http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
+```

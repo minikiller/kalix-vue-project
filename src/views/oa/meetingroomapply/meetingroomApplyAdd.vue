@@ -4,7 +4,7 @@
 开发日期：2017年8月17日
 -->
 <template lang="pug">
-  kalix-dialog.user-add(ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL")
+  kalix-dialog.user-add(ref="kalixBizDialog" v-bind:formModel.sync="formModel" v-bind:targetURL="targetURL" v-bind:submitBefore="submitBefore")
     div.el-form.kalix-form-table(slot="dialogFormSlot")
       div.table-title 吉林动画学院会议室申请表
       el-form-item(label="名称" prop="title" v-bind:rules="rules.title" v-bind:label-width="labelWidth")
@@ -128,15 +128,17 @@
               console.log('tempDate', tempDate)
               console.log('tempDate2', tempDate2)
               if (this.meetingRoomApplyList[i].status !== 3) { // 非中止的
-                // 缺少条件非(status===2（结束）且 流程结果不同意)
-                if (tempDate2 === tempDate) {
-                  console.log('endTimeOK is ok')
-                  if (formatDate(new Date(this.endTime), 'hh:mm:ss ') <= this.meetingRoomApplyList[i].beginTime) {
-                  } else if (formatDate(new Date(this.beginTime), 'hh:mm:ss ') >= this.meetingRoomApplyList[i].endTime) {
-                  } else {
-                    hasConfic = true
-                    this.openMessage(this.meetingRoomApplyList[i].beginTime, this.meetingRoomApplyList[i].endTime)
-                    callback(new Error('会议时间与其他会议冲突'))
+                // 非(status===2（结束）且 流程结果不同意)
+                if (!(this.meetingRoomApplyList[i].status === 2 && this.meetingRoomApplyList[i].auditResult.contain('不同意'))) {
+                  if (tempDate2 === tempDate) {
+                    console.log('endTimeOK is ok')
+                    if (formatDate(new Date(this.endTime), 'hh:mm:ss ') <= this.meetingRoomApplyList[i].beginTime) {
+                    } else if (formatDate(new Date(this.beginTime), 'hh:mm:ss ') >= this.meetingRoomApplyList[i].endTime) {
+                    } else {
+                      hasConfic = true
+                      this.openMessage(this.meetingRoomApplyList[i].beginTime, this.meetingRoomApplyList[i].endTime)
+                      callback(new Error('会议时间与其他会议冲突'))
+                    }
                   }
                 }
               }
@@ -245,6 +247,43 @@
           this.formModel.term = ''
           this.formModel.week = null
         }
+      },
+      submitBefore(baseDialog, callBack) {
+        const _data = {
+          jsonStr: {'meetingroomId': this.formModel.meetingroomId, 'meetingDateStr': this.formModel.meetingDateStr},
+          page: 1,
+          start: 0,
+          limit: 200,
+          sort: ''
+        }
+        this.axios.get(MeetingroomApplyURL, {params: _data}).then(response => {
+          this.meetingRoomApplyList = response.data.data
+          let tempDate = ''
+          let tempDate2 = ''
+          let hasConfic = false
+          for (let i = 0; i < this.meetingRoomApplyList.length; i++) {
+            tempDate = formatDate(new Date(this.meetingRoomApplyList[i].meetingDate), 'yyyy-MM-dd ')
+            tempDate2 = formatDate(new Date(this.meetingDate), 'yyyy-MM-dd ')
+            if (this.meetingRoomApplyList[i].status !== 3) { // 非中止的
+              // 非(status===2（结束）且 流程结果不同意)
+              if (!(this.meetingRoomApplyList[i].status === 2 && this.meetingRoomApplyList[i].auditResult.contain('不同意'))) {
+                if (tempDate2 === tempDate) {
+                  console.log('endTimeOK is ok')
+                  if (formatDate(new Date(this.endTime), 'hh:mm:ss ') <= this.meetingRoomApplyList[i].beginTime) {
+                  } else if (formatDate(new Date(this.beginTime), 'hh:mm:ss ') >= this.meetingRoomApplyList[i].endTime) {
+                  } else {
+                    hasConfic = true
+                    this.openMessage(this.meetingRoomApplyList[i].beginTime, this.meetingRoomApplyList[i].endTime)
+                    callBack(new Error('会议时间与其他会议冲突'))
+                  }
+                }
+              }
+            }
+          }
+          if (!hasConfic) {
+            callBack()
+          }
+        })
       }
     }
   }
