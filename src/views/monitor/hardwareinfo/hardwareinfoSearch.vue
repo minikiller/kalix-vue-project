@@ -15,7 +15,7 @@
     data() {
       return {
         searchFields: [
-          {label: 'MAC地址', prop: 'mac'}
+          {label: '条形码', prop: 'barcode'}
         ]
       }
     },
