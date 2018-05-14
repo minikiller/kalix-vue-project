@@ -28,6 +28,7 @@
         targetURL: HardwareInfoURL,
         targetRestURL: restHardwareInfoURL,
         tableFields: [
+          {prop: 'barcode', label: '条形码'},
           {prop: 'mac', label: 'MAC地址'},
           {prop: 'ip', label: 'IP地址'},
           {prop: 'cpu', label: 'cpu'},
