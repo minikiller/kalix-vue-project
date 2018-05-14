@@ -9,6 +9,7 @@
      v-bind:bizSearch="'MonitorHardwareLogSearch'" v-bind:btnList="btnList" v-bind:toolbarBtnList="toolbarBtnList"
      v-bind:bizDialog="bizDialog" v-bind:customToolBar="customToolBar")
       template(slot="tableColumnSlot")
+        el-table-column(prop="barcode" label="条形码" width="280" align="center")
         el-table-column(prop="mac" label="MAC地址" width="280" align="center")
         el-table-column(prop="ip" label="IP地址" width="280" align="center")
         el-table-column(prop="creationDate" label="比对时间" align="center")
