@@ -19,11 +19,11 @@
             type: 'select',
             field: 'chartSelectValue',
             options: [
-              {value: '0', label: '异常信息统计'},
+              {value: '3', label: '异常信息统计'},
               {value: '1', label: '异常趋势统计'},
               {value: '2', label: '硬件信息统计'}
             ],
-            defaultVal: '0'
+            defaultVal: '3'
           },
           {label: '硬件分类',
             prop: 'hardwareType',
