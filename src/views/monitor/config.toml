@@ -5,7 +5,7 @@ MonitorDictsTypesListURL = "/camel/rest/monitor/dicts/types/list"
 
 HardwareInfoURL = "/camel/rest/hardwareInfos"
 restHardwareInfoURL = "/camel/rest/resetHardwareinfos"
-HardwareLogURL= "/camel/rest/hardwarelogs"
+HardwareLogURL= "/camel/rest/searchHardwareLogs"
 HardwareLogMailURL= "/camel/rest/system/config"
 HardwareStatisticsURL = "/camel/rest/getHardwareStatistics"
 SignupURL = "/camel/rest/signups"
