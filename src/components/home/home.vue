@@ -118,7 +118,7 @@
     },
     components: {
       KalixHeader: Header,
-      KalixNav: Navigater,
+      KalixNavigate: Navigater,
       Welcome: Welcome,
       KalixContent: content, // 动态显示组件
       UserEditpwd,
