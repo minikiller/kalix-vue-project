@@ -70,6 +70,7 @@
         default: '拒绝'
       },
       title: '',
+      editCustom: '',  // 自定义编辑地址路径，改变默认参数id为自定义参数
       submitBefore: {  // 提交前执行  submitBefore(baseDialog,function Submit)
         type: Function
       },
@@ -106,7 +107,7 @@
           if (valid) {
             Vue.axios.request({
               method: this.isEdit ? 'PUT' : 'POST',
-              url: this.isEdit ? `${this.targetURL}/${this.formModel.id}` : this.targetURL,
+              url: this.isEdit ? (this.editCustom ? `${this.targetURL}/${this.editCustom}` : `${this.targetURL}/${this.formModel.id}`) : this.targetURL,
               data: this.formModel,
               params: {}
             }).then(response => {
