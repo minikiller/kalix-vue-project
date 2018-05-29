@@ -17,6 +17,8 @@ addusersURL = "/camel/rest//dataauths/[id]/users"
 functionMenuURL = "camel/rest/applications/extend/tree" # 功能管理菜单
 functionItemBaseURL = "/camel/rest/functions/application/" # 功能管理点击菜单节点
 functionURL = "/camel/rest/functions" # 功能管理树表
+# 菜单管理
+baseModulesURL = "/camel/rest/system/apps"
 templateURL = "/camel/rest/admin/templates" # 模板管理
 templateConfigURL = "/camel/rest/templateconfigs" # 模板配置
 templateContentURL = "/camel/rest/templatecontents" # 模板内容
@@ -296,3 +298,11 @@ name = "AdminConfiguer"
 [[AuditConfigComponent]]
  path = "admin/auditconfig/auditconfigView"
  name = "AdminAuditConfigView"
+
+# 需要自动注册成全局的Menu组件
+ [[MenuComponent]]
+   path = "admin/menu/moduleAdd"
+   name = "AdminModuleAdd"
+ [[MenuComponent]]
+   path = "admin/menu/menuAdd"
+   name = "AdminMenuAdd"
